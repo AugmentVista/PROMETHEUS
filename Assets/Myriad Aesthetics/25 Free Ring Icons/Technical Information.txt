@@ -1,0 +1,7 @@
+PSD and PNG files
+Transparent background: Yes
+Optional Outline: Yes
+Dimesions: 512x512
+File count: 25
+Animated: No
+Pixel based: Yes
