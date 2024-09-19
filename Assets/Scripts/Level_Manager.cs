@@ -5,9 +5,10 @@ public class Level_Manager : MonoBehaviour // This used to inherit from UI_Manag
 {
     public GameObject Player;
     public Transform PlayerTransform;
+    //public GameObject PlayerRespawnPoint;
+
     public bool Win;
     public bool Lose;
-    //public GameObject PlayerRespawnPoint;
     static bool isSubscribed;
 
     private void Awake()
@@ -25,7 +26,7 @@ public class Level_Manager : MonoBehaviour // This used to inherit from UI_Manag
     }
     public void LoadGamePlay1()
     {
-        SceneManager.LoadScene("MainMenu");
+        SceneManager.LoadScene("GamePlay1");
     }
     public void LoadGameWin()
     {

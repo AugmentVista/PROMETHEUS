@@ -51,35 +51,35 @@ public class UI_Manager : MonoBehaviour
     }
     private void MainMenuUI()
     {
-        HideAllUI();
-        mainMenuUI.SetActive(true);
+        HideAllUI(mainMenuUI);
+        //mainMenuUI.SetActive(true);
     }
     public void GamePlayUI()
     {
-        HideAllUI();
-        gamePlayUI.SetActive(true);
+        HideAllUI(gamePlayUI);
+        //gamePlayUI.SetActive(true);
     }
     public void OptionsUI()
     {
-        HideAllUI();
-        optionsUI.SetActive(true);
+        HideAllUI(optionsUI);
+        //optionsUI.SetActive(true);
     }
     protected void GameWinUI()
     {
-        HideAllUI();
-        gameWinUI.SetActive(true);
+        HideAllUI(gameWinUI);
+        //gameWinUI.SetActive(true);
     }
     protected void GameOverUI()
     {
-        HideAllUI();
-        gameOverUI.SetActive(true);
+        HideAllUI(gameOverUI);
+        //gameOverUI.SetActive(true);
     }
     public void PausedUI()
     {
-        HideAllUI();
-        pausedUI.SetActive(true);
+        HideAllUI(pausedUI); // GameObject.SetActive(true);
+        //pausedUI.SetActive(true);
     }
-    public void HideAllUI()
+    public void HideAllUI(GameObject ActiveUI)
     {
         mainMenuUI.SetActive(false);
         gamePlayUI.SetActive(false);
@@ -87,5 +87,6 @@ public class UI_Manager : MonoBehaviour
         pausedUI.SetActive(false);
         gameOverUI.SetActive(false);
         gameWinUI.SetActive(false);
+        ActiveUI.SetActive(true);
     }
 }

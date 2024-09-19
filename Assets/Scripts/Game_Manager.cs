@@ -6,18 +6,22 @@ public class Game_Manager : MonoBehaviour
 {
     [SerializeField] private UI_Manager ui_Manager;
     [SerializeField] private Level_Manager level_Manager;
+
     public static GameObject playerCamera;
     public static GameObject menuCamera;
     public GameObject playerCameraLocal;
     public GameObject menuCameraLocal;
     [SerializeField] private GameObject Player;
+
     public bool Paused;
-    //public GameObject ShowControls;
-    //public GameObject ShowPauseControls;
+    
     private bool controlsActive = false;
     private bool pauseControlsActive = false;
-    //public GameObject Inventory;
     private bool inventoryActive;
+
+    //public GameObject ShowControls;
+    //public GameObject ShowPauseControls;
+    //public GameObject Inventory;
 
     public enum GameState { MainMenu, GamePlay1, Options, GameOver, GameWin }
     public GameState gameState;
