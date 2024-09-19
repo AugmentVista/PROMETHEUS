@@ -7,8 +7,8 @@ public class Game_Manager : MonoBehaviour
     [SerializeField] private UI_Manager ui_Manager;
     [SerializeField] private Level_Manager level_Manager;
 
-    private static GameObject playerCamera;
-    private static GameObject menuCamera;
+    public GameObject playerCamera;
+    public GameObject menuCamera;
     [SerializeField] private GameObject Player;
 
     public bool Paused;
@@ -27,15 +27,11 @@ public class Game_Manager : MonoBehaviour
     public delegate void GameStateChange();
     public static event GameStateChange OnMainMenu;
     public static event GameStateChange OnGamePlay1;
-    public static event GameStateChange OnGamePlay2;
     public static event GameStateChange OnGameOver;
     public static event GameStateChange OnGameWin;
 
     private void Awake() // Awake runs before start and again when scenes change.
     {
-        playerCamera = GameObject.Find("PlayerCamera");
-        menuCamera = GameObject.Find("MenuCamera");
-
         if (playerCamera == null || menuCamera == null)
         {
             Debug.LogError("Camera references not found!");
@@ -189,20 +185,22 @@ public class Game_Manager : MonoBehaviour
     // Swaps between player camera and menu camera when a menu is opened
     public static void ChangeCamera(bool isGameplayCameraOpen = false)
     {
+        Game_Manager gameManager = Singleton.instance.GetComponent<Game_Manager>();
+
         if (isGameplayCameraOpen)
         {
-            menuCamera.SetActive(false);
-            playerCamera.SetActive(true);
+            gameManager.menuCamera.SetActive(false);
+            gameManager.playerCamera.SetActive(true);
         }
-        else if (menuCamera.activeSelf)
+        else if (gameManager.menuCamera.activeSelf)
         {
-            menuCamera.SetActive(false);
-            playerCamera.SetActive(true);
+            gameManager.menuCamera.SetActive(false);
+            gameManager.playerCamera.SetActive(true);
         }
-        else if (playerCamera.activeSelf)
+        else if (gameManager.playerCamera.activeSelf)
         {
-            playerCamera.SetActive(false);
-            menuCamera.SetActive(true);
+            gameManager.playerCamera.SetActive(false);
+            gameManager.menuCamera.SetActive(true);
         }
     }
     #endregion
