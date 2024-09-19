@@ -34,7 +34,7 @@ public class Level_Manager : MonoBehaviour // This used to inherit from UI_Manag
     }
     public void LoadGameOver()
     {
-        SceneManager.LoadScene("GameLose");
+        SceneManager.LoadScene("GameOver");
     }
     #endregion
 
@@ -68,9 +68,23 @@ public class Level_Manager : MonoBehaviour // This used to inherit from UI_Manag
 
     private void PrepareScene(Scene scene)
     {
-        if (scene.name == "GamePlay1")
+        switch (scene.name)
         {
-            SetupGameplayScene();
+            case "GamePlay1":
+                SetupGameplayScene();
+                break;
+            case "MainMenu":
+                SetupMainMenu();
+                break;
+            case "GameWin":
+                SetupGameWin();
+                break;
+            case "GameOver":
+                SetupGameOver();
+                break;
+            default:
+                Debug.LogWarning($"No specific setup for scene: {scene.name}");
+                break;
         }
     }
     private void SetupGameplayScene()
@@ -80,5 +94,25 @@ public class Level_Manager : MonoBehaviour // This used to inherit from UI_Manag
         //PlayerRespawnPoint = GameObject.Find("Player Spawn Point");
         //PlayerTransform.position = PlayerRespawnPoint.transform.position;
         Game_Manager.ChangeCamera(true);
+    }
+
+    private void SetupMainMenu()
+    {
+        // Ensure the menu camera is active and the player camera is inactive
+        Game_Manager.ChangeCamera(false);
+    }
+
+    private void SetupGameWin()
+    {
+        // Logic for handling what happens in the Game Win scene
+        // example, activate win UI, display scores, play victory animations, etc.
+        Game_Manager.ChangeCamera(false); // Ensure menu camera is active
+    }
+
+    private void SetupGameOver()
+    {
+        // Logic for handling what happens in the Game Lose scene
+        // example, activate lose UI, display scores, play defeat animations, etc.
+        Game_Manager.ChangeCamera(false); // Ensure menu camera is active
     }
 }

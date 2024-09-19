@@ -7,17 +7,15 @@ public class Game_Manager : MonoBehaviour
     [SerializeField] private UI_Manager ui_Manager;
     [SerializeField] private Level_Manager level_Manager;
 
-    public static GameObject playerCamera;
-    public static GameObject menuCamera;
-    public GameObject playerCameraLocal;
-    public GameObject menuCameraLocal;
+    private static GameObject playerCamera;
+    private static GameObject menuCamera;
     [SerializeField] private GameObject Player;
 
     public bool Paused;
-    
-    private bool controlsActive = false;
-    private bool pauseControlsActive = false;
-    private bool inventoryActive;
+
+    //private bool controlsActive = false;
+    //private bool pauseControlsActive = false;
+    //private bool inventoryActive;
 
     //public GameObject ShowControls;
     //public GameObject ShowPauseControls;
@@ -34,10 +32,14 @@ public class Game_Manager : MonoBehaviour
     public static event GameStateChange OnGameWin;
 
     private void Awake() // Awake runs before start and again when scenes change.
-                         // This reallocates both cameras to the new cameras across scenes where start would not.
     {
-        playerCamera = playerCameraLocal;
-        menuCamera = menuCameraLocal;
+        playerCamera = GameObject.Find("PlayerCamera");
+        menuCamera = GameObject.Find("MenuCamera");
+
+        if (playerCamera == null || menuCamera == null)
+        {
+            Debug.LogError("Camera references not found!");
+        }
     }
     void Update()
     {
@@ -95,7 +97,7 @@ public class Game_Manager : MonoBehaviour
 
     public void PauseTrigger()
     {
-        MenuIs(true);
+        IsMenuOpen(true);
         ui_Manager.PausedUI();
         Time.timeScale = 0.0f;
         Paused = true;
@@ -103,7 +105,7 @@ public class Game_Manager : MonoBehaviour
 
     public void ResumeGame()
     {
-        MenuIs(false);
+        IsMenuOpen(false);
         ui_Manager.GamePlayUI();
         Time.timeScale = 1.0f;
         ChangeCamera(true);
@@ -166,26 +168,28 @@ public class Game_Manager : MonoBehaviour
         Application.Quit();
     }
 
-    private bool MenuIs(bool open)
-    // If a menu is open and the menu camera is turned off it is turned on and the player camera is turned off.
-    // If a menu isn't open and the player camera is turned off it is turned on and the menu camera is turned off.
+    private bool IsMenuOpen(bool open)
     {
+        // If a menu is open and the menu camera is turned off, turn it on and turn off the player camera.
         if (!menuCamera.activeSelf && open)
         {
             ChangeCamera();
             return true;
         }
+        // If a menu isn't open and the player camera is turned off, turn it on and turn off the menu camera.
         else if (!playerCamera.activeSelf && !open)
         {
             ChangeCamera();
             return false;
         }
-        else return false;
+
+        return false; // No change needed
     }
+
     // Swaps between player camera and menu camera when a menu is opened
-    public static void ChangeCamera(bool forceGameplayCam = false)
+    public static void ChangeCamera(bool isGameplayCameraOpen = false)
     {
-        if (forceGameplayCam)
+        if (isGameplayCameraOpen)
         {
             menuCamera.SetActive(false);
             playerCamera.SetActive(true);
@@ -197,8 +201,8 @@ public class Game_Manager : MonoBehaviour
         }
         else if (playerCamera.activeSelf)
         {
-            menuCamera.SetActive(true);
             playerCamera.SetActive(false);
+            menuCamera.SetActive(true);
         }
     }
     #endregion
@@ -210,32 +214,32 @@ public class Game_Manager : MonoBehaviour
         OnMainMenu?.Invoke();
         level_Manager.LoadMainMenu();
         Time.timeScale = 1.0f;
-        MenuIs(true);
+        IsMenuOpen(true);
     }
 
     private void GamePlay1()
     {
         level_Manager.LoadGamePlay1();
-        MenuIs(false);
+        IsMenuOpen(false);
         OnGamePlay1?.Invoke();
     }
     #endregion
     private void Options()
     {
         ui_Manager.OptionsUI();
-        MenuIs(true);
+        IsMenuOpen(true);
     }
 
     private void GameOver()
     {
         OnGameOver?.Invoke();
-        MenuIs(true);
+        IsMenuOpen(true);
     }
 
     private void GameWin()
     {
         OnGameWin?.Invoke();
-        MenuIs(true);
+        IsMenuOpen(true);
     }
     #endregion
 }

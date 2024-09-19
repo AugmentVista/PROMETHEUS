@@ -41,7 +41,7 @@ public class UI_Manager : MonoBehaviour
             case "GameWin":
                 GameWinUI();
                 break;
-            case "GameLose":
+            case "GameOver":
                 GameWinUI();
                 break;
             default:
@@ -52,32 +52,26 @@ public class UI_Manager : MonoBehaviour
     private void MainMenuUI()
     {
         HideAllUI(mainMenuUI);
-        //mainMenuUI.SetActive(true);
     }
     public void GamePlayUI()
     {
         HideAllUI(gamePlayUI);
-        //gamePlayUI.SetActive(true);
     }
     public void OptionsUI()
     {
         HideAllUI(optionsUI);
-        //optionsUI.SetActive(true);
     }
     protected void GameWinUI()
     {
         HideAllUI(gameWinUI);
-        //gameWinUI.SetActive(true);
     }
     protected void GameOverUI()
     {
         HideAllUI(gameOverUI);
-        //gameOverUI.SetActive(true);
     }
     public void PausedUI()
     {
-        HideAllUI(pausedUI); // GameObject.SetActive(true);
-        //pausedUI.SetActive(true);
+        HideAllUI(pausedUI);
     }
     public void HideAllUI(GameObject ActiveUI)
     {
