@@ -13,14 +13,6 @@ public class Game_Manager : MonoBehaviour
 
     public bool Paused;
 
-    //private bool controlsActive = false;
-    //private bool pauseControlsActive = false;
-    //private bool inventoryActive;
-
-    //public GameObject ShowControls;
-    //public GameObject ShowPauseControls;
-    //public GameObject Inventory;
-
     public enum GameState { MainMenu, GamePlay1, Options, GameOver, GameWin }
     public GameState gameState;
 
@@ -39,6 +31,13 @@ public class Game_Manager : MonoBehaviour
     }
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Alpha1)) SceneManager.LoadScene("Level_1"); // press 1
+        if (Input.GetKeyDown(KeyCode.Alpha2)) SceneManager.LoadScene("Level_2"); // press 2
+        if (Input.GetKeyDown(KeyCode.Alpha3)) SceneManager.LoadScene("Level_3");// press 3
+        if (Input.GetKeyDown(KeyCode.Alpha4)) SceneManager.LoadScene("MainMenu"); // press 4
+        if (Input.GetKeyDown(KeyCode.Alpha5)) SceneManager.LoadScene("GameOver"); // press 5
+        if (Input.GetKeyDown(KeyCode.Alpha6)) SceneManager.LoadScene("GameWin"); // press 6
+
         if (Input.GetKeyDown(KeyCode.Escape) && (gameState == GameState.GamePlay1))
         {
             if (!Paused) // If not paused, pause the game.
