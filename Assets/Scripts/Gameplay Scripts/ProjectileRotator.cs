@@ -2,36 +2,40 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ProjectileRotator : MonoBehaviour
+using UnityEngine;
+
+public class Projectile : MonoBehaviour
 {
-    public GameObject Ring;
+    public GameObject Shot;
 
-    private Rigidbody ringBody;
-    private Vector3 ringVelocity;
-
-    public int xRotationSpeed;
-    public int yRotationSpeed;
-    public int zRotationSpeed;
+    private Rigidbody shotBody;
+    public float speed = 1f; 
+    public float rotationSpeed = 100f; 
 
     void Start()
     {
-        ringBody = GetComponent<Rigidbody>();
+        shotBody = GetComponent<Rigidbody>();
+        MoveForward();
+    }
+
+    private void MoveForward()
+    {
+        shotBody.velocity = transform.forward * speed;
     }
 
     void FixedUpdate()
     {
-        ringVelocity = new Vector3(xRotationSpeed, yRotationSpeed, zRotationSpeed);
+        Quaternion deltaRotation = Quaternion.Euler(Vector3.up * rotationSpeed * Time.fixedDeltaTime);
+        shotBody.MoveRotation(shotBody.rotation * deltaRotation);
+    }
 
-        Quaternion deltaRotation = Quaternion.Euler(ringVelocity * Time.fixedDeltaTime);
-        ringBody.MoveRotation(ringBody.rotation * deltaRotation);
-        xRotationSpeed++;
+    private void OnCollisionEnter(Collision collision)
+    {
+        //Destroy(gameObject);
     }
 
     private void DestroyProjectile()
     {
-        if (xRotationSpeed >= 500)
-        {
-            Destroy(gameObject, 5f);
-        }
+        Destroy(gameObject);
     }
 }
