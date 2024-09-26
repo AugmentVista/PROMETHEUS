@@ -1,19 +1,18 @@
+using System.Collections;
 using UnityEngine;
 
 public class ProjectileCollisionHandler : MonoBehaviour
 {
-    private bool hasCollided = false;
-    private float deactivateDelay = 0.2f; // Time to deactivate after a hit
-    private float elapsedTime = 0f;
+    public bool reusedProjectile = false; // Track whether this projectile is reused
 
+    private float deactivateDelay = 0.5f; // Time to deactivate after a hit
     private ProjectileSpawner spawner; // Reference to the spawner
-    private PlayerZone playerZone;
 
     private void Start()
     {
-        ProjectileSpawner spawner = FindObjectOfType<ProjectileSpawner>();
-        PlayerZone playerZone = FindObjectOfType<PlayerZone>();
+        spawner = FindObjectOfType<ProjectileSpawner>();
     }
+
     public void SetSpawner(ProjectileSpawner spawnerReference)
     {
         spawner = spawnerReference;
@@ -21,41 +20,21 @@ public class ProjectileCollisionHandler : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("Collision confirmed");
-
         if (collision.gameObject.CompareTag("Player"))
         {
-            hasCollided = true;
+            StartCoroutine(DeactivateAfterDelay(true)); // Player hit
         }
         else if (collision.gameObject.CompareTag("MissZone"))
         {
-            hasCollided = true;
+            StartCoroutine(DeactivateAfterDelay(false)); // Player missed
         }
     }
 
-    private void CheckCollision()
+    private IEnumerator DeactivateAfterDelay(bool didPlayerHitThis)
     {
-        if (hasCollided)
-        {
-            Debug.Log("Collided");
-            elapsedTime += Time.deltaTime;
-            if (elapsedTime >= deactivateDelay)
-            {
-                DeactivateProjectile(gameObject);
-            }
-        }
-        else // Handles if the projectile if misses entirely by some strange means and deactivates it
-        {
-            //Invoke(nameof(DeactivateProjectile), 5.0f);
-            //Debug.Log("Something went wrong");
-        }
+        yield return new WaitForSeconds(deactivateDelay);
+        HandlePlayerInput(didPlayerHitThis);
     }
-
-    private void Update()
-    {
-        CheckCollision();
-    }
-
 
     public void HandlePlayerInput(bool didPlayerHitThis)
     {
@@ -63,20 +42,13 @@ public class ProjectileCollisionHandler : MonoBehaviour
         {
             Debug.Log("Player hit the projectile!");
         }
-        else if (!didPlayerHitThis)
+        else
         {
             Debug.Log("Player missed the projectile!");
         }
-        DeactivateProjectile(gameObject);
-    }
 
-    public void DeactivateProjectile(GameObject obj)
-    {
-        if (spawner != null)
-        {
-            spawner.OnProjectileInactive();
-        }
-
-        obj.SetActive(false); // Deactivate the projectile for pooling
+        // Call spawner to deactivate the projectile
+        spawner.OnProjectileInactive(gameObject);
     }
 }
+
