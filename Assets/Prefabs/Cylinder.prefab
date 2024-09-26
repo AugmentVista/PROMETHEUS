@@ -14,11 +14,10 @@ GameObject:
   - component: {fileID: 7258739233158370715}
   - component: {fileID: 6011509915488377114}
   - component: {fileID: 8184163710309665388}
-  - component: {fileID: 5373628261414785711}
   - component: {fileID: 3616684132500771534}
   m_Layer: 0
   m_Name: Cylinder
-  m_TagString: Untagged
+  m_TagString: Proj
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -676,18 +675,6 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 0}
---- !u!114 &5373628261414785711
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2943701228234494011}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e4cafbec7bf9e6c4eb7987906a48281a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!54 &3616684132500771534
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -713,5 +700,5 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 2
   m_CollisionDetection: 1

@@ -7,67 +7,76 @@ public class ProjectileCollisionHandler : MonoBehaviour
     private float elapsedTime = 0f;
 
     private ProjectileSpawner spawner; // Reference to the spawner
+    private PlayerZone playerZone;
 
-    private void Update()
+    private void Start()
     {
-        // If projectile has collided, start countdown to deactivation
-        if (hasCollided)
-        {
-            elapsedTime += Time.deltaTime;
-            if (elapsedTime >= deactivateDelay)
-            {
-                DeactivateProjectile();
-            }
-        }
-        else
-        {
-            // Deactivate the projectile after 10 seconds if no collision happens
-            Invoke(nameof(DeactivateProjectile), 10f);
-        }
+        ProjectileSpawner spawner = FindObjectOfType<ProjectileSpawner>();
+        PlayerZone playerZone = FindObjectOfType<PlayerZone>();
+    }
+    public void SetSpawner(ProjectileSpawner spawnerReference)
+    {
+        spawner = spawnerReference;
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        // Check if the collision is with the player
+        Debug.Log("Collision confirmed");
+
         if (collision.gameObject.CompareTag("Player"))
         {
             hasCollided = true;
-            HandlePlayerHit();
         }
         else if (collision.gameObject.CompareTag("MissZone"))
         {
-            // Handle if the player misses the projectile (Guitar Hero miss equivalent)
-            HandleMiss();
-            DeactivateProjectile();
+            hasCollided = true;
         }
     }
 
-    private void HandlePlayerHit()
+    private void CheckCollision()
     {
-        // Trigger the effects of a successful hit (like scoring points)
-        Debug.Log("Player hit the projectile!");
+        if (hasCollided)
+        {
+            Debug.Log("Collided");
+            elapsedTime += Time.deltaTime;
+            if (elapsedTime >= deactivateDelay)
+            {
+                DeactivateProjectile(gameObject);
+            }
+        }
+        else // Handles if the projectile if misses entirely by some strange means and deactivates it
+        {
+            //Invoke(nameof(DeactivateProjectile), 5.0f);
+            //Debug.Log("Something went wrong");
+        }
     }
 
-    private void HandleMiss()
+    private void Update()
     {
-        // Logic for when the player misses the projectile
-        Debug.Log("Player missed the projectile!");
+        CheckCollision();
     }
 
-    private void DeactivateProjectile()
+
+    public void HandlePlayerInput(bool didPlayerHitThis)
     {
-        // Notify the spawner that the projectile is inactive
+        if (didPlayerHitThis)
+        {
+            Debug.Log("Player hit the projectile!");
+        }
+        else if (!didPlayerHitThis)
+        {
+            Debug.Log("Player missed the projectile!");
+        }
+        DeactivateProjectile(gameObject);
+    }
+
+    public void DeactivateProjectile(GameObject obj)
+    {
         if (spawner != null)
         {
             spawner.OnProjectileInactive();
         }
 
-        gameObject.SetActive(false);
-    }
-
-    // Method to set the spawner reference
-    public void SetSpawner(ProjectileSpawner spawnerReference)
-    {
-        spawner = spawnerReference;
+        obj.SetActive(false); // Deactivate the projectile for pooling
     }
 }
