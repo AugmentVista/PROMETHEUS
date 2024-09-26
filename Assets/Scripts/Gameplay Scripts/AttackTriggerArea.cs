@@ -2,8 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-using UnityEngine;
-
 public class AttackTriggerArea : MonoBehaviour
 {
     public GameObject Projectile; // Uncommented to instantiate projectiles later on
