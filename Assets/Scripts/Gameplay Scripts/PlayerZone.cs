@@ -4,24 +4,23 @@ using UnityEngine;
 
 public class PlayerZone : MonoBehaviour
 {
-    public KeyCode hitKey = KeyCode.Space; // Key to hit
+    public KeyCode hitKey = KeyCode.Space; 
 
     private string targetTag = "Proj"; // Tag for projectiles
 
-    public List<GameObject> currentProjectileInZone = new List<GameObject>(); // Track projectiles in the zone
-    public List<GameObject> missedProjectiles = new List<GameObject>(); // keeps record of misses to reference
+    public List<GameObject> currentProjectileInZone = new List<GameObject>(); 
+    public List<GameObject> missedProjectiles = new List<GameObject>(); 
 
     private void Update()
     { 
         // if hitkey is pressed while there is a projectile in the zone HandleNoteHit is called
         if (Input.GetKeyDown(hitKey))  
         {
-            if (currentProjectileInZone.Count > 0) // List has no contents while nothing is passing through it
+            if (currentProjectileInZone.Count > 0)
             {
                 HandleNoteHit();
             }
 
-            // If hitkey is pressed and list doesn't have contents it's a miss
             else if (currentProjectileInZone.Count >= 0)
             { 
                 HandleNoteMiss(); 
@@ -34,9 +33,8 @@ public class PlayerZone : MonoBehaviour
         // Add proj to the activeProj list when it enters
         if (other.CompareTag(targetTag))
         {
-            currentProjectileInZone.Add(other.gameObject);
-
-            Debug.Log(currentProjectileInZone.Count.ToString() + " Projectiles have entered zone");
+            // When object enters it
+            currentProjectileInZone.Add(other.gameObject); 
         }
     }
 
@@ -49,11 +47,10 @@ public class PlayerZone : MonoBehaviour
             GameObject hitProjectile = currentProjectileInZone[0]; // most recent hit becomes index 0
             currentProjectileInZone.RemoveAt(0);
 
-            // Call the collision handler to process the hit
             ProjectileCollisionHandler collisionHandler = hitProjectile.GetComponent<ProjectileCollisionHandler>();
             if (collisionHandler != null)
             {
-                collisionHandler.HandlePlayerInput(true); // provide true argument to didPlayerHitThis
+                collisionHandler.HandlePlayerInput(true); 
             }
         }
     }
@@ -71,7 +68,7 @@ public class PlayerZone : MonoBehaviour
             ProjectileCollisionHandler collisionHandler = missedProjectile.GetComponent<ProjectileCollisionHandler>();
             if (collisionHandler != null)
             {
-                collisionHandler.HandlePlayerInput(false); // provide false argument to didPlayerHitThis
+                collisionHandler.HandlePlayerInput(false); 
             }
         }
     }

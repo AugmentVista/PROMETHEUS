@@ -20,6 +20,7 @@ public class ProjectileCollisionHandler : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        Debug.Log("OnCollisionEnter has been triggered");
         if (collision.gameObject.CompareTag("Player"))
         {
             StartCoroutine(DeactivateAfterDelay(true)); // Player hit
