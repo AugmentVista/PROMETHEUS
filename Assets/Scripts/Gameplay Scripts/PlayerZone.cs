@@ -14,29 +14,42 @@ public class PlayerZone : MonoBehaviour
     private void Update()
     { 
         // if hitkey is pressed while there is a projectile in the zone HandleNoteHit is called
-        if (Input.GetKeyDown(hitKey))  
+        if (Input.GetKeyDown(hitKey) && currentProjectileInZone.Count > 0)  
         {
-            if (currentProjectileInZone.Count > 0) // List has no contents while nothing is passing through it
-            {
-                HandleNoteHit();
-            }
-
-            // If hitkey is pressed and list doesn't have contents it's a miss
-            else if (currentProjectileInZone.Count >= 0)
-            { 
-                HandleNoteMiss(); 
-            }
+            HandleNoteHit();
+        }
+        else if (Input.GetKeyDown(hitKey))
+        {
+            HandleNoteMiss();
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        // Add proj to the activeProj list when it enters
+        // Currently there is only one targetTag being "Proj", additional tag types may be added later
         if (other.CompareTag(targetTag))
         {
             currentProjectileInZone.Add(other.gameObject);
 
             Debug.Log(currentProjectileInZone.Count.ToString() + " Projectiles have entered zone");
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag(targetTag))
+        {
+            missedProjectiles.Add(other.gameObject); // adds object with targetTag to a missedprojectiles list
+
+            GameObject hitProjectile = missedProjectiles[missedProjectiles.Count - 1]; // most recent miss is last in the list
+
+            // Remove the projectile from the zone list if it exists
+            if (currentProjectileInZone.Contains(other.gameObject))
+            {
+                currentProjectileInZone.Remove(other.gameObject);
+            }
+
+            Debug.Log(currentProjectileInZone.Count.ToString() + " Projectiles remain in zone");
         }
     }
 
@@ -46,46 +59,41 @@ public class PlayerZone : MonoBehaviour
         {
             Debug.Log("HandleNoteHit called");
 
-            GameObject hitProjectile = currentProjectileInZone[0]; // most recent hit becomes index 0
-            currentProjectileInZone.RemoveAt(0);
+            GameObject hitProjectile = currentProjectileInZone[0];
+            currentProjectileInZone.RemoveAt(0); // take that projectile out of list
 
-            // Call the collision handler to process the hit
-            ProjectileCollisionHandler collisionHandler = hitProjectile.GetComponent<ProjectileCollisionHandler>();
-            if (collisionHandler != null)
+            if (hitProjectile != null) 
             {
-                collisionHandler.HandlePlayerInput(true); // provide true argument to didPlayerHitThis
+                // Call the collision handler to process the hit
+                ProjectileCollisionHandler collisionHandler = hitProjectile.GetComponent<ProjectileCollisionHandler>();
+                if (collisionHandler != null)
+                {
+                    collisionHandler.HandlePlayerInput(true); // provide true argument to didPlayerHitThis
+                }
             }
         }
     }
 
     private void HandleNoteMiss()
     {
-        if (currentProjectileInZone.Count <= 0 && missedProjectiles.Count > 0) 
+        Debug.Log("HHHHHHHHHHHHHHaaaaaaaaaaaaaaaaaaaa");
+        if (currentProjectileInZone.Count <= 0 && missedProjectiles.Count > 0)
         {
             Debug.Log("HandleNoteMiss called");
 
             GameObject missedProjectile = missedProjectiles[0];
             missedProjectiles.RemoveAt(0);
 
-
-            ProjectileCollisionHandler collisionHandler = missedProjectile.GetComponent<ProjectileCollisionHandler>();
-            if (collisionHandler != null)
+            if (missedProjectile != null) // Safety check
             {
-                collisionHandler.HandlePlayerInput(false); // provide false argument to didPlayerHitThis
+                ProjectileCollisionHandler collisionHandler = missedProjectile.GetComponent<ProjectileCollisionHandler>();
+                if (collisionHandler != null)
+                {
+                    Debug.Log("HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH");
+                    collisionHandler.HandlePlayerInput(false); // provide false argument to didPlayerHitThis
+                }
             }
         }
     }
 
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag(targetTag) && currentProjectileInZone.Count < 0)
-        {
-            missedProjectiles.Add(other.gameObject); // Add to list of misses
-            GameObject hitProjectile = missedProjectiles[0]; // most recent miss becomes index 0
-
-            currentProjectileInZone.Remove(other.gameObject);
-
-            Debug.Log(currentProjectileInZone.Count.ToString() + "Projectile leaving zone");
-        }
-    }
 }

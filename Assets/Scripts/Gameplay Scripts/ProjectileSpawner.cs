@@ -4,7 +4,7 @@ using UnityEngine;
 public class ProjectileSpawner : MonoBehaviour
 {
     public GameObject ProjectilePrefab;
-    public Transform playerTransform;
+    public Transform projectileTarget;
     public Transform spawnPosition;
 
     public float spawnInterval = 2f; 
@@ -42,7 +42,7 @@ public class ProjectileSpawner : MonoBehaviour
         // Set projectile position and direction
         projectileInstance.transform.position = spawnPosition.position;
 
-        Vector3 directionToPlayer = (playerTransform.position - spawnPosition.position).normalized;
+        Vector3 directionToPlayer = (projectileTarget.position - spawnPosition.position).normalized;
 
         Rigidbody projectileRb = projectileInstance.GetComponent<Rigidbody>();
         projectileRb.velocity = directionToPlayer * projectileSpeed;

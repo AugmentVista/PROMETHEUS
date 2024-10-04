@@ -4,8 +4,7 @@ using UnityEngine.SceneManagement;
 public class Level_Manager : MonoBehaviour // This used to inherit from UI_Manager for unknown reasons, change back if this causes issues
 {
     public GameObject Player;
-    public Transform PlayerTransform;
-    //public GameObject PlayerRespawnPoint;
+    public Transform projectileTarget;
 
     public bool Win;
     public bool Lose;
@@ -91,22 +90,16 @@ public class Level_Manager : MonoBehaviour // This used to inherit from UI_Manag
     {
         Game_Manager gameManager = Singleton.instance.GetComponent<Game_Manager>();
         gameManager.Paused = false;
-        //PlayerRespawnPoint = GameObject.Find("Player Spawn Point");
-        //PlayerTransform.position = PlayerRespawnPoint.transform.position;
         Game_Manager.ChangeCamera(true);
     }
 
     private void SetupMainMenu()
     {
-        // Ensure the menu camera is active and the player camera is inactive
         Game_Manager.ChangeCamera(false);
     }
 
     private void SetupGameWin()
     {
-        // Logic for handling what happens in the Game Win scene
-        // example, activate win UI, display scores, play victory animations, etc.
-        Game_Manager.ChangeCamera(false); // Ensure menu camera is active
     }
 
     private void SetupGameOver()
