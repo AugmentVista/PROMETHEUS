@@ -47,9 +47,8 @@ public class PlayerZone : MonoBehaviour
             if (currentProjectileInZone.Contains(other.gameObject))
             {
                 currentProjectileInZone.Remove(other.gameObject);
+                HandleNoteMiss();
             }
-            HandleNoteMiss();
-
             Debug.Log(currentProjectileInZone.Count.ToString() + " Projectiles remain in zone");
         }
     }

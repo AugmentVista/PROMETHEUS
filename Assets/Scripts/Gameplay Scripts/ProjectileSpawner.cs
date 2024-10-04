@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -5,9 +6,9 @@ public class ProjectileSpawner : MonoBehaviour
 {
     public GameObject ProjectilePrefab;
     public Transform projectileTarget;
-    public Transform spawnPosition;
+    public Transform[] spawnPositions; // Array to hold multiple spawn positions
 
-    public float spawnInterval = 2f; 
+    public float spawnInterval = 2f;
     public float projectileSpeed = 10f;
     public int maxProjectiles = 5;
     private int currentProjectiles = 0;
@@ -36,10 +37,11 @@ public class ProjectileSpawner : MonoBehaviour
         else
         {
             // If no pooled projectiles, create a new one
-            projectileInstance = Instantiate(ProjectilePrefab, spawnPosition.position, Quaternion.identity);
+            projectileInstance = Instantiate(ProjectilePrefab);
         }
 
-        // Set projectile position and direction
+        Transform spawnPosition = spawnPositions[Random.Range(0, spawnPositions.Length)];
+
         projectileInstance.transform.position = spawnPosition.position;
 
         Vector3 directionToPlayer = (projectileTarget.position - spawnPosition.position).normalized;
@@ -54,18 +56,18 @@ public class ProjectileSpawner : MonoBehaviour
             collisionHandler = projectileInstance.AddComponent<ProjectileCollisionHandler>();
         }
 
-        collisionHandler.SetSpawner(this); 
-        collisionHandler.reusedProjectile = pooledProjectiles.Count > 0; // Indicate whether it's reused
+        collisionHandler.SetSpawner(this);
+        collisionHandler.reusedProjectile = pooledProjectiles.Count > 0;
 
         currentProjectiles++;
     }
 
-    // Method to deactivate projectile reset it to be used again
+    // deactivate projectile and reset it
     public void OnProjectileInactive(GameObject obj)
     {
-        obj.SetActive(false);  
+        obj.SetActive(false);
         pooledProjectiles.Enqueue(obj);  // put it back in the pool
-        currentProjectiles--;  
+        currentProjectiles--;
     }
 
     public void ToggleSpawning(bool isActive)
