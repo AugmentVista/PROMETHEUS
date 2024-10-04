@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class ProjectileCollisionHandler : MonoBehaviour
 {
+
+    public ScoreKeeper Score;
     public bool reusedProjectile = false; // Track whether this projectile is reused
 
     private float deactivateDelay = 0.5f; // Time to deactivate after a hit
@@ -10,6 +12,7 @@ public class ProjectileCollisionHandler : MonoBehaviour
 
     private void Start()
     {
+        Score = FindAnyObjectByType<ScoreKeeper>();
         spawner = FindObjectOfType<ProjectileSpawner>();
     }
 
@@ -41,10 +44,12 @@ public class ProjectileCollisionHandler : MonoBehaviour
     {
         if (didPlayerHitThis)
         {
+            Score.score++;
             Debug.Log("Player hit the projectile!");
         }
         else
         {
+            Score.score--;
             Debug.Log("Player missed the projectile!");
         }
 
