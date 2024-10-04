@@ -39,7 +39,7 @@ public class PlayerZone : MonoBehaviour
     {
         if (other.CompareTag(targetTag))
         {
-            missedProjectiles.Add(other.gameObject); // adds object with targetTag to a missedprojectiles list
+            missedProjectiles.Add(other.gameObject); // adds object with targetTag to missedprojectiles list
 
             GameObject hitProjectile = missedProjectiles[missedProjectiles.Count - 1]; // most recent miss is last in the list
 
@@ -48,6 +48,7 @@ public class PlayerZone : MonoBehaviour
             {
                 currentProjectileInZone.Remove(other.gameObject);
             }
+            HandleNoteMiss();
 
             Debug.Log(currentProjectileInZone.Count.ToString() + " Projectiles remain in zone");
         }
@@ -77,14 +78,14 @@ public class PlayerZone : MonoBehaviour
     private void HandleNoteMiss()
     {
         Debug.Log("HHHHHHHHHHHHHHaaaaaaaaaaaaaaaaaaaa");
-        if (currentProjectileInZone.Count <= 0 && missedProjectiles.Count > 0)
+        if (missedProjectiles.Count > 0)
         {
             Debug.Log("HandleNoteMiss called");
 
             GameObject missedProjectile = missedProjectiles[0];
             missedProjectiles.RemoveAt(0);
 
-            if (missedProjectile != null) // Safety check
+            if (missedProjectile != null)
             {
                 ProjectileCollisionHandler collisionHandler = missedProjectile.GetComponent<ProjectileCollisionHandler>();
                 if (collisionHandler != null)
