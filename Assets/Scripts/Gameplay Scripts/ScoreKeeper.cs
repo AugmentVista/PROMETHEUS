@@ -8,6 +8,11 @@ public class ScoreKeeper : MonoBehaviour
     public TextMeshProUGUI scoreText;
     public int score;
 
+
+    private void Start()
+    {
+        Cursor.visible = false;
+    }
     void Update()
     {
         scoreText.text = "Score: " + score.ToString();
