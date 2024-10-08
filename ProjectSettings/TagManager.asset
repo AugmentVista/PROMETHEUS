@@ -7,6 +7,8 @@ TagManager:
   - MainMenu
   - Proj
   - MissZone
+  - PlayerBody
+  - Knockback
   layers:
   - Default
   - TransparentFX

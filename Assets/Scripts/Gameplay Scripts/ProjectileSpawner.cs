@@ -8,7 +8,7 @@ public class ProjectileSpawner : MonoBehaviour
     public Transform projectileTarget;
     public Transform[] spawnPositions; // Array to hold multiple spawn positions
 
-    public float spawnInterval = 2f;
+    public float spawnInterval;
     public float projectileSpeed = 10f;
     public int maxProjectiles = 5;
     private int currentProjectiles = 0;

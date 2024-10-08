@@ -3,17 +3,24 @@ using UnityEngine;
 
 public class ProjectileCollisionHandler : MonoBehaviour
 {
-
     public ScoreKeeper Score;
     public bool reusedProjectile = false; // Track whether this projectile is reused
+    private PlayerMovement playerMove;
 
     private float deactivateDelay = 0.5f; // Time to deactivate after a hit
     private ProjectileSpawner spawner; // Reference to the spawner
+
+    public enum ShotType
+    { 
+        Knockback,
+        Slow
+    }
 
     private void Start()
     {
         Score = FindAnyObjectByType<ScoreKeeper>();
         spawner = FindObjectOfType<ProjectileSpawner>();
+        playerMove = FindObjectOfType<PlayerMovement>();
     }
 
     public void SetSpawner(ProjectileSpawner spawnerReference)
@@ -23,7 +30,6 @@ public class ProjectileCollisionHandler : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("OnCollisionEnter has been triggered");
         if (collision.gameObject.CompareTag("Player"))
         {
             StartCoroutine(DeactivateAfterDelay(true)); // Player hit
@@ -45,16 +51,15 @@ public class ProjectileCollisionHandler : MonoBehaviour
         if (didPlayerHitThis)
         {
             Score.score++;
-            Debug.Log("Player hit the projectile!");
+            playerMove.WasHit(false);
         }
         else
         {
             Score.score--;
-            Debug.Log("Player missed the projectile!");
+            playerMove.WasHit(true);
         }
 
         // Call spawner to deactivate the projectile
         spawner.OnProjectileInactive(gameObject);
     }
 }
-
