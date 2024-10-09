@@ -98,29 +98,33 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    public bool WasHit(bool hit)
+    public void WasHit(bool hit)
     {
-        if (hit) 
+        if (hit) // if this is true player moves backwards
         {
             MoveBackwards(1);
-            return true; 
         }
-        else if (!hit) { return false; }
-        return false;
+        else 
+        {
+            hit = false;
+            return; 
+        }
     }
 
     public void MoveBackwards(int spacesToMove)
     {
-        if (currentRow < rows - 1) // Adjust if more columns are added
+        if (currentRow < spacesToMove) // Adjust if more columns are added
         {
-            currentRow--;
-            currentRow = Mathf.Max(0, currentRow - spacesToMove);
-        }
-        if (gridPositions[currentRow, currentColumn] != null)
-        {
-            currentRow = Mathf.Max(0, currentRow - spacesToMove);
-            transform.position = Vector3.Lerp(transform.position, gridPositions[currentRow, currentColumn].position, moveSpeed * Time.deltaTime);
-        }
+            currentRow = currentRow - spacesToMove;
+            if (currentRow <= 0) // after decrementing if the currentRow is 0 or less the player loses instead of moves
+            { 
+            //Lose script
+            }
+            else if (gridPositions[currentRow, currentColumn] != null) // after decrementing current row is greater than 0 player moves back
+            {
+                transform.position = Vector3.Lerp(transform.position, gridPositions[currentRow, currentColumn].position, moveSpeed * Time.deltaTime);
+            }
+        } 
     }
 
     private IEnumerator SideMovementCooldown()

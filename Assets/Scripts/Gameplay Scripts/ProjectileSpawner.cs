@@ -9,8 +9,8 @@ public class ProjectileSpawner : MonoBehaviour
     public Transform[] spawnPositions; // Array to hold multiple spawn positions
 
     public float spawnInterval;
-    public float projectileSpeed = 10f;
-    public int maxProjectiles = 5;
+    public float projectileSpeed;
+    public int maxProjectiles;
     private int currentProjectiles = 0;
 
     private Queue<GameObject> pooledProjectiles = new Queue<GameObject>(); // Queue to hold inactive projectiles
@@ -24,42 +24,49 @@ public class ProjectileSpawner : MonoBehaviour
 
     private void SpawnProjectile()
     {
-        if (!isGameActive || currentProjectiles >= maxProjectiles) return;
-
-        GameObject projectileInstance;
-
-        // Check if there are any available pooled projectiles
-        if (pooledProjectiles.Count > 0)
+        if (isGameActive)
         {
-            projectileInstance = pooledProjectiles.Dequeue();
-            projectileInstance.SetActive(true);  // Reuse from the pool
+            GameObject projectileInstance;
+
+            // Check if there are any available pooled projectiles
+            if (pooledProjectiles.Count + currentProjectiles < maxProjectiles)
+            {
+                // If no pooled projectiles, create a new one
+                projectileInstance = Instantiate(ProjectilePrefab);
+            }
+            else if (pooledProjectiles.Count > 0)
+            {
+                projectileInstance = pooledProjectiles.Dequeue();
+                projectileInstance.SetActive(true);  // Reuse from the pool
+            }
+            else { return; }
+            
+
+            Transform spawnPosition = spawnPositions[Random.Range(0, spawnPositions.Length)];
+
+            projectileInstance.transform.position = spawnPosition.position;
+
+            Vector3 directionToPlayer = (projectileTarget.position - spawnPosition.position).normalized;
+
+            Rigidbody projectileRb = projectileInstance.GetComponent<Rigidbody>();
+
+            projectileRb.velocity = directionToPlayer * projectileSpeed;
+
+            // Attach or reference the ProjectileCollisionHandler
+            ProjectileCollisionHandler collisionHandler = projectileInstance.GetComponent<ProjectileCollisionHandler>();
+            if (collisionHandler == null)
+            {
+                collisionHandler = projectileInstance.AddComponent<ProjectileCollisionHandler>();
+            }
+
+            collisionHandler.SetSpawner(this);
+            if (!collisionHandler.reusedProjectile)
+            {
+                collisionHandler.reusedProjectile = true;
+            }
+
+            currentProjectiles++;
         }
-        else
-        {
-            // If no pooled projectiles, create a new one
-            projectileInstance = Instantiate(ProjectilePrefab);
-        }
-
-        Transform spawnPosition = spawnPositions[Random.Range(0, spawnPositions.Length)];
-
-        projectileInstance.transform.position = spawnPosition.position;
-
-        Vector3 directionToPlayer = (projectileTarget.position - spawnPosition.position).normalized;
-
-        Rigidbody projectileRb = projectileInstance.GetComponent<Rigidbody>();
-        projectileRb.velocity = directionToPlayer * projectileSpeed;
-
-        // Attach or reference the ProjectileCollisionHandler
-        ProjectileCollisionHandler collisionHandler = projectileInstance.GetComponent<ProjectileCollisionHandler>();
-        if (collisionHandler == null)
-        {
-            collisionHandler = projectileInstance.AddComponent<ProjectileCollisionHandler>();
-        }
-
-        collisionHandler.SetSpawner(this);
-        collisionHandler.reusedProjectile = pooledProjectiles.Count > 0;
-
-        currentProjectiles++;
     }
 
     // deactivate projectile and reset it

@@ -3,12 +3,19 @@ using UnityEngine;
 
 public class ProjectileCollisionHandler : MonoBehaviour
 {
+    /// <summary>
+    /// This class is attached to projectiles when they are instantiated. 
+    /// It handles only what the projectile needs to know.
+    /// It knows if it hits the Player or if it hits the Miss Zone.
+    /// It can reduce your score if you get hit.
+    /// </summary>
+   
     public ScoreKeeper Score;
-    public bool reusedProjectile = false; // Track whether this projectile is reused
     private PlayerMovement playerMove;
-
-    private float deactivateDelay = 0.5f; // Time to deactivate after a hit
     private ProjectileSpawner spawner; // Reference to the spawner
+
+    public bool reusedProjectile = false; // Track whether this projectile is reused
+    public bool inAttackHitBox = false;
 
     public enum ShotType
     { 
@@ -28,35 +35,28 @@ public class ProjectileCollisionHandler : MonoBehaviour
         spawner = spawnerReference;
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnCollisionEnter(Collision collision) // checks for collisions based on tags
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("PlayerBody")) // this tag needs to be on a small playermodel
         {
-            StartCoroutine(DeactivateAfterDelay(true)); // Player hit
+            OnPlayerDamaged(true);
         }
-        else if (collision.gameObject.CompareTag("MissZone"))
+        else if (collision.gameObject.CompareTag("MissZone")) // this tag belongs to an object just out of camera view behind player
         {
-            StartCoroutine(DeactivateAfterDelay(false)); // Player missed
+            OnPlayerDamaged(false); // does nothing
         }
     }
 
-    private IEnumerator DeactivateAfterDelay(bool didPlayerHitThis)
+    public void OnPlayerDamaged(bool didThisHitPlayer)
     {
-        yield return new WaitForSeconds(deactivateDelay);
-        HandlePlayerInput(didPlayerHitThis);
-    }
-
-    public void HandlePlayerInput(bool didPlayerHitThis)
-    {
-        if (didPlayerHitThis)
+        if (didThisHitPlayer)
         {
-            Score.score++;
-            playerMove.WasHit(false);
+            Score.score--;
+            playerMove.WasHit(true); // Sends player back a space
         }
         else
         {
-            Score.score--;
-            playerMove.WasHit(true);
+            playerMove.WasHit(false); // does nothing
         }
 
         // Call spawner to deactivate the projectile
