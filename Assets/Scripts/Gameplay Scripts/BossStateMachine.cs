@@ -20,10 +20,11 @@ public class BossStateMachine : MonoBehaviour
 
     private void SyncAttackSpeed()
     {
-        float attackSpeed = spawner.spawnInterval * Time.deltaTime;                        
+        // As spawn interval goes smaller attackspeed goes larger
+        float newAttackSpeed = 1 / spawner.spawnInterval * Time.deltaTime;                   
         if (animator != null && spawner != null)
         {
-            animator.speed = spawner.spawnInterval;
+            animator.speed = newAttackSpeed;
         }
     }
 }

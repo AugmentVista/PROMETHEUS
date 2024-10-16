@@ -17,12 +17,7 @@ public class ProjectileCollisionHandler : MonoBehaviour
 
     public bool reusedProjectile = false; // Track whether this projectile is reused
     public bool inAttackHitBox;
-
-    public enum ShotType
-    { 
-        Knockback,
-        Slow
-    }
+    public bool struckByWeapon;
 
     private void Start()
     {
@@ -42,35 +37,102 @@ public class ProjectileCollisionHandler : MonoBehaviour
         spawner = spawnerReference;
     }
 
-    private void OnTriggerEnter(Collider other) // checks for collisions based on tags
+    private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("PlayerBody")) // this tag needs to be on a small playermodel
+        // Assuming each projectile has a tag that corresponds to its type (e.g., "Stone", "Knockback", "Stun", "Slow", "None")
+        switch (other.tag)
         {
-            OnPlayerDamaged(true);
-            Debug.Log("Player body was struck");
-        }
-        else if (other.gameObject.CompareTag("MissZone")) // this tag belongs to an object just out of camera view behind player
-        {
-            OnPlayerDamaged(false); // does nothing
-            Debug.Log("Miss zone was struck");
-        }
-        else if (other.gameObject.CompareTag("Player"))
-        {
-            Score.score++; // score is unaffected
-            Debug.Log("Player was struck");
+            case "Stone":
+                HandleProjectileCollision(other, "Stone");
+                break;
+
+            case "Knockback":
+                HandleProjectileCollision(other, "Knockback");
+                break;
+
+            case "Stun":
+                HandleProjectileCollision(other, "Stun");
+                break;
+
+            case "Slow":
+                HandleProjectileCollision(other, "Slow");
+                break;
+
+            default:
+                Debug.Log("Unknown projectile tag");
+                break;
         }
     }
 
-    public void OnPlayerDamaged(bool didThisHitPlayer)
+    private void HandleProjectileCollision(Collider other, string projectileType)
+    {
+        // Determine what was hit (PlayerBody, Player/Weapon, MissZone)
+        switch (other.gameObject.tag)
+        {
+            case "PlayerBody":
+                OnPlayerDamaged(true, projectileType); // Player body was struck
+                Debug.Log($"{projectileType} hit the PlayerBody");
+                break;
+
+            case "Weapon":
+                if (struckByWeapon)
+                {
+                    Score.score++; // Award score for hitting with weapon
+                    Debug.Log($"{projectileType} hit the player's weapon and was blocked.");
+                    spawner.OnProjectileInactive(gameObject);
+                }
+                else if (!struckByWeapon)
+                {
+                    spawner.OnProjectileInactive(gameObject); 
+                }
+                break;
+
+            case "MissZone":
+                OnPlayerDamaged(false, projectileType); // Projectile missed
+                Debug.Log($"{projectileType} missed and hit the MissZone.");
+                spawner.OnProjectileInactive(gameObject); 
+                break;
+
+            default:
+                Debug.Log("Unknown hit location");
+                break;
+        }
+    }
+
+    public void OnPlayerDamaged(bool didThisHitPlayer, string projectileType)
     {
         if (didThisHitPlayer)
         {
-            Score.score--; // score is unaffected
-            playerMove.WasHit(true); // Sends player back a space
+            switch (projectileType)
+            {
+                case "Stone":
+                    Score.score--; // Reduce score
+                    Debug.Log("Stone hit the player. Score reduced.");
+                    break;
+
+                case "Knockback":
+                    playerMove.WasHit(true, projectileType); // Move player backward
+                    Debug.Log("Knockback hit the player. Player moved backward.");
+                    break;
+
+                case "Stun":
+                    playerMove.WasHit(true, projectileType); // Stun the player
+                    Debug.Log("Stun hit the player. Player stunned.");
+                    break;
+
+                case "Slow":
+                    playerMove.WasHit(true, projectileType); // Slow the player
+                    Debug.Log("Slow hit the player. Player movement slowed.");
+                    break;
+
+                default:
+                    Debug.Log("Unknown projectile type");
+                    break;
+            }
         }
         else
         {
-            playerMove.WasHit(false); // does nothing
+            Debug.Log($"Projectile missed: {projectileType}");
         }
 
         // Call spawner to deactivate the projectile
