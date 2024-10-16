@@ -29,6 +29,7 @@ public class PlayerMovement : MonoBehaviour
         {
             gridPositions[i, 0] = leftColumn[i];  // Left column (0 index)
             gridPositions[i, 1] = rightColumn[i]; // Right column (1 index)
+            Debug.Log("Left column is " + leftColumn.Length + " long");
         }
 
         // If adding a middle column for a 3-column grid, populate it similarly
@@ -41,7 +42,7 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         PlayerInput();
-
+        Debug.Log(gridPositions[currentRow, currentColumn]);
         if (gridPositions[currentRow, currentColumn] != null)
         {
             transform.position = Vector3.Lerp(transform.position, gridPositions[currentRow, currentColumn].position, moveSpeed * Time.deltaTime);
@@ -113,7 +114,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void MoveBackwards(int spacesToMove)
     {
-        if (currentRow < spacesToMove) // Adjust if more columns are added
+        if (currentRow > spacesToMove) // Adjust if more columns are added
         {
             currentRow = currentRow - spacesToMove;
             if (currentRow <= 0) // after decrementing if the currentRow is 0 or less the player loses instead of moves
