@@ -9,6 +9,11 @@ TagManager:
   - MissZone
   - PlayerBody
   - Knockback
+  - Stun
+  - Stone
+  - Slow
+  - Weapon
+  - VFX
   layers:
   - Default
   - TransparentFX

@@ -10,21 +10,35 @@ public class ProjectileCollisionHandler : MonoBehaviour
     /// It knows if it hits the Player or if it hits the Miss Zone.
     /// It can reduce your score if you get hit.
     /// </summary>
-   
+
     public ScoreKeeper Score;
     private PlayerMovement playerMove;
     private ProjectileSpawner spawner; // Reference to the spawner
+    private PlayerAttackHitBox playerAttack;
+    private string[] Type;
 
-    public bool reusedProjectile = false; // Track whether this projectile is reused
-    public bool inAttackHitBox;
+    public bool reusedProjectile = false; 
     public bool struckByWeapon;
+
+    private Collider projectileCollider;
 
     private void Start()
     {
         Score = FindAnyObjectByType<ScoreKeeper>();
         spawner = FindObjectOfType<ProjectileSpawner>();
         playerMove = FindObjectOfType<PlayerMovement>();
-        inAttackHitBox = false;
+        playerAttack = FindObjectOfType<PlayerAttackHitBox>();
+        projectileCollider = GetComponent<Collider>();
+
+    }
+
+    public void SetSpawner(ProjectileSpawner spawnerReference)
+    {
+        spawner = spawnerReference;
+    }
+    public Collider GetProjectileCollider()
+    {
+        return projectileCollider;
     }
 
     void FixedUpdate()
@@ -32,30 +46,32 @@ public class ProjectileCollisionHandler : MonoBehaviour
         transform.Rotate(5, 5, 5, Space.Self);
     }
 
-    public void SetSpawner(ProjectileSpawner spawnerReference)
-    {
-        spawner = spawnerReference;
-    }
+    
 
     private void OnTriggerEnter(Collider other)
     {
-        // Assuming each projectile has a tag that corresponds to its type (e.g., "Stone", "Knockback", "Stun", "Slow", "None")
-        switch (other.tag)
+        Debug.Log($"OnTriggerEnter called with: {other.gameObject.tag}");
+        switch (other.gameObject.tag)
         {
-            case "Stone":
-                HandleProjectileCollision(other, "Stone");
+            case "Weapon":
+                playerAttack.CanPlayerAttackThis(projectileCollider);
+                Debug.Log("Called CanPlayerAttackThis from OnTriggerEnter");
+                if (!struckByWeapon) { return; }
+                else
+                { 
+                    HandleProjectileCollision(other, "Weapon");
+                }
                 break;
 
-            case "Knockback":
-                HandleProjectileCollision(other, "Knockback");
-                break;
+            case "PlayerBody":
+                if (!struckByWeapon)
+                { 
+                HandleProjectileCollision(other, "PlayerBody");
+                }
+                break;  
 
-            case "Stun":
-                HandleProjectileCollision(other, "Stun");
-                break;
-
-            case "Slow":
-                HandleProjectileCollision(other, "Slow");
+            case "MissZone":
+                HandleProjectileCollision(other, "MissZone");
                 break;
 
             default:
@@ -66,35 +82,42 @@ public class ProjectileCollisionHandler : MonoBehaviour
 
     private void HandleProjectileCollision(Collider other, string projectileType)
     {
-        // Determine what was hit (PlayerBody, Player/Weapon, MissZone)
-        switch (other.gameObject.tag)
+        // Determine what was hit (PlayerBody, Weapon, MissZone)
+        switch (other.gameObject.tag) // the tag of this object
         {
             case "PlayerBody":
-                OnPlayerDamaged(true, projectileType); // Player body was struck
-                Debug.Log($"{projectileType} hit the PlayerBody");
+                OnPlayerDamaged(true, gameObject.tag); 
+
+                Debug.Log($"{gameObject.tag} hit the PlayerBody");
+                Score.score--;
+                DisableColliderForPooling();
                 break;
 
             case "Weapon":
                 if (struckByWeapon)
                 {
-                    Score.score++; // Award score for hitting with weapon
+                    Score.score++;
+                    
                     Debug.Log($"{projectileType} hit the player's weapon and was blocked.");
-                    spawner.OnProjectileInactive(gameObject);
+                    DisableColliderForPooling();
                 }
                 else if (!struckByWeapon)
                 {
-                    spawner.OnProjectileInactive(gameObject); 
+                    DisableColliderForPooling(); 
                 }
                 break;
 
             case "MissZone":
-                OnPlayerDamaged(false, projectileType); // Projectile missed
-                Debug.Log($"{projectileType} missed and hit the MissZone.");
-                spawner.OnProjectileInactive(gameObject); 
+                OnPlayerDamaged(false, gameObject.tag);
+
+                Debug.Log($"{gameObject.tag} missed and hit the MissZone.");
+
+                DisableColliderForPooling(); 
                 break;
 
             default:
                 Debug.Log("Unknown hit location");
+                DisableColliderForPooling();
                 break;
         }
     }
@@ -103,14 +126,17 @@ public class ProjectileCollisionHandler : MonoBehaviour
     {
         if (didThisHitPlayer)
         {
+            Debug.Log($"Player hit {projectileType} !!!!!");
             switch (projectileType)
             {
                 case "Stone":
                     Score.score--; // Reduce score
+                    playerMove.WasHit(true, projectileType);
                     Debug.Log("Stone hit the player. Score reduced.");
                     break;
 
                 case "Knockback":
+                    
                     playerMove.WasHit(true, projectileType); // Move player backward
                     Debug.Log("Knockback hit the player. Player moved backward.");
                     break;
@@ -126,7 +152,7 @@ public class ProjectileCollisionHandler : MonoBehaviour
                     break;
 
                 default:
-                    Debug.Log("Unknown projectile type");
+                    Debug.Log("Player was not hit");
                     break;
             }
         }
@@ -136,6 +162,16 @@ public class ProjectileCollisionHandler : MonoBehaviour
         }
 
         // Call spawner to deactivate the projectile
+        DisableColliderForPooling();
+    }
+
+    private void DisableColliderForPooling()
+    {
+        // Disable the collider to prevent further interactions
+        GetComponent<Collider>().enabled = false;
+        GetComponent<Renderer>().enabled = false;
+
+        // Call the spawner to handle the pooling logic if needed
         spawner.OnProjectileInactive(gameObject);
     }
 }

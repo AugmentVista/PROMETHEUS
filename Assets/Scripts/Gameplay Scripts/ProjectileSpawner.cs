@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.ProBuilder;
 
 public class ProjectileSpawner : MonoBehaviour
 {
@@ -38,6 +39,8 @@ public class ProjectileSpawner : MonoBehaviour
             {
                 projectileInstance = pooledProjectiles.Dequeue();
                 projectileInstance.SetActive(true);  // Reuse from the pool
+                projectileInstance.GetComponent<Renderer>().enabled = true;
+                projectileInstance.GetComponent<Collider>().enabled = true;
             }
             else { return; }
             
@@ -72,7 +75,16 @@ public class ProjectileSpawner : MonoBehaviour
     // deactivate projectile and reset it
     public void OnProjectileInactive(GameObject obj)
     {
+        ProjectileCollisionHandler handler = obj.GetComponent<ProjectileCollisionHandler>();
+        if (handler != null)
+        {
+            // Reset necessary variables
+            handler.struckByWeapon = false;
+            handler.reusedProjectile = true;
+        }
+
         obj.SetActive(false);
+        
         pooledProjectiles.Enqueue(obj);  // put it back in the pool
         currentProjectiles--;
     }

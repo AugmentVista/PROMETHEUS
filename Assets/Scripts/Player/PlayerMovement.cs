@@ -30,7 +30,6 @@ public class PlayerMovement : MonoBehaviour
         {
             gridPositions[i, 0] = leftColumn[i];  // Left column (0 index)
             gridPositions[i, 1] = rightColumn[i]; // Right column (1 index)
-            Debug.Log("Left column is " + leftColumn.Length + " long");
         }
 
         // If adding a middle column for a 3-column grid, populate it similarly
@@ -43,7 +42,6 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         PlayerInput();
-        Debug.Log(gridPositions[currentRow, currentColumn]);
         if (gridPositions[currentRow, currentColumn] != null)
         {
             transform.position = Vector3.Lerp(transform.position, gridPositions[currentRow, currentColumn].position, moveSpeed * Time.deltaTime);
@@ -106,15 +104,18 @@ public class PlayerMovement : MonoBehaviour
             // Handle different projectile types based on the tag
             switch (projectileTag)
             {
-                case "KnockbackProjectile":
+                case "Stone":
+                    // thing
+                    break;
+                case "Knockback":
                     MoveBackwards(1);
                     break;
 
-                case "StunProjectile":
+                case "Stun":
                     StartCoroutine(StunPlayer(2f)); // Example stun for 2 seconds
                     break;
 
-                case "SlowProjectile":
+                case "Slow":
                     StartCoroutine(SlowPlayer(2f)); // Example slow for 2 seconds
                     break;
 
