@@ -10,13 +10,15 @@ public class PlayerAttackHitBox : MonoBehaviour // This script is attached to th
     ProjectileCollisionHandler projectileHandler;
 
     public GameObject rockSmashVFX;
-    public Vector3 posOffset = new Vector3(0, 0, 200);
 
     public float attackDuration = 0.25f; // Time the collider remains active
 
     public float attackCooldown = 0.25f; // Time before another attack can occur
 
     public Renderer weaponVisual;
+
+    public Material blade;
+    public Material idleBlade;
 
     private Color idleColor;
 
@@ -36,6 +38,8 @@ public class PlayerAttackHitBox : MonoBehaviour // This script is attached to th
         swordCollider = GetComponent<Collider>();
         weaponVisual = GetComponent<Renderer>();
         idleColor = weaponVisual.material.color;
+        idleBlade = blade;
+        idleBlade.color = blade.color;
 
         PlayerWeaponCheck();
     }
@@ -55,6 +59,7 @@ public class PlayerAttackHitBox : MonoBehaviour // This script is attached to th
     private IEnumerator Attack()
     {
         weaponVisual.material.color = Color.red;
+        blade.color = Color.red;
        
         canAttack = false; // Prevent further attacks until cooldown expires
 
@@ -66,6 +71,7 @@ public class PlayerAttackHitBox : MonoBehaviour // This script is attached to th
         isAttacking = false;
         canAttack = true; // Allow attacks again
         weaponVisual.material.color = idleColor;
+        blade.color =Color.blue;
     }
 
     public void CanPlayerAttackThis(Collider other)
