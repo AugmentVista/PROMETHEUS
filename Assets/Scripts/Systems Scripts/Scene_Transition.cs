@@ -1,18 +1,23 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Scene_Transition : MonoBehaviour // use this for LevelManager to win the game
+public class Scene_Transition : MonoBehaviour
 {
-    public void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerEnter(Collider other) // This is a shortcut, properly connect to LevelManager when there is time
     {
+        Debug.Log("Are we getting anything?");
         Game_Manager gameManager = Singleton.instance.GetComponent<Game_Manager>();
-        if (other.CompareTag("Player"))
+        Debug.Log(gameManager.ToString());
+
+        if (other.gameObject.tag == "PlayerBody")
         {
             Scene currentScene = SceneManager.GetActiveScene();
+            Debug.Log(currentScene.ToString());
+
             if (currentScene.name == "GamePlay1")
             {
-                //Debug.Log("Active scene is " + currentScene.name);
-                //gameManager.GamePlay2();
+                gameManager.gameState = Game_Manager.GameState.GameWin; // test if this itself will change scene
+                SceneManager.LoadScene("GameWin");
             }
         }
     }

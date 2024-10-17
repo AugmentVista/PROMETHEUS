@@ -3,8 +3,6 @@ using UnityEngine.SceneManagement;
 
 public class UI_Manager : MonoBehaviour
 {
-    
-
     [SerializeField] private Level_Manager levelManager;
 
     public GameObject mainMenuUI;
@@ -19,7 +17,7 @@ public class UI_Manager : MonoBehaviour
         UpdateUI();
         Game_Manager.OnMainMenu += MainMenuUI;
         Game_Manager.OnGamePlay1 += GamePlayUI;
-        Game_Manager.OnGameOver += GameWinUI;
+        Game_Manager.OnGameOver += GameOverUI;
         Game_Manager.OnGameWin += GameWinUI;
     }
 
@@ -27,11 +25,11 @@ public class UI_Manager : MonoBehaviour
     {
         Game_Manager.OnMainMenu -= MainMenuUI;
         Game_Manager.OnGamePlay1 -= GamePlayUI;
-        Game_Manager.OnGameOver -= GameWinUI;
+        Game_Manager.OnGameOver -= GameOverUI;
         Game_Manager.OnGameWin -= GameWinUI;
     }
 
-    private void UpdateUI()
+    public void UpdateUI()
     {
         Scene currentScene = SceneManager.GetActiveScene();
         switch (currentScene.name)
@@ -46,7 +44,7 @@ public class UI_Manager : MonoBehaviour
                 GameWinUI();
                 break;
             case "GameOver":
-                GameWinUI();
+                GameOverUI();
                 break;
             default:
                 MainMenuUI();

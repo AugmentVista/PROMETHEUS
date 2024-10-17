@@ -31,12 +31,12 @@ public class Game_Manager : MonoBehaviour
     }
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1)) SceneManager.LoadScene("Level_1"); // press 1
-        if (Input.GetKeyDown(KeyCode.Alpha2)) SceneManager.LoadScene("Level_2"); // press 2
-        if (Input.GetKeyDown(KeyCode.Alpha3)) SceneManager.LoadScene("Level_3");// press 3
-        if (Input.GetKeyDown(KeyCode.Alpha4)) SceneManager.LoadScene("MainMenu"); // press 4
-        if (Input.GetKeyDown(KeyCode.Alpha5)) SceneManager.LoadScene("GameOver"); // press 5
-        if (Input.GetKeyDown(KeyCode.Alpha6)) SceneManager.LoadScene("GameWin"); // press 6
+        //if (Input.GetKeyDown(KeyCode.Alpha1)) SceneManager.LoadScene("Level_1"); // press 1
+        //if (Input.GetKeyDown(KeyCode.Alpha2)) SceneManager.LoadScene("Level_2"); // press 2
+        //if (Input.GetKeyDown(KeyCode.Alpha3)) SceneManager.LoadScene("Level_3");// press 3
+        //if (Input.GetKeyDown(KeyCode.Alpha4)) SceneManager.LoadScene("MainMenu"); // press 4
+        //if (Input.GetKeyDown(KeyCode.Alpha5)) SceneManager.LoadScene("GameOver"); // press 5
+        //if (Input.GetKeyDown(KeyCode.Alpha6)) SceneManager.LoadScene("GameWin"); // press 6
 
         if (Input.GetKeyDown(KeyCode.Escape) && (gameState == GameState.GamePlay1))
         {
@@ -103,8 +103,8 @@ public class Game_Manager : MonoBehaviour
     {
         IsMenuOpen(false);
         ui_Manager.GamePlayUI();
-        ProjectileSpawner.isGameActive = true;
         Time.timeScale = 1.0f;
+        ProjectileSpawner.isGameActive = true;
         ChangeCamera(true);
         Paused = false;
     }
