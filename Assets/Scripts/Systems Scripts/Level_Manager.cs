@@ -18,6 +18,10 @@ public class Level_Manager : MonoBehaviour // This used to inherit from UI_Manag
         isSubscribed = true;
     }
 
+    private void Update()
+    {
+        CheckWinClause();
+    }
     #region SceneCalls
     public void LoadMainMenu()
     {
@@ -45,9 +49,10 @@ public class Level_Manager : MonoBehaviour // This used to inherit from UI_Manag
             if (gameManager != null)
             {
                 if (Win)
-                    gameManager.gameState = Game_Manager.GameState.GameWin;
+                    gameManager.GameWinTrigger();
+
                 else if (Lose)
-                    gameManager.gameState = Game_Manager.GameState.GameOver;
+                    gameManager.GameOverTrigger();
             }
             else
             {

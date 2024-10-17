@@ -16,7 +16,7 @@ public class ProjectileSpawner : MonoBehaviour
 
     private Queue<GameObject> pooledProjectiles = new Queue<GameObject>(); // Queue to hold inactive projectiles
 
-    public bool isGameActive = true;
+    public static bool isGameActive = true;
 
     private void Start()
     {

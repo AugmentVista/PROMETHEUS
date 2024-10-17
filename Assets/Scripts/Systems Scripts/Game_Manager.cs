@@ -94,6 +94,7 @@ public class Game_Manager : MonoBehaviour
     {
         IsMenuOpen(true);
         ui_Manager.PausedUI();
+        ProjectileSpawner.isGameActive = false;
         Time.timeScale = 0.0f;
         Paused = true;
     }
@@ -102,6 +103,7 @@ public class Game_Manager : MonoBehaviour
     {
         IsMenuOpen(false);
         ui_Manager.GamePlayUI();
+        ProjectileSpawner.isGameActive = true;
         Time.timeScale = 1.0f;
         ChangeCamera(true);
         Paused = false;

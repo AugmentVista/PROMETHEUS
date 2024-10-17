@@ -5,9 +5,11 @@ public class TimerController : MonoBehaviour
 {
     public Image fillImage;
 
-    public float duration = 100f;
+    public float duration = 10f;
 
     public float elapsedTime = 0f;
+
+    public float fillValue;
 
     void Start()
     {
@@ -18,7 +20,7 @@ public class TimerController : MonoBehaviour
     {
         elapsedTime += Time.deltaTime;
 
-        float fillValue = Mathf.Lerp(1.0f, 0.0f, elapsedTime / duration);
+         fillValue = Mathf.Lerp(1.0f, 0.0f, elapsedTime / duration);
 
         UpdateFillAmount(fillValue);
     }
