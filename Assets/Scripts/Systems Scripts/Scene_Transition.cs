@@ -16,8 +16,8 @@ public class Scene_Transition : MonoBehaviour
 
             if (currentScene.name == "GamePlay1")
             {
-                gameManager.gameState = Game_Manager.GameState.GameWin; // test if this itself will change scene
-                SceneManager.LoadScene("GameWin");
+                gameManager.GameWinTrigger(); // test if this itself will change scene
+                //SceneManager.LoadScene("GameWin");
             }
         }
     }
