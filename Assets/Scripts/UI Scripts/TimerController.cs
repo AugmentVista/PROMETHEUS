@@ -9,7 +9,7 @@ public class TimerController : MonoBehaviour
 
     public float elapsedTime = 0f;
 
-    public float fillValue;
+    public static bool TimerOver = false;
 
     void Start()
     {
@@ -20,9 +20,14 @@ public class TimerController : MonoBehaviour
     {
         elapsedTime += Time.deltaTime;
 
-         fillValue = Mathf.Lerp(1.0f, 0.0f, elapsedTime / duration);
+        float fillValue = Mathf.Lerp(1.0f, 0.0f, elapsedTime / duration);
 
         UpdateFillAmount(fillValue);
+
+        if (elapsedTime > duration)
+        { 
+        TimerOver = true;
+        }
     }
 
     public void UpdateFillAmount(float value)

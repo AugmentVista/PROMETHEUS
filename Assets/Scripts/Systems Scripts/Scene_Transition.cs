@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Scene_Transition : MonoBehaviour
+public class Scene_Transition : MonoBehaviour // use this for LevelManager to win the game
 {
     public void OnTriggerEnter2D(Collider2D other)
     {

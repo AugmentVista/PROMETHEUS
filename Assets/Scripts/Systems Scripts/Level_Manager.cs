@@ -5,6 +5,7 @@ public class Level_Manager : MonoBehaviour // This used to inherit from UI_Manag
 {
     public GameObject Player;
     public Transform projectileTarget;
+    //public TimerController Timer;
 
     public bool Win;
     public bool Lose;
@@ -20,7 +21,18 @@ public class Level_Manager : MonoBehaviour // This used to inherit from UI_Manag
 
     private void Update()
     {
-        CheckWinClause();
+        if (TimerController.TimerOver)
+        {
+            Win = false;
+            Lose = true;
+            CheckWinClause();
+        }
+    }
+
+
+    private void Start()
+    {
+        //Timer = new TimerController();
     }
     #region SceneCalls
     public void LoadMainMenu()
@@ -49,10 +61,10 @@ public class Level_Manager : MonoBehaviour // This used to inherit from UI_Manag
             if (gameManager != null)
             {
                 if (Win)
-                    gameManager.GameWinTrigger();
+                    gameManager.gameState = Game_Manager.GameState.GameWin;
 
-                else if (Lose)
-                    gameManager.GameOverTrigger();
+                if (Lose)
+                    gameManager.gameState = Game_Manager.GameState.GameOver;
             }
             else
             {

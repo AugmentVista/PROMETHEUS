@@ -3,7 +3,7 @@ using UnityEngine.SceneManagement;
 
 public class UI_Manager : MonoBehaviour
 {
-    public TimerController Timer;
+    
 
     [SerializeField] private Level_Manager levelManager;
 
@@ -21,20 +21,6 @@ public class UI_Manager : MonoBehaviour
         Game_Manager.OnGamePlay1 += GamePlayUI;
         Game_Manager.OnGameOver += GameWinUI;
         Game_Manager.OnGameWin += GameWinUI;
-
-        Timer = new TimerController();
-        levelManager = new Level_Manager();
-    }
-
-    private void Update()
-    {
-        if (Timer != null)
-        {
-            if (Timer.fillImage.fillAmount < 0.05f)
-            {
-                levelManager.Win = false;
-            }
-        }
     }
 
     private void OnDestroy()

@@ -232,11 +232,13 @@ public class Game_Manager : MonoBehaviour
     private void GameOver()
     {
         OnGameOver?.Invoke();
+        level_Manager.LoadGameOver();
         IsMenuOpen(true);
     }
 
     private void GameWin()
     {
+        level_Manager.LoadGameWin();
         OnGameWin?.Invoke();
         IsMenuOpen(true);
     }
