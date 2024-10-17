@@ -4,14 +4,14 @@ using UnityEngine.UI;
 
 public class TimerController : MonoBehaviour
 {
-    public Image[] NumbersImages;
+    public Image[] TimeNumberImages;
 
     public Image Ones;
     public Image Tens;
     public Image Hundreds;
     public Image fillImage;
 
-    public float duration = 10f;
+    public float duration;
     public float elapsedTime = 0f;
 
     private int lastDisplayedTime = -1;
@@ -33,7 +33,6 @@ public class TimerController : MonoBehaviour
         UpdateFillAmount(fillValue);
 
         remainingTime = Mathf.CeilToInt(duration - elapsedTime);
-        Debug.Log(remainingTime.ToString());
 
         if (remainingTime != lastDisplayedTime && remainingTime >= 0)
         {
@@ -54,9 +53,9 @@ public class TimerController : MonoBehaviour
         int tens = (time / 10) % 10;
         int hundreds = (time / 100) % 10;
 
-        Ones.sprite = NumbersImages[ones].sprite; // Access the sprite property to set the image
-        Tens.sprite = NumbersImages[tens].sprite;
-        Hundreds.sprite = NumbersImages[hundreds].sprite;
+        Ones.sprite = TimeNumberImages[ones].sprite;
+        Tens.sprite = TimeNumberImages[tens].sprite;
+        Hundreds.sprite = TimeNumberImages[hundreds].sprite;
     }
 
     public void UpdateFillAmount(float value)
