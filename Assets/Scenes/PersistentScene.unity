@@ -1789,7 +1789,7 @@ MonoBehaviour:
   Tens: {fileID: 273511669}
   Hundreds: {fileID: 2078336448}
   fillImage: {fileID: 1907024161}
-  duration: 20
+  duration: 25
   elapsedTime: 0
 --- !u!1 &518326170
 GameObject:
@@ -33861,6 +33861,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Player: {fileID: 7210121734195487336}
   projectileTarget: {fileID: 0}
+  Timer: {fileID: 0}
   Win: 0
   Lose: 0
 --- !u!4 &3072505620770011694
@@ -44631,7 +44632,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &6913047875572833135
 Transform:
   m_ObjectHideFlags: 0

@@ -1,11 +1,12 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using static Game_Manager;
 
 public class Level_Manager : MonoBehaviour // This used to inherit from UI_Manager for unknown reasons, change back if this causes issues
 {
     public GameObject Player;
     public Transform projectileTarget;
-    //public TimerController Timer;
+    public TimerController Timer;
 
     public bool Win;
     public bool Lose;
@@ -23,7 +24,6 @@ public class Level_Manager : MonoBehaviour // This used to inherit from UI_Manag
     {
         if (TimerController.TimerOver)
         {
-            Win = false;
             Lose = true;
             CheckWinClause();
         }
@@ -32,7 +32,7 @@ public class Level_Manager : MonoBehaviour // This used to inherit from UI_Manag
 
     private void Start()
     {
-        //Timer = new TimerController();
+        Timer = new TimerController();
     }
     #region SceneCalls
     public void LoadMainMenu()
@@ -58,13 +58,19 @@ public class Level_Manager : MonoBehaviour // This used to inherit from UI_Manag
         if (Singleton.instance != null)
         {
             Game_Manager gameManager = Singleton.instance.GetComponent<Game_Manager>();
+            Scene currentScene = SceneManager.GetActiveScene();
             if (gameManager != null)
             {
-                if (Win)
-                    gameManager.gameState = Game_Manager.GameState.GameWin;
+                if (Win && currentScene.name == "GamePlay1")
+                {
+                    gameManager.GameWinTrigger();
+                    //gameManager.gameState = GameState.GameWin;
+                }
 
-                if (Lose)
-                    gameManager.gameState = Game_Manager.GameState.GameOver;
+                if (Lose && currentScene.name == "GamePlay1")
+                {
+                    gameManager.GameOverTrigger(); // same call as Scene_Transition
+                }
             }
             else
             {

@@ -21,7 +21,7 @@ public class ProjectileCollisionHandler : MonoBehaviour
     public bool struckByWeapon;
 
     public float stoneDamage = 10f;
-    public float knockBackDamage = 50f;
+    public float knockBackDamage = 10f;
     public float stunDamage = 5f;
     public float slowDamage = 12f;
 

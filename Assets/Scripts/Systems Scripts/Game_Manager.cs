@@ -37,6 +37,7 @@ public class Game_Manager : MonoBehaviour
         //if (Input.GetKeyDown(KeyCode.Alpha4)) SceneManager.LoadScene("MainMenu"); // press 4
         //if (Input.GetKeyDown(KeyCode.Alpha5)) SceneManager.LoadScene("GameOver"); // press 5
         //if (Input.GetKeyDown(KeyCode.Alpha6)) SceneManager.LoadScene("GameWin"); // press 6
+        
 
         if (Input.GetKeyDown(KeyCode.Escape) && (gameState == GameState.GamePlay1))
         {
@@ -49,6 +50,13 @@ public class Game_Manager : MonoBehaviour
                 ResumeGameTrigger();
             }
         }
+
+        if (gameState == GameState.GamePlay1 && !Paused)
+        {
+            Cursor.visible = false;
+        }
+        else if (gameState != GameState.GamePlay1 || Paused) { Cursor.visible = true; }
+
     }
     public void ChangeGameState(GameState state)
     {
@@ -249,8 +257,8 @@ public class Game_Manager : MonoBehaviour
     private void GameOver()
     {
         Time.timeScale = 1.0f;
-        OnGameOver?.Invoke();
         level_Manager.LoadGameOver();
+        OnGameOver?.Invoke();
         IsMenuOpen(true);
     }
 

@@ -41,8 +41,10 @@ public class TimerController : MonoBehaviour
         }
 
 
-        if (elapsedTime > duration)
-        { 
+        if (elapsedTime >= duration)
+        {
+            //Game_Manager gameManager = Singleton.instance.GetComponent<Game_Manager>();
+            //gameManager.GameOverTrigger();
             TimerOver = true;
         }
     }
@@ -64,6 +66,13 @@ public class TimerController : MonoBehaviour
         {
             // Ensure the fill value stays between 0 and 1
             fillImage.fillAmount = Mathf.Clamp(value, 0f, 1f);
+            //if (fillImage.fillAmount < 0.0f)
+            //{
+            //    TimerOver = true;
+            //    Game_Manager gameManager = Singleton.instance.GetComponent<Game_Manager>();
+            //    gameManager.GameOverTrigger();
+
+            //}
         }
     }
 

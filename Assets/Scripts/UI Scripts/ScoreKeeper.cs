@@ -22,7 +22,6 @@ public class ScoreKeeper : MonoBehaviour
 
     private void Start()
     {
-        Cursor.visible = false;
     }
 
     void Update()
