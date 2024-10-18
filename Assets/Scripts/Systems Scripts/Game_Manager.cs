@@ -13,7 +13,7 @@ public class Game_Manager : MonoBehaviour
 
     public bool Paused;
 
-    public enum GameState { MainMenu, GamePlay1, Options, GameOver, GameWin }
+    public enum GameState { MainMenu, GamePlay1, GameOver, GameWin }
     public GameState gameState;
 
     public delegate void GameStateChange();
@@ -46,7 +46,7 @@ public class Game_Manager : MonoBehaviour
             }
             else // If already paused, resume game.
             {
-                ResumeGame();
+                ResumeGameTrigger();
             }
         }
     }
@@ -59,9 +59,6 @@ public class Game_Manager : MonoBehaviour
                 break;
             case GameState.GamePlay1:
                 GamePlay1();
-                break;
-            case GameState.Options:
-                Options();
                 break;
             case GameState.GameOver:
                 GameOver();
@@ -86,8 +83,16 @@ public class Game_Manager : MonoBehaviour
 
     public void StartGameTrigger()
     {
-        gameState = GameState.GamePlay1;
-        ChangeGameState(gameState);
+        if (gameState != GameState.GamePlay1)
+        {
+            gameState = GameState.GamePlay1;
+            ChangeGameState(gameState);
+        }
+        else if (gameState == GameState.GamePlay1) // if we are jumping back into the same game 
+        {
+            ResumeGameTrigger();
+        }
+       
     }
 
     public void PauseTrigger()
@@ -95,24 +100,41 @@ public class Game_Manager : MonoBehaviour
         IsMenuOpen(true);
         ui_Manager.PausedUI();
         ProjectileSpawner.isGameActive = false;
-        Time.timeScale = 0.25f;
+        Time.timeScale = 0.001f;
         Paused = true;
     }
 
-    public void ResumeGame()
+    public void ResumeGameTrigger()
     {
-        IsMenuOpen(false);
-        ui_Manager.GamePlayUI();
+
         Time.timeScale = 1.0f;
-        ProjectileSpawner.isGameActive = true;
-        ChangeCamera(true);
         Paused = false;
+        ResumeGame(gameState);
+        // gameState = GameState.GameOver;
+        //ChangeGameState(gameState);
+    }
+
+    private void ResumeGame(GameState state)
+    {
+        Debug.Log(state.ToString());
+        if (gameState == GameState.MainMenu) 
+        {
+            ReloadScene();
+        }
+        else if (gameState == GameState.GamePlay1)
+        { 
+            IsMenuOpen(false);
+            ui_Manager.GamePlayUI();
+            ChangeCamera(true);
+            ProjectileSpawner.isGameActive = true;
+            Paused = false;
+        }
     }
 
     public void OptionsTrigger()
     {
-        gameState = GameState.Options;
-        ChangeGameState(gameState);
+        ui_Manager.OptionsUI();
+        IsMenuOpen(true);
     }
 
     //public void ShowInventoryTrigger()
@@ -145,6 +167,7 @@ public class Game_Manager : MonoBehaviour
     #endregion
     public void ReloadScene() // Loads selected scene
     {
+        Paused = false;
         Scene currentScene = SceneManager.GetActiveScene();
         switch (currentScene.name)
         {
@@ -223,14 +246,9 @@ public class Game_Manager : MonoBehaviour
         OnGamePlay1?.Invoke();
     }
     #endregion
-    private void Options()
-    {
-        ui_Manager.OptionsUI();
-        IsMenuOpen(true);
-    }
-
     private void GameOver()
     {
+        Time.timeScale = 1.0f;
         OnGameOver?.Invoke();
         level_Manager.LoadGameOver();
         IsMenuOpen(true);
@@ -238,6 +256,7 @@ public class Game_Manager : MonoBehaviour
 
     private void GameWin()
     {
+        Time.timeScale = 1.0f;
         level_Manager.LoadGameWin();
         OnGameWin?.Invoke();
         IsMenuOpen(true);
