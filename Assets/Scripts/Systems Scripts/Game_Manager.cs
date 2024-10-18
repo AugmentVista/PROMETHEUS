@@ -95,7 +95,7 @@ public class Game_Manager : MonoBehaviour
         IsMenuOpen(true);
         ui_Manager.PausedUI();
         ProjectileSpawner.isGameActive = false;
-        Time.timeScale = 0.0f;
+        Time.timeScale = 0.25f;
         Paused = true;
     }
 

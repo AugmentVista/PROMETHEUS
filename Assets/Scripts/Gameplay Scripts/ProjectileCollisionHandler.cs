@@ -20,6 +20,11 @@ public class ProjectileCollisionHandler : MonoBehaviour
     public bool reusedProjectile = false; 
     public bool struckByWeapon;
 
+    public float stoneDamage = 10f;
+    public float knockBackDamage = 50f;
+    public float stunDamage = 5f;
+    public float slowDamage = 12f;
+
     private Collider projectileCollider;
 
     private void Start()
@@ -131,12 +136,13 @@ public class ProjectileCollisionHandler : MonoBehaviour
             {
                 case "Stone":
                     Score.score--; // Reduce score
+                    PlayerHealthSystem.TakeDamage(stoneDamage);
                     playerMove.WasHit(true, projectileType);
                     Debug.Log("Stone hit the player. Score reduced.");
                     break;
 
                 case "Knockback":
-                    
+                    PlayerHealthSystem.TakeDamage(knockBackDamage);
                     playerMove.WasHit(true, projectileType); // Move player backward
                     Debug.Log("Knockback hit the player. Player moved backward.");
                     break;
