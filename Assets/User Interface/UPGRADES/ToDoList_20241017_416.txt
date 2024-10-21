@@ -1,5 +1,8 @@
 To do:
 
+1. Settings/Global variables class for variables like isGameActive, GameStates, Win/Loss state, etc
+
+2. Projectile base class to handle shared properties between projectile types
 
 3. Gameplay instructions available in pause menu, options menu and in game
 
@@ -8,4 +11,5 @@ To do:
 5. The loop should allow navigation through: even with placeholder screens.
 	Gameplay > Results Screen > Upgrade Screen > Back to Gameplay
 	Main Title Screen
+
 
