@@ -54,7 +54,7 @@ public class ProjectileSpawner : MonoBehaviour
 
             Rigidbody projectileRb = projectileInstance.GetComponent<Rigidbody>();
 
-            BaseProjectile baseProj = projectileInstance.GetComponentInChildren<BaseProjectile>();
+            BaseProjectile baseProj = projectileInstance.GetComponent<BaseProjectile>();
 
             projectileRb.velocity = directionToPlayer * baseProj.travelSpeed; 
 

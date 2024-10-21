@@ -40,7 +40,7 @@ public class BaseProjectile : MonoBehaviour
     }
     private void Start()
     {
-        
+        travelSpeed = 1000f;
     }
     void AssignProjectileType()
     {

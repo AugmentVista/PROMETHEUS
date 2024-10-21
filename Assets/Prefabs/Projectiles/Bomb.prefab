@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3694146074694714677}
   - component: {fileID: 8136131570199709719}
   - component: {fileID: 3109343617447235398}
+  - component: {fileID: -3158181525368003139}
   m_Layer: 0
   m_Name: Bomb
   m_TagString: Knockback
@@ -134,3 +135,26 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4864056309639282896, guid: 3bfafe16217a0c748878d98ec00aabf4, type: 3}
+--- !u!114 &-3158181525368003139
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2955496615001424215}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37063564f08dbdf46a0436a0df4ff5b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  travelSpeed: 1000
+  currentState: 0
+  currentEffect: 0
+  currentVariant: 4
+  damage: 0
+  scoreReduction: 0
+  value: 0
+  stunDamage: 10
+  knockBackDamage: 10
+  slowDamage: 12
+  bombDamage: 20
