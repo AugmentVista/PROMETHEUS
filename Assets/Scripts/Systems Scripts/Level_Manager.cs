@@ -8,8 +8,8 @@ public class Level_Manager : MonoBehaviour // This used to inherit from UI_Manag
     public Transform projectileTarget;
     public TimerController Timer;
 
-    public bool Win;
-    public bool Lose;
+    public bool Win = GlobalSettings.globalPlayerWin;
+    public bool Lose = GlobalSettings.globalPlayerLose;
     static bool isSubscribed;
 
     private void Awake()

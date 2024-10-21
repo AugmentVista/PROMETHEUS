@@ -31,14 +31,6 @@ public class Game_Manager : MonoBehaviour
     }
     void Update()
     {
-        //if (Input.GetKeyDown(KeyCode.Alpha1)) SceneManager.LoadScene("Level_1"); // press 1
-        //if (Input.GetKeyDown(KeyCode.Alpha2)) SceneManager.LoadScene("Level_2"); // press 2
-        //if (Input.GetKeyDown(KeyCode.Alpha3)) SceneManager.LoadScene("Level_3");// press 3
-        //if (Input.GetKeyDown(KeyCode.Alpha4)) SceneManager.LoadScene("MainMenu"); // press 4
-        //if (Input.GetKeyDown(KeyCode.Alpha5)) SceneManager.LoadScene("GameOver"); // press 5
-        //if (Input.GetKeyDown(KeyCode.Alpha6)) SceneManager.LoadScene("GameWin"); // press 6
-        
-
         if (Input.GetKeyDown(KeyCode.Escape) && (gameState == GameState.GamePlay1))
         {
             if (!Paused) // If not paused, pause the game.
@@ -100,31 +92,29 @@ public class Game_Manager : MonoBehaviour
         {
             ResumeGameTrigger();
         }
-       
     }
 
     public void PauseTrigger()
     {
+        ProjectileSpawner spawner = FindObjectOfType<ProjectileSpawner>();
         IsMenuOpen(true);
         ui_Manager.PausedUI();
-        ProjectileSpawner.isGameActive = false;
+        spawner.ToggleSpawning(false);
         Time.timeScale = 0.001f;
         Paused = true;
     }
 
     public void ResumeGameTrigger()
     {
-
         Time.timeScale = 1.0f;
         Paused = false;
         ResumeGame(gameState);
-        // gameState = GameState.GameOver;
-        //ChangeGameState(gameState);
     }
 
     private void ResumeGame(GameState state)
     {
-        Debug.Log(state.ToString());
+        ProjectileSpawner spawner = FindObjectOfType<ProjectileSpawner>();
+
         if (gameState == GameState.MainMenu) 
         {
             ReloadScene();
@@ -134,7 +124,7 @@ public class Game_Manager : MonoBehaviour
             IsMenuOpen(false);
             ui_Manager.GamePlayUI();
             ChangeCamera(true);
-            ProjectileSpawner.isGameActive = true;
+            spawner.ToggleSpawning(false);
             Paused = false;
         }
     }
@@ -173,7 +163,7 @@ public class Game_Manager : MonoBehaviour
     }
 
     #endregion
-    public void ReloadScene() // Loads selected scene
+    public void ReloadScene() 
     {
         Paused = false;
         Scene currentScene = SceneManager.GetActiveScene();

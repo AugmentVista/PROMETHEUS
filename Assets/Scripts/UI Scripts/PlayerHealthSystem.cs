@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class PlayerHealthSystem : MonoBehaviour
 {
-    public float maxHealth = 100f;
+    public float maxHealth = GlobalSettings.globalPlayerHPMaximum;
     public float currentHealth;
 
     public Image playerHealthGauge;

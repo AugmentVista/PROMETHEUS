@@ -14,15 +14,11 @@ public class ScoreKeeper : MonoBehaviour
     public Image drachmaOnes;
     public Image drachmaTens;
 
-    public int score;
-    public int drachma; // Ancient Greek name for currency
+    public int score = GlobalSettings.globalScore;
+    public int drachma = GlobalSettings.globalDrachma; // Ancient Greek name for currency
 
     private int lastPointValue = -1;
     private int lastDrachma = -1;    
-
-    private void Start()
-    {
-    }
 
     void Update()
     {

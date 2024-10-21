@@ -11,9 +11,9 @@ public class PlayerAttackHitBox : MonoBehaviour // This script is attached to th
 
     public GameObject rockSmashVFX;
 
-    public float attackDuration = 0.25f; // Time the collider remains active
+    public float attackDuration = GlobalSettings.globalPlayerAttackDuration;
 
-    public float attackCooldown = 0.25f; // Time before another attack can occur
+    public float attackCooldown = GlobalSettings.globalPlayerSecondsBetweenAttacks;
 
     public Renderer weaponVisual;
 

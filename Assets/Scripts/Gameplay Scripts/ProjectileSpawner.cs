@@ -9,14 +9,15 @@ public class ProjectileSpawner : MonoBehaviour
     public Transform projectileTarget;
     public Transform[] spawnPositions; // Array to hold multiple spawn positions
 
-    public float spawnInterval;
-    public float projectileSpeed;
-    public int maxProjectiles;
+    public float spawnInterval = GlobalSettings.spawnerSecondsBetweenAttacks;
+    public float projectileSpeed = GlobalSettings.spawnerProjectileSpeed;
+    public int maxProjectiles = GlobalSettings.spawnerProjectilesMaxAmount;
+
     private int currentProjectiles = 0;
 
     private Queue<GameObject> pooledProjectiles = new Queue<GameObject>(); // Queue to hold inactive projectiles
 
-    public static bool isGameActive = true;
+    public bool isGameActive = GlobalSettings.projectileSpawnerActive;
 
     private void Start()
     {
