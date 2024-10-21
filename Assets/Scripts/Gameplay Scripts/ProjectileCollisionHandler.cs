@@ -46,12 +46,6 @@ public class ProjectileCollisionHandler : MonoBehaviour
         return projectileCollider;
     }
 
-    void FixedUpdate()
-    {
-        transform.Rotate(5, 5, 5, Space.Self);
-    }
-
-    
 
     private void OnTriggerEnter(Collider other)
     {

@@ -10,7 +10,7 @@ public class ProjectileSpawner : MonoBehaviour
     public Transform[] spawnPositions; // Array to hold multiple spawn positions
 
     public float spawnInterval = GlobalSettings.spawnerSecondsBetweenAttacks;
-    public float projectileSpeed = GlobalSettings.spawnerProjectileSpeed;
+
     public int maxProjectiles = GlobalSettings.spawnerProjectilesMaxAmount;
 
     private int currentProjectiles = 0;
@@ -54,7 +54,9 @@ public class ProjectileSpawner : MonoBehaviour
 
             Rigidbody projectileRb = projectileInstance.GetComponent<Rigidbody>();
 
-            projectileRb.velocity = directionToPlayer * projectileSpeed;
+            BaseProjectile baseProj = projectileInstance.GetComponentInChildren<BaseProjectile>();
+
+            projectileRb.velocity = directionToPlayer * baseProj.travelSpeed; 
 
             // Attach or reference the ProjectileCollisionHandler
             ProjectileCollisionHandler collisionHandler = projectileInstance.GetComponent<ProjectileCollisionHandler>();

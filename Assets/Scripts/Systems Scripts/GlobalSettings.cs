@@ -54,8 +54,6 @@ public class GlobalSettings : MonoBehaviour
 
     #region ProjectileSpawner Variables
 
-    public static float spawnerProjectileSpeed = 1000f;
-
     public static float spawnerSecondsBetweenAttacks = 1.0f; 
 
     public static int spawnerProjectilesMaxAmount = 50;
