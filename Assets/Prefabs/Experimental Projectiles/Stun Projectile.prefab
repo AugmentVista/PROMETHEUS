@@ -149,8 +149,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   travelSpeed: 1000
   currentState: 0
-  currentEffect: 0
-  currentVariant: 2
+  currentEffect: 1
+  currentVariant: 1
   damage: 0
   scoreReduction: 0
   value: 0
+  stunDamage: 10
+  knockBackDamage: 10
+  slowDamage: 12
+  bombDamage: 20

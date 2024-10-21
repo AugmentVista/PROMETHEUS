@@ -4,17 +4,22 @@ using UnityEngine;
 
 public class BaseProjectile : MonoBehaviour
 {
+    /// <summary>
+    /// This is the base class for all projectiles, it defines instructs the projectile how to behave based on what
+    /// kind it is and other factors
+    /// </summary>
+
     private ProjectileSpawner spawner; // Reference to the spawner
     private Collider localCollider;
     private Rigidbody rb;
 
     public float travelSpeed = 1000.0f; // default travel speed
 
-    public enum ProjectileState { Damage, KnockBack, Stun, Slow }
+    public enum ProjectileState { Traveling, Recycled, HitPlayer, MissedPlayer }
     public ProjectileState currentState;
-    public enum ProjectileEffect { Damage, KnockBack, Stun, Slow }
+    public enum ProjectileEffect { KnockBack, Stun, Slow, Cash, Bomb }
     public ProjectileEffect currentEffect;
-    public enum ProjectileVariant { Stone, KnockBack, Stun, Slow, Cash, Bomb }
+    public enum ProjectileVariant { Purple, Yellow, Pink, Blue, Black }
     public ProjectileVariant currentVariant;
 
     public float damage;
@@ -22,11 +27,36 @@ public class BaseProjectile : MonoBehaviour
     public int value;
 
 
+    public float stunDamage = 10f;
+    public float knockBackDamage = 10f;
+    public float slowDamage = 12f;
+    public float bombDamage = 20f;
+
     private void Awake()
     {
         spawner = FindObjectOfType<ProjectileSpawner>();
         localCollider = FindObjectOfType<Collider>();
         rb = GetComponent<Rigidbody>();
+    }
+    private void Start()
+    {
+        
+    }
+    void AssignProjectileType()
+    {
+        switch (currentVariant)
+        {
+            case ProjectileVariant.Purple:
+                break;
+            case ProjectileVariant.Yellow:
+                break;
+            case ProjectileVariant.Pink:
+                break;
+            case ProjectileVariant.Blue:
+                break;
+            case ProjectileVariant.Black:
+                break;
+        }
     }
 
 
@@ -34,6 +64,7 @@ public class BaseProjectile : MonoBehaviour
     {
         UpdateProjectileStateMachine();
     }
+
     void Spin()
     {
         transform.Rotate(5, 5, 5, Space.Self);
@@ -41,19 +72,22 @@ public class BaseProjectile : MonoBehaviour
 
     void UpdateProjectileStateMachine()
     {
-        switch (currentVariant)
+        switch (currentEffect)
         {
-            case ProjectileVariant.Stone:
-                //PatrolState();
+            case ProjectileEffect.KnockBack:
+                value = 1;
                 break;
-            case ProjectileVariant.KnockBack:
-                //ChaseState();
+            case ProjectileEffect.Slow:
+                value = 1;
                 break;
-            case ProjectileVariant.Slow:
-                //SearchState();
+            case ProjectileEffect.Stun:
+                value = 2;
                 break;
-            case ProjectileVariant.Stun:
-                //AttackState();
+            case ProjectileEffect.Cash:
+                value = 10;
+                break;
+            case ProjectileEffect.Bomb:
+                value = 0;
                 break;
         }
     }

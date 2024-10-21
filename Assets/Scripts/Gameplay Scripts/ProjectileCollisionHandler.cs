@@ -15,20 +15,19 @@ public class ProjectileCollisionHandler : MonoBehaviour
     private PlayerMovement playerMove;
     private ProjectileSpawner spawner; // Reference to the spawner
     private PlayerAttackHitBox playerAttack;
+    private BaseProjectile Base;
     private string[] Type;
 
     public bool reusedProjectile = false; 
     public bool struckByWeapon;
 
-    public float stoneDamage = 10f;
-    public float knockBackDamage = 10f;
-    public float stunDamage = 5f;
-    public float slowDamage = 12f;
+   
 
     private Collider projectileCollider;
 
     private void Start()
     {
+        Base = GetComponent<BaseProjectile>();
         Score = FindAnyObjectByType<ScoreKeeper>();
         spawner = FindObjectOfType<ProjectileSpawner>();
         playerMove = FindObjectOfType<PlayerMovement>();
@@ -130,13 +129,13 @@ public class ProjectileCollisionHandler : MonoBehaviour
             {
                 case "Stone":
                     Score.score--; // Reduce score
-                    PlayerHealthSystem.TakeDamage(stoneDamage);
+                    PlayerHealthSystem.TakeDamage(Base.stunDamage);
                     playerMove.WasHit(true, projectileType);
                     Debug.Log("Stone hit the player. Score reduced.");
                     break;
 
                 case "Knockback":
-                    PlayerHealthSystem.TakeDamage(knockBackDamage);
+                    PlayerHealthSystem.TakeDamage(Base.knockBackDamage);
                     playerMove.WasHit(true, projectileType); // Move player backward
                     Debug.Log("Knockback hit the player. Player moved backward.");
                     break;
