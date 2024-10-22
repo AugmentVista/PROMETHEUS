@@ -57,7 +57,7 @@ public class FirstPersonController : MonoBehaviour
 
     public bool playerCanMove = true;
     public float walkSpeed = 5f;
-    public float maxVelocityChange = 10f;
+    public float maxVelocityChange = 0.5f;
 
     // Internal Variables
     private bool isWalking = false;
@@ -374,8 +374,7 @@ public class FirstPersonController : MonoBehaviour
             Vector3 targetVelocity = new Vector3(0, 0, Input.GetAxis("Vertical"));
 
             // Checks if player is walking and isGrounded
-            // Will allow head bob
-            if (targetVelocity.x != 0 || targetVelocity.z != 0 && isGrounded)
+            if ((targetVelocity.x != 0 || targetVelocity.z != 0) && isGrounded)
             {
                 isWalking = true;
             }
@@ -384,21 +383,26 @@ public class FirstPersonController : MonoBehaviour
                 isWalking = false;
             }
 
-            // All movement calculations shile sprint is active
+            // Movement calculations while sprinting
             if (enableSprint && Input.GetKey(sprintKey) && sprintRemaining > 0f && !isSprintCooldown)
             {
                 targetVelocity = transform.TransformDirection(targetVelocity) * sprintSpeed;
 
-                // Apply a force that attempts to reach our target velocity
+                // Directly modify velocity for smooth movement
                 Vector3 velocity = rb.velocity;
-                Vector3 velocityChange = (targetVelocity - velocity);
-                velocityChange.x = 0;
-                velocityChange.y = 0;
-                velocityChange.z = Mathf.Clamp(velocityChange.z, -maxVelocityChange, maxVelocityChange);
+                float currentZ = velocity.z;
 
-                // Player is only moving when valocity change != 0
-                // Makes sure fov change only happens during movement
-                if (velocityChange.z != 0)
+                // Smooth transition to target velocity using Lerp
+                float smoothZVelocity = Mathf.Lerp(currentZ, targetVelocity.z, Time.deltaTime * maxVelocityChange);
+
+                // Clamp the smoothed velocity to ensure it stays within bounds
+                smoothZVelocity = Mathf.Clamp(smoothZVelocity, -maxVelocityChange, maxVelocityChange);
+
+                // Update rigidbody velocity directly
+                rb.velocity = new Vector3(velocity.x, velocity.y, smoothZVelocity);
+
+                // Handle sprint-related logic
+                if (Mathf.Abs(smoothZVelocity) > 0.1f) // Allow for small tolerance to avoid jitter
                 {
                     isSprinting = true;
 
@@ -412,10 +416,8 @@ public class FirstPersonController : MonoBehaviour
                         sprintBarCG.alpha += 5 * Time.deltaTime;
                     }
                 }
-
-                rb.AddForce(velocityChange, ForceMode.VelocityChange);
             }
-            // All movement calculations while walking
+            // Movement calculations while walking
             else
             {
                 isSprinting = false;
@@ -427,19 +429,25 @@ public class FirstPersonController : MonoBehaviour
 
                 targetVelocity = transform.TransformDirection(targetVelocity) * walkSpeed;
 
-                // Apply a force that attempts to reach our target velocity
+                // Directly modify velocity for walking
                 Vector3 velocity = rb.velocity;
-                Vector3 velocityChange = (targetVelocity - velocity);
-                velocityChange.x = 0;
-                velocityChange.y = 0;
-                velocityChange.z = Mathf.Clamp(velocityChange.z, -maxVelocityChange, maxVelocityChange);
+                float currentZ = velocity.z;
 
-                rb.AddForce(velocityChange, ForceMode.VelocityChange);
+                // Smooth transition to walking speed
+                float smoothZVelocity = Mathf.Lerp(currentZ, targetVelocity.z, Time.deltaTime * maxVelocityChange);
+
+                // Clamp the smoothed velocity to ensure it stays within bounds
+                smoothZVelocity = Mathf.Clamp(smoothZVelocity, -maxVelocityChange, maxVelocityChange);
+
+                // Update rigidbody velocity directly
+                rb.velocity = new Vector3(velocity.x, velocity.y, smoothZVelocity);
             }
         }
 
         #endregion
+
     }
+
 
     // Sets isGrounded based on a raycast sent straigth down from the player object
     private void CheckGround()

@@ -9,6 +9,7 @@ public class PlayerVelocityReader : MonoBehaviour
     public Rigidbody body;
 
     public Vector3 animVelocity;
+    public float velocityThreshold = 0.01f;
     void Start()
     {
         animVelocity = playerAnim.velocity;
@@ -17,6 +18,12 @@ public class PlayerVelocityReader : MonoBehaviour
     
     void Update()
     {
-        playerAnim.SetFloat("Velocity", body.velocity.magnitude);
+        float currentVelocity = body.velocity.magnitude;
+
+        if (currentVelocity < velocityThreshold)
+        {
+            currentVelocity = 0f; // sets velocity to 0 if it is so small it is basically 0
+        }
+        playerAnim.SetFloat("Velocity", currentVelocity);
     }
 }
