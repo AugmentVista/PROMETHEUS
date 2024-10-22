@@ -5,7 +5,9 @@ using UnityEngine;
 public class PlayerVelocityReader : MonoBehaviour
 {
     public Animator playerAnim;
+
     public Rigidbody body;
+
     public Vector3 animVelocity;
     void Start()
     {
