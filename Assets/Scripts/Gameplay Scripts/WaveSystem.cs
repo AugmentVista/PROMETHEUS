@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class WaveSystem : MonoBehaviour
 {
-    //[SerializeField] private //EnemySpawn[] enemySpawnArray;
+    [SerializeField] private Wave[] waveArray;
     [SerializeField] private EnemyWaveTrigger waveTrigger;
 
     private State state;
 
     private enum State
     { 
-    Idle, 
-    Active,
+        Idle, 
+        Active,
     }
 
     private void Awake()
@@ -29,7 +29,8 @@ public class WaveSystem : MonoBehaviour
     {
         if (state == State.Idle)
         { 
-        StartWave();
+            StartWave();
+
             waveTrigger.OnPlayerEnterTrigger -= EnemyWaveTrigger_OnPlayerEnterTrigger;
         }
 
@@ -39,14 +40,55 @@ public class WaveSystem : MonoBehaviour
     {
         Debug.Log("Wave is starting");
 
-        //foreach (EnemySpawn enemySpawn in enemySpawnArray)
-        //{
-        //    enemySpawn.Spawn();
-        //}
+        state = State.Active;
+    }
 
-
+    private void Update()
+    {
+        switch (state)
+        {
+            case State.Active:
+                foreach (Wave wave in waveArray)
+                {
+                    wave.Update();
+                }
+                break;
+        }
     }
 
 
+    /// <summary>
+    /// Represents a single Enemy Spawn Wave
+    /// </summary>
 
+    [System.Serializable]
+    private class Wave 
+    {
+        [SerializeField] private EnemySpawn[] enemySpawnArray;
+        [SerializeField] private float timer;
+
+
+        public void Update() 
+        {
+            if (timer >= 0)
+            { 
+                timer -= Time.deltaTime;
+                if (timer <= 0)
+                { 
+                    SpawnEnemies();
+                }
+            }
+        } 
+
+
+        private void SpawnEnemies()
+        {
+            foreach (EnemySpawn enemySpawn in enemySpawnArray)
+            {
+                enemySpawn.Spawn();
+            }
+
+        }
+
+    }
 }
