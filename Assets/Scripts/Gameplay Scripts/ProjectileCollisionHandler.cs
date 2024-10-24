@@ -13,7 +13,7 @@ public class ProjectileCollisionHandler : MonoBehaviour
 
     public ScoreKeeper Score;
     private PlayerMovement playerMove;
-    private ProjectileSpawner spawner; // Reference to the spawner
+    private EnemyProjectileManager spawner; // Reference to the spawner
     private PlayerAttackHitBox playerAttack;
     private BaseProjectile Base;
     private string[] Type;
@@ -29,14 +29,14 @@ public class ProjectileCollisionHandler : MonoBehaviour
     {
         Base = GetComponent<BaseProjectile>();
         Score = FindAnyObjectByType<ScoreKeeper>();
-        spawner = FindObjectOfType<ProjectileSpawner>();
+        spawner = FindObjectOfType<EnemyProjectileManager>();
         playerMove = FindObjectOfType<PlayerMovement>();
         playerAttack = FindObjectOfType<PlayerAttackHitBox>();
         projectileCollider = GetComponent<Collider>();
 
     }
 
-    public void SetSpawner(ProjectileSpawner spawnerReference)
+    public void SetSpawner(EnemyProjectileManager spawnerReference)
     {
         spawner = spawnerReference;
     }
@@ -171,6 +171,6 @@ public class ProjectileCollisionHandler : MonoBehaviour
         GetComponent<Renderer>().enabled = false;
 
         // Call the spawner to handle the pooling logic if needed
-        spawner.OnProjectileInactive(gameObject);
+        spawner.ReturnProjectile(gameObject);
     }
 }

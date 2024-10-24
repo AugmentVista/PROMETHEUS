@@ -6,25 +6,25 @@ public class BossStateMachine : MonoBehaviour
 {
     public Animator animator;
 
-    private ProjectileSpawner spawner;
+    private EnemyProjectileManager spawner;
     void Start()
     {
         animator = GetComponent<Animator>();
-        spawner = GetComponent<ProjectileSpawner>();
+        spawner = GetComponent<EnemyProjectileManager>();
     }
 
     void Update()
     {
-        SyncAttackSpeed();
+        //SyncAttackSpeed();
     }
 
-    private void SyncAttackSpeed()
-    {
-        // As spawn interval goes smaller attackspeed goes larger
-        float newAttackSpeed = 1 / spawner.spawnInterval * Time.deltaTime;                   
-        if (animator != null && spawner != null)
-        {
-            animator.speed = newAttackSpeed;
-        }
-    }
+    //private void SyncAttackSpeed()
+    //{
+    //    // As spawn interval goes smaller attackspeed goes larger
+    //    float newAttackSpeed = 1 / spawner.spawnInterval * Time.deltaTime;                   
+    //    if (animator != null && spawner != null)
+    //    {
+    //        animator.speed = newAttackSpeed;
+    //    }
+    //}
 }

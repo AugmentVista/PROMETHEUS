@@ -96,10 +96,10 @@ public class Game_Manager : MonoBehaviour
 
     public void PauseTrigger()
     {
-        ProjectileSpawner spawner = FindObjectOfType<ProjectileSpawner>();
+        EnemyProjectileManager spawner = FindObjectOfType<EnemyProjectileManager>();
         IsMenuOpen(true);
         ui_Manager.PausedUI();
-        spawner.ToggleSpawning(false);
+        GlobalSettings.projectileSpawnerActive = false;
         Time.timeScale = 0.001f;
         Paused = true;
     }
@@ -113,7 +113,7 @@ public class Game_Manager : MonoBehaviour
 
     private void ResumeGame(GameState state)
     {
-        ProjectileSpawner spawner = FindObjectOfType<ProjectileSpawner>();
+        EnemyProjectileManager spawner = FindObjectOfType<EnemyProjectileManager>();
 
         if (gameState == GameState.MainMenu) 
         {
@@ -124,7 +124,7 @@ public class Game_Manager : MonoBehaviour
             IsMenuOpen(false);
             ui_Manager.GamePlayUI();
             ChangeCamera(true);
-            spawner.ToggleSpawning(false);
+            GlobalSettings.projectileSpawnerActive = true;
             Paused = false;
         }
     }

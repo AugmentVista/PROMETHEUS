@@ -9,7 +9,7 @@ public class BaseProjectile : MonoBehaviour
     /// kind it is and other factors
     /// </summary>
 
-    private ProjectileSpawner spawner; // Reference to the spawner
+    private EnemyProjectileManager spawner; // Reference to the spawner
     private Collider localCollider;
     private Rigidbody rb;
 
@@ -35,7 +35,7 @@ public class BaseProjectile : MonoBehaviour
 
     private void Awake()
     {
-        spawner = FindObjectOfType<ProjectileSpawner>();
+        spawner = FindObjectOfType<EnemyProjectileManager>();
         localCollider = FindObjectOfType<Collider>();
         rb = GetComponent<Rigidbody>();
     }
