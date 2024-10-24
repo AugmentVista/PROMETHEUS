@@ -13,7 +13,8 @@ public class BaseProjectile : MonoBehaviour
     private Collider localCollider;
     private Rigidbody rb;
 
-    public float travelSpeed = 1000.0f; // default travel speed
+    [HideInInspector]
+    public float travelSpeed = 10.0f; // default travel speed
 
     public enum ProjectileState { Traveling, Recycled, HitPlayer, MissedPlayer }
     public ProjectileState currentState;
