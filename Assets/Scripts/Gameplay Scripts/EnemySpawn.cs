@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EnemySpawn : MonoBehaviour
 {
+    public bool IsAlive;
 
     /// <summary>
     /// enemy details here 

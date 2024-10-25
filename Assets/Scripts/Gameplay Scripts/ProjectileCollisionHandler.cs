@@ -12,7 +12,7 @@ public class ProjectileCollisionHandler : MonoBehaviour
     /// </summary>
 
     public ScoreKeeper Score;
-    private PlayerMovement playerMove;
+    private PlayerSideToSide playerMove;
     private EnemyProjectileManager spawner; // Reference to the spawner
     private PlayerAttackHitBox playerAttack;
     private BaseProjectile Base;
@@ -30,7 +30,7 @@ public class ProjectileCollisionHandler : MonoBehaviour
         Base = GetComponent<BaseProjectile>();
         Score = FindAnyObjectByType<ScoreKeeper>();
         spawner = FindObjectOfType<EnemyProjectileManager>();
-        playerMove = FindObjectOfType<PlayerMovement>();
+        playerMove = FindObjectOfType<PlayerSideToSide>();
         playerAttack = FindObjectOfType<PlayerAttackHitBox>();
         projectileCollider = GetComponent<Collider>();
 
@@ -87,14 +87,14 @@ public class ProjectileCollisionHandler : MonoBehaviour
                 OnPlayerDamaged(true, gameObject.tag); 
 
                 Debug.Log($"{gameObject.tag} hit the PlayerBody");
-                Score.score--;
+                //Score.score--;
                 DisableColliderForPooling();
                 break;
 
             case "Weapon":
                 if (struckByWeapon)
                 {
-                    Score.score++;
+                    //Score.score++;
                     
                     Debug.Log($"{projectileType} hit the player's weapon and was blocked.");
                     DisableColliderForPooling();
