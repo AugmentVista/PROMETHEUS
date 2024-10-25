@@ -122,6 +122,4 @@ public class PlayerAttackHitBox : MonoBehaviour // This script is attached to th
             Debug.Log("No ProjectileCollisionHandler found on: " + other.gameObject.name);
         }
     }
-
-
 }

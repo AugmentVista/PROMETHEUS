@@ -4,7 +4,9 @@ public class EnemyFire : MonoBehaviour
 {
     public Transform projectileTarget; // The player or other target
     public Transform[] spawnPositions; // Array to hold multiple spawn positions
-    public float spawnInterval = GlobalSettings.spawnerSecondsBetweenAttacks;
+    private float spawnInterval = GlobalSettings.spawnerSecondsBetweenAttacks;
+    private float ShotDelay() { return Mathf.Round(Random.Range(0.1f, 1.0f) * 100) / 100; }
+    private float shootingTimeGap; 
 
     private EnemyProjectileManager projectileManager;
     private bool isGameActive = GlobalSettings.projectileSpawnerActive;
@@ -14,7 +16,8 @@ public class EnemyFire : MonoBehaviour
         projectileManager = FindObjectOfType<EnemyProjectileManager>(); // Reference the manager
         if (isGameActive)
         {
-            InvokeRepeating(nameof(SpawnProjectile), 0f, spawnInterval);
+            shootingTimeGap = ShotDelay();
+            InvokeRepeating(nameof(SpawnProjectile), 0f, spawnInterval + shootingTimeGap);
         }
     }
 
@@ -22,7 +25,7 @@ public class EnemyFire : MonoBehaviour
     {
         if (isGameActive)
         {
-            GameObject projectileInstance = projectileManager.RequestProjectile(); // Get a projectile from the manager
+            GameObject projectileInstance = projectileManager.RequestProjectile(transform); // Get a projectile from the manager
             if (projectileInstance != null)
             {
                 // Select a random spawn position for the projectile

@@ -39,10 +39,6 @@ public class BaseProjectile : MonoBehaviour
         localCollider = FindObjectOfType<Collider>();
         rb = GetComponent<Rigidbody>();
     }
-    private void Start()
-    {
-        travelSpeed = 1000f;
-    }
     void AssignProjectileType()
     {
         switch (currentVariant)

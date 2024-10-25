@@ -6,28 +6,32 @@ public class EnemyProjectileManager : MonoBehaviour
 {
     public GameObject ProjectilePrefab;
     public int maxProjectiles = GlobalSettings.spawnerProjectilesMaxAmount;
+    public Transform InitalPosition = null;
 
     private int currentProjectiles = 0;
-    private Queue<GameObject> pooledProjectiles = new Queue<GameObject>(); // Queue to hold inactive projectiles
+    public Queue<GameObject> pooledProjectiles = new Queue<GameObject>(); // Queue to hold inactive projectiles
 
-    public GameObject RequestProjectile()
+    public GameObject RequestProjectile(Transform localTransform)
     {
         GameObject projectileInstance;
+        InitalPosition = localTransform;
 
         // Check if there are any available pooled projectiles or need to create new ones
         if (pooledProjectiles.Count + currentProjectiles < maxProjectiles)
         {
             // Create new projectile if under max limit
-            projectileInstance = Instantiate(ProjectilePrefab);
+            projectileInstance = Instantiate(ProjectilePrefab, localTransform.position, Quaternion.identity);
             currentProjectiles++;
         }
         else if (pooledProjectiles.Count > 0)
         {
             // Reuse from the pool
             projectileInstance = pooledProjectiles.Dequeue();
+            //projectileInstance.transform.position = localTransform.position;
             projectileInstance.SetActive(true);
             projectileInstance.GetComponent<Renderer>().enabled = true;
             projectileInstance.GetComponent<Collider>().enabled = true;
+            currentProjectiles++;
         }
         else
         {
@@ -56,6 +60,7 @@ public class EnemyProjectileManager : MonoBehaviour
 
         // Disable the projectile and add it back to the pool
         obj.SetActive(false);
+        obj.transform.position = InitalPosition.position;
         pooledProjectiles.Enqueue(obj);
 
         // Update projectile count
