@@ -13,6 +13,7 @@ public class WaveSystem : MonoBehaviour
     { 
         Idle, 
         Active,
+        BattleOver,
     }
 
     private void Awake()
@@ -35,14 +36,6 @@ public class WaveSystem : MonoBehaviour
         }
 
     }
-
-    private void StartWave()
-    {
-        Debug.Log("Wave is starting");
-
-        state = State.Active;
-    }
-
     private void Update()
     {
         switch (state)
@@ -52,10 +45,47 @@ public class WaveSystem : MonoBehaviour
                 {
                     wave.Update();
                 }
+                TestBattleOver();
                 break;
         }
     }
 
+    private void StartWave()
+    {
+        Debug.Log("Wave is starting");
+
+        state = State.Active;
+    }
+
+    private void TestBattleOver()
+    {
+        if (state == State.Active)
+        {
+            if (AreWavesOver())
+            { 
+                // Battle is over
+                state = State.BattleOver;
+                Debug.Log($"Battle is {state}");
+            }
+        }
+    }
+
+    private bool AreWavesOver()
+    {
+        foreach (Wave wave in waveArray)
+        {
+            if (wave.IsWaveOver())
+            {
+                // Wave is over
+            }
+            else
+            {
+                // Wave not over
+                return false;
+            }
+        }
+        return true;
+    }
 
     /// <summary>
     /// Represents a single Enemy Spawn Wave
@@ -66,7 +96,6 @@ public class WaveSystem : MonoBehaviour
     {
         [SerializeField] private EnemySpawn[] enemySpawnArray;
         [SerializeField] private float timer;
-
 
         public void Update() 
         {
@@ -80,15 +109,40 @@ public class WaveSystem : MonoBehaviour
             }
         } 
 
-
         private void SpawnEnemies()
         {
             foreach (EnemySpawn enemySpawn in enemySpawnArray)
             {
                 enemySpawn.Spawn();
             }
-
         }
+
+        public bool IsWaveOver()
+        {
+            if (timer < 0)
+            {
+                // Wave spawned
+
+                foreach (EnemySpawn enemySpawn in enemySpawnArray)
+                {
+                    if (enemySpawn.IsAlive)
+                    {
+                        return false;
+                    }
+                }
+                return true;
+            }
+            else 
+            {
+                // Enemies have not spawned yet
+                return false;
+            }
+        }
+
+
+
+
+
 
     }
 }
