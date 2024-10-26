@@ -43,8 +43,6 @@ public class TimerController : MonoBehaviour
 
         if (elapsedTime >= duration)
         {
-            //Game_Manager gameManager = Singleton.instance.GetComponent<Game_Manager>();
-            //gameManager.GameOverTrigger();
             TimerOver = true;
         }
     }

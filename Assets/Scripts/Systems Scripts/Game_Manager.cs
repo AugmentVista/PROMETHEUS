@@ -13,7 +13,7 @@ public class Game_Manager : MonoBehaviour
 
     public bool Paused;
 
-    public enum GameState { MainMenu, GamePlay1, GameOver, GameWin }
+    public enum GameState { MainMenu, GamePlay1, GameOver, GameWin, DoNothing }
     public GameState gameState;
 
     public delegate void GameStateChange();
@@ -21,6 +21,7 @@ public class Game_Manager : MonoBehaviour
     public static event GameStateChange OnGamePlay1;
     public static event GameStateChange OnGameOver;
     public static event GameStateChange OnGameWin;
+    public static event GameStateChange OnDoNothing;
 
     private void Awake() // Awake runs before start and again when scenes change.
     {
@@ -29,6 +30,12 @@ public class Game_Manager : MonoBehaviour
             Debug.LogError("Camera references not found!");
         }
     }
+
+    private void Start()
+    {
+        gameState = GameState.DoNothing;
+    }
+
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape) && (gameState == GameState.GamePlay1))
@@ -54,6 +61,9 @@ public class Game_Manager : MonoBehaviour
     {
         switch (state)
         {
+            case GameState.DoNothing:
+                DontDoShit();
+                break;
             case GameState.MainMenu:
                 MainMenu();
                 break;
@@ -67,7 +77,7 @@ public class Game_Manager : MonoBehaviour
                 GameWin();
                 break;
             default:
-                MainMenu();
+                DontDoShit();
                 break;
         }
     }
@@ -134,21 +144,6 @@ public class Game_Manager : MonoBehaviour
         ui_Manager.OptionsUI();
         IsMenuOpen(true);
     }
-
-    //public void ShowInventoryTrigger()
-    //{
-    //    inventoryActive = !inventoryActive;
-    //    Inventory.SetActive(inventoryActive);
-    //}
-
-    //public void ShowControlsTrigger()
-    //{
-    //    controlsActive = !controlsActive;
-    //    ShowControls.SetActive(controlsActive);
-
-    //    pauseControlsActive = !pauseControlsActive;
-    //    ShowPauseControls.SetActive(pauseControlsActive);
-    //}
 
     public void GameOverTrigger()
     {
@@ -229,6 +224,13 @@ public class Game_Manager : MonoBehaviour
 
     #region States
     #region States that trigger scene Managers
+
+    private void DontDoShit()
+    {
+        IsMenuOpen(false);
+    }
+
+
     private void MainMenu()
     {
         OnMainMenu?.Invoke();

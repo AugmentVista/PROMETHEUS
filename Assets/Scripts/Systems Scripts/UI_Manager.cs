@@ -5,6 +5,7 @@ public class UI_Manager : MonoBehaviour
 {
     [SerializeField] private Level_Manager levelManager;
 
+    public GameObject emptyUI;
     public GameObject mainMenuUI;
     public GameObject gamePlayUI;
     public GameObject optionsUI;
@@ -15,6 +16,7 @@ public class UI_Manager : MonoBehaviour
     void Start()
     {
         UpdateUI();
+        Game_Manager.OnDoNothing += NoUI;
         Game_Manager.OnMainMenu += MainMenuUI;
         Game_Manager.OnGamePlay1 += GamePlayUI;
         Game_Manager.OnGameOver += GameOverUI;
@@ -23,6 +25,7 @@ public class UI_Manager : MonoBehaviour
 
     private void OnDestroy()
     {
+        Game_Manager.OnDoNothing -= NoUI;
         Game_Manager.OnMainMenu -= MainMenuUI;
         Game_Manager.OnGamePlay1 -= GamePlayUI;
         Game_Manager.OnGameOver -= GameOverUI;
@@ -47,10 +50,16 @@ public class UI_Manager : MonoBehaviour
                 GameOverUI();
                 break;
             default:
-                MainMenuUI();
+                NoUI();
                 break;
         }
     }
+
+    private void NoUI()
+    {
+        HideAllUI(emptyUI);
+    }
+
     private void MainMenuUI()
     {
         HideAllUI(mainMenuUI);
@@ -77,6 +86,7 @@ public class UI_Manager : MonoBehaviour
     }
     public void HideAllUI(GameObject ActiveUI)
     {
+        emptyUI.SetActive(false);
         mainMenuUI.SetActive(false);
         gamePlayUI.SetActive(false);
         optionsUI.SetActive(false);
