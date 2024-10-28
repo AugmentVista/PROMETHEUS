@@ -6,12 +6,14 @@ using TMPro;
 
 public class ShopManager : MonoBehaviour
 {
-    public int drachma = GlobalSettings.globalDrachma; // Ancient Greek name for currency
+    public UpgradeItem[] itemDisplays;
 
-    private int amountToAdd = 5;
+    public GameObject[] itemsDisplayedInShop;
 
     #region Player Balance
 
+    private int drachma = GlobalSettings.globalDrachma;
+    private int amountToAdd = 5;
     public Image[] DrachmaPositive;
     public Image[] DrachmaNegative;// separate into postive and negative array of images
     public Image drachmaOnes;
@@ -46,6 +48,7 @@ public class ShopManager : MonoBehaviour
             lastDrachma = currentDrachma;
         }
     }
+
     private void SetBalance(int drachma)
     {
         int absDrachma = Mathf.Abs(drachma); // Get the absolute value for digit extraction
@@ -69,4 +72,18 @@ public class ShopManager : MonoBehaviour
             drachmaHundreds.sprite = DrachmaNegative[hundreds].sprite;
         }
     }
+
+    public void PopulateShop()
+    {
+        for (int i = 0; i < itemDisplays.Length; i++)
+        { 
+        
+        }
+    
+    
+    }
+
+
+
+
 }
