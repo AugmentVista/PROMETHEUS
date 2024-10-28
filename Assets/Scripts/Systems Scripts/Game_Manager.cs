@@ -13,7 +13,7 @@ public class Game_Manager : MonoBehaviour
 
     public bool Paused;
 
-    public enum GameState { MainMenu, GamePlay1, GameOver, GameWin, DoNothing }
+    public enum GameState { MainMenu, GamePlay1, GameOver, GameWin, DoNothing } 
     public GameState gameState;
 
     public delegate void GameStateChange();

@@ -14,6 +14,7 @@ public class TimerController : MonoBehaviour
     public float duration;
     public float elapsedTime = 0f;
 
+
     private int lastDisplayedTime = -1;
     int remainingTime;
 

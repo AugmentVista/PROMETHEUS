@@ -1,8 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using static Game_Manager;
 
-public class Level_Manager : MonoBehaviour // This used to inherit from UI_Manager for unknown reasons, change back if this causes issues
+public class Level_Manager : MonoBehaviour 
 {
     public GameObject Player;
     public Transform projectileTarget;
@@ -27,12 +26,6 @@ public class Level_Manager : MonoBehaviour // This used to inherit from UI_Manag
             Lose = true;
             CheckWinClause();
         }
-    }
-
-
-    private void Start()
-    {
-        Timer = new TimerController();
     }
     #region SceneCalls
     public void LoadMainMenu()

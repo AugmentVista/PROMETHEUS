@@ -16,7 +16,7 @@ public class UI_Manager : MonoBehaviour
     void Start()
     {
         UpdateUI();
-        Game_Manager.OnDoNothing += NoUI;
+        Game_Manager.OnDoNothing += NoUI; 
         Game_Manager.OnMainMenu += MainMenuUI;
         Game_Manager.OnGamePlay1 += GamePlayUI;
         Game_Manager.OnGameOver += GameOverUI;
