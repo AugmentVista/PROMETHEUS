@@ -24,7 +24,7 @@ public class PlayerSideToSide : MonoBehaviour
     private void HandleSideMovement()
     {
         // Only allow side movement if the player is grounded
-        if (firstPersonController != null && firstPersonController.isGrounded && !isMovingSide)
+        if (firstPersonController != null /*&& firstPersonController.isGrounded*/ && !isMovingSide)
         {
             if (Input.GetKeyDown(KeyCode.A))
             {

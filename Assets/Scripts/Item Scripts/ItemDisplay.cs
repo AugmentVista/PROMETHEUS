@@ -18,6 +18,8 @@ public class ItemDisplay : MonoBehaviour
 
     public TMP_Text priceText;
 
+    public float Modifer;
+
     private void Start()
     {
         titleText.text = scriptableItem.title;
@@ -29,5 +31,7 @@ public class ItemDisplay : MonoBehaviour
         currencyImage.sprite = scriptableItem.currencyType;
 
         priceText.text = scriptableItem.price;
+
+        Modifer = scriptableItem.ImprovementModifier;
     }
 }

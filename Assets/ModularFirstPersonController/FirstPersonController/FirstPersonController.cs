@@ -67,9 +67,11 @@ public class FirstPersonController : MonoBehaviour
     public bool enableSprint = true;
     public bool unlimitedSprint = false;
     public KeyCode sprintKey = KeyCode.LeftShift;
-    public float sprintSpeed = 7f;
-    public float sprintDuration = 5f;
-    public float sprintCooldown = .5f;
+
+    public float sprintSpeed = GlobalSettings.globalSprintSpeed;
+    public float sprintDuration = GlobalSettings.globalSprintDuration;
+    public float sprintCooldown = GlobalSettings.globalSprintCooldown;
+
     public float sprintFOV = 80f;
     public float sprintFOVStepTime = 10f;
 
@@ -114,6 +116,7 @@ public class FirstPersonController : MonoBehaviour
     // Internal Variables
     private bool isCrouched = false;
     private Vector3 originalScale;
+    float camRotation;
 
     #endregion
     #endregion
@@ -198,7 +201,12 @@ public class FirstPersonController : MonoBehaviour
         #endregion
     }
 
-    float camRotation;
+    public void UpdateUpgrades()
+    {
+        sprintSpeed = GlobalSettings.globalSprintSpeed;
+        sprintDuration = GlobalSettings.globalSprintDuration;
+        sprintCooldown = GlobalSettings.globalSprintCooldown;
+    }
 
     private void Update()
     {
@@ -540,11 +548,14 @@ public class FirstPersonController : MonoBehaviour
 
 // Custom Editor
 #if UNITY_EDITOR
-    [CustomEditor(typeof(FirstPersonController)), InitializeOnLoadAttribute]
-    public class FirstPersonControllerEditor : Editor
-    {
+[CustomEditor(typeof(FirstPersonController)), InitializeOnLoadAttribute]
+public class FirstPersonControllerEditor : Editor
+{
     FirstPersonController fpc;
     SerializedObject SerFPC;
+
+    private float maxSprint = GlobalSettings.globalMaxSprintSpeed;
+    private float minWalkSpeed = GlobalSettings.globalMinWalkSpeed;
 
     private void OnEnable()
     {
@@ -583,18 +594,18 @@ public class FirstPersonController : MonoBehaviour
         fpc.crosshair = EditorGUILayout.ToggleLeft(new GUIContent("Auto Crosshair", "Determines if the basic crosshair will be turned on, and sets is to the center of the screen."), fpc.crosshair);
 
         // Only displays crosshair options if crosshair is enabled
-        if(fpc.crosshair) 
-        { 
-            EditorGUI.indentLevel++; 
-            EditorGUILayout.BeginHorizontal(); 
-            EditorGUILayout.PrefixLabel(new GUIContent("Crosshair Image", "Sprite to use as the crosshair.")); 
+        if (fpc.crosshair)
+        {
+            EditorGUI.indentLevel++;
+            EditorGUILayout.BeginHorizontal();
+            EditorGUILayout.PrefixLabel(new GUIContent("Crosshair Image", "Sprite to use as the crosshair."));
             fpc.crosshairImage = (Sprite)EditorGUILayout.ObjectField(fpc.crosshairImage, typeof(Sprite), false);
             EditorGUILayout.EndHorizontal();
 
             EditorGUILayout.BeginHorizontal();
             fpc.crosshairColor = EditorGUILayout.ColorField(new GUIContent("Crosshair Color", "Determines the color of the crosshair."), fpc.crosshairColor);
             EditorGUILayout.EndHorizontal();
-            EditorGUI.indentLevel--; 
+            EditorGUI.indentLevel--;
         }
 
         EditorGUILayout.Space();
@@ -609,7 +620,7 @@ public class FirstPersonController : MonoBehaviour
         fpc.holdToZoom = EditorGUILayout.ToggleLeft(new GUIContent("Hold to Zoom", "Requires the player to hold the zoom key instead if pressing to zoom and unzoom."), fpc.holdToZoom);
         fpc.zoomKey = (KeyCode)EditorGUILayout.EnumPopup(new GUIContent("Zoom Key", "Determines what key is used to zoom."), fpc.zoomKey);
         fpc.zoomFOV = EditorGUILayout.Slider(new GUIContent("Zoom FOV", "Determines the field of view the camera zooms to."), fpc.zoomFOV, .1f, fpc.fov);
-        fpc.zoomStepTime = EditorGUILayout.Slider(new GUIContent("Step Time", "Determines how fast the FOV transitions while zooming in."), fpc.zoomStepTime, .1f, 10f);
+        fpc.zoomStepTime = EditorGUILayout.Slider(new GUIContent("Step Time", "Determines how fast the FOV transitions while zooming in."), fpc.zoomStepTime, 0.1f, 10f);
         GUI.enabled = true;
 
         #endregion
@@ -625,7 +636,7 @@ public class FirstPersonController : MonoBehaviour
         fpc.playerCanMove = EditorGUILayout.ToggleLeft(new GUIContent("Enable Player Movement", "Determines if the player is allowed to move."), fpc.playerCanMove);
 
         GUI.enabled = fpc.playerCanMove;
-        fpc.walkSpeed = EditorGUILayout.Slider(new GUIContent("Walk Speed", "Determines how fast the player will move while walking."), fpc.walkSpeed, .1f, fpc.sprintSpeed);
+        fpc.walkSpeed = EditorGUILayout.Slider(new GUIContent("Walk Speed", "Determines how fast the player will move while walking."), fpc.walkSpeed, minWalkSpeed, fpc.sprintSpeed);
         GUI.enabled = true;
 
         EditorGUILayout.Space();
@@ -639,7 +650,7 @@ public class FirstPersonController : MonoBehaviour
         GUI.enabled = fpc.enableSprint;
         fpc.unlimitedSprint = EditorGUILayout.ToggleLeft(new GUIContent("Unlimited Sprint", "Determines if 'Sprint Duration' is enabled. Turning this on will allow for unlimited sprint."), fpc.unlimitedSprint);
         fpc.sprintKey = (KeyCode)EditorGUILayout.EnumPopup(new GUIContent("Sprint Key", "Determines what key is used to sprint."), fpc.sprintKey);
-        fpc.sprintSpeed = EditorGUILayout.Slider(new GUIContent("Sprint Speed", "Determines how fast the player will move while sprinting."), fpc.sprintSpeed, fpc.walkSpeed, 20f);
+        fpc.sprintSpeed = EditorGUILayout.Slider(new GUIContent("Sprint Speed", "Determines how fast the player will move while sprinting."), fpc.sprintSpeed, fpc.walkSpeed, maxSprint);
 
         //GUI.enabled = !fpc.unlimitedSprint;
         fpc.sprintDuration = EditorGUILayout.Slider(new GUIContent("Sprint Duration", "Determines how long the player can sprint while unlimited sprint is disabled."), fpc.sprintDuration, 1f, 20f);
@@ -652,7 +663,7 @@ public class FirstPersonController : MonoBehaviour
         fpc.useSprintBar = EditorGUILayout.ToggleLeft(new GUIContent("Use Sprint Bar", "Determines if the default sprint bar will appear on screen."), fpc.useSprintBar);
 
         // Only displays sprint bar options if sprint bar is enabled
-        if(fpc.useSprintBar)
+        if (fpc.useSprintBar)
         {
             EditorGUI.indentLevel++;
 
@@ -726,7 +737,7 @@ public class FirstPersonController : MonoBehaviour
         EditorGUILayout.Space();
 
         fpc.enableHeadBob = EditorGUILayout.ToggleLeft(new GUIContent("Enable Head Bob", "Determines if the camera will bob while the player is walking."), fpc.enableHeadBob);
-        
+
 
         GUI.enabled = fpc.enableHeadBob;
         fpc.joint = (Transform)EditorGUILayout.ObjectField(new GUIContent("Camera Joint", "Joint object position is moved while head bob is active."), fpc.joint, typeof(Transform), true);
@@ -737,7 +748,7 @@ public class FirstPersonController : MonoBehaviour
         #endregion
 
         //Sets any changes from the prefab
-        if(GUI.changed)
+        if (GUI.changed)
         {
             EditorUtility.SetDirty(fpc);
             Undo.RecordObject(fpc, "FPC Change");

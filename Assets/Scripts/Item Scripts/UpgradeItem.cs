@@ -16,4 +16,6 @@ public class UpgradeItem : ScriptableObject
     public Sprite itemImage;
 
     public Sprite currencyType;
+
+    public float ImprovementModifier;
 }

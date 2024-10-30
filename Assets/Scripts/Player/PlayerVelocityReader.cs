@@ -9,7 +9,11 @@ public class PlayerVelocityReader : MonoBehaviour
     public Rigidbody body;
 
     public Vector3 animVelocity;
+
     public float velocityThreshold = 0.01f;
+
+    [SerializeField]
+    private float currentVelocity = 0;
     void Start()
     {
         animVelocity = playerAnim.velocity;
@@ -18,7 +22,7 @@ public class PlayerVelocityReader : MonoBehaviour
     
     void Update()
     {
-        float currentVelocity = body.velocity.magnitude;
+        currentVelocity = body.velocity.magnitude;
 
         if (currentVelocity < velocityThreshold)
         {

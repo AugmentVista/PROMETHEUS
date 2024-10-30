@@ -7,6 +7,7 @@ public class WaveSystem : MonoBehaviour
     [SerializeField] private Wave[] waveArray;
     [SerializeField] private EnemyWaveTrigger waveTrigger;
 
+
     private State state;
 
     private enum State
@@ -26,7 +27,7 @@ public class WaveSystem : MonoBehaviour
         waveTrigger.OnPlayerEnterTrigger += EnemyWaveTrigger_OnPlayerEnterTrigger;
     }
 
-    private void EnemyWaveTrigger_OnPlayerEnterTrigger(object sender, System.EventArgs e)
+    private void EnemyWaveTrigger_OnPlayerEnterTrigger(object sender, System.EventArgs _) // _  is for events that don’t require information beyond the event occurring.
     {
         if (state == State.Idle)
         { 
@@ -34,8 +35,8 @@ public class WaveSystem : MonoBehaviour
 
             waveTrigger.OnPlayerEnterTrigger -= EnemyWaveTrigger_OnPlayerEnterTrigger;
         }
-
     }
+
     private void Update()
     {
         switch (state)
@@ -69,7 +70,6 @@ public class WaveSystem : MonoBehaviour
             }
         }
     }
-
     private bool AreWavesOver()
     {
         foreach (Wave wave in waveArray)
@@ -116,7 +116,6 @@ public class WaveSystem : MonoBehaviour
                 enemySpawn.Spawn();
             }
         }
-
         public bool IsWaveOver()
         {
             if (timer < 0)
@@ -138,11 +137,5 @@ public class WaveSystem : MonoBehaviour
                 return false;
             }
         }
-
-
-
-
-
-
     }
 }

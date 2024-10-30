@@ -48,12 +48,12 @@ public class ProjectileCollisionHandler : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log($"OnTriggerEnter called with: {other.gameObject.tag}");
+        //Debug.Log($"OnTriggerEnter called with: {other.gameObject.tag}");
         switch (other.gameObject.tag)
         {
             case "Weapon":
                 playerAttack.CanPlayerAttackThis(projectileCollider);
-                Debug.Log("Called CanPlayerAttackThis from OnTriggerEnter");
+                //Debug.Log("Called CanPlayerAttackThis from OnTriggerEnter");
                 if (!struckByWeapon) { return; }
                 else
                 { 
@@ -73,7 +73,7 @@ public class ProjectileCollisionHandler : MonoBehaviour
                 break;
 
             default:
-                Debug.Log("Unknown projectile tag");
+                //Debug.Log("Unknown projectile tag");
                 break;
         }
     }
@@ -86,7 +86,7 @@ public class ProjectileCollisionHandler : MonoBehaviour
             case "PlayerBody":
                 OnPlayerDamaged(true, gameObject.tag); 
 
-                Debug.Log($"{gameObject.tag} hit the PlayerBody");
+                //Debug.Log($"{gameObject.tag} hit the PlayerBody");
                 //Score.score--;
                 DisableColliderForPooling();
                 break;
@@ -96,7 +96,7 @@ public class ProjectileCollisionHandler : MonoBehaviour
                 {
                     //Score.score++;
                     
-                    Debug.Log($"{projectileType} hit the player's weapon and was blocked.");
+                    //Debug.Log($"{projectileType} hit the player's weapon and was blocked.");
                     DisableColliderForPooling();
                 }
                 else if (!struckByWeapon)
@@ -108,13 +108,13 @@ public class ProjectileCollisionHandler : MonoBehaviour
             case "MissZone":
                 OnPlayerDamaged(false, gameObject.tag);
 
-                Debug.Log($"{gameObject.tag} missed and hit the MissZone.");
+                //Debug.Log($"{gameObject.tag} missed and hit the MissZone.");
 
                 DisableColliderForPooling(); 
                 break;
 
             default:
-                Debug.Log("Unknown hit location");
+                //Debug.Log("Unknown hit location");
                 DisableColliderForPooling();
                 break;
         }
@@ -124,40 +124,40 @@ public class ProjectileCollisionHandler : MonoBehaviour
     {
         if (didThisHitPlayer)
         {
-            Debug.Log($"Player hit {projectileType} !!!!!");
+            //Debug.Log($"Player hit {projectileType} !!!!!");
             switch (projectileType)
             {
                 case "Stone":
                     Score.score--; // Reduce score
                     PlayerHealthSystem.TakeDamage(Base.stunDamage);
                     playerMove.WasHit(true, projectileType);
-                    Debug.Log("Stone hit the player. Score reduced.");
+                    //Debug.Log("Stone hit the player. Score reduced.");
                     break;
 
                 case "Knockback":
                     PlayerHealthSystem.TakeDamage(Base.knockBackDamage);
                     playerMove.WasHit(true, projectileType); // Move player backward
-                    Debug.Log("Knockback hit the player. Player moved backward.");
+                    //Debug.Log("Knockback hit the player. Player moved backward.");
                     break;
 
                 case "Stun":
                     playerMove.WasHit(true, projectileType); // Stun the player
-                    Debug.Log("Stun hit the player. Player stunned.");
+                    //Debug.Log("Stun hit the player. Player stunned.");
                     break;
 
                 case "Slow":
                     playerMove.WasHit(true, projectileType); // Slow the player
-                    Debug.Log("Slow hit the player. Player movement slowed.");
+                    //Debug.Log("Slow hit the player. Player movement slowed.");
                     break;
 
                 default:
-                    Debug.Log("Player was not hit");
+                    //Debug.Log("Player was not hit");
                     break;
             }
         }
         else
         {
-            Debug.Log($"Projectile missed: {projectileType}");
+            //Debug.Log($"Projectile missed: {projectileType}");
         }
 
         // Call spawner to deactivate the projectile

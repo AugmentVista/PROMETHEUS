@@ -40,6 +40,23 @@ public class GlobalSettings : MonoBehaviour
 
     #endregion
 
+    #region Player Movement Variables
+    #region fpc MonoBehaviour
+
+    public static float globalSprintSpeed = 8f;
+    public static float globalSprintDuration = 5f;
+    public static float globalSprintCooldown = globalSprintDuration/2;
+
+    #endregion
+    #region fpc Editor
+
+    public static float globalMaxSprintSpeed = 10f;
+    public static float globalMinWalkSpeed = 2.5f;
+
+    #endregion
+
+    #endregion
+
     #region ProjectileCollisionHandler Variables
 
     public static float stoneProjectileDamage = 10f;
@@ -68,5 +85,6 @@ public class GlobalSettings : MonoBehaviour
     public static bool globalPauseOverride = false;
     #endregion
 
+   
 
 }
