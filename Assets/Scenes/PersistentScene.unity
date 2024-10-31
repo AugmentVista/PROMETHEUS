@@ -2480,13 +2480,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3407d98951d443f46981952b5d97311f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scriptableItem: {fileID: 11400000, guid: 035c3fa4dd646124fbcb8e63d2243ae1, type: 2}
+  scriptableItem: {fileID: 11400000, guid: c2fb66c8390c9ff4b843c710c8489941, type: 2}
   titleText: {fileID: 1678052634}
   descriptionText: {fileID: 516632849}
   itemSprite: {fileID: 1952711385}
   currencyImage: {fileID: 1086942527}
   priceText: {fileID: 212779852}
-  Modifer: 2
+  Modifer: 1
 --- !u!1 &816694104
 GameObject:
   m_ObjectHideFlags: 0
@@ -2995,13 +2995,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3407d98951d443f46981952b5d97311f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scriptableItem: {fileID: 11400000, guid: 035c3fa4dd646124fbcb8e63d2243ae1, type: 2}
+  scriptableItem: {fileID: 11400000, guid: 012cced9f60629644be898fe8fa3d30d, type: 2}
   titleText: {fileID: 103121468}
   descriptionText: {fileID: 995154356}
   itemSprite: {fileID: 375572916}
   currencyImage: {fileID: 953439694}
   priceText: {fileID: 1081058551}
-  Modifer: 2
+  Modifer: 50
 --- !u!1 &979825517
 GameObject:
   m_ObjectHideFlags: 0
@@ -5404,13 +5404,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3407d98951d443f46981952b5d97311f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scriptableItem: {fileID: 11400000, guid: 035c3fa4dd646124fbcb8e63d2243ae1, type: 2}
+  scriptableItem: {fileID: 11400000, guid: 012cced9f60629644be898fe8fa3d30d, type: 2}
   titleText: {fileID: 827578187}
   descriptionText: {fileID: 1572512475}
   itemSprite: {fileID: 583342318}
   currencyImage: {fileID: 1507782515}
   priceText: {fileID: 283089757}
-  Modifer: 2
+  Modifer: 50
 --- !u!1 &1873685562
 GameObject:
   m_ObjectHideFlags: 0
@@ -15036,13 +15036,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3407d98951d443f46981952b5d97311f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scriptableItem: {fileID: 11400000, guid: 035c3fa4dd646124fbcb8e63d2243ae1, type: 2}
+  scriptableItem: {fileID: 11400000, guid: c2fb66c8390c9ff4b843c710c8489941, type: 2}
   titleText: {fileID: 7077043173069613436}
   descriptionText: {fileID: 1814957111374893578}
   itemSprite: {fileID: 4217889824897585059}
   currencyImage: {fileID: 171624501652857251}
   priceText: {fileID: 8025376573431008166}
-  Modifer: 2
+  Modifer: 1
 --- !u!222 &1943830944151411693
 CanvasRenderer:
   m_ObjectHideFlags: 0

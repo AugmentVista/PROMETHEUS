@@ -3,10 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Button_UpgradeEvent : MonoBehaviour // this needs to be on an object within UI Manager
+public class Button_UpgradeEvent : MonoBehaviour
 {
-    public EventHandler UpgradeWasPurchased; // sends notice to UpgradeEventManager to dish out upgrades
-
+    public EventHandler<UpgradeEventArgs> UpgradeWasPurchased;
+    public ItemDisplay item; // Assign this in the inspector for each button
 
     private void Start()
     {
@@ -15,24 +15,20 @@ public class Button_UpgradeEvent : MonoBehaviour // this needs to be on an objec
 
     private void OnPurchase()
     {
-        // if all conditions to be purchased are met
-        { 
-            UpgradeWasPurchased?.Invoke(this, EventArgs.Empty);
+        // Assuming purchase conditions are met
+        if (item != null)
+        {
+            UpgradeWasPurchased?.Invoke(this, new UpgradeEventArgs(item));
         }
-    
     }
 
-    [System.Serializable]
-    private class UpgradeInfoCollector
+    public class UpgradeEventArgs : EventArgs
     {
-        ///<summary>
-        /// This class's job is to gather up all of the information from upgradable classes
-        /// This class will then have each of these classes represented by an enum or something
-        /// Then when the purchase button is clicked on the button will communicate with this script
+        public ItemDisplay Item { get; }  // Refers to ItemDisplay rather than UpgradeItem
 
-        public GlobalSettings settings;
-
+        public UpgradeEventArgs(ItemDisplay item)
+        {
+            Item = item;
+        }
     }
 }
-
-

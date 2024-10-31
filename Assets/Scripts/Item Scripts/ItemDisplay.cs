@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -33,6 +34,11 @@ public class ItemDisplay : MonoBehaviour
         priceText.text = scriptableItem.price;
 
         Modifer = scriptableItem.ImprovementModifier;
+    }
+
+    public bool IsTitleMatch(string titleToCheck)
+    {
+        return titleText.text.Equals(titleToCheck, StringComparison.OrdinalIgnoreCase);
     }
 
     public void UpdateDisplay(UpgradeItem newScriptableItem, TMP_Text newTitleText, TMP_Text newDescriptionText, 
