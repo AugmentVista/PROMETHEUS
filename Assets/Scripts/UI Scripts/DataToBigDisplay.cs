@@ -6,33 +6,35 @@ using UnityEngine.UI;
 
 public class DataToBigDisplay : MonoBehaviour
 {
-    ItemDisplay display;
-    GameObject BigDisplay;
+    public ItemDisplay display;
+    public ItemDisplay bigDisplay;
 
 
-    void Start()
+    public void DisplayNewValues()
     {
-        display = GetComponent<ItemDisplay>();
+        if (bigDisplay != null && display != null)
+            bigDisplay.UpdateDisplay(display.scriptableItem, display.titleText, display.descriptionText, display.itemSprite, display.currencyImage, display.priceText, display.Modifer);
+
+        Debug.Log("huh?");
     }
 
     public void SelectToDisplay()
     {
-        ItemDisplay targetDisplay = BigDisplay.GetComponent<ItemDisplay>();
-        if (targetDisplay != null)
+        if (bigDisplay != null && display != null)
         { 
-            targetDisplay.scriptableItem = display.scriptableItem;
+            bigDisplay.scriptableItem = display.scriptableItem;
 
-            targetDisplay.titleText = display.titleText;
+            bigDisplay.titleText = display.titleText;
 
-            targetDisplay.descriptionText = display.descriptionText;
+            bigDisplay.descriptionText = display.descriptionText;
 
-            targetDisplay.itemSprite = display.itemSprite;
+            bigDisplay.itemSprite = display.itemSprite;
 
-            targetDisplay.currencyImage = display.currencyImage;
+            bigDisplay.currencyImage = display.currencyImage;
 
-            targetDisplay.priceText = display.priceText;
+            bigDisplay.priceText = display.priceText;
 
-            targetDisplay.Modifer = display.Modifer;
+            bigDisplay.Modifer = display.Modifer;
         }
     }
 }

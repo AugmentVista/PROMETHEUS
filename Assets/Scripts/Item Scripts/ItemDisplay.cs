@@ -34,4 +34,22 @@ public class ItemDisplay : MonoBehaviour
 
         Modifer = scriptableItem.ImprovementModifier;
     }
+
+    public void UpdateDisplay(UpgradeItem newScriptableItem, TMP_Text newTitleText, TMP_Text newDescriptionText, 
+        Image newItemSprite, Image newCurrencyImage, TMP_Text newPriceText, float newModifer)
+    {
+        scriptableItem = newScriptableItem;
+
+        titleText.text = newTitleText.text;
+
+        descriptionText.text = newDescriptionText.text;
+
+        itemSprite.sprite = newItemSprite.sprite;
+
+        currencyImage.sprite = newCurrencyImage.sprite;
+
+        priceText.text = newPriceText.text;
+
+        Modifer = newModifer;
+    }
 }
