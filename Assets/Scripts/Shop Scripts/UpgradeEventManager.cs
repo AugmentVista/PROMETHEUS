@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static Button_UpgradeEvent;
 
 public class UpgradeEventManager : MonoBehaviour // this needs to be on an object within UI Manager
 {
@@ -23,7 +22,7 @@ public class UpgradeEventManager : MonoBehaviour // this needs to be on an objec
         upgradeButton.UpgradeWasPurchased += Button_UpgradeEvent_UpgradeWasPurchased;
     }
 
-    private void Button_UpgradeEvent_UpgradeWasPurchased(object sender, Button_UpgradeEvent.UpgradeEventArgs e)
+    private void Button_UpgradeEvent_UpgradeWasPurchased(object sender, UpgradeEventArgs e)
     {
         ItemDisplay purchasedItemDisplay = e.Item;
 
@@ -38,6 +37,7 @@ public class UpgradeEventManager : MonoBehaviour // this needs to be on an objec
                 if (Item.IsTitleMatch("Health Potion"))
                 {
                     UpdateUpgradeHealth?.Invoke(this, new UpgradeEventArgs(Item));
+                    Debug.Log("Player bought a Health Potion");
                 }
                 break;
             case "Hammer Upgrade":

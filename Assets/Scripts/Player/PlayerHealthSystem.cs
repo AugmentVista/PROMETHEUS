@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System;
 
 public class PlayerHealthSystem : MonoBehaviour
 {
@@ -12,13 +13,16 @@ public class PlayerHealthSystem : MonoBehaviour
 
     public float fillSpeed = 0.5f;  // Controls how fast the health bar fills/drains
 
-    private float targetFillAmount; 
+    private float targetFillAmount;
+
+    private int hpUpgradeLimit = 0;
 
     private void Start()
     {
         currentHealth = maxHealth;
         targetFillAmount = 1.0f;
         playerHealthGauge.fillAmount = targetFillAmount;
+        Debug.Log("Health Start has completed");
     }
 
     private void Update()
@@ -69,6 +73,26 @@ public class PlayerHealthSystem : MonoBehaviour
             {
                 gameManager.GameOverTrigger();
             }
+        }
+    }
+
+    public void HpEvent(ItemDisplay item)
+    {
+        if (item != null)
+        {
+
+            Debug.Log($"Mod is {item.Modifer}");
+                GlobalSettings.globalPlayerHPMaximum += item.Modifer;
+                maxHealth = GlobalSettings.globalPlayerHPMaximum;
+                Heal(item.Modifer);
+                Debug.Log("Player has been healed");
+                hpUpgradeLimit++;
+            
+            
+        }
+        else
+        {
+            Debug.Log("item is null");
         }
     }
 }

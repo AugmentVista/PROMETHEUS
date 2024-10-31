@@ -3,13 +3,14 @@ using UnityEngine.SceneManagement;
 
 public class Level_Manager : MonoBehaviour 
 {
-    public GameObject Player;
-    public Transform projectileTarget;
+    [SerializeField] private UpgradeEventManager upgradeManager;
+
     public TimerController Timer;
 
     public bool Win = GlobalSettings.globalPlayerWin;
     public bool Lose = GlobalSettings.globalPlayerLose;
     static bool isSubscribed;
+    bool subscribedHealthUpgrade = false;
 
     private void Awake()
     {
@@ -19,14 +20,41 @@ public class Level_Manager : MonoBehaviour
         isSubscribed = true;
     }
 
+    private void OnDisable()
+    {
+        upgradeManager.UpdateUpgradeHealth -= UpgradeEventManager_UpdateUpgradeHealth;
+    }
+
+    private void UpgradeEventManager_UpdateUpgradeHealth(object sender, UpgradeEventArgs e)
+    {
+        PlayerHealthSystem healthSystem = FindObjectOfType<PlayerHealthSystem>(true);
+        ItemDisplay healthPotion = e.Item;
+        healthSystem.HpEvent(healthPotion);
+
+    }
+
+    private void Start()
+    {
+        upgradeManager.UpdateUpgradeHealth += UpgradeEventManager_UpdateUpgradeHealth;
+    }
+
     private void Update()
     {
-        if (TimerController.TimerOver)
+        if (Timer != null) 
         {
-            Lose = true;
-            CheckWinClause();
+            if (Timer.TimerOver)
+            {
+                //Debug.Log("DING DING, TIMER IS UP!");
+                //Lose = true;
+                //CheckWinClause();
+            }
         }
+        
     }
+
+    // upgradeManager.UpdateUpgradeHealth += UpgradeEventManager_UpdateUpgradeHealth;
+
+
     #region SceneCalls
     public void LoadMainMenu()
     {
@@ -45,6 +73,8 @@ public class Level_Manager : MonoBehaviour
         SceneManager.LoadScene("GameOver");
     }
     #endregion
+
+    #region Win-Conditionals
 
     public void CheckWinClause()
     {
@@ -75,6 +105,10 @@ public class Level_Manager : MonoBehaviour
             Debug.LogError("Singleton instance not found.");
         }
     }
+
+    #endregion
+
+    #region Scene Prep
 
     private void OnSceneChanged(Scene previousScene, Scene newScene)
     {
@@ -124,4 +158,9 @@ public class Level_Manager : MonoBehaviour
         // example, activate lose UI, display scores, play defeat animations, etc.
         Game_Manager.ChangeCamera(false); // Ensure menu camera is active
     }
+
+    #endregion
+
+
+
 }

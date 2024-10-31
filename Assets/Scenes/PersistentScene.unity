@@ -20832,8 +20832,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b79850cfd85fb5e4ca521d03ff39ec21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Player: {fileID: 539069329940609946}
-  projectileTarget: {fileID: 0}
+  upgradeManager: {fileID: 1685919408}
   Timer: {fileID: 3175393366862203896}
   Win: 0
   Lose: 0
@@ -21722,6 +21721,7 @@ MonoBehaviour:
   fillImage: {fileID: 5769239382171524442}
   duration: 25
   elapsedTime: 0
+  TimerOver: 0
 --- !u!222 &3181581488019663061
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -51176,7 +51176,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!222 &6024471037135930291
 CanvasRenderer:
   m_ObjectHideFlags: 0

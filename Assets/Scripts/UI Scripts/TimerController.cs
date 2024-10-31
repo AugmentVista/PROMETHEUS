@@ -14,11 +14,10 @@ public class TimerController : MonoBehaviour
     public float duration;
     public float elapsedTime = 0f;
 
-
     private int lastDisplayedTime = -1;
     int remainingTime;
 
-    public static bool TimerOver = false;
+    public bool TimerOver = false;
 
     void Start()
     {
