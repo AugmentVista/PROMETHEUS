@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da52b6043a4a9fc418470ec65226891a, type: 3}
   m_Name: Block Upgrade
   m_EditorClassIdentifier: 
-  title: 
-  description: 
-  price: 
-  itemImage: {fileID: 0}
-  currencyType: {fileID: 0}
-  ImprovementModifier: 0
+  title: Block Upgrade
+  description: Improves your block
+  price: 70
+  itemImage: {fileID: 21300000, guid: 2d89e2d5557e42e47992652f748a6b1f, type: 3}
+  currencyType: {fileID: 21300000, guid: 8117ae5dc2e40f64384b96446574744d, type: 3}
+  ImprovementModifier: 30

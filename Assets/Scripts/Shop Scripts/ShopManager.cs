@@ -6,38 +6,38 @@ using TMPro;
 
 public class ShopManager : MonoBehaviour
 {
-    public UpgradeItem[] itemDisplays;
-
-    public GameObject[] itemsDisplayedInShop;
-
     #region Player Balance
 
     private int drachma = GlobalSettings.globalDrachma;
-    private int amountToAdd = 5;
+    private int buttonAmount = 5;
     public Image[] DrachmaPositive;
-    public Image[] DrachmaNegative;// separate into postive and negative array of images
+    public Image[] DrachmaNegative;
     public Image drachmaOnes;
     public Image drachmaTens;
     public Image drachmaHundreds;
 
     #endregion
 
-
+    
     private int lastDrachma = -1;
 
-    public void AddDrachma()
+
+
+    public void AddDrachma(int amountToAdd)
     {
         GlobalSettings.globalDrachma += amountToAdd;
         drachma = GlobalSettings.globalDrachma;
         Debug.Log(drachma);
     }
 
-    public void SubdractDrachma()
+    public void SubtractDrachma(int amountToReduce)
     {
-        GlobalSettings.globalDrachma -= amountToAdd;
+        GlobalSettings.globalDrachma -= amountToReduce;
         drachma = GlobalSettings.globalDrachma;
         Debug.Log(drachma);
     }
+    public void ButtonAddMoney() { AddDrachma(buttonAmount); }
+    public void ButtonRemoveMoney() { SubtractDrachma(buttonAmount); }
 
     void Update()
     {
@@ -73,14 +73,30 @@ public class ShopManager : MonoBehaviour
         }
     }
 
-    public void PopulateShop()
+    public bool CanPlayerAffordThis(TMP_Text priceText)
     {
-        for (int i = 0; i < itemDisplays.Length; i++)
-        { 
-        
+        string priceString = priceText.text;
+
+        if (int.TryParse(priceString, out int price))
+        {
+            if (drachma - price >= 0)
+            {
+                Debug.Log("Player can Afford this item");
+                SubtractDrachma(price);
+                return true;
+            }
+            else
+            {
+                Debug.Log("Player can't afford that item");
+                return false;
+            }
+        }
+        else
+        {
+            Debug.Log($"Price cannot be converted to an int, price is {priceString}");
+            return false;
         }
     }
-
 
 
 

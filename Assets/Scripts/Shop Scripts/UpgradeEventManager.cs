@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Button_UpgradeEvent;
 
 public class UpgradeEventManager : MonoBehaviour // this needs to be on an object within UI Manager
 {
@@ -9,20 +10,13 @@ public class UpgradeEventManager : MonoBehaviour // this needs to be on an objec
 
     [SerializeField] private Button_UpgradeEvent upgradeButton;
 
-    public EventHandler UpdateUpgradeHealth;
-    public EventHandler UpdateUpgradeWeapon;
-    public EventHandler UpdateUpgradeStamina;
-    public EventHandler UpdateUpgradeAttackSpeed;
-    public EventHandler UpdateUpgradeSprintSpeed;
+    public EventHandler<UpgradeEventArgs> UpdateUpgradeHealth;
+    public EventHandler<UpgradeEventArgs> UpdateUpgradeHammer;
+    public EventHandler<UpgradeEventArgs> UpdateUpgradeStamina;
+    public EventHandler<UpgradeEventArgs> UpdateUpgradeAttackSpeed;
+    public EventHandler<UpgradeEventArgs> UpdateUpgradeSprintSpeed;
+    public EventHandler<UpgradeEventArgs> UpdateUpgradeBlock;
 
-    private State state;
-
-    private enum State
-    {
-        Consumable,
-        PlayerUpgrade,
-        TemporaryBuff
-    }
 
     void Start()
     {
@@ -43,31 +37,37 @@ public class UpgradeEventManager : MonoBehaviour // this needs to be on an objec
             case "Health Potion":
                 if (Item.IsTitleMatch("Health Potion"))
                 {
-
+                    UpdateUpgradeHealth?.Invoke(this, new UpgradeEventArgs(Item));
                 }
                 break;
             case "Hammer Upgrade":
                 if (Item.IsTitleMatch("Hammer Upgrade"))
                 {
-
+                    UpdateUpgradeHammer?.Invoke(this, new UpgradeEventArgs(Item));
                 }
                 break;
                 case "Stamina Upgrade":
                 if (Item.IsTitleMatch("Stamina Upgrade"))
                 {
-
+                    UpdateUpgradeStamina?.Invoke(this, new UpgradeEventArgs(Item));
                 }
                 break;
                 case "Attack Speed Upgrade":
                 if (Item.IsTitleMatch("Attack Speed Upgrade"))
                 {
-
+                    UpdateUpgradeAttackSpeed?.Invoke(this, new UpgradeEventArgs(Item));
                 }
                 break;
                 case "Sprint Speed Upgrade":
                 if (Item.IsTitleMatch("Sprint Speed Upgrade"))
                 {
-
+                    UpdateUpgradeSprintSpeed?.Invoke(this, new UpgradeEventArgs(Item));
+                }
+                break;
+            case "Block Upgrade":
+                if (Item.IsTitleMatch("Block Upgrade"))
+                {
+                    UpdateUpgradeBlock?.Invoke(this, new UpgradeEventArgs(Item));
                 }
                 break;
             default:
