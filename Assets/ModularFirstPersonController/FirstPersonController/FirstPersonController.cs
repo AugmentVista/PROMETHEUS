@@ -563,6 +563,13 @@ public class FirstPersonControllerEditor : Editor
         SerFPC = new SerializedObject(fpc);
     }
 
+    public void UpdateEditorUpgrade()
+    {
+      maxSprint = GlobalSettings.globalMaxSprintSpeed;
+     minWalkSpeed = GlobalSettings.globalMinWalkSpeed;
+    }
+
+
     public override void OnInspectorGUI()
     {
         SerFPC.Update();

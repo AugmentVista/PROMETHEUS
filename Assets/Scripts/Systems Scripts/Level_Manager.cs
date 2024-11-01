@@ -29,13 +29,20 @@ public class Level_Manager : MonoBehaviour
     {
         PlayerHealthSystem healthSystem = FindObjectOfType<PlayerHealthSystem>(true);
         ItemDisplay healthPotion = e.Item;
-        healthSystem.HpEvent(healthPotion);
-
+        if (healthSystem != null) { healthSystem.HpEvent(healthPotion); }
+    }
+    private void UpgradeEventManager_UpdateUpgradeSprintSpeed(object sender, UpgradeEventArgs e)
+    {
+        SprintBoost sprint = FindObjectOfType<SprintBoost>(true);
+        ItemDisplay sprintUpgrade = e.Item;
+        if (sprint != null) { sprint.IncreaseSprint(sprintUpgrade.Modifer); }
     }
 
     private void Start()
     {
         upgradeManager.UpdateUpgradeHealth += UpgradeEventManager_UpdateUpgradeHealth;
+        upgradeManager.UpdateUpgradeSprintSpeed += UpgradeEventManager_UpdateUpgradeSprintSpeed;
+        //upgradeManager.UpdateUpgradeAttackSpeed += UpgradeEventManager_UpdateUpgradeAttackSpeed;
     }
 
     private void Update()
@@ -52,7 +59,6 @@ public class Level_Manager : MonoBehaviour
         
     }
 
-    // upgradeManager.UpdateUpgradeHealth += UpgradeEventManager_UpdateUpgradeHealth;
 
 
     #region SceneCalls
