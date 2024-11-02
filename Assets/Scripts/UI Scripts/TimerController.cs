@@ -25,6 +25,11 @@ public class TimerController : MonoBehaviour
         SetTimerUINumbers(Mathf.CeilToInt(duration - elapsedTime));
     }
 
+    public void ResetTimerCount()
+    { 
+        elapsedTime = 0f;
+    }
+
     void Update()
     {
         elapsedTime += Time.deltaTime;

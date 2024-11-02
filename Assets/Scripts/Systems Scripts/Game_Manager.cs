@@ -10,6 +10,7 @@ public class Game_Manager : MonoBehaviour
 
     public GameObject playerCamera;
     public GameObject menuCamera;
+    public GameObject CameraHolder;
 
     public bool Paused;
 
@@ -23,6 +24,7 @@ public class Game_Manager : MonoBehaviour
     public static event GameStateChange OnGameWin;
     public static event GameStateChange OnDoNothing;
     public static event GameStateChange OnUpgrades;
+    public static event GameStateChange OnIntroduction;
 
     private void Awake() // Awake runs before start and again when scenes change.
     {
@@ -152,6 +154,12 @@ public class Game_Manager : MonoBehaviour
         IsMenuOpen(true);
     }
 
+    public void IntroductionMenuTrigger()
+    {
+        OnIntroduction?.Invoke();
+        IsMenuOpen (true);
+    }
+
     public void GameOverTrigger()
     {
         gameState = GameState.GameOver;
@@ -162,7 +170,6 @@ public class Game_Manager : MonoBehaviour
     {
         gameState = GameState.GameWin;
         ChangeGameState(gameState);
-
     }
 
     #endregion
@@ -189,42 +196,64 @@ public class Game_Manager : MonoBehaviour
         Application.Quit();
     }
 
-    private bool IsMenuOpen(bool open)
+    private void IsMenuOpen(bool open)
     {
         // If a menu is open and the menu camera is turned off, turn it on and turn off the player camera.
         if (!menuCamera.activeSelf && open)
         {
-            EnableGameplayCamera();
-            return true;
+            EnableGameplayCamera(true);
+        }
+        //if a menu is open and the menu camera is turned on, return
+        else if (menuCamera.activeSelf && open)
+        {
+            return;
+            //EnableGameplayCamera(false);
         }
         // If a menu isn't open and the player camera is turned off, turn it on and turn off the menu camera.
         else if (!playerCamera.activeSelf && !open)
         {
-            EnableGameplayCamera();
-            return false;
+            EnableGameplayCamera(false);
         }
-
-        return false; // No change needed
+        // if a menu isn't open and the player camera is turned on return
+        else if (playerCamera.activeSelf && !open) 
+        {
+            return;
+            //EnableGameplayCamera(true);
+        }
     }
 
     // Swaps between player camera and menu camera when a menu is opened
     public void EnableGameplayCamera(bool isGameplayCameraOpen = false)
     {
-        if (isGameplayCameraOpen)
+        Scene currentScene = SceneManager.GetActiveScene();
+        if (currentScene.name != "Level1" && !Paused)
         {
-            menuCamera.SetActive(false);
-            playerCamera.SetActive(true);
+            playerCamera = GameObject.FindGameObjectWithTag("PlayerCamera"); // not singleton
+            Transform cameraTransform = playerCamera.transform;
+            Transform singletonTransform = CameraHolder.transform;
+            cameraTransform.parent = singletonTransform; // moves this camera into the singleton pattern to retain active reference
         }
-        else if (menuCamera.activeSelf)
+        else 
         {
-            menuCamera.SetActive(false);
-            playerCamera.SetActive(true);
+            playerCamera = GameObject.FindGameObjectWithTag("MainCamera"); // part of singleton
         }
-        else if (playerCamera.activeSelf)
+
+        if (menuCamera != null && playerCamera != null)
         {
-            playerCamera.SetActive(false);
-            menuCamera.SetActive(true);
+            playerCamera.SetActive(isGameplayCameraOpen);
+            menuCamera.SetActive(isGameplayCameraOpen);
         }
+        else { Debug.LogError($"Player Camera is: {playerCamera}, Menu Camera is: {menuCamera} "); }
+        //else if (menuCamera.activeSelf)
+        //{
+        //    playerCamera.SetActive(true);
+        //    menuCamera.SetActive(false);
+        //}
+        //else if (playerCamera.activeSelf)
+        //{
+        //    playerCamera.SetActive(false);
+        //    menuCamera.SetActive(true);
+        //}
         meteorVFX.SetActive(!isGameplayCameraOpen);
     }
 
@@ -236,46 +265,53 @@ public class Game_Manager : MonoBehaviour
 
     private void Default()
     {
-        IsMenuOpen(false);
+        Time.timeScale = 1.0f;
     }
 
     private void UpgradesMenu()
     {
         Time.timeScale = 1.0f;
-        OnUpgrades?.Invoke();
         IsMenuOpen(true);
+        OnUpgrades?.Invoke();
+    }
+
+    private void Introduction()
+    {
+        Time.timeScale = 1.0f;
+        IsMenuOpen(true);
+        OnIntroduction?.Invoke();
     }
 
     private void MainMenu()
     {
         Time.timeScale = 1.0f;
-        OnMainMenu?.Invoke();
-        level_Manager.LoadMainMenu();
         IsMenuOpen(true);
+        level_Manager.LoadMainMenu();
+        OnMainMenu?.Invoke();
     }
 
     private void Level_1()
     {
         Time.timeScale = 1.0f;
-        level_Manager.LoadLevel_1();
         IsMenuOpen(false);
+        level_Manager.LoadLevel_1();
         OnLevel1?.Invoke();
     }
     #endregion
     private void GameOver()
     {
         Time.timeScale = 1.0f;
+        IsMenuOpen(true);
         level_Manager.LoadGameOver();
         OnGameOver?.Invoke();
-        IsMenuOpen(true);
     }
 
     private void GameWin()
     {
         Time.timeScale = 1.0f;
+        IsMenuOpen(true);
         level_Manager.LoadGameWin();
         OnGameWin?.Invoke();
-        IsMenuOpen(true);
     }
     #endregion
 }
