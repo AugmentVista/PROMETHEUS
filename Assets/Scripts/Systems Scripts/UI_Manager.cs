@@ -18,7 +18,7 @@ public class UI_Manager : MonoBehaviour
         UpdateUI();
         Game_Manager.OnDoNothing += NoUI; 
         Game_Manager.OnMainMenu += MainMenuUI;
-        Game_Manager.OnGamePlay1 += GamePlayUI;
+        Game_Manager.OnLevel1 += GamePlayUI;
         Game_Manager.OnGameOver += GameOverUI;
         Game_Manager.OnGameWin += GameWinUI;
     }
@@ -27,7 +27,7 @@ public class UI_Manager : MonoBehaviour
     {
         Game_Manager.OnDoNothing -= NoUI;
         Game_Manager.OnMainMenu -= MainMenuUI;
-        Game_Manager.OnGamePlay1 -= GamePlayUI;
+        Game_Manager.OnLevel1 -= GamePlayUI;
         Game_Manager.OnGameOver -= GameOverUI;
         Game_Manager.OnGameWin -= GameWinUI;
     }
@@ -40,7 +40,7 @@ public class UI_Manager : MonoBehaviour
             case "MainMenu":
                 MainMenuUI();
                 break;
-            case "GamePlay1":
+            case "Level1":
                 GamePlayUI();
                 break;
             case "GameWin":
@@ -59,7 +59,6 @@ public class UI_Manager : MonoBehaviour
     {
         HideAllUI(emptyUI);
     }
-
     private void MainMenuUI()
     {
         HideAllUI(mainMenuUI);

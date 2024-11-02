@@ -80,9 +80,9 @@ public class GlobalSettings : MonoBehaviour
     #endregion
 
     #region Game_Manager Variables
-    public enum GlobalGameState { MainMenu, GamePlay1, GameOver, GameWin }
-    public static GlobalGameState globalGameState;
+
     public static bool globalPauseOverride = false;
+
     #endregion
 
    

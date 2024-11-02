@@ -14,7 +14,7 @@ public class Scene_Transition : MonoBehaviour
             Scene currentScene = SceneManager.GetActiveScene();
             Debug.Log(currentScene.ToString());
 
-            if (currentScene.name == "GamePlay1")
+            if (currentScene.name == "Level1")
             {
                 gameManager.GameWinTrigger(); // test if this itself will change scene
                 //SceneManager.LoadScene("GameWin");

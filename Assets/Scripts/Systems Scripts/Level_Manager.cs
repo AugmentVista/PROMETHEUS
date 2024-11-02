@@ -68,9 +68,9 @@ public class Level_Manager : MonoBehaviour
     {
         SceneManager.LoadScene("MainMenu");
     }
-    public void LoadGamePlay1()
+    public void LoadLevel_1()
     {
-        SceneManager.LoadScene("GamePlay1");
+        SceneManager.LoadScene("Level_1");
     }
     public void LoadGameWin()
     {
@@ -92,13 +92,13 @@ public class Level_Manager : MonoBehaviour
             Scene currentScene = SceneManager.GetActiveScene();
             if (gameManager != null)
             {
-                if (Win && currentScene.name == "GamePlay1")
+                if (Win && currentScene.name == "Level_1")
                 {
                     gameManager.GameWinTrigger();
                     //gameManager.gameState = GameState.GameWin;
                 }
 
-                if (Lose && currentScene.name == "GamePlay1")
+                if (Lose && currentScene.name == "Level_1")
                 {
                     gameManager.GameOverTrigger(); // same call as Scene_Transition
                 }
@@ -120,6 +120,7 @@ public class Level_Manager : MonoBehaviour
 
     private void OnSceneChanged(Scene previousScene, Scene newScene)
     {
+
         PrepareScene(newScene);
     }
 
@@ -127,7 +128,7 @@ public class Level_Manager : MonoBehaviour
     {
         switch (scene.name)
         {
-            case "GamePlay1":
+            case "Level_1":
                 SetupGameplayScene();
                 break;
             case "MainMenu":
@@ -148,23 +149,28 @@ public class Level_Manager : MonoBehaviour
     {
         Game_Manager gameManager = Singleton.instance.GetComponent<Game_Manager>();
         gameManager.Paused = false;
-        Game_Manager.ChangeCamera(true);
+        gameManager.playerCamera = GameObject.FindGameObjectWithTag("MainCamera");
+        gameManager.EnableGameplayCamera(true);
     }
+
 
     private void SetupMainMenu()
     {
-        Game_Manager.ChangeCamera(false);
+        Game_Manager gameManager = Singleton.instance.GetComponent<Game_Manager>();
+        gameManager.EnableGameplayCamera(false);
     }
 
     private void SetupGameWin()
     {
+
     }
 
     private void SetupGameOver()
     {
+        Game_Manager gameManager = Singleton.instance.GetComponent<Game_Manager>();
         // Logic for handling what happens in the Game Lose scene
         // example, activate lose UI, display scores, play defeat animations, etc.
-        Game_Manager.ChangeCamera(false); // Ensure menu camera is active
+        gameManager.EnableGameplayCamera(false); // Ensure menu camera is active
     }
 
     #endregion
