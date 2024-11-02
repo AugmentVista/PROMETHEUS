@@ -2,18 +2,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerVelocityReader : MonoBehaviour
+public class PlayerSpeedReader : MonoBehaviour
 {
     public Animator playerAnim;
 
     public Rigidbody body;
 
-    public Vector3 animVelocity;
-
-    public float velocityThreshold = 0.01f;
+    [SerializeField]
+    private KeyCode attackKey = KeyCode.E;
 
     [SerializeField]
-    private float currentVelocity = 0;
+    private KeyCode hitKey = KeyCode.Q;
+
+    [SerializeField] 
+    private Vector3 animVelocity;
+
+    [SerializeField]
+    private float currentSpeed = 0;
+
+    public bool attacking;
+
+    public bool damaged;
+
+    public float SpeedThreshold = 0.005f;
+
     void Start()
     {
         animVelocity = playerAnim.velocity;
@@ -22,12 +34,34 @@ public class PlayerVelocityReader : MonoBehaviour
     
     void Update()
     {
-        currentVelocity = body.velocity.magnitude;
+        currentSpeed = body.velocity.magnitude;
 
-        if (currentVelocity < velocityThreshold)
+        if (currentSpeed < SpeedThreshold)
         {
-            currentVelocity = 0f; // sets velocity to 0 if it is so small it is basically 0
+            currentSpeed = 0f; // sets Speed to 0 if it is so small it is basically 0
         }
-        playerAnim.SetFloat("Velocity", currentVelocity);
+        playerAnim.SetFloat("Speed", currentSpeed);
+
+        if (Input.GetKeyDown(attackKey))
+        {
+            attacking = true;
+            playerAnim.SetBool("Attacking", attacking);
+        }
+        else
+        {
+            attacking = false;
+            playerAnim.SetBool("Attacking", attacking);
+        }
+
+        if (Input.GetKeyDown(hitKey))
+        {
+            damaged = true;
+            playerAnim.SetBool("Damaged", damaged);
+        }
+        else
+        {
+            damaged = false;
+            playerAnim.SetBool("Damaged", damaged);
+        }
     }
 }
