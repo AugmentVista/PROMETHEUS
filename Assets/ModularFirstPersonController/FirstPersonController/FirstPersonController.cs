@@ -400,9 +400,7 @@ public class FirstPersonController : MonoBehaviour
                 Vector3 velocity = rb.velocity;
                 float currentZ = velocity.z;
 
-                float smoothZVelocity = Mathf.Lerp(currentZ, targetVelocity.z, Time.deltaTime * maxVelocityChange);
-
-                smoothZVelocity = Mathf.Clamp(smoothZVelocity, currentZ - maxVelocityChange, currentZ + maxVelocityChange);
+                float smoothZVelocity = Mathf.Lerp(currentZ, targetVelocity.z, Time.deltaTime);
 
                 Debug.Log("Non-Final Velocity is: " + rb.velocity); // returns 9.68
 
@@ -443,7 +441,6 @@ public class FirstPersonController : MonoBehaviour
 
                 float smoothZVelocity = Mathf.Lerp(currentwalkZ, targetVelocity.z, Time.deltaTime * maxVelocityChange);
 
-                smoothZVelocity = Mathf.Clamp(smoothZVelocity, currentwalkZ - maxVelocityChange, currentwalkZ + maxVelocityChange);
 
                 rb.velocity = new Vector3(velocity.x, velocity.y, smoothZVelocity);
             }
