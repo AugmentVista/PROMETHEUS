@@ -120,7 +120,6 @@ public class Level_Manager : MonoBehaviour
 
     private void OnSceneChanged(Scene previousScene, Scene newScene)
     {
-
         PrepareScene(newScene);
     }
 
@@ -157,6 +156,7 @@ public class Level_Manager : MonoBehaviour
     private void SetupMainMenu()
     {
         Game_Manager gameManager = Singleton.instance.GetComponent<Game_Manager>();
+        gameManager.playerCamera = GameObject.FindGameObjectWithTag("PlayerCamera");
         gameManager.EnableGameplayCamera(false);
     }
 
