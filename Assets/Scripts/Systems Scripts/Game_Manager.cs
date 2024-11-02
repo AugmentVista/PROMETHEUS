@@ -13,7 +13,7 @@ public class Game_Manager : MonoBehaviour
 
     public bool Paused;
 
-    public enum GameState { MainMenu, Level1, GameOver, GameWin, DoNothing } 
+    public enum GameState { MainMenu, Level1, GameOver, GameWin, DoNothing, Upgrades } 
     public GameState gameState;
 
     public delegate void GameStateChange();
@@ -22,6 +22,7 @@ public class Game_Manager : MonoBehaviour
     public static event GameStateChange OnGameOver;
     public static event GameStateChange OnGameWin;
     public static event GameStateChange OnDoNothing;
+    public static event GameStateChange OnUpgrades;
 
     private void Awake() // Awake runs before start and again when scenes change.
     {
@@ -67,6 +68,9 @@ public class Game_Manager : MonoBehaviour
             case GameState.MainMenu:
                 MainMenu();
                 break;
+            case GameState.Upgrades:
+                UpgradesMenu();
+                break;
             case GameState.Level1:
                 Level_1();
                 break;
@@ -88,6 +92,12 @@ public class Game_Manager : MonoBehaviour
     public void MainMenuTrigger()
     {
         gameState = GameState.MainMenu;
+        ChangeGameState(gameState);
+    }
+
+    public void UpgradesMenuTrigger()
+    { 
+        gameState = GameState.Upgrades;
         ChangeGameState(gameState);
     }
 
@@ -152,6 +162,7 @@ public class Game_Manager : MonoBehaviour
     {
         gameState = GameState.GameWin;
         ChangeGameState(gameState);
+
     }
 
     #endregion
@@ -228,6 +239,12 @@ public class Game_Manager : MonoBehaviour
         IsMenuOpen(false);
     }
 
+    private void UpgradesMenu()
+    {
+        Time.timeScale = 1.0f;
+        OnUpgrades?.Invoke();
+        IsMenuOpen(true);
+    }
 
     private void MainMenu()
     {

@@ -12,11 +12,13 @@ public class UI_Manager : MonoBehaviour
     public GameObject pausedUI;
     public GameObject gameOverUI;
     public GameObject gameWinUI;
+    public GameObject upgradesUI;
 
     void Start()
     {
         UpdateUI();
-        Game_Manager.OnDoNothing += NoUI; 
+        Game_Manager.OnDoNothing += NoUI;
+        Game_Manager.OnUpgrades += UpgradesUI;
         Game_Manager.OnMainMenu += MainMenuUI;
         Game_Manager.OnLevel1 += GamePlayUI;
         Game_Manager.OnGameOver += GameOverUI;
@@ -26,6 +28,7 @@ public class UI_Manager : MonoBehaviour
     private void OnDestroy()
     {
         Game_Manager.OnDoNothing -= NoUI;
+        Game_Manager.OnUpgrades -= UpgradesUI;
         Game_Manager.OnMainMenu -= MainMenuUI;
         Game_Manager.OnLevel1 -= GamePlayUI;
         Game_Manager.OnGameOver -= GameOverUI;
@@ -59,6 +62,10 @@ public class UI_Manager : MonoBehaviour
     {
         HideAllUI(emptyUI);
     }
+    private void UpgradesUI()
+    {
+        HideAllUI(upgradesUI);
+    }
     private void MainMenuUI()
     {
         HideAllUI(mainMenuUI);
@@ -86,6 +93,7 @@ public class UI_Manager : MonoBehaviour
     public void HideAllUI(GameObject ActiveUI)
     {
         emptyUI.SetActive(false);
+        upgradesUI.SetActive(false);
         mainMenuUI.SetActive(false);
         gamePlayUI.SetActive(false);
         optionsUI.SetActive(false);
