@@ -5,28 +5,27 @@ using UnityEngine;
 
 public class SprintBoost : MonoBehaviour
 {
-    public FirstPersonController FPScontroller;
-    FirstPersonControllerEditor FPSeditor;
-
-    private void Awake()
-    {
-        FPScontroller = FindObjectOfType<FirstPersonController>(true);
-        FPSeditor = FindObjectOfType<FirstPersonControllerEditor>(true);
-    }
-
     public void IncreaseSprint(float boost)
     {
-        if (FPScontroller != null && FPSeditor != null)
+        Debug.Log("Increase Sprint was called.");
+        FirstPersonController FPScontroller = FindObjectOfType<FirstPersonController>(true);
+        Debug.Log(FPScontroller);
+        if (FPScontroller != null)
         {
-            GlobalSettings.globalMaxSprintSpeed += boost;
-            GlobalSettings.globalSprintSpeed = boost;
-            FPScontroller.UpdateUpgrades();
-            FPSeditor.UpdateEditorUpgrade();
-            Debug.Log($"Sprint speed is {GlobalSettings.globalSprintSpeed}");
-            Debug.Log($"Real Sprint speed is {FPScontroller.sprintSpeed}");
-
-            Debug.Log(GlobalSettings.globalMaxSprintSpeed.ToString());
+            FPScontroller.UpgradeSpeed(boost);
+            Debug.Log($"Sprint speed is: {FPScontroller.sprintSpeed}");
         }
-        
+    }
+
+    public void IncreaseStamina(float boost)
+    {
+        Debug.Log("Increase Stamina was called.");
+        FirstPersonController FPScontroller = FindObjectOfType<FirstPersonController>(true);
+        Debug.Log(FPScontroller);
+        if (FPScontroller != null)
+        {
+            FPScontroller.UpgradeDuration(boost);
+            Debug.Log($"Stamina is:  {FPScontroller.sprintDuration}");
+        }
     }
 }

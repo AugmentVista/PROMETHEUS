@@ -5405,12 +5405,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1508077866}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -960, y: -540, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 4283002039709831097}
+  m_Father: {fileID: 2302118929808201075}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1508077868
 MonoBehaviour:
@@ -5424,7 +5424,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fbbab3342d22c949a4127c1ee4eb821, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controller: {fileID: 0}
 --- !u!1 &1559755861
 GameObject:
   m_ObjectHideFlags: 0
@@ -6287,12 +6286,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1685919406}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2078084581686015423}
+  m_Father: {fileID: 9082993959735988864}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1685919408
 MonoBehaviour:
@@ -16245,7 +16244,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1685919407}
   - {fileID: 4422522984548163052}
   m_Father: {fileID: 9082993959735988864}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -21371,6 +21369,7 @@ RectTransform:
   - {fileID: 256212401638644214}
   - {fileID: 3026399155674038977}
   - {fileID: 4507423545138001410}
+  - {fileID: 1508077867}
   m_Father: {fileID: 8641883285682473966}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -21734,7 +21733,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   upgradeManager: {fileID: 1685919408}
-  sprint: {fileID: 0}
   Timer: {fileID: 3175393366862203896}
   Win: 0
   Lose: 0
@@ -21953,7 +21951,7 @@ GameObject:
   - component: {fileID: 2302118929808201075}
   - component: {fileID: 1952016379115059952}
   m_Layer: 5
-  m_Name: Health-Mana Manager
+  m_Name: Player Stats Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -34002,8 +34000,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1508077867}
+  m_Children: []
   m_Father: {fileID: 9082993959735988864}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!222 &4286428766893913876
@@ -66610,6 +66607,7 @@ Transform:
   m_Children:
   - {fileID: 4283002039709831097}
   - {fileID: 1911473195}
+  - {fileID: 1685919407}
   - {fileID: 2078084581686015423}
   - {fileID: 2453379512808070224}
   - {fileID: 4670406291920601430}

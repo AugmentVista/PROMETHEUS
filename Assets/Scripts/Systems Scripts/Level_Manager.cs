@@ -35,7 +35,9 @@ public class Level_Manager : MonoBehaviour
     {
         SprintBoost sprint = FindObjectOfType<SprintBoost>(true);
         ItemDisplay sprintUpgrade = e.Item;
-        if (sprint != null) { sprint.IncreaseSprint(sprintUpgrade.Modifer); }
+        Debug.Log($"Upgrade purchased of type {sprint}");
+        if (sprint != null) { sprint.IncreaseSprint(sprintUpgrade.Modifer); Debug.Log($"Sprint is {sprint}"); }
+      
     }
 
     private void Start()

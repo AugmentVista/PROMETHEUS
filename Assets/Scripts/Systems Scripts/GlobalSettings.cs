@@ -43,14 +43,14 @@ public class GlobalSettings : MonoBehaviour
     #region Player Movement Variables
     #region fpc MonoBehaviour
 
-    public static float globalSprintSpeed = 8f;
+    public static float globalSprintSpeed = 10f;
     public static float globalSprintDuration = 5f;
     public static float globalSprintCooldown = globalSprintDuration/2;
 
     #endregion
     #region fpc Editor
 
-    public static float globalMaxSprintSpeed = 10f;
+    public static float globalMaxSprintSpeed = 30f;
     public static float globalMinWalkSpeed = 2.5f;
 
     #endregion

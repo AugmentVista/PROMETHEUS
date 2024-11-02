@@ -56,11 +56,10 @@ public class FirstPersonController : MonoBehaviour
     #region Movement Variables
 
     public bool playerCanMove = true;
-    public float walkSpeed = 5f;
-    public float maxVelocityChange = 0.5f;
 
     // Internal Variables
     private bool isWalking = false;
+    private float maxVelocityChange = 1f;
 
     #region Sprint
 
@@ -68,10 +67,10 @@ public class FirstPersonController : MonoBehaviour
     public bool unlimitedSprint = false;
     public KeyCode sprintKey = KeyCode.LeftShift;
 
-    public float sprintSpeed = GlobalSettings.globalSprintSpeed;
-    public float sprintDuration = GlobalSettings.globalSprintDuration;
-    public float sprintCooldown = GlobalSettings.globalSprintCooldown;
-
+    public float walkSpeed;
+    public float sprintSpeed;
+    public float sprintDuration;
+    public float sprintCooldown = 3f;
     public float sprintFOV = 80f;
     public float sprintFOVStepTime = 10f;
 
@@ -150,6 +149,7 @@ public class FirstPersonController : MonoBehaviour
             sprintRemaining = sprintDuration;
             sprintCooldownReset = sprintCooldown;
         }
+        else { sprintCooldown = sprintDuration / 2; }
     }
 
     void Start()
@@ -201,11 +201,11 @@ public class FirstPersonController : MonoBehaviour
         #endregion
     }
 
-    public void UpdateUpgrades()
-    {
-        sprintSpeed = GlobalSettings.globalSprintSpeed;
-        sprintDuration = GlobalSettings.globalSprintDuration;
-        sprintCooldown = GlobalSettings.globalSprintCooldown;
+    public void UpgradeSpeed(float increase) { sprintSpeed += increase; }
+    public void UpgradeDuration(float increase) 
+    { 
+        sprintDuration += increase;
+        sprintCooldown = sprintDuration / 2;
     }
 
     private void Update()
@@ -395,21 +395,20 @@ public class FirstPersonController : MonoBehaviour
             if (enableSprint && Input.GetKey(sprintKey) && sprintRemaining > 0f && !isSprintCooldown)
             {
                 targetVelocity = transform.TransformDirection(targetVelocity) * sprintSpeed;
+                Debug.Log($"Sprint Speed at the start of sprint is {sprintSpeed}");
 
-                // Directly modify velocity for smooth movement
                 Vector3 velocity = rb.velocity;
                 float currentZ = velocity.z;
 
-                // Smooth transition to target velocity using Lerp
                 float smoothZVelocity = Mathf.Lerp(currentZ, targetVelocity.z, Time.deltaTime * maxVelocityChange);
 
-                // Clamp the smoothed velocity to ensure it stays within bounds
-                smoothZVelocity = Mathf.Clamp(smoothZVelocity, -maxVelocityChange, maxVelocityChange);
+                smoothZVelocity = Mathf.Clamp(smoothZVelocity, currentZ - maxVelocityChange, currentZ + maxVelocityChange);
 
-                // Update rigidbody velocity directly
+                Debug.Log("Non-Final Velocity is: " + rb.velocity); // returns 9.68
+
                 rb.velocity = new Vector3(velocity.x, velocity.y, smoothZVelocity);
 
-                // Handle sprint-related logic
+
                 if (Mathf.Abs(smoothZVelocity) > 0.1f) // Allow for small tolerance to avoid jitter
                 {
                     isSprinting = true;
@@ -424,6 +423,8 @@ public class FirstPersonController : MonoBehaviour
                         sprintBarCG.alpha += 5 * Time.deltaTime;
                     }
                 }
+                Debug.Log(sprintSpeed);
+                Debug.Log("Velocity is: " + rb.velocity); // returns 10.0
             }
             // Movement calculations while walking
             else
@@ -437,17 +438,13 @@ public class FirstPersonController : MonoBehaviour
 
                 targetVelocity = transform.TransformDirection(targetVelocity) * walkSpeed;
 
-                // Directly modify velocity for walking
                 Vector3 velocity = rb.velocity;
-                float currentZ = velocity.z;
+                float currentwalkZ = velocity.z;
 
-                // Smooth transition to walking speed
-                float smoothZVelocity = Mathf.Lerp(currentZ, targetVelocity.z, Time.deltaTime * maxVelocityChange);
+                float smoothZVelocity = Mathf.Lerp(currentwalkZ, targetVelocity.z, Time.deltaTime * maxVelocityChange);
 
-                // Clamp the smoothed velocity to ensure it stays within bounds
-                smoothZVelocity = Mathf.Clamp(smoothZVelocity, -maxVelocityChange, maxVelocityChange);
+                smoothZVelocity = Mathf.Clamp(smoothZVelocity, currentwalkZ - maxVelocityChange, currentwalkZ + maxVelocityChange);
 
-                // Update rigidbody velocity directly
                 rb.velocity = new Vector3(velocity.x, velocity.y, smoothZVelocity);
             }
         }
@@ -554,21 +551,13 @@ public class FirstPersonControllerEditor : Editor
     FirstPersonController fpc;
     SerializedObject SerFPC;
 
-    private float maxSprint = GlobalSettings.globalMaxSprintSpeed;
-    private float minWalkSpeed = GlobalSettings.globalMinWalkSpeed;
-
+    private float maxSprint = 30f;
+    private float minWalkSpeed = 2.5f;
     private void OnEnable()
     {
         fpc = (FirstPersonController)target;
         SerFPC = new SerializedObject(fpc);
     }
-
-    public void UpdateEditorUpgrade()
-    {
-      maxSprint = GlobalSettings.globalMaxSprintSpeed;
-     minWalkSpeed = GlobalSettings.globalMinWalkSpeed;
-    }
-
 
     public override void OnInspectorGUI()
     {
