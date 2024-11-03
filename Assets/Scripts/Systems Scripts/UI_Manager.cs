@@ -14,11 +14,13 @@ public class UI_Manager : MonoBehaviour
     public GameObject gameOverUI;
     public GameObject gameWinUI;
     public GameObject upgradesUI;
+    public GameObject resultsUI;
 
     void Start()
     {
         UpdateUI();
         Game_Manager.OnDoNothing += NoUI;
+        Game_Manager.OnResults += ResultsUI;
         Game_Manager.OnIntroduction += IntroductionUI;
         Game_Manager.OnUpgrades += UpgradesUI;
         Game_Manager.OnMainMenu += MainMenuUI;
@@ -30,6 +32,7 @@ public class UI_Manager : MonoBehaviour
     private void OnDestroy()
     {
         Game_Manager.OnDoNothing -= NoUI;
+        Game_Manager.OnResults -= ResultsUI;
         Game_Manager.OnIntroduction -= IntroductionUI;
         Game_Manager.OnUpgrades -= UpgradesUI;
         Game_Manager.OnMainMenu -= MainMenuUI;
@@ -64,6 +67,10 @@ public class UI_Manager : MonoBehaviour
     private void NoUI()
     {
         HideAllUI(emptyUI);
+    }
+    private void ResultsUI()
+    {
+        HideAllUI(resultsUI);
     }
     private void IntroductionUI()
     {
@@ -100,6 +107,7 @@ public class UI_Manager : MonoBehaviour
     public void HideAllUI(GameObject ActiveUI)
     {
         emptyUI.SetActive(false);
+        resultsUI.SetActive(false);
         introductionUI.SetActive(false);
         upgradesUI.SetActive(false);
         mainMenuUI.SetActive(false);

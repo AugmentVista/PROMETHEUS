@@ -10,7 +10,6 @@ public class Level_Manager : MonoBehaviour
     public bool Win = GlobalSettings.globalPlayerWin;
     public bool Lose = GlobalSettings.globalPlayerLose;
     static bool isSubscribed;
-    bool subscribedHealthUpgrade = false;
 
     private void Awake()
     {
@@ -23,6 +22,9 @@ public class Level_Manager : MonoBehaviour
     private void OnDisable()
     {
         upgradeManager.UpdateUpgradeHealth -= UpgradeEventManager_UpdateUpgradeHealth;
+        upgradeManager.UpdateUpgradeSprintSpeed -= UpgradeEventManager_UpdateUpgradeSprintSpeed;
+        upgradeManager.UpdateUpgradeAttackSpeed -= UpgradeEventManager_UpdateUpgradeAttackSpeed;
+
     }
 
     private void UpgradeEventManager_UpdateUpgradeHealth(object sender, UpgradeEventArgs e)
@@ -39,12 +41,19 @@ public class Level_Manager : MonoBehaviour
         if (sprint != null) { sprint.IncreaseSprint(sprintUpgrade.Modifer); Debug.Log($"Sprint is {sprint}"); }
       
     }
+    private void UpgradeEventManager_UpdateUpgradeAttackSpeed(object sender, UpgradeEventArgs e)
+    { 
+        PlayerAttackHitBox attackHitBox = FindObjectOfType<PlayerAttackHitBox>(true);
+        ItemDisplay attackSpeedUpgrade= e.Item;
+        Debug.Log($"Upgrade purchased of type {attackSpeedUpgrade}");
+        if (attackHitBox != null) { attackHitBox.UpdateAttackSpeed(attackSpeedUpgrade.Modifer); Debug.Log($"Attack speed is {attackHitBox}"); } 
+    }
 
     private void Start()
     {
         upgradeManager.UpdateUpgradeHealth += UpgradeEventManager_UpdateUpgradeHealth;
         upgradeManager.UpdateUpgradeSprintSpeed += UpgradeEventManager_UpdateUpgradeSprintSpeed;
-        //upgradeManager.UpdateUpgradeAttackSpeed += UpgradeEventManager_UpdateUpgradeAttackSpeed;
+        upgradeManager.UpdateUpgradeAttackSpeed += UpgradeEventManager_UpdateUpgradeAttackSpeed;
     }
 
     private void Update()
@@ -61,9 +70,8 @@ public class Level_Manager : MonoBehaviour
         
     }
 
-
-
     #region SceneCalls
+
     public void LoadMainMenu()
     {
         SceneManager.LoadScene("MainMenu");
@@ -80,6 +88,7 @@ public class Level_Manager : MonoBehaviour
     {
         SceneManager.LoadScene("GameOver");
     }
+
     #endregion
 
     #region Win-Conditionals
@@ -95,10 +104,8 @@ public class Level_Manager : MonoBehaviour
                 if (Win && currentScene.name == "Level_1")
                 {
                     gameManager.GameWinTrigger();
-                    //gameManager.gameState = GameState.GameWin;
                 }
-
-                if (Lose && currentScene.name == "Level_1")
+                else if (Lose && currentScene.name == "Level_1")
                 {
                     gameManager.GameOverTrigger(); // same call as Scene_Transition
                 }
@@ -144,6 +151,7 @@ public class Level_Manager : MonoBehaviour
                 break;
         }
     }
+
     private void SetupGameplayScene(Scene scene)
     {
         Game_Manager gameManager = Singleton.instance.GetComponent<Game_Manager>();
@@ -151,7 +159,6 @@ public class Level_Manager : MonoBehaviour
         if (gameManager.gameplayCamera == null && scene.name == "Level1") { gameManager.gameplayCamera = GameObject.FindGameObjectWithTag("PlayerCamera"); }
         gameManager.EnableGameplayCamera(true);
     }
-
 
     private void SetupMainMenu()
     {
@@ -172,9 +179,5 @@ public class Level_Manager : MonoBehaviour
         // example, activate lose UI, display scores, play defeat animations, etc.
         gameManager.EnableGameplayCamera(false); // Ensure menu camera is active
     }
-
     #endregion
-
-
-
 }

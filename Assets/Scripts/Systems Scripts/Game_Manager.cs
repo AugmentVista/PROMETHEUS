@@ -15,7 +15,7 @@ public class Game_Manager : MonoBehaviour
 
     public bool Paused;
 
-    public enum GameState { MainMenu, Level1, GameOver, GameWin, DoNothing, Upgrades } 
+    public enum GameState { MainMenu, Level1, GameOver, GameWin, DoNothing, Upgrades, Results } 
     public GameState gameState;
 
     public delegate void GameStateChange();
@@ -24,6 +24,7 @@ public class Game_Manager : MonoBehaviour
     public static event GameStateChange OnGameOver;
     public static event GameStateChange OnGameWin;
     public static event GameStateChange OnDoNothing;
+    public static event GameStateChange OnResults;
     public static event GameStateChange OnUpgrades;
     public static event GameStateChange OnIntroduction;
 
@@ -81,6 +82,9 @@ public class Game_Manager : MonoBehaviour
             case GameState.GameWin:
                 GameWin();
                 break;
+            case GameState.Results:
+                ResultsMenu();
+                break;
             default:
                 Default();
                 break;
@@ -93,6 +97,12 @@ public class Game_Manager : MonoBehaviour
     public void MainMenuTrigger()
     {
         gameState = GameState.MainMenu;
+        ChangeGameState(gameState);
+    }
+
+    public void ResultsMenuTrigger()
+    { 
+        gameState = GameState.Results;
         ChangeGameState(gameState);
     }
 
@@ -113,6 +123,30 @@ public class Game_Manager : MonoBehaviour
         {
             ResumeGameTrigger();
         }
+    }
+
+    public void OptionsTrigger()
+    {
+        ui_Manager.OptionsUI();
+        IsMenuOpen(true);
+    }
+
+    public void IntroductionMenuTrigger()
+    {
+        OnIntroduction?.Invoke();
+        IsMenuOpen(true);
+    }
+
+    public void GameOverTrigger()
+    {
+        gameState = GameState.GameOver;
+        ChangeGameState(gameState);
+    }
+
+    public void GameWinTrigger()
+    {
+        gameState = GameState.GameWin;
+        ChangeGameState(gameState);
     }
 
     public void PauseTrigger()
@@ -168,31 +202,7 @@ public class Game_Manager : MonoBehaviour
         }
     }
 
-    public void OptionsTrigger()
-    {
-        ui_Manager.OptionsUI();
-        IsMenuOpen(true);
-    }
-
-    public void IntroductionMenuTrigger()
-    {
-        OnIntroduction?.Invoke();
-        IsMenuOpen (true);
-    }
-
-    public void GameOverTrigger()
-    {
-        gameState = GameState.GameOver;
-        ChangeGameState(gameState);
-    }
-
-    public void GameWinTrigger()
-    {
-        gameState = GameState.GameWin;
-        ChangeGameState(gameState);
-    }
-
-    #endregion
+#endregion
     
 
     public void GameQuit()
@@ -259,9 +269,7 @@ public class Game_Manager : MonoBehaviour
 
     #endregion
 
-    #region States
 
-    #region States that trigger scene Managers
 
     private void Default()
     {
@@ -281,7 +289,11 @@ public class Game_Manager : MonoBehaviour
         OnIntroduction?.Invoke();
     }
 
-    #endregion
+    private void ResultsMenu()
+    { 
+        IsMenuOpen (true);
+        OnResults?.Invoke();
+    }
 
     private void MainMenu()
     {
@@ -315,5 +327,4 @@ public class Game_Manager : MonoBehaviour
         OnGameWin?.Invoke();
     }
 
-    #endregion
 }
