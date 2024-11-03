@@ -32,28 +32,23 @@ public class GlobalSettings : MonoBehaviour
 
     #endregion
 
-    #region PlayerAttackHitBox Variables
-
-    public static float globalPlayerAttackDuration = 0.25f;
-
-    public static float globalPlayerSecondsBetweenAttacks = 0.25f;
-
-    #endregion
 
     #region Player Movement Variables
-    #region fpc MonoBehaviour
+
+        #region fpc MonoBehaviour
 
     public static float globalSprintSpeed = 10f;
     public static float globalSprintDuration = 5f;
     public static float globalSprintCooldown = globalSprintDuration/2;
 
     #endregion
-    #region fpc Editor
 
-    public static float globalMaxSprintSpeed = 30f;
-    public static float globalMinWalkSpeed = 2.5f;
+            #region fpc Editor
 
-    #endregion
+        public static float globalMaxSprintSpeed = 40f;
+        public static float globalMinWalkSpeed = 2.5f;
+
+        #endregion
 
     #endregion
 
@@ -84,7 +79,4 @@ public class GlobalSettings : MonoBehaviour
     public static bool globalPauseOverride = false;
 
     #endregion
-
-   
-
 }

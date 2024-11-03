@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class PlayerAttackHitBox : MonoBehaviour // This script is attached to the player weapon
 {
@@ -11,23 +10,23 @@ public class PlayerAttackHitBox : MonoBehaviour // This script is attached to th
 
     public GameObject rockSmashVFX;
 
-    public float attackDuration = GlobalSettings.globalPlayerAttackDuration;
+    public float attackDuration = 0.25f;
 
-    public float attackCooldown = GlobalSettings.globalPlayerSecondsBetweenAttacks;
+    public float attackCooldown = 1.0f;
+
+    private int attackSpeedUps = 0;
 
     public Renderer weaponVisual;
 
-    public Material blade;
-    public Material idleBlade;
+    public Material weaponMaterial;
+    public Material idleWeapon;
 
     private Color idleColor;
 
-    [SerializeField]
+    public Collider weaponCollider; 
 
-    public Collider swordCollider; 
     private bool canAttack = true; 
     private bool isAttacking = false;
-
 
     public List<string> ableToHit;
 
@@ -35,11 +34,11 @@ public class PlayerAttackHitBox : MonoBehaviour // This script is attached to th
     {
         ableToHit = new List<string>();
 
-        swordCollider = GetComponent<Collider>();
+        weaponCollider = GetComponent<Collider>();
         weaponVisual = GetComponent<Renderer>();
         idleColor = weaponVisual.material.color;
-        idleBlade = blade;
-        idleBlade.color = blade.color;
+        idleWeapon = weaponMaterial;
+        idleWeapon.color = weaponMaterial.color;
 
         PlayerWeaponCheck();
     }
@@ -47,6 +46,16 @@ public class PlayerAttackHitBox : MonoBehaviour // This script is attached to th
     public void PlayerWeaponCheck()
     {
         ableToHit.Add("Knockback");
+    }
+
+    public void UpdateAttackSpeed(float amountToReduce)
+    {
+        if (attackSpeedUps < 5)
+        { 
+            float convertedValue = amountToReduce / 100;
+            attackCooldown -= convertedValue;
+        }
+        attackSpeedUps += 1;
     }
 
     private void Update()
@@ -59,7 +68,7 @@ public class PlayerAttackHitBox : MonoBehaviour // This script is attached to th
     private IEnumerator Attack()
     {
         weaponVisual.material.color = Color.red;
-        blade.color = Color.red;
+        weaponMaterial.color = Color.red;
        
         canAttack = false; // Prevent further attacks until cooldown expires
 
@@ -71,7 +80,7 @@ public class PlayerAttackHitBox : MonoBehaviour // This script is attached to th
         isAttacking = false;
         canAttack = true; // Allow attacks again
         weaponVisual.material.color = idleColor;
-        blade.color =Color.blue;
+        weaponMaterial.color = Color.blue;
     }
 
     public void CanPlayerAttackThis(Collider other)

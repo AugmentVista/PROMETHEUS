@@ -87,8 +87,6 @@ public class PlayerHealthSystem : MonoBehaviour
                 Heal(item.Modifer);
                 Debug.Log("Player has been healed");
                 hpUpgradeLimit++;
-            
-            
         }
         else
         {
