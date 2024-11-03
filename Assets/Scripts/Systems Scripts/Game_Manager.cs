@@ -9,9 +9,9 @@ public class Game_Manager : MonoBehaviour
     [SerializeField] private GameObject meteorVFX;
 
     public GameObject userInterfaceCamera;
-    public GameObject gameplayCamera;
-    public GameObject menuCamera;
-    public GameObject CameraHolder;
+    //public GameObject gameplayCamera;
+    //public GameObject menuCamera;
+    //public GameObject CameraHolder;
 
     public bool Paused;
 
@@ -215,59 +215,70 @@ public class Game_Manager : MonoBehaviour
 
     private void IsMenuOpen(bool open)
     {
-        // If a menu is open and the menu camera is turned off, turn it on and turn off the interface cam.
-        if (!menuCamera.activeSelf && open) 
-        {
-            EnableGameplayCamera(open);
-        }
-        //if a menu is open and the menu camera is turned on, return
-        else if (menuCamera.activeSelf && open)
-        {
-            EnableGameplayCamera(open);
-        }
-        // If a menu isn't open and the interface cam is turned off, turn it on and turn off the menu camera.
-        else if (!userInterfaceCamera.activeSelf && !open)
-        {
-            EnableGameplayCamera(open);
-        }
-        // if a menu isn't open and the interface cam is turned on return
-        else if (userInterfaceCamera.activeSelf && !open) 
-        {
-            EnableGameplayCamera(open);
-        }
+        EnableGameplayCamera(!open);
+        //// If a menu is open and the menu camera is turned off, turn it on and turn off the interface cam.
+        //if (!menuCamera.activeSelf && open) 
+        //{
+        //    EnableGameplayCamera(open);
+        //}
+        ////if a menu is open and the menu camera is turned on, return
+        //else if (menuCamera.activeSelf && open)
+        //{
+        //    EnableGameplayCamera(open);
+        //}
+        //// If a menu isn't open and the interface cam is turned off, turn it on and turn off the menu camera.
+        //else if (!userInterfaceCamera.activeSelf && !open)
+        //{
+        //    EnableGameplayCamera(open);
+        //}
+        //// if a menu isn't open and the interface cam is turned on return
+        //else if (userInterfaceCamera.activeSelf && !open) 
+        //{
+        //    EnableGameplayCamera(open);
+        //}
     }
 
     // Swaps between cameras
     public void EnableGameplayCamera(bool shouldGamePlayCamOpen)
     {
         Scene currentScene = SceneManager.GetActiveScene();
-
-        if (menuCamera != null && userInterfaceCamera != null || menuCamera != null && gameplayCamera != null)
+        if (currentScene.name == "Level_1" && !Paused)
         {
-            if (currentScene.name == "Level_1" && !Paused)
-            {
-                gameplayCamera.SetActive(true);
-
-                if (userInterfaceCamera.activeSelf) { userInterfaceCamera.SetActive(false); }
-                if (menuCamera.activeSelf) { menuCamera.SetActive(false); }
-            }
-            else
-            {
-                if (gameplayCamera.activeSelf) { gameplayCamera.SetActive(false); } // deals with case that gamePlayCam is still on
-
-                if (shouldGamePlayCamOpen)
-                {
-                    userInterfaceCamera.SetActive(true);
-                    if (menuCamera.activeSelf) { menuCamera.SetActive(false); }
-                }
-                else if (!shouldGamePlayCamOpen)
-                {
-                    if (userInterfaceCamera.activeSelf) { userInterfaceCamera.SetActive(false); }
-                    menuCamera.SetActive(true);
-                }
-            }
+            userInterfaceCamera.SetActive(false);
+        }
+        else 
+        { 
+            userInterfaceCamera.SetActive(true); 
             meteorVFX.SetActive(!shouldGamePlayCamOpen);
         }
+
+
+
+        //if (menuCamera != null && userInterfaceCamera != null || menuCamera != null && gameplayCamera != null)
+        //{
+        //    if (currentScene.name == "Level_1" && !Paused)
+        //    {
+        //        gameplayCamera.SetActive(true);
+
+        //        if (userInterfaceCamera.activeSelf) { userInterfaceCamera.SetActive(false); }
+        //        if (menuCamera.activeSelf) { menuCamera.SetActive(false); }
+        //    }
+        //    else
+        //    {
+        //        if (gameplayCamera.activeSelf) { gameplayCamera.SetActive(false); } // deals with case that gamePlayCam is still on
+
+        //        if (shouldGamePlayCamOpen)
+        //        {
+        //            userInterfaceCamera.SetActive(true);
+        //            if (menuCamera.activeSelf) { menuCamera.SetActive(false); }
+        //        }
+        //        else if (!shouldGamePlayCamOpen)
+        //        {
+        //            if (userInterfaceCamera.activeSelf) { userInterfaceCamera.SetActive(false); }
+        //            menuCamera.SetActive(true);
+        //        }
+        //    }
+        //}
     }
 
     #endregion
