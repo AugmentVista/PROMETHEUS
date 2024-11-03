@@ -76,7 +76,10 @@ public class Level_Manager : MonoBehaviour
         Debug.Log($"Upgrade purchased of type {hammerUpgrade}");
         if (hammerHitBox != null) { hammerHitBox.UpdateHammer(hammerUpgrade.Modifer);}
     }
-
+    public void IntroductionInvoke()
+    {
+        CreateBridgeSectionDuringIntro?.Invoke(this, EventArgs.Empty);
+    }
 
     private void OnDisable()
     {
@@ -86,11 +89,6 @@ public class Level_Manager : MonoBehaviour
         upgradeManager.UpdateUpgradeHammer -= UpgradeEventManager_UpdateUpgradeHammer;
         upgradeManager.UpdateUpgradeStamina -= UpgradeEventManager_UpdateUpgradeStamina;
         upgradeManager.UpdateUpgradeBlock -= UpgradeEventManager_UpdateUpgradeBlock;
-    }
-
-    public void IntroTrigger()
-    {
-        CreateBridgeSectionDuringIntro?.Invoke(this, EventArgs.Empty);
     }
 
     private void Update()
@@ -193,7 +191,7 @@ public class Level_Manager : MonoBehaviour
     private void SetupGameplayScene(Scene scene)
     {
         Game_Manager gameManager = Singleton.instance.GetComponent<Game_Manager>();
-        gameManager.Paused = false;
+        GlobalSettings.globalPauseOverride = false;
         // This doesn't work but the camera system works without it switching?
         // Only god knows these cameras work right now. The Game_Reference doesn't change but the angles are correct
         // If it ain't broke, don't touch it.

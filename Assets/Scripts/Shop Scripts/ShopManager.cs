@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -17,11 +15,8 @@ public class ShopManager : MonoBehaviour
     public Image drachmaHundreds;
 
     #endregion
-
     
     private int lastDrachma = -1;
-
-
 
     public void AddDrachma(int amountToAdd)
     {

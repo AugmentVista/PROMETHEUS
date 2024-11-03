@@ -49,7 +49,7 @@ public class FirstPersonController : MonoBehaviour
 
     #region Movement Variables
 
-    public bool playerCanMove = true;
+    public bool playerCanMove;
 
     // Internal Variables
     private bool isWalking = false;
@@ -203,10 +203,12 @@ public class FirstPersonController : MonoBehaviour
 
     private void Update()
     {
+        playerCanMove = !GlobalSettings.globalPauseOverride;
+
         #region Camera
 
         // Control camera movement
-        if(cameraCanMove)
+        if (cameraCanMove)
         {
             yaw = transform.localEulerAngles.y + Input.GetAxis("Mouse X") * mouseSensitivity;
 

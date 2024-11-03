@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EnemySpawn : MonoBehaviour
 {
+    public GameObject Enemy;
     public bool IsAlive;
 
     /// <summary>
@@ -17,10 +18,9 @@ public class EnemySpawn : MonoBehaviour
     /// enemy 
     /// </summary>
 
-
-
     public void Spawn()
     {
+
         Debug.Log("A enemy has been spawned");
     }
 }

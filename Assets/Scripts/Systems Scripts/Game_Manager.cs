@@ -9,10 +9,11 @@ public class Game_Manager : MonoBehaviour
     [SerializeField] private UI_Manager ui_Manager;
     [SerializeField] private Level_Manager level_Manager;
     [SerializeField] private GameObject meteorVFX;
+    [SerializeField] private SpawnBridge bridge;
 
     public GameObject userInterfaceCamera;
 
-    public bool Paused;
+    public bool Paused = GlobalSettings.globalPauseOverride;
     bool firstStart = true;
 
     public enum GameState { MainMenu, Level1, GameOver, GameWin, DoNothing, Upgrades, Results, Introduction }
@@ -36,11 +37,19 @@ public class Game_Manager : MonoBehaviour
     private void Start()
     {
         gameState = GameState.DoNothing;
+        level_Manager.CreateBridgeSectionDuringIntro += Level_Manager_CreateBridgeSectionDuringIntro;
     }
+
+    private void Level_Manager_CreateBridgeSectionDuringIntro(object sender, System.EventArgs _)
+    {
+        bridge.CreateBridge();
+    }
+
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && (gameState == GameState.Level1))
+        Scene thisScene = SceneManager.GetActiveScene();
+        if (Input.GetKeyDown(KeyCode.Escape) && (thisScene.name == "Level_1"))
         {
             if (!Paused) // If not paused, pause the game.
             {
@@ -51,13 +60,15 @@ public class Game_Manager : MonoBehaviour
                 ResumeGameTrigger();
             }
         }
-
-        if (gameState == GameState.Level1 && !Paused)
+        if (gameState != GameState.Level1 || Paused || thisScene.name != "Level_1") 
+        {
+            Cursor.visible = true; 
+        }
+        else if (thisScene.name == "Level_1" && !Paused)
         {
             Cursor.visible = false;
         }
-        else if (gameState != GameState.Level1 || Paused) { Cursor.visible = true; }
-
+        Paused = GlobalSettings.globalPauseOverride;
     }
     public void ChangeGameState(GameState state)
     {
@@ -114,6 +125,12 @@ public class Game_Manager : MonoBehaviour
         ChangeGameState(gameState);
     }
 
+    public void OptionsTrigger()
+    {
+        ui_Manager.OptionsUI();
+        IsMenuOpen(true);
+    }
+
     public void StartGameTrigger()
     {
         Scene thisScene = SceneManager.GetActiveScene();
@@ -128,22 +145,15 @@ public class Game_Manager : MonoBehaviour
         }
     }
 
-    public void OptionsTrigger()
-    {
-        ui_Manager.OptionsUI();
-        IsMenuOpen(true);
-    }
-    private void Level_Manager_CreateBridgeSectionDuringIntro(object sender, System.EventArgs _) 
+    public void StartGameFromIntroduction()
     { 
-        // create bridge here
+    
     }
+   
     public void IntroductionReturn()
     {
-        level_Manager.CreateBridgeSectionDuringIntro += Level_Manager_CreateBridgeSectionDuringIntro;
         Introduction();
-        IsMenuOpen(true);
 
-        // Start the coroutine to introduce a delay
         StartCoroutine(IntroductionCoroutine());
     }
 
@@ -152,27 +162,16 @@ public class Game_Manager : MonoBehaviour
         GameObject IntroPlayButton;
 
         IntroPlayButton = ui_Manager.introductionUI.transform.Find("Play BG").gameObject;
+        if (IntroPlayButton != null && IntroPlayButton.activeSelf)
+        {
+            IntroPlayButton.SetActive(false);
+        }
 
         float duration = 3f; // seconds
         
         yield return new WaitForSeconds(duration);
 
-        //if (previousGameState == GameState.Level1)
-        //{
-        //    gameState = previousGameState;
-        //    ChangeGameState(gameState);
-        //    IsMenuOpen(false);
-        //    OnLevel1?.Invoke();
-        //}
-        //else if (previousGameState == GameState.MainMenu)
-        //{
-            IntroPlayButton.SetActive(true);
-        //}
-        //else if (previousGameState != GameState.Level1 || previousGameState != GameState.Introduction)
-        //{
-        //    gameState = previousGameState;
-        //    ChangeGameState(gameState);
-        //}
+        IntroPlayButton.SetActive(true);
 
         Debug.Log($"{duration} seconds have passed.");
     }
@@ -194,7 +193,7 @@ public class Game_Manager : MonoBehaviour
         IsMenuOpen(true);
         ui_Manager.PausedUI();
         GlobalSettings.projectileSpawnerActive = false;
-        Paused = true;
+        GlobalSettings.globalPauseOverride = true;
     }
 
     public void ResumeGameTrigger()
@@ -207,23 +206,21 @@ public class Game_Manager : MonoBehaviour
     {
         if (scene.name != "Level_1") 
         {
-            Debug.LogError("Did Resume run?");
             ReloadScene();
             IsMenuOpen(true);
         }
         else if (scene.name == "Level_1")
         {
-            Debug.LogError("Does intro trigger this one?");
             IsMenuOpen(false);
             ui_Manager.GamePlayUI();
             GlobalSettings.projectileSpawnerActive = true;
-            Paused = false;
+            GlobalSettings.globalPauseOverride = false;
         }
     }
 
     public void ReloadScene()
     {
-        Paused = false;
+        GlobalSettings.globalPauseOverride = false;
         Scene currentScene = SceneManager.GetActiveScene();
         switch (currentScene.name)
         {
@@ -245,10 +242,18 @@ public class Game_Manager : MonoBehaviour
         }
     }
 
-#endregion
+    #endregion
 
     private void IsMenuOpen(bool open)
     {
+        if (open)
+        {
+            Cursor.visible = open;
+        }
+        else if (!open)
+        {
+            Cursor.visible = open;
+        }
         EnableGameplayCamera(!open);
     }
 
@@ -321,9 +326,9 @@ public class Game_Manager : MonoBehaviour
         OnGameWin?.Invoke();
     }
 
+    #endregion
     public void GameQuit()
     {
         Application.Quit();
     }
-    #endregion
 }
