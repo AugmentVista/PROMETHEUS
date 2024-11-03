@@ -148,16 +148,15 @@ public class Level_Manager : MonoBehaviour
     {
         Game_Manager gameManager = Singleton.instance.GetComponent<Game_Manager>();
         gameManager.Paused = false;
-        gameManager.playerCamera = GameObject.FindGameObjectWithTag("MainCamera");
         gameManager.EnableGameplayCamera(true);
     }
 
 
     private void SetupMainMenu()
     {
-        Game_Manager gameManager = Singleton.instance.GetComponent<Game_Manager>();
-        gameManager.playerCamera = GameObject.FindGameObjectWithTag("PlayerCamera");
-        gameManager.EnableGameplayCamera(false);
+        //Game_Manager gameManager = Singleton.instance.GetComponent<Game_Manager>();
+        //gameManager.playerCamera = GameObject.FindGameObjectWithTag("PlayerCamera");
+        //gameManager.EnableGameplayCamera(false);
     }
 
     private void SetupGameWin()
