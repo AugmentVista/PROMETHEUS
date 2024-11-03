@@ -388,7 +388,7 @@ public class FirstPersonController : MonoBehaviour
             if (enableSprint && Input.GetKey(sprintKey) && sprintRemaining > 0f && !isSprintCooldown)
             {
                 targetVelocity = transform.TransformDirection(targetVelocity) * sprintSpeed;
-                Debug.Log($"Sprint Speed at the start of sprint is {sprintSpeed}");
+                //Debug.Log($"Sprint Speed at the start of sprint is {sprintSpeed}");
 
 
                 Vector3 velocity = rb.velocity;
@@ -400,7 +400,7 @@ public class FirstPersonController : MonoBehaviour
                 float smoothZVelocity = Mathf.Lerp(currentZ, targetVelocity.z, Time.deltaTime);
 
 
-                Debug.Log("Non-Final Velocity is: " + rb.velocity); // returns 9.68
+                //Debug.Log("Non-Final Velocity is: " + rb.velocity); // returns 9.68
 
 
                 rb.velocity = new Vector3(velocity.x, velocity.y, smoothZVelocity);
@@ -420,8 +420,8 @@ public class FirstPersonController : MonoBehaviour
                         sprintBarCG.alpha += 5 * Time.deltaTime;
                     }
                 }
-                Debug.Log(sprintSpeed);
-                Debug.Log("Velocity is: " + rb.velocity); // returns 10.0
+                //Debug.Log(sprintSpeed);
+                //Debug.Log("Velocity is: " + rb.velocity); // returns 10.0
             }
             // Movement calculations while walking
             else
@@ -434,7 +434,7 @@ public class FirstPersonController : MonoBehaviour
                 }
 
                 targetVelocity = transform.TransformDirection(targetVelocity) * walkSpeed;
-                Debug.Log($"Sprint Speed at the start of sprint is {walkSpeed}");
+                //Debug.Log($"Sprint Speed at the start of sprint is {walkSpeed}");
 
 
                 Vector3 velocity = rb.velocity;
@@ -446,13 +446,13 @@ public class FirstPersonController : MonoBehaviour
                 float smoothZVelocity = Mathf.Lerp(currentZ, targetVelocity.z, Time.deltaTime);
 
 
-                Debug.Log("Non-Final Velocity is: " + rb.velocity);
+                //Debug.Log("Non-Final Velocity is: " + rb.velocity);
 
 
                 rb.velocity = new Vector3(velocity.x, velocity.y, smoothZVelocity);
 
-                Debug.Log(walkSpeed);
-                Debug.Log("Velocity is: " + rb.velocity);
+                //Debug.Log(walkSpeed);
+                //Debug.Log("Velocity is: " + rb.velocity);
             }
         }
 

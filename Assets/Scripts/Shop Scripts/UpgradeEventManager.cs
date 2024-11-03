@@ -75,7 +75,4 @@ public class UpgradeEventManager : MonoBehaviour // this needs to be on an objec
                 break;
         }
     }
-
-
-
 }

@@ -1,9 +1,12 @@
 using UnityEngine;
+using System;
 using UnityEngine.SceneManagement;
 
 public class Level_Manager : MonoBehaviour 
 {
     [SerializeField] private UpgradeEventManager upgradeManager;
+
+    public event EventHandler CreateBridgeSectionDuringIntro;
 
     public TimerController Timer;
 
@@ -85,6 +88,11 @@ public class Level_Manager : MonoBehaviour
         upgradeManager.UpdateUpgradeBlock -= UpgradeEventManager_UpdateUpgradeBlock;
     }
 
+    public void IntroTrigger()
+    {
+        CreateBridgeSectionDuringIntro?.Invoke(this, EventArgs.Empty);
+    }
+
     private void Update()
     {
         if (Timer != null) 
@@ -108,6 +116,7 @@ public class Level_Manager : MonoBehaviour
     public void LoadLevel_1()
     {
         SceneManager.LoadScene("Level_1");
+        CreateBridgeSectionDuringIntro?.Invoke(this, EventArgs.Empty);
     }
     public void LoadGameWin()
     {

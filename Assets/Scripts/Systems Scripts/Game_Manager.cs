@@ -2,6 +2,8 @@ using Unity.VisualScripting;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using static UnityEditor.Progress;
+using System;
 
 public class Game_Manager : MonoBehaviour
 {
@@ -12,8 +14,9 @@ public class Game_Manager : MonoBehaviour
     public GameObject userInterfaceCamera;
 
     public bool Paused;
+    bool firstStart = true;
 
-    public enum GameState { MainMenu, Level1, GameOver, GameWin, DoNothing, Upgrades, Results, Introduction } 
+    public enum GameState { MainMenu, Level1, GameOver, GameWin, DoNothing, Upgrades, Results, Introduction }
     public GameState gameState;
 
     public delegate void GameStateChange();
@@ -101,13 +104,13 @@ public class Game_Manager : MonoBehaviour
     }
 
     public void ResultsMenuTrigger()
-    { 
+    {
         gameState = GameState.Results;
         ChangeGameState(gameState);
     }
 
     public void UpgradesMenuTrigger()
-    { 
+    {
         gameState = GameState.Upgrades;
         ChangeGameState(gameState);
     }
@@ -115,16 +118,12 @@ public class Game_Manager : MonoBehaviour
     public void StartGameTrigger()
     {
         Scene thisScene = SceneManager.GetActiveScene();
-        if ( thisScene.name != "Level_1" )
+        if (thisScene.name != "Level_1")
         {
             gameState = GameState.Level1;
             ChangeGameState(gameState);
-            if (thisScene.name == "Level_1")
-            {
-                IntroductionReturn();
-            }
         }
-        else if ( thisScene.name == "Level_1" ) // if we are jumping back into the same game 
+        else if (thisScene.name == "Level_1") // if we are jumping back into the same game 
         {
             ResumeGameTrigger();
         }
@@ -136,15 +135,18 @@ public class Game_Manager : MonoBehaviour
         IsMenuOpen(true);
     }
 
-    public void IntroductionContinue() // currently useless
+    public void IntroductionFirst() // currently useless
     {
-        Introduction();
+        IntroductionReturn();
     }
-
+    private void Level_Manager_CreateBridgeSectionDuringIntro(object sender, System.EventArgs _) 
+    { 
+    // create bridge here
+    }
     public void IntroductionReturn()
     {
+        level_Manager.CreateBridgeSectionDuringIntro += Level_Manager_CreateBridgeSectionDuringIntro;
         GameState previousGameState = gameState;
-
         gameState = GameState.Introduction;
         ChangeGameState(gameState);
 
@@ -154,11 +156,20 @@ public class Game_Manager : MonoBehaviour
 
     private IEnumerator IntroductionCoroutine(GameState previousGameState)
     {
-        float duration = 5f; // seconds
+        float duration = 7f; // seconds
+        
         yield return new WaitForSeconds(duration);
 
-        gameState = previousGameState;
-        ChangeGameState(gameState);
+        if (!firstStart)
+        {
+            gameState = previousGameState;
+            ChangeGameState(gameState);
+        }
+        else if (firstStart)
+        { 
+            firstStart = false;
+            StartGameTrigger();
+        }
 
         Debug.Log($"{duration} seconds have passed.");
     }
@@ -263,8 +274,8 @@ public class Game_Manager : MonoBehaviour
 
     private void Introduction() // INVOKING DOES NOT CHANGE GAMESTATE, GAMESTATE IS MANUALLY CHANGED
     {
-        OnIntroduction?.Invoke(); // does not change gameState, only invokes the event.
         IsMenuOpen(true);
+        OnIntroduction?.Invoke(); // does not change gameState, only invokes the event.
     }
 
     private void UpgradesMenu()
@@ -281,7 +292,6 @@ public class Game_Manager : MonoBehaviour
 
     private void MainMenu()
     {
-       
         IsMenuOpen(true);
         level_Manager.LoadMainMenu();
         OnMainMenu?.Invoke();
@@ -289,7 +299,6 @@ public class Game_Manager : MonoBehaviour
 
     private void Level_1()
     {
-       
         IsMenuOpen(false);
         level_Manager.LoadLevel_1();
         OnLevel1?.Invoke();
@@ -297,7 +306,6 @@ public class Game_Manager : MonoBehaviour
     
     private void GameOver()
     {
-       
         IsMenuOpen(true);
         level_Manager.LoadGameOver();
         OnGameOver?.Invoke();
@@ -305,7 +313,6 @@ public class Game_Manager : MonoBehaviour
 
     private void GameWin()
     {
-       
         IsMenuOpen(true);
         level_Manager.LoadGameWin();
         OnGameWin?.Invoke();
