@@ -23,7 +23,7 @@ public class EnemyProjectileManager : MonoBehaviour
             projectileInstance = Instantiate(ProjectilePrefab, localTransform.position, Quaternion.identity);
             currentProjectiles++;
         }
-        else if (pooledProjectiles.Count > 0)
+        else if (pooledProjectiles.Count > 8)
         {
             // Reuse from the pool
             projectileInstance = pooledProjectiles.Dequeue();

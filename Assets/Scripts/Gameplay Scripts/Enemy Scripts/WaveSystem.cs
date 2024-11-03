@@ -30,10 +30,10 @@ public class WaveSystem : MonoBehaviour
     private void EnemyWaveTrigger_OnPlayerEnterTrigger(object sender, System.EventArgs _) // _  is for events that don’t require information beyond the event occurring.
     {
         if (state == State.Idle)
-        { 
+        {
             StartWave();
-
-            waveTrigger.OnPlayerEnterTrigger -= EnemyWaveTrigger_OnPlayerEnterTrigger;
+            // unsub to avoid multiple triggers from the same source
+            waveTrigger.OnPlayerEnterTrigger -= EnemyWaveTrigger_OnPlayerEnterTrigger; 
         }
     }
 
@@ -103,7 +103,7 @@ public class WaveSystem : MonoBehaviour
             { 
                 timer -= Time.deltaTime;
                 if (timer <= 0)
-                { 
+                {
                     SpawnEnemies();
                 }
             }

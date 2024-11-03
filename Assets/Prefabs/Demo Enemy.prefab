@@ -228,6 +228,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e0b303ad09c90f4298aef96c4ddb21c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waveTrigger: {fileID: 0}
+  MissZoneTransform: {fileID: 0}
+  enemyPrefab: {fileID: 3967361403814445529}
+  enemySpawnPositions: []
   IsAlive: 0
 --- !u!114 &9185364281201999126
 MonoBehaviour:
@@ -241,7 +245,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d000c1c61852ca4c856c07ef10a059e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectileTarget: {fileID: 0}
   spawnPositions:
   - {fileID: 3439214495896424505}
   - {fileID: 378455244119700793}

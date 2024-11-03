@@ -6,6 +6,7 @@ using UnityEngine;
 public class EnemyWaveTrigger : MonoBehaviour
 {
     public event EventHandler OnPlayerEnterTrigger;
+    public Transform[] SpawnPositions;
 
     private void Start()
     {
@@ -16,7 +17,7 @@ public class EnemyWaveTrigger : MonoBehaviour
     {
         if (collider.CompareTag("PlayerBody"))
         {
-            Debug.Log("Player has triggered a new wave");
+            Debug.LogError("Player has triggered a new wave");
             OnPlayerEnterTrigger?.Invoke(this, EventArgs.Empty);
         }
     }

@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class EnemyFire : MonoBehaviour
 {
-    public Transform projectileTarget; // The player or other target
+    private Transform projectileTarget; // The player or other target
     public Transform[] spawnPositions; // Array to hold multiple spawn positions
     private float spawnInterval = GlobalSettings.spawnerSecondsBetweenAttacks;
     private float ShotDelay() { return Mathf.Round(Random.Range(0.1f, 1.0f) * 100) / 100; }
