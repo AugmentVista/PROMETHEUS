@@ -49,7 +49,7 @@ public class UI_Manager : MonoBehaviour
             case "MainMenu":
                 MainMenuUI();
                 break;
-            case "Level1":
+            case "Level_1":
                 GamePlayUI();
                 break;
             case "GameWin":

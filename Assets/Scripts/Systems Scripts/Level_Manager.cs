@@ -188,15 +188,15 @@ public class Level_Manager : MonoBehaviour
         // This doesn't work but the camera system works without it switching?
         // Only god knows these cameras work right now. The Game_Reference doesn't change but the angles are correct
         // If it ain't broke, don't touch it.
-        if (gameManager.gameplayCamera == null && scene.name == "Level1") { gameManager.gameplayCamera = GameObject.FindGameObjectWithTag("PlayerCamera"); }
+        if (gameManager.gameplayCamera == null && scene.name == "Level_1") { gameManager.gameplayCamera = GameObject.FindGameObjectWithTag("PlayerCamera"); }
         gameManager.EnableGameplayCamera(true);
     }
 
     private void SetupMainMenu()
     {
-        //Game_Manager gameManager = Singleton.instance.GetComponent<Game_Manager>();
-        //gameManager.playerCamera = GameObject.FindGameObjectWithTag("PlayerCamera");
-        //gameManager.EnableGameplayCamera(false);
+        Game_Manager gameManager = Singleton.instance.GetComponent<Game_Manager>();
+        gameManager.userInterfaceCamera = GameObject.FindGameObjectWithTag("PlayerCamera");
+        gameManager.EnableGameplayCamera(false);
     }
 
     private void SetupGameWin()

@@ -69,7 +69,7 @@ public class PlayerHealthSystem : MonoBehaviour
         {
             Scene currentScene = SceneManager.GetActiveScene();
 
-            if (currentScene.name == "Level1")
+            if (currentScene.name == "Level_1")
             {
                 gameManager.GameOverTrigger();
             }

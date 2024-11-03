@@ -164,15 +164,18 @@ public class Game_Manager : MonoBehaviour
 
     private void ResumeGame(Scene scene)
     {
-        if (scene.name != "Level1") 
+        if (scene.name != "Level_1") 
         {
+            Debug.LogError("Did Resume run?");
             ReloadScene();
             IsMenuOpen(true);
         }
-        else if (scene.name == "Level1")
-        { 
-            OnLevel1?.Invoke();
-            EnableGameplayCamera(true);
+        else if (scene.name == "Level_1")
+        {
+            IsMenuOpen(false);
+            ui_Manager.GamePlayUI();
+            //OnLevel1?.Invoke();
+            //EnableGameplayCamera(true);
             GlobalSettings.projectileSpawnerActive = true;
             Paused = false;
         }
@@ -241,7 +244,7 @@ public class Game_Manager : MonoBehaviour
 
         if (menuCamera != null && userInterfaceCamera != null || menuCamera != null && gameplayCamera != null)
         {
-            if (currentScene.name == "Level1" && !Paused)
+            if (currentScene.name == "Level_1" && !Paused)
             {
                 gameplayCamera.SetActive(true);
 
