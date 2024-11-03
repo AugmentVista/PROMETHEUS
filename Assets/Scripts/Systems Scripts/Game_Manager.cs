@@ -1,4 +1,5 @@
 using Unity.VisualScripting;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -9,13 +10,10 @@ public class Game_Manager : MonoBehaviour
     [SerializeField] private GameObject meteorVFX;
 
     public GameObject userInterfaceCamera;
-    //public GameObject gameplayCamera;
-    //public GameObject menuCamera;
-    //public GameObject CameraHolder;
 
     public bool Paused;
 
-    public enum GameState { MainMenu, Level1, GameOver, GameWin, DoNothing, Upgrades, Results } 
+    public enum GameState { MainMenu, Level1, GameOver, GameWin, DoNothing, Upgrades, Results, Introduction } 
     public GameState gameState;
 
     public delegate void GameStateChange();
@@ -66,6 +64,9 @@ public class Game_Manager : MonoBehaviour
             case GameState.DoNothing:
                 Default();
                 break;
+            case GameState.Introduction:
+                Introduction();
+                break;
             case GameState.MainMenu:
                 MainMenu();
                 break;
@@ -113,12 +114,17 @@ public class Game_Manager : MonoBehaviour
 
     public void StartGameTrigger()
     {
-        if ( gameState != GameState.Level1 )
+        Scene thisScene = SceneManager.GetActiveScene();
+        if ( thisScene.name != "Level_1" )
         {
             gameState = GameState.Level1;
             ChangeGameState(gameState);
+            if (thisScene.name == "Level_1")
+            {
+                IntroductionReturn();
+            }
         }
-        else if (gameState == GameState.Level1) // if we are jumping back into the same game 
+        else if ( thisScene.name == "Level_1" ) // if we are jumping back into the same game 
         {
             ResumeGameTrigger();
         }
@@ -130,10 +136,31 @@ public class Game_Manager : MonoBehaviour
         IsMenuOpen(true);
     }
 
-    public void IntroductionMenuTrigger()
+    public void IntroductionContinue() // currently useless
     {
-        OnIntroduction?.Invoke();
-        IsMenuOpen(true);
+        Introduction();
+    }
+
+    public void IntroductionReturn()
+    {
+        GameState previousGameState = gameState;
+
+        gameState = GameState.Introduction;
+        ChangeGameState(gameState);
+
+        // Start the coroutine to introduce a delay
+        StartCoroutine(IntroductionCoroutine(previousGameState));
+    }
+
+    private IEnumerator IntroductionCoroutine(GameState previousGameState)
+    {
+        float duration = 5f; // seconds
+        yield return new WaitForSeconds(duration);
+
+        gameState = previousGameState;
+        ChangeGameState(gameState);
+
+        Debug.Log($"{duration} seconds have passed.");
     }
 
     public void GameOverTrigger()
@@ -172,10 +199,9 @@ public class Game_Manager : MonoBehaviour
         }
         else if (scene.name == "Level_1")
         {
+            Debug.LogError("Does intro trigger this one?");
             IsMenuOpen(false);
             ui_Manager.GamePlayUI();
-            //OnLevel1?.Invoke();
-            //EnableGameplayCamera(true);
             GlobalSettings.projectileSpawnerActive = true;
             Paused = false;
         }
@@ -206,36 +232,10 @@ public class Game_Manager : MonoBehaviour
     }
 
 #endregion
-    
-
-    public void GameQuit()
-    {
-        Application.Quit();
-    }
 
     private void IsMenuOpen(bool open)
     {
         EnableGameplayCamera(!open);
-        //// If a menu is open and the menu camera is turned off, turn it on and turn off the interface cam.
-        //if (!menuCamera.activeSelf && open) 
-        //{
-        //    EnableGameplayCamera(open);
-        //}
-        ////if a menu is open and the menu camera is turned on, return
-        //else if (menuCamera.activeSelf && open)
-        //{
-        //    EnableGameplayCamera(open);
-        //}
-        //// If a menu isn't open and the interface cam is turned off, turn it on and turn off the menu camera.
-        //else if (!userInterfaceCamera.activeSelf && !open)
-        //{
-        //    EnableGameplayCamera(open);
-        //}
-        //// if a menu isn't open and the interface cam is turned on return
-        //else if (userInterfaceCamera.activeSelf && !open) 
-        //{
-        //    EnableGameplayCamera(open);
-        //}
     }
 
     // Swaps between cameras
@@ -251,38 +251,9 @@ public class Game_Manager : MonoBehaviour
             userInterfaceCamera.SetActive(true); 
             meteorVFX.SetActive(!shouldGamePlayCamOpen);
         }
-
-
-
-        //if (menuCamera != null && userInterfaceCamera != null || menuCamera != null && gameplayCamera != null)
-        //{
-        //    if (currentScene.name == "Level_1" && !Paused)
-        //    {
-        //        gameplayCamera.SetActive(true);
-
-        //        if (userInterfaceCamera.activeSelf) { userInterfaceCamera.SetActive(false); }
-        //        if (menuCamera.activeSelf) { menuCamera.SetActive(false); }
-        //    }
-        //    else
-        //    {
-        //        if (gameplayCamera.activeSelf) { gameplayCamera.SetActive(false); } // deals with case that gamePlayCam is still on
-
-        //        if (shouldGamePlayCamOpen)
-        //        {
-        //            userInterfaceCamera.SetActive(true);
-        //            if (menuCamera.activeSelf) { menuCamera.SetActive(false); }
-        //        }
-        //        else if (!shouldGamePlayCamOpen)
-        //        {
-        //            if (userInterfaceCamera.activeSelf) { userInterfaceCamera.SetActive(false); }
-        //            menuCamera.SetActive(true);
-        //        }
-        //    }
-        //}
     }
 
     #endregion
-
 
 
     private void Default()
@@ -290,17 +261,16 @@ public class Game_Manager : MonoBehaviour
 
     }
 
+    private void Introduction() // INVOKING DOES NOT CHANGE GAMESTATE, GAMESTATE IS MANUALLY CHANGED
+    {
+        OnIntroduction?.Invoke(); // does not change gameState, only invokes the event.
+        IsMenuOpen(true);
+    }
+
     private void UpgradesMenu()
     {
         IsMenuOpen(true);
         OnUpgrades?.Invoke();
-    }
-
-    private void Introduction()
-    {
-
-        IsMenuOpen(true);
-        OnIntroduction?.Invoke();
     }
 
     private void ResultsMenu()
@@ -339,6 +309,11 @@ public class Game_Manager : MonoBehaviour
         IsMenuOpen(true);
         level_Manager.LoadGameWin();
         OnGameWin?.Invoke();
+    }
+
+    public void GameQuit()
+    {
+        Application.Quit();
     }
 
 }
