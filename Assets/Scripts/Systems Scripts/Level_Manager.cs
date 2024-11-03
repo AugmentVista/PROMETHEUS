@@ -128,7 +128,7 @@ public class Level_Manager : MonoBehaviour
         switch (scene.name)
         {
             case "Level_1":
-                SetupGameplayScene();
+                SetupGameplayScene(scene);
                 break;
             case "MainMenu":
                 SetupMainMenu();
@@ -144,10 +144,11 @@ public class Level_Manager : MonoBehaviour
                 break;
         }
     }
-    private void SetupGameplayScene()
+    private void SetupGameplayScene(Scene scene)
     {
         Game_Manager gameManager = Singleton.instance.GetComponent<Game_Manager>();
         gameManager.Paused = false;
+        if (gameManager.gameplayCamera == null && scene.name == "Level1") { gameManager.gameplayCamera = GameObject.FindGameObjectWithTag("PlayerCamera"); }
         gameManager.EnableGameplayCamera(true);
     }
 

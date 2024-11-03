@@ -29,10 +29,8 @@ public class Game_Manager : MonoBehaviour
 
     private void Awake() // Awake runs before start and again when scenes change.
     {
-        if (userInterfaceCamera == null || menuCamera == null)
-        {
-            Debug.LogError("Camera references not found!");
-        }
+
+
     }
 
     private void Start()
@@ -122,29 +120,51 @@ public class Game_Manager : MonoBehaviour
         IsMenuOpen(true);
         ui_Manager.PausedUI();
         GlobalSettings.projectileSpawnerActive = false;
-        Time.timeScale = 0.001f;
         Paused = true;
     }
 
     public void ResumeGameTrigger()
     {
-        Time.timeScale = 1.0f;
-        Paused = false;
         ResumeGame(gameState);
     }
 
     private void ResumeGame(GameState state)
     {
-        if (gameState == GameState.MainMenu) 
+        if (gameState != GameState.Level1) 
         {
             ReloadScene();
+            IsMenuOpen(true);
         }
         else if (gameState == GameState.Level1)
         { 
-            IsMenuOpen(false);
-            ui_Manager.GamePlayUI();
+            OnLevel1?.Invoke();
+            EnableGameplayCamera(true);
             GlobalSettings.projectileSpawnerActive = true;
             Paused = false;
+        }
+    }
+
+    public void ReloadScene()
+    {
+        Paused = false;
+        Scene currentScene = SceneManager.GetActiveScene();
+        switch (currentScene.name)
+        {
+            case "MainMenu":
+                MainMenu();
+                break;
+            case "Level_1":
+                Level_1();
+                break;
+            case "GameWin":
+                GameWin();
+                break;
+            case "GameOver":
+                GameOver();
+                break;
+            default:
+                MainMenu();
+                break;
         }
     }
 
@@ -173,23 +193,7 @@ public class Game_Manager : MonoBehaviour
     }
 
     #endregion
-    public void ReloadScene() 
-    {
-        Paused = false;
-        Scene currentScene = SceneManager.GetActiveScene();
-        switch (currentScene.name)
-        {
-            case "MainMenu":
-                MainMenu();
-                break;
-            case "Level_1":
-                Level_1();
-                break;
-            default:
-                MainMenu();
-                break;
-        }
-    }
+    
 
     public void GameQuit()
     {
@@ -224,6 +228,7 @@ public class Game_Manager : MonoBehaviour
     public void EnableGameplayCamera(bool shouldGamePlayCamOpen)
     {
         Scene currentScene = SceneManager.GetActiveScene();
+
         if (menuCamera != null && userInterfaceCamera != null || menuCamera != null && gameplayCamera != null)
         {
             if (currentScene.name == "Level1" && !Paused)
@@ -248,30 +253,8 @@ public class Game_Manager : MonoBehaviour
                     menuCamera.SetActive(true);
                 }
             }
-
+            meteorVFX.SetActive(!shouldGamePlayCamOpen);
         }
-
-
-       
-       
-
-        if (menuCamera != null && userInterfaceCamera != null || menuCamera != null && gameplayCamera != null )
-        {
-            userInterfaceCamera.SetActive(shouldGamePlayCamOpen);
-            menuCamera.SetActive(!shouldGamePlayCamOpen);
-        }
-        else { Debug.LogError($"Player Camera is: {userInterfaceCamera}, Menu Camera is: {menuCamera} "); }
-        //else if (menuCamera.activeSelf)
-        //{
-        //    playerCamera.SetActive(true);
-        //    menuCamera.SetActive(false);
-        //}
-        //else if (playerCamera.activeSelf)
-        //{
-        //    playerCamera.SetActive(false);
-        //    menuCamera.SetActive(true);
-        //}
-        meteorVFX.SetActive(!shouldGamePlayCamOpen);
     }
 
     #endregion
@@ -282,26 +265,27 @@ public class Game_Manager : MonoBehaviour
 
     private void Default()
     {
-        Time.timeScale = 1.0f;
+
     }
 
     private void UpgradesMenu()
     {
-        Time.timeScale = 1.0f;
         IsMenuOpen(true);
         OnUpgrades?.Invoke();
     }
 
     private void Introduction()
     {
-        Time.timeScale = 1.0f;
+
         IsMenuOpen(true);
         OnIntroduction?.Invoke();
     }
 
+    #endregion
+
     private void MainMenu()
     {
-        Time.timeScale = 1.0f;
+       
         IsMenuOpen(true);
         level_Manager.LoadMainMenu();
         OnMainMenu?.Invoke();
@@ -309,15 +293,15 @@ public class Game_Manager : MonoBehaviour
 
     private void Level_1()
     {
-        Time.timeScale = 1.0f;
+       
         IsMenuOpen(false);
         level_Manager.LoadLevel_1();
         OnLevel1?.Invoke();
     }
-    #endregion
+    
     private void GameOver()
     {
-        Time.timeScale = 1.0f;
+       
         IsMenuOpen(true);
         level_Manager.LoadGameOver();
         OnGameOver?.Invoke();
@@ -325,10 +309,11 @@ public class Game_Manager : MonoBehaviour
 
     private void GameWin()
     {
-        Time.timeScale = 1.0f;
+       
         IsMenuOpen(true);
         level_Manager.LoadGameWin();
         OnGameWin?.Invoke();
     }
+
     #endregion
 }
