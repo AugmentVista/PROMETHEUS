@@ -2,7 +2,6 @@ using Unity.VisualScripting;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using static UnityEditor.Progress;
 using System;
 
 public class Game_Manager : MonoBehaviour
@@ -134,42 +133,46 @@ public class Game_Manager : MonoBehaviour
         ui_Manager.OptionsUI();
         IsMenuOpen(true);
     }
-
-    public void IntroductionFirst() // currently useless
-    {
-        IntroductionReturn();
-    }
     private void Level_Manager_CreateBridgeSectionDuringIntro(object sender, System.EventArgs _) 
     { 
-    // create bridge here
+        // create bridge here
     }
     public void IntroductionReturn()
     {
         level_Manager.CreateBridgeSectionDuringIntro += Level_Manager_CreateBridgeSectionDuringIntro;
-        GameState previousGameState = gameState;
-        gameState = GameState.Introduction;
-        ChangeGameState(gameState);
+        Introduction();
+        IsMenuOpen(true);
 
         // Start the coroutine to introduce a delay
-        StartCoroutine(IntroductionCoroutine(previousGameState));
+        StartCoroutine(IntroductionCoroutine());
     }
 
-    private IEnumerator IntroductionCoroutine(GameState previousGameState)
+    private IEnumerator IntroductionCoroutine()
     {
-        float duration = 7f; // seconds
+        GameObject IntroPlayButton;
+
+        IntroPlayButton = ui_Manager.introductionUI.transform.Find("Play BG").gameObject;
+
+        float duration = 3f; // seconds
         
         yield return new WaitForSeconds(duration);
 
-        if (!firstStart)
-        {
-            gameState = previousGameState;
-            ChangeGameState(gameState);
-        }
-        else if (firstStart)
-        { 
-            firstStart = false;
-            StartGameTrigger();
-        }
+        //if (previousGameState == GameState.Level1)
+        //{
+        //    gameState = previousGameState;
+        //    ChangeGameState(gameState);
+        //    IsMenuOpen(false);
+        //    OnLevel1?.Invoke();
+        //}
+        //else if (previousGameState == GameState.MainMenu)
+        //{
+            IntroPlayButton.SetActive(true);
+        //}
+        //else if (previousGameState != GameState.Level1 || previousGameState != GameState.Introduction)
+        //{
+        //    gameState = previousGameState;
+        //    ChangeGameState(gameState);
+        //}
 
         Debug.Log($"{duration} seconds have passed.");
     }
@@ -266,7 +269,7 @@ public class Game_Manager : MonoBehaviour
 
     #endregion
 
-
+    #region Private Invoke calls
     private void Default()
     {
 
@@ -322,5 +325,5 @@ public class Game_Manager : MonoBehaviour
     {
         Application.Quit();
     }
-
+    #endregion
 }

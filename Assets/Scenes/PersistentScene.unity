@@ -415,7 +415,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &80994441
 RectTransform:
   m_ObjectHideFlags: 0
@@ -13901,7 +13901,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &770803783
 RectTransform:
   m_ObjectHideFlags: 0
@@ -56462,7 +56462,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!222 &376997681981041178
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -63238,7 +63238,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1461781221591521523
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -64180,7 +64180,8 @@ Transform:
   m_Children:
   - {fileID: 8821160350138711098}
   - {fileID: 1146911049580352954}
-  - {fileID: 8452935277855586288}
+  - {fileID: 2052445395429576137}
+  - {fileID: 4382997483690511214}
   - {fileID: 6214654847448080128}
   - {fileID: 4218466161400041560}
   m_Father: {fileID: 4422522984548163052}
@@ -64477,11 +64478,11 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 9022129768334343621}
-  m_Father: {fileID: 8452935277855586288}
+  m_Father: {fileID: 1914688532491844976}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -761, y: -653}
+  m_AnchoredPosition: {x: 78, y: -447}
   m_SizeDelta: {x: 350, y: 125}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2059096360763541375
@@ -87289,11 +87290,11 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5862265227201139516}
-  m_Father: {fileID: 8452935277855586288}
+  m_Father: {fileID: 1914688532491844976}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 27, y: 240}
+  m_AnchoredPosition: {x: 866, y: 446}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &4400668682690040849
@@ -100245,22 +100246,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!1 &6271485116315929549
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 8452935277855586288}
-  m_Layer: 5
-  m_Name: Buttons
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!224 &6279653367079431621
 RectTransform:
   m_ObjectHideFlags: 0
@@ -111607,8 +111592,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 5499660082299225139}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 35}
   m_SizeDelta: {x: 70, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -113856,27 +113841,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!224 &8452935277855586288
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6271485116315929549}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 4382997483690511214}
-  - {fileID: 2052445395429576137}
-  m_Father: {fileID: 1914688532491844976}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 839, y: 206}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &8454517304342721852
 RectTransform:
   m_ObjectHideFlags: 0
@@ -115286,7 +115250,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 4525191834167568916}
         m_TargetAssemblyTypeName: Game_Manager, Assembly-CSharp
-        m_MethodName: ResumeGameTrigger
+        m_MethodName: StartGameTrigger
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
