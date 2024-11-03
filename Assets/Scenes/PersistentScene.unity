@@ -100787,7 +100787,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5719079838647781640}
   - component: {fileID: 7831032648012028366}
-  - component: {fileID: 7831032648012028367}
   m_Layer: 0
   m_Name: User Interface Camera
   m_TagString: PlayerCamera
@@ -113094,14 +113093,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!81 &7831032648012028367
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6258696111653029438}
-  m_Enabled: 1
 --- !u!1 &7834392551089992166
 GameObject:
   m_ObjectHideFlags: 0

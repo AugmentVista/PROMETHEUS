@@ -21,6 +21,8 @@ public class EnemySpawn : MonoBehaviour
     {   
         if(waveTrigger != null)
         enemySpawnPositions = waveTrigger.SpawnPositions;
+        Debug.LogError($"Enemy spawn pos is {enemySpawnPositions}");
+        Debug.LogError($"Enemy spawn count is {enemySpawnPositions.Length}");
     }
     
     /// <summary>
@@ -36,15 +38,23 @@ public class EnemySpawn : MonoBehaviour
 
     public void Spawn()
     {
-        GameObject enemyInstance;
-        InitalPosition = transform;
+        IsAlive = true;
 
-        enemyInstance = Instantiate(enemyPrefab, transform.position, Quaternion.identity);
+        if (waveTrigger != null)
+            enemySpawnPositions = waveTrigger.SpawnPositions;
+        Debug.LogError($"Enemy spawn pos is {enemySpawnPositions}");
+        Debug.LogError($"Enemy spawn count is {enemySpawnPositions.Length}");
+
+        GameObject enemyInstance = Instantiate(enemyPrefab, transform.position, Quaternion.identity);
+        InitalPosition = transform;
+        //enemyInstance = Instantiate(enemyPrefab, transform.position, Quaternion.identity);
+        Debug.Log($"enemy is {enemyInstance}");
 
         Transform spawnPosition = enemySpawnPositions[Random.Range(0, enemySpawnPositions.Length)];
         enemyInstance.transform.position = spawnPosition.position;
 
-        // Calculate direction to target (e.g., player)
+        Debug.Log($"Enemy spawn array length is {enemySpawnPositions.Length} and enemy itself is {enemyInstance}");
+        
         Vector3 directionToPlayer = (MissZoneTransform.position - spawnPosition.position).normalized;
 
         Debug.Log("A enemy has been spawned");
