@@ -97,7 +97,4 @@ public class ShopManager : MonoBehaviour
             return false;
         }
     }
-
-
-
 }

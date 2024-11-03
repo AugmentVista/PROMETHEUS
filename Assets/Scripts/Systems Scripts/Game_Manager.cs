@@ -31,7 +31,6 @@ public class Game_Manager : MonoBehaviour
     private void Awake() // Awake runs before start and again when scenes change.
     {
 
-
     }
 
     private void Start()
@@ -159,17 +158,18 @@ public class Game_Manager : MonoBehaviour
 
     public void ResumeGameTrigger()
     {
-        ResumeGame(gameState);
+        Scene thisScene = SceneManager.GetActiveScene();
+        ResumeGame(thisScene);
     }
 
-    private void ResumeGame(GameState state)
+    private void ResumeGame(Scene scene)
     {
-        if (gameState != GameState.Level1) 
+        if (scene.name != "Level1") 
         {
             ReloadScene();
             IsMenuOpen(true);
         }
-        else if (gameState == GameState.Level1)
+        else if (scene.name == "Level1")
         { 
             OnLevel1?.Invoke();
             EnableGameplayCamera(true);
@@ -257,7 +257,7 @@ public class Game_Manager : MonoBehaviour
                     userInterfaceCamera.SetActive(true);
                     if (menuCamera.activeSelf) { menuCamera.SetActive(false); }
                 }
-                else if (!shouldGamePlayCamOpen) 
+                else if (!shouldGamePlayCamOpen)
                 {
                     if (userInterfaceCamera.activeSelf) { userInterfaceCamera.SetActive(false); }
                     menuCamera.SetActive(true);
