@@ -41952,9 +41952,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4283002039709831097}
     m_Modifications:
+    - target: {fileID: 6779477049813781292, guid: 4296879f55bcdfb42931b1d2607951b1, type: 3}
+      propertyPath: m_Name
+      value: Player Camera
+      objectReference: {fileID: 0}
     - target: {fileID: 8585538195268402147, guid: 4296879f55bcdfb42931b1d2607951b1, type: 3}
       propertyPath: m_Name
       value: PlayerMain
+      objectReference: {fileID: 0}
+    - target: {fileID: 8585538195268402147, guid: 4296879f55bcdfb42931b1d2607951b1, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8772894800031778780, guid: 4296879f55bcdfb42931b1d2607951b1, type: 3}
       propertyPath: m_LocalPosition.x
@@ -42004,6 +42012,11 @@ PrefabInstance:
 --- !u!4 &1915629041 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8772894800031778780, guid: 4296879f55bcdfb42931b1d2607951b1, type: 3}
+  m_PrefabInstance: {fileID: 1915629040}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1915629042 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6779477049813781292, guid: 4296879f55bcdfb42931b1d2607951b1, type: 3}
   m_PrefabInstance: {fileID: 1915629040}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1952711384
@@ -61604,7 +61617,7 @@ GameObject:
   - component: {fileID: 8428313498359003861}
   - component: {fileID: 5097432001545230469}
   m_Layer: 0
-  m_Name: MenuCamera
+  m_Name: Menu Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -84795,7 +84808,8 @@ MonoBehaviour:
   ui_Manager: {fileID: 9143321981724161331}
   level_Manager: {fileID: 2653878070925650047}
   meteorVFX: {fileID: 4955560193981042372}
-  playerCamera: {fileID: 6258696111653029438}
+  userInterfaceCamera: {fileID: 6258696111653029438}
+  gameplayCamera: {fileID: 1915629042}
   menuCamera: {fileID: 2098326621707049964}
   CameraHolder: {fileID: 539069329940609946}
   Paused: 0
@@ -97247,7 +97261,7 @@ GameObject:
   - component: {fileID: 5719079838647781640}
   - component: {fileID: 7831032648012028366}
   m_Layer: 0
-  m_Name: PlayerCamera
+  m_Name: User Interface Camera
   m_TagString: PlayerCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
