@@ -58,6 +58,13 @@ public class PlayerAttackHitBox : MonoBehaviour // This script is attached to th
         attackSpeedUps += 1;
     }
 
+    public void UpdateHammer(float amountToEnlarge)
+    {
+        float convertedValue = 1f + amountToEnlarge / 100;
+        weaponCollider.transform.localScale *= convertedValue;
+        Debug.Log($"Hammer has grown by {convertedValue} %");
+    }
+
     private void Update()
     {
         if (Input.GetKeyDown(hitKey) && canAttack)
