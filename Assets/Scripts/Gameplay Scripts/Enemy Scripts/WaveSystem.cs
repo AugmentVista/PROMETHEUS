@@ -103,10 +103,9 @@ public class WaveSystem : MonoBehaviour
         return true;
     }
 
-
-
     public void BeginNewWave()
     {
+        Debug.LogError("Has a new wave begun?");
         endWaveTrigger.WaveEnd_ShowResults -= EndWaveTrigger_WaveEnd_ShowResults;
         waveTrigger.OnPlayerEnterTrigger += EnemyWaveTrigger_OnPlayerEnterTrigger;
         foreach (Wave wave in waveArray)

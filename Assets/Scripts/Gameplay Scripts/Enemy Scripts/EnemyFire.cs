@@ -6,7 +6,7 @@ public class EnemyFire : MonoBehaviour
 
     public Transform[] spawnPositions; // Array to hold multiple spawn positions
 
-    [SerializeField] private int AmmunitionLifespan = 10;
+    [SerializeField] private int AmmunitionLifespan = 100;
     [SerializeField] private int Ammunition = 0;
 
 

@@ -25,7 +25,7 @@ public class EnemyProjectileManager : MonoBehaviour
             totalProjectilesCreated += 1;
             currentProjectiles++;
         }
-        else if (pooledProjectiles.Count > 0)
+        else if (pooledProjectiles.Count < maxProjectiles)
         {
             // Reuse from the pool
             projectileInstance = pooledProjectiles.Dequeue();

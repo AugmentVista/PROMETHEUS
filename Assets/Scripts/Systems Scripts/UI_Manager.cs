@@ -3,10 +3,6 @@ using UnityEngine.SceneManagement;
 
 public class UI_Manager : MonoBehaviour
 {
-    //[SerializeField] private Level_Manager levelManager;
-
-
-
     public GameObject emptyUI;
     public GameObject introductionUI;
     public GameObject mainMenuUI;
@@ -120,21 +116,4 @@ public class UI_Manager : MonoBehaviour
         gameWinUI.SetActive(false);
         ActiveUI.SetActive(true);
     }
-
-
-    public void DisplayHitBoxUI()
-    {
-        PlayerAttackHitBox hitBox = FindAnyObjectByType<PlayerAttackHitBox>();
-
-        if (hitBox != null)
-        {
-            GameObject hitBoxChild = hitBox.transform.Find("Hit Box Visual")?.gameObject;
-
-            if (hitBoxChild != null)
-            {
-                hitBoxChild.SetActive(!hitBoxChild.activeSelf);
-            }
-        }
-    }
-
 }

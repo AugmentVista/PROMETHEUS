@@ -72,6 +72,7 @@ public class PlayerHealthSystem : MonoBehaviour
             if (currentScene.name == "Level_1")
             {
                 gameManager.ResultsMenuTrigger();
+                GlobalSettings.globalPauseOverride = true;
             }
         }
     }

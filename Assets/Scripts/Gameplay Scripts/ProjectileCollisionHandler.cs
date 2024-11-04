@@ -92,7 +92,7 @@ public class ProjectileCollisionHandler : MonoBehaviour
                 if (struckByWeapon)
                 {
                     if (Score != null) { Score.score += Base.value; }
-                    Score.drachma += 5;
+                    Score.drachma += 8;
 
                     //Debug.Log($"{projectileType} hit the player's weapon and was blocked.");
                     DisableColliderForPooling();

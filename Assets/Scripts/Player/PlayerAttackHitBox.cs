@@ -80,8 +80,6 @@ public class PlayerAttackHitBox : MonoBehaviour // This script is attached to th
 
         canAttack = false; 
 
-        //PlayHammerAnimation();
-
         isAttacking = true;
         yield return new WaitForSeconds(attackDuration);
 

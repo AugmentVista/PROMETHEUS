@@ -51,7 +51,7 @@ public class BaseProjectile : MonoBehaviour
         {
             case ProjectileEffect.KnockBack:
                 Spin();
-                value = 1;
+                value = 8;
                 break;
             case ProjectileEffect.Slow:
                 value = 1;
