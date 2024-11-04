@@ -5,7 +5,7 @@ public class EnemyFire : MonoBehaviour
     [SerializeField] private Transform projectileTarget; // The player or other target
     public Transform[] spawnPositions; // Array to hold multiple spawn positions
     private float spawnInterval = GlobalSettings.spawnerSecondsBetweenAttacks;
-    private float ShotDelay() { return Mathf.Round(Random.Range(0.1f, 1.0f) * 100) / 100; }
+    private float ShotDelay() { return Mathf.Round(Random.Range(0.1f, 2.0f) * 100) / 100; } // produces clean decimals
     private float shootingTimeGap; 
 
     private EnemyProjectileManager projectileManager;
@@ -54,6 +54,11 @@ public class EnemyFire : MonoBehaviour
                 }
             }
         }
+    }
+
+    private void Update()
+    {
+        ToggleFiring(!GlobalSettings.projectileSpawnerActive);
     }
 
     public void ToggleFiring(bool isActive)

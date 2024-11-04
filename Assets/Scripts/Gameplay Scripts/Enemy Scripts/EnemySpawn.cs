@@ -1,62 +1,49 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemySpawn : MonoBehaviour
 {
     [SerializeField] private EnemyWaveTrigger waveTrigger;
-
-
     public Transform MissZoneTransform;
-
     public GameObject enemyPrefab;
-
-    public Transform[] enemySpawnPositions;
-
+    private Transform[] enemySpawnPositions => waveTrigger?.SpawnPositions;
     private Transform InitalPosition = null;
-
     public bool IsAlive;
 
     private void Start()
-    {   
-        if(waveTrigger != null)
-        enemySpawnPositions = waveTrigger.SpawnPositions;
-        Debug.LogError($"Enemy spawn pos is {enemySpawnPositions}");
-        Debug.LogError($"Enemy spawn count is {enemySpawnPositions.Length}");
+    {
+        if (waveTrigger == null)
+        {
+            return;
+        }
+
+        if (enemySpawnPositions == null || enemySpawnPositions.Length == 0)
+        {
+            return;
+        }
+
     }
-    
-    /// <summary>
-    /// enemy details here 
-    /// public event EventHandler OnDead;
-    /// EnemyMain enemyMain
-    /// awake 
-    /// start
-    /// enemy healthsystem
-    /// bool IsAlive
-    /// enemy 
-    /// </summary>
 
     public void Spawn()
     {
-        IsAlive = true;
+        if (enemySpawnPositions == null || enemySpawnPositions.Length == 0)
+        {
+            Debug.LogError("No valid spawn positions");
+            return;
+        }
 
-        if (waveTrigger != null)
-            enemySpawnPositions = waveTrigger.SpawnPositions;
-        Debug.LogError($"Enemy spawn pos is {enemySpawnPositions}");
-        Debug.LogError($"Enemy spawn count is {enemySpawnPositions.Length}");
+        IsAlive = true;
 
         GameObject enemyInstance = Instantiate(enemyPrefab, transform.position, Quaternion.identity);
         InitalPosition = transform;
-        //enemyInstance = Instantiate(enemyPrefab, transform.position, Quaternion.identity);
-        Debug.Log($"enemy is {enemyInstance}");
+        Debug.Log($"Enemy instance created: {enemyInstance}");
 
         Transform spawnPosition = enemySpawnPositions[Random.Range(0, enemySpawnPositions.Length)];
         enemyInstance.transform.position = spawnPosition.position;
+        enemyInstance.transform.rotation = Quaternion.identity;
 
-        Debug.Log($"Enemy spawn array length is {enemySpawnPositions.Length} and enemy itself is {enemyInstance}");
-        
-        Vector3 directionToPlayer = (MissZoneTransform.position - spawnPosition.position).normalized;
+        Debug.Log($"Enemy spawned at position: {spawnPosition.position}");
 
-        Debug.Log("A enemy has been spawned");
+        Debug.Log("An enemy has been spawned");
     }
 }
+

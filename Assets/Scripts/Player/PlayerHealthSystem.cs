@@ -84,7 +84,7 @@ public class PlayerHealthSystem : MonoBehaviour
             Debug.Log($"Mod is {item.Modifer}");
                 GlobalSettings.globalPlayerHPMaximum += item.Modifer;
                 maxHealth = GlobalSettings.globalPlayerHPMaximum;
-                Heal(item.Modifer);
+                Heal(item.Modifer * 3f);
                 Debug.Log("Player has been healed");
                 hpUpgradeLimit++;
         }
