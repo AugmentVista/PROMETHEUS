@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class GlobalSettings : MonoBehaviour
 {
+    public static bool EnemiesAreAlive = true;
+
     #region PlayerHealthSystem Variables
 
     public static float globalPlayerHPMaximum = 100f;

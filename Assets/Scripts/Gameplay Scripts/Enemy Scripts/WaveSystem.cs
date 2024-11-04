@@ -109,6 +109,10 @@ public class WaveSystem : MonoBehaviour
     {
         endWaveTrigger.WaveEnd_ShowResults -= EndWaveTrigger_WaveEnd_ShowResults;
         waveTrigger.OnPlayerEnterTrigger += EnemyWaveTrigger_OnPlayerEnterTrigger;
+        foreach (Wave wave in waveArray)
+        {
+            wave.DestroyAllEnemies();
+        }
     }
 
     /// <summary>
@@ -131,7 +135,23 @@ public class WaveSystem : MonoBehaviour
                     SpawnEnemies();
                 }
             }
-        } 
+        }
+
+        public void DestroyAllEnemies()
+        {
+            foreach (EnemySpawn enemySpawn in enemySpawnArray)
+            {
+                Destroy(enemySpawn.gameObject);
+            }
+        }
+
+        public void ReviveEnemies()
+        {
+            foreach (EnemySpawn enemySpawn in enemySpawnArray)
+            {
+                enemySpawn.IsAlive = true;
+            }
+        }
 
         private void SpawnEnemies()
         {

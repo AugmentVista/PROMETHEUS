@@ -200,9 +200,18 @@ public class Level_Manager : MonoBehaviour
     {
         Game_Manager gameManager = Singleton.instance.GetComponent<Game_Manager>();
         CreateBridgeSectionDuringIntro?.Invoke(this, EventArgs.Empty);
+
+        Extention = GameObject.Find("Extention");
         Extention.SetActive(false);
-        playerTransform.position = respawnPoint.position;
-        
+
+        GameObject playerObject = GameObject.FindWithTag("Player");
+        if (playerObject != null)
+        {
+            playerTransform = playerObject.transform;
+            playerTransform.position = respawnPoint.position;
+            Debug.Log($"Found player object: {playerTransform.name}");
+            playerTransform.position = respawnPoint.position;
+        }
 
         gameManager.ResumeGameTrigger();
     }
@@ -219,16 +228,6 @@ public class Level_Manager : MonoBehaviour
         { 
             endWaveTrigger.WaveEnd_ShowResults += EndWaveTrigger_WaveEnd_ShowResults;
         }
-        Extention =  GameObject.Find("Extention");
-        GameObject playerObject = GameObject.FindWithTag("Player");
-
-        if (playerObject != null)
-        {
-            playerTransform = playerObject.transform;
-            playerTransform.position = respawnPoint.position;
-            Debug.Log($"Found player object: {playerTransform.name}");
-        }
-
         gameManager.EnableGameplayCamera(true);
     }
 
