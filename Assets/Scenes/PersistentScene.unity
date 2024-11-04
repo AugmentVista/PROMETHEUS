@@ -27832,7 +27832,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1487960141
 RectTransform:
   m_ObjectHideFlags: 0
@@ -27898,7 +27898,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 4525191834167568916}
         m_TargetAssemblyTypeName: Game_Manager, Assembly-CSharp
-        m_MethodName: ContinueButton
+        m_MethodName: ContinueFromUpgrades
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -27921,7 +27921,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.15642452, g: 1, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -58292,7 +58292,7 @@ Transform:
   - {fileID: 3653510542297018002}
   - {fileID: 5125252311647624042}
   - {fileID: 1487960141}
-  - {fileID: 1178239972774024614}
+  - {fileID: 9006103103224903358}
   - {fileID: 4269700981432738198}
   - {fileID: 5332168350991846647}
   - {fileID: 7853510560798700083}
@@ -63952,7 +63952,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 673452572371065975}
+  m_Father: {fileID: 4269700981432738198}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -82991,8 +82991,8 @@ RectTransform:
   m_Children:
   - {fileID: 5265539079367627552}
   - {fileID: 2099958801047411590}
-  - {fileID: 9006103103224903358}
   - {fileID: 1305301179321478127}
+  - {fileID: 1178239972774024614}
   m_Father: {fileID: 673452572371065975}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -115239,7 +115239,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 4269700981432738198}
+  m_Father: {fileID: 673452572371065975}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}

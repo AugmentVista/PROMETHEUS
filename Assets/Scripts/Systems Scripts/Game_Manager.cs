@@ -150,7 +150,7 @@ public class Game_Manager : MonoBehaviour
 
             UpgradeContinueButton = ui_Manager.upgradesUI.transform.Find("ContinueFromUpgrades").gameObject;
 
-            UpgradePlayButton = ui_Manager.upgradesUI.transform.Find("Gear").gameObject;
+            UpgradePlayButton = ui_Manager.upgradesUI.transform.Find("Return").gameObject;
 
             if (UpgradePlayButton != null && UpgradePlayButton.activeSelf)
             {
