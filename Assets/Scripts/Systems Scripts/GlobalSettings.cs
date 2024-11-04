@@ -68,7 +68,7 @@ public class GlobalSettings : MonoBehaviour
 
     public static float spawnerSecondsBetweenAttacks = 1.0f; 
 
-    public static int spawnerProjectilesMaxAmount = 5; // this is each?
+    public static int spawnerProjectilesMaxAmount = 20; // this is each?
 
     public static bool projectileSpawnerActive = true;
 

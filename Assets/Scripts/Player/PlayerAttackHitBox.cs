@@ -55,6 +55,12 @@ public class PlayerAttackHitBox : MonoBehaviour // This script is attached to th
     public void PlayerWeaponCheck()
     {
         ableToHit.Add("Knockback");
+        ableToHit.Add("Stone");
+        
+        //stunDamage = 10f;
+    //public float knockBackDamage = 10f;
+    //public float slowDamage = 12f;
+    //public float bombDamage = 10f;
     }
 
     public void UpdateAttackSpeed(float amountToReduce)
@@ -92,22 +98,24 @@ public class PlayerAttackHitBox : MonoBehaviour // This script is attached to th
 
     private IEnumerator Attack()
     {
-
-        PlayHammerAnimation();
-
         weaponVisual.material.color = Color.red;
         weaponMaterial.color = Color.red;
-       
-        canAttack = false; // Prevent further attacks until cooldown expires
-        // Allow hit detection for a short duration
-        isAttacking = true;
+
         PlayHammerAnimation();
+       
+        canAttack = false; 
+
+        //PlayHammerAnimation();
+
+        isAttacking = true;
         yield return new WaitForSeconds(attackDuration);
 
         yield return new WaitForSeconds(attackCooldown);
         isAttacking = false;
         canAttack = true; // Allow attacks again
+
         weaponAnimator.SetTrigger("Idle");
+
         weaponVisual.material.color = idleColor;
         weaponMaterial.color = Color.blue;
     }
@@ -136,28 +144,28 @@ public class PlayerAttackHitBox : MonoBehaviour // This script is attached to th
 
                 Debug.Log($"CanPlayerAttackThis: struckByWeapon is set to {projectileHandler.struckByWeapon}");
 
-                Attack();
+                //Attack();
                 // Instantiate the VFX at the position of the projectile
                 GameObject explosion = Instantiate(rockSmashVFX, other.transform.position, Quaternion.identity);
                 explosion.SetActive(true);
-                ParticleSystem ps = explosion.GetComponent<ParticleSystem>();
-                if (ps != null)
+                ParticleSystem explosionVFX = explosion.GetComponent<ParticleSystem>();
+                if (explosionVFX != null)
                 {
-                    ps.Play();
+                    explosionVFX.Play();
                 }
 
-                Destroy(explosion, ps.main.duration);
+                Destroy(explosion, explosionVFX.main.duration);
                 Debug.Log("Explosion instantiated at projectile position.");
             }
             else
             {
-                Debug.Log("Tag not found in ableToHit list: " + other.tag);
+                Debug.LogError("Tag not found in ableToHit list: " + other.tag);
                 projectileHandler.struckByWeapon = false;
             }
         }
         else
         {
-            Debug.Log("No ProjectileCollisionHandler found on: " + other.gameObject.name);
+            Debug.LogError("No ProjectileCollisionHandler found on: " + other.gameObject.name);
         }
     }
 }
