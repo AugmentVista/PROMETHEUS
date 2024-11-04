@@ -28,5 +28,10 @@ public class SpawnPositionDisable : MonoBehaviour
                 waveTrigger.SpawnPositions = spawnPositionsList.ToArray(); // Update the array
             }
         }
+        else if (collider.CompareTag("Weapon"))
+        {
+            EnemySpawn thisEnemy = GetComponent<EnemySpawn>();
+            thisEnemy.IsAlive = false;
+        }
     }
 }

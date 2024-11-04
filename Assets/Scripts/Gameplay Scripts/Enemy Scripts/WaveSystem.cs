@@ -1,13 +1,16 @@
+using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class WaveSystem : MonoBehaviour
 {
     [SerializeField] private Wave[] waveArray;
     [SerializeField] private EnemyWaveTrigger waveTrigger;
+    [SerializeField] private EndWaveTrigger endWaveTrigger;
 
+   
 
+    public int waveCount = 0;
     private State state;
 
     private enum State
@@ -27,13 +30,24 @@ public class WaveSystem : MonoBehaviour
         waveTrigger.OnPlayerEnterTrigger += EnemyWaveTrigger_OnPlayerEnterTrigger;
     }
 
-    private void EnemyWaveTrigger_OnPlayerEnterTrigger(object sender, System.EventArgs _) // _  is for events that don’t require information beyond the event occurring.
+    private void EndWaveTrigger_WaveEnd_ShowResults(object sender, EventArgs _)
+    {
+        if (state == State.BattleOver) 
+        {
+            state = State.Idle; 
+        // send to results screen
+        }
+    }
+
+    private void EnemyWaveTrigger_OnPlayerEnterTrigger(object sender, EventArgs _) // _  is for events that don’t require information beyond the event occurring.
     {
         if (state == State.Idle)
         {
             StartWave();
             // unsub to avoid multiple triggers from the same source
-            waveTrigger.OnPlayerEnterTrigger -= EnemyWaveTrigger_OnPlayerEnterTrigger; 
+            waveTrigger.OnPlayerEnterTrigger -= EnemyWaveTrigger_OnPlayerEnterTrigger; // turn off starter
+
+            endWaveTrigger.WaveEnd_ShowResults += EndWaveTrigger_WaveEnd_ShowResults; // turn on ender
         }
     }
 
@@ -58,6 +72,8 @@ public class WaveSystem : MonoBehaviour
         state = State.Active;
     }
 
+    
+
     private void TestBattleOver()
     {
         if (state == State.Active)
@@ -67,6 +83,7 @@ public class WaveSystem : MonoBehaviour
                 // Battle is over
                 state = State.BattleOver;
                 Debug.Log($"Battle is {state}");
+                // invoke results screen
             }
         }
     }
@@ -76,6 +93,7 @@ public class WaveSystem : MonoBehaviour
         {
             if (wave.IsWaveOver())
             {
+                waveCount += 1;
                 // Wave is over
             }
             else
@@ -85,6 +103,13 @@ public class WaveSystem : MonoBehaviour
             }
         }
         return true;
+    }
+
+
+
+    private void BeginNewWave()
+    {
+
     }
 
     /// <summary>

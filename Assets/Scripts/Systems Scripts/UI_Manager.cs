@@ -3,7 +3,10 @@ using UnityEngine.SceneManagement;
 
 public class UI_Manager : MonoBehaviour
 {
-    [SerializeField] private Level_Manager levelManager;
+    //[SerializeField] private Level_Manager levelManager;
+
+    [SerializeField] private ResultsKeeper resultsKeeper;
+
 
     public GameObject emptyUI;
     public GameObject introductionUI;
@@ -71,6 +74,7 @@ public class UI_Manager : MonoBehaviour
     private void ResultsUI()
     {
         HideAllUI(resultsUI);
+        resultsKeeper.ResultsButton();
     }
     private void IntroductionUI()
     {

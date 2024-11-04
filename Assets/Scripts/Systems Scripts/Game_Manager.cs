@@ -43,10 +43,12 @@ public class Game_Manager : MonoBehaviour
         level_Manager.CreateBridgeSectionDuringIntro += Level_Manager_CreateBridgeSectionDuringIntro;
     }
 
-    private void Level_Manager_CreateBridgeSectionDuringIntro(object sender, System.EventArgs _)
+    private void Level_Manager_CreateBridgeSectionDuringIntro(object sender, EventArgs _)
     {
         bridge.CreateBridge();
     }
+
+
 
 
     void Update()
@@ -146,11 +148,6 @@ public class Game_Manager : MonoBehaviour
         {
             ResumeGameTrigger();
         }
-    }
-
-    public void StartGameFromIntroduction()
-    { 
-    
     }
    
     public void IntroductionReturn()

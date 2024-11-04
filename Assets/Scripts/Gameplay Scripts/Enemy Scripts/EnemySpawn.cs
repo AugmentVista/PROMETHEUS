@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 
 public class EnemySpawn : MonoBehaviour
@@ -26,13 +27,25 @@ public class EnemySpawn : MonoBehaviour
     private void OnTriggerEnter(Collider collider)
     {
         if (collider.CompareTag("MissZone"))
-        { 
+        {
             EnemyFire fireScript = GetComponent<EnemyFire>();
             if (fireScript != null)
-            { 
+            {
                 fireScript.enabled = false;
                 fireScript.ToggleFiring(false);
             }
+            IsAlive = false;
+            // Remove this transform from the waveTrigger's SpawnPositions
+            if (waveTrigger.SpawnPositions.Contains(transform))
+            {
+                var spawnPositionsList = waveTrigger.SpawnPositions.ToList();
+                spawnPositionsList.Remove(transform);
+                waveTrigger.SpawnPositions = spawnPositionsList.ToArray(); // Update the array
+            }
+        }
+        else if (collider.CompareTag("Weapon"))
+        {
+            IsAlive = false; // Mark the enemy as not alive
         }
     }
 

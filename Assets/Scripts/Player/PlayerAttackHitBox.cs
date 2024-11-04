@@ -100,9 +100,9 @@ public class PlayerAttackHitBox : MonoBehaviour // This script is attached to th
         projectileHandler = other.GetComponent<ProjectileCollisionHandler>();
 
         Debug.Log("Checking for ProjectileCollisionHandler on: " + other.gameObject.name);
-        if (projectileHandler != null && isAttacking)
+        if (projectileHandler != null )
         {
-            if (other.tag == "Knockback")
+            if (other.tag == "Knockback" /* && isAttacking*/)
             {
                 if (isAttacking)
                 {

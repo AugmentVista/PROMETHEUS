@@ -30,10 +30,12 @@ public class Level_Manager : MonoBehaviour
         upgradeManager.UpdateUpgradeHammer += UpgradeEventManager_UpdateUpgradeHammer;
         upgradeManager.UpdateUpgradeStamina += UpgradeEventManager_UpdateUpgradeStamina;
         upgradeManager.UpdateUpgradeBlock += UpgradeEventManager_UpdateUpgradeBlock;
+
+        
     }
 
     private void UpgradeEventManager_UpdateUpgradeBlock(object sender, UpgradeEventArgs e)
-    { 
+    {
         // BLOCK WILL NOT BE AVAILABLE BY ALPHA
     }
 
@@ -91,14 +93,10 @@ public class Level_Manager : MonoBehaviour
         upgradeManager.UpdateUpgradeBlock -= UpgradeEventManager_UpdateUpgradeBlock;
     }
 
+
+
     private void Update()
     {
-        if (Timer != null) 
-        {
-            if (Timer.TimerOver)
-            {
-            }
-        }
         
     }
 
@@ -111,7 +109,6 @@ public class Level_Manager : MonoBehaviour
     public void LoadLevel_1()
     {
         SceneManager.LoadScene("Level_1");
-        //CreateBridgeSectionDuringIntro?.Invoke(this, EventArgs.Empty);
     }
     public void LoadGameWin()
     {
@@ -185,14 +182,25 @@ public class Level_Manager : MonoBehaviour
         }
     }
 
+    private void EndWaveTrigger_WaveEnd_ShowResults(object sender, EventArgs _)
+    {
+        Game_Manager gameManager = Singleton.instance.GetComponent<Game_Manager>();
+        gameManager.ResultsMenuTrigger();
+        CreateBridgeSectionDuringIntro?.Invoke(this, EventArgs.Empty);
+    }
+
     private void SetupGameplayScene(Scene scene)
     {
         Game_Manager gameManager = Singleton.instance.GetComponent<Game_Manager>();
         GlobalSettings.globalPauseOverride = false;
-        // This doesn't work but the camera system works without it switching?
-        // Only god knows these cameras work right now. The Game_Reference doesn't change but the angles are correct
-        // If it ain't broke, don't touch it.
-        //if (gameManager.gameplayCamera == null && scene.name == "Level_1") { gameManager.gameplayCamera = GameObject.FindGameObjectWithTag("PlayerCamera"); }
+
+        EndWaveTrigger endWaveTrigger = FindAnyObjectByType<EndWaveTrigger>();
+        Debug.LogError($"Has the end wave trigger loaded at this point {endWaveTrigger.isActiveAndEnabled}");
+        if (endWaveTrigger != null)
+        { 
+            endWaveTrigger.WaveEnd_ShowResults += EndWaveTrigger_WaveEnd_ShowResults;
+        }
+
         gameManager.EnableGameplayCamera(true);
     }
 

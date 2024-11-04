@@ -12,7 +12,7 @@ public class ProjectileCollisionHandler : MonoBehaviour
     /// It can reduce your score if you get hit.
     /// </summary>
 
-    public ScoreKeeper Score;
+    private ScoreKeeper Score;
     private PlayerSideToSide playerMove;
     private EnemyProjectileManager spawner; // Reference to the spawner
     private PlayerAttackHitBox playerAttack;

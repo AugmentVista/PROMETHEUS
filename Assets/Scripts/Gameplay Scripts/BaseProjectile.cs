@@ -42,7 +42,7 @@ public class BaseProjectile : MonoBehaviour
 
     void Spin()
     {
-        transform.Rotate(5, 5, 5, Space.Self);
+        transform.Rotate(1, 0, 0, Space.Self);
     }
 
     void UpdateProjectileStateMachine()
