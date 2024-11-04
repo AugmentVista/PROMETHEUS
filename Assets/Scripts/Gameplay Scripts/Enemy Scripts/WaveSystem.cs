@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using UnityEngine;
 
 public class WaveSystem : MonoBehaviour
@@ -7,8 +6,6 @@ public class WaveSystem : MonoBehaviour
     [SerializeField] private Wave[] waveArray;
     [SerializeField] private EnemyWaveTrigger waveTrigger;
     [SerializeField] private EndWaveTrigger endWaveTrigger;
-
-   
 
     public int waveCount = 1;
     private State state;
@@ -108,9 +105,10 @@ public class WaveSystem : MonoBehaviour
 
 
 
-    private void BeginNewWave()
+    public void BeginNewWave()
     {
-
+        endWaveTrigger.WaveEnd_ShowResults -= EndWaveTrigger_WaveEnd_ShowResults;
+        waveTrigger.OnPlayerEnterTrigger += EnemyWaveTrigger_OnPlayerEnterTrigger;
     }
 
     /// <summary>

@@ -14,6 +14,7 @@ public class Game_Manager : MonoBehaviour
     [SerializeField] private ResultsKeeper resultsKeeper;
 
     public GameObject userInterfaceCamera;
+    public bool hasHitEndWaveTrigger = false;
 
     [SerializeField] private AudioListener audioPlayer;
     [SerializeField] private AudioListener audioMenu;
@@ -49,8 +50,6 @@ public class Game_Manager : MonoBehaviour
     {
         bridge.CreateBridge();
     }
-
-
 
 
     void Update()
@@ -132,6 +131,38 @@ public class Game_Manager : MonoBehaviour
         ChangeGameState(gameState);
     }
 
+    public void ContinueFromUpgrades()
+    {
+        if (!hasHitEndWaveTrigger)
+        {
+            gameState = GameState.Upgrades;
+            ChangeGameState(gameState);
+        }
+        else if (hasHitEndWaveTrigger)
+        {
+            gameState = GameState.Upgrades;
+            ChangeGameState(gameState);
+
+            hasHitEndWaveTrigger = true;
+
+            GameObject UpgradePlayButton;
+            GameObject UpgradeContinueButton;
+
+            UpgradeContinueButton = ui_Manager.upgradesUI.transform.Find("ContinueFromUpgrades").gameObject;
+
+            UpgradePlayButton = ui_Manager.upgradesUI.transform.Find("Gear").gameObject;
+
+            if (UpgradePlayButton != null && UpgradePlayButton.activeSelf)
+            {
+                UpgradePlayButton.SetActive(false);
+            }
+            if (UpgradeContinueButton != null)
+            {
+                UpgradeContinueButton.SetActive(true);
+            }
+        }
+    }
+
     public void OptionsTrigger()
     {
         ui_Manager.OptionsUI();
@@ -149,6 +180,32 @@ public class Game_Manager : MonoBehaviour
         else if (thisScene.name == "Level_1") // if we are jumping back into the same game 
         {
             ResumeGameTrigger();
+        }
+    }
+
+    public void ContinueButton()
+    {
+        WaveSystem wave = FindAnyObjectByType<WaveSystem>();
+        if (wave != null)
+        {
+            wave.BeginNewWave();
+            Introduction();
+            GameObject IntroPlayButton;
+            GameObject IntroContinueButton;
+
+            IntroContinueButton = ui_Manager.introductionUI.transform.Find("Continue Button").gameObject;
+
+            IntroPlayButton = ui_Manager.introductionUI.transform.Find("Play BG").gameObject;
+
+            if (IntroPlayButton != null && IntroPlayButton.activeSelf)
+            {
+                IntroPlayButton.SetActive(false);
+            }
+            if (IntroContinueButton != null)
+            { 
+                IntroContinueButton.SetActive(true);
+                hasHitEndWaveTrigger = true;
+            }
         }
     }
    
@@ -298,7 +355,7 @@ public class Game_Manager : MonoBehaviour
     { 
         IsMenuOpen (true);
         OnResults?.Invoke();
-        resultsKeeper.ResultsButton();
+        resultsKeeper.ShowResults();
     }
 
     private void MainMenu()

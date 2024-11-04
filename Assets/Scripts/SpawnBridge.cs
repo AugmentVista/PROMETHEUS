@@ -9,8 +9,6 @@ public class SpawnBridge : MonoBehaviour
 
     public void CreateBridge()
     {
-        Instantiate(bridgePrefab, new Vector3(0,3,0), Quaternion.identity);
+        Instantiate(bridgePrefab, new Vector3(0,0,-82.5f), Quaternion.identity);
     }
-
-
 }

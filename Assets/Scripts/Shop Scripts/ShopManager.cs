@@ -4,9 +4,11 @@ using TMPro;
 
 public class ShopManager : MonoBehaviour
 {
+    [SerializeField] private ScoreKeeper scoreKeeper;
+
     #region Player Balance
 
-    private int drachma = GlobalSettings.globalDrachma;
+    private int drachma => scoreKeeper != null ? scoreKeeper.drachma : 0;
     private int buttonAmount = 5;
     public Image[] DrachmaPositive;
     public Image[] DrachmaNegative;
@@ -20,15 +22,13 @@ public class ShopManager : MonoBehaviour
 
     public void AddDrachma(int amountToAdd)
     {
-        GlobalSettings.globalDrachma += amountToAdd;
-        drachma = GlobalSettings.globalDrachma;
+        scoreKeeper.drachma += amountToAdd;
         Debug.Log(drachma);
     }
 
     public void SubtractDrachma(int amountToReduce)
     {
-        GlobalSettings.globalDrachma -= amountToReduce;
-        drachma = GlobalSettings.globalDrachma;
+        scoreKeeper.drachma -= amountToReduce;
         Debug.Log(drachma);
     }
     public void ButtonAddMoney() { AddDrachma(buttonAmount); }

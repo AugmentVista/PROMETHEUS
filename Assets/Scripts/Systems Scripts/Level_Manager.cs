@@ -8,7 +8,13 @@ public class Level_Manager : MonoBehaviour
 
     public event EventHandler CreateBridgeSectionDuringIntro;
 
+    public GameObject Extention = null;
+
     public TimerController Timer;
+
+    public Transform playerTransform = null;
+
+    public Transform respawnPoint;
 
     public bool Win = GlobalSettings.globalPlayerWin;
     public bool Lose = GlobalSettings.globalPlayerLose;
@@ -185,9 +191,22 @@ public class Level_Manager : MonoBehaviour
     private void EndWaveTrigger_WaveEnd_ShowResults(object sender, EventArgs _)
     {
         Game_Manager gameManager = Singleton.instance.GetComponent<Game_Manager>();
+        GlobalSettings.globalPauseOverride = false;
         gameManager.ResultsMenuTrigger();
-        CreateBridgeSectionDuringIntro?.Invoke(this, EventArgs.Empty);
+        ResetLevel();
     }
+
+    public void ResetLevel()
+    {
+        Game_Manager gameManager = Singleton.instance.GetComponent<Game_Manager>();
+        CreateBridgeSectionDuringIntro?.Invoke(this, EventArgs.Empty);
+        Extention.SetActive(false);
+        playerTransform.position = respawnPoint.position;
+        
+
+        gameManager.ResumeGameTrigger();
+    }
+
 
     private void SetupGameplayScene(Scene scene)
     {
@@ -199,6 +218,15 @@ public class Level_Manager : MonoBehaviour
         if (endWaveTrigger != null)
         { 
             endWaveTrigger.WaveEnd_ShowResults += EndWaveTrigger_WaveEnd_ShowResults;
+        }
+        Extention =  GameObject.Find("Extention");
+        GameObject playerObject = GameObject.FindWithTag("Player");
+
+        if (playerObject != null)
+        {
+            playerTransform = playerObject.transform;
+            playerTransform.position = respawnPoint.position;
+            Debug.Log($"Found player object: {playerTransform.name}");
         }
 
         gameManager.EnableGameplayCamera(true);
