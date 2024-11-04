@@ -71462,7 +71462,7 @@ MonoBehaviour:
   Tens: {fileID: 856244947969336663}
   Hundreds: {fileID: 4240563292689678626}
   fillImage: {fileID: 5769239382171524442}
-  duration: 25
+  duration: 99
   elapsedTime: 0
   TimerOver: 0
 --- !u!114 &3201343037966247423
@@ -88115,6 +88115,8 @@ MonoBehaviour:
   meteorVFX: {fileID: 4955560193981042372}
   bridge: {fileID: 1080690858}
   userInterfaceCamera: {fileID: 6258696111653029438}
+  audioPlayer: {fileID: 0}
+  audioMenu: {fileID: 0}
   Paused: 0
   gameState: 4
 --- !u!224 &4534549598921086488
@@ -100182,7 +100184,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &6033511883651361129
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -106021,7 +106023,7 @@ GameObject:
   - component: {fileID: 3022553757407182540}
   - component: {fileID: 6860498488001058276}
   m_Layer: 5
-  m_Name: Points_Tens
+  m_Name: DRACHMA ONES
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -112439,8 +112441,8 @@ MonoBehaviour:
   - {fileID: 7340757692336768914}
   - {fileID: 7814191109312543172}
   - {fileID: 3352864767594720096}
-  drachmaOnes: {fileID: 7408410989895690349}
-  drachmaTens: {fileID: 6860498488001058276}
+  drachmaOnes: {fileID: 6860498488001058276}
+  drachmaTens: {fileID: 7408410989895690349}
   score: 0
   drachma: 0
 --- !u!222 &7626292097672291659
@@ -114184,7 +114186,7 @@ GameObject:
   - component: {fileID: 1251129219624307536}
   - component: {fileID: 7408410989895690349}
   m_Layer: 5
-  m_Name: Points_Ones
+  m_Name: DRACHMA TENS
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

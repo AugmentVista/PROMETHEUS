@@ -97,9 +97,6 @@ public class Level_Manager : MonoBehaviour
         {
             if (Timer.TimerOver)
             {
-                //Debug.Log("DING DING, TIMER IS UP!");
-                //Lose = true;
-                //CheckWinClause();
             }
         }
         
@@ -114,15 +111,15 @@ public class Level_Manager : MonoBehaviour
     public void LoadLevel_1()
     {
         SceneManager.LoadScene("Level_1");
-        CreateBridgeSectionDuringIntro?.Invoke(this, EventArgs.Empty);
+        //CreateBridgeSectionDuringIntro?.Invoke(this, EventArgs.Empty);
     }
     public void LoadGameWin()
     {
-        SceneManager.LoadScene("GameWin");
+        //SceneManager.LoadScene("GameWin");
     }
     public void LoadGameOver()
     {
-        SceneManager.LoadScene("GameOver");
+        //SceneManager.LoadScene("GameOver");
     }
 
     #endregion

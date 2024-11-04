@@ -56,7 +56,7 @@ public class GlobalSettings : MonoBehaviour
 
     public static float stoneProjectileDamage = 10f;
 
-    public static float knockbackProjectileDamage = 10f;
+    public static float knockbackProjectileDamage = 5f;
 
     public static float stunProjectileDamage = 5f;
 

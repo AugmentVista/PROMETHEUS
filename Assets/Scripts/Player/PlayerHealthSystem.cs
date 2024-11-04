@@ -71,7 +71,7 @@ public class PlayerHealthSystem : MonoBehaviour
 
             if (currentScene.name == "Level_1")
             {
-                gameManager.GameOverTrigger();
+                gameManager.ResultsMenuTrigger();
             }
         }
     }

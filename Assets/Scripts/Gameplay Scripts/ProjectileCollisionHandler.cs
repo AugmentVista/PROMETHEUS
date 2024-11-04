@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.ProBuilder.Shapes;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class ProjectileCollisionHandler : MonoBehaviour
 {
@@ -53,7 +54,6 @@ public class ProjectileCollisionHandler : MonoBehaviour
         {
             case "Weapon":
                 playerAttack.CanPlayerAttackThis(projectileCollider);
-                //Debug.Log("Called CanPlayerAttackThis from OnTriggerEnter");
                 if (!struckByWeapon) { return; }
                 else
                 { 
@@ -86,6 +86,7 @@ public class ProjectileCollisionHandler : MonoBehaviour
             case "PlayerBody":
                 OnPlayerDamaged(true, gameObject.tag); 
 
+                if (Score != null) { Score.score -= Base.value; }
                 //Debug.Log($"{gameObject.tag} hit the PlayerBody");
                 //Score.score--;
                 DisableColliderForPooling();
@@ -94,8 +95,9 @@ public class ProjectileCollisionHandler : MonoBehaviour
             case "Weapon":
                 if (struckByWeapon)
                 {
-                    //Score.score++;
-                    
+                    if (Score != null) { Score.score += Base.value; }
+                    Score.drachma += 5;
+
                     //Debug.Log($"{projectileType} hit the player's weapon and was blocked.");
                     DisableColliderForPooling();
                 }

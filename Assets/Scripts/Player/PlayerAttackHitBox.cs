@@ -56,11 +56,6 @@ public class PlayerAttackHitBox : MonoBehaviour // This script is attached to th
     {
         ableToHit.Add("Knockback");
         ableToHit.Add("Stone");
-        
-        //stunDamage = 10f;
-    //public float knockBackDamage = 10f;
-    //public float slowDamage = 12f;
-    //public float bombDamage = 10f;
     }
 
     public void UpdateAttackSpeed(float amountToReduce)
