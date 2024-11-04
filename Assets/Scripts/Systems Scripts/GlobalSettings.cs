@@ -52,21 +52,8 @@ public class GlobalSettings : MonoBehaviour
 
     #endregion
 
-    #region ProjectileCollisionHandler Variables
-
-    public static float stoneProjectileDamage = 10f;
-
-    public static float knockbackProjectileDamage = 5f;
-
-    public static float stunProjectileDamage = 5f;
-
-    public static float slowProjectileDamage = 12f;
-
-    #endregion
 
     #region ProjectileSpawner Variables
-
-    public static float spawnerSecondsBetweenAttacks = 1.0f; 
 
     public static int spawnerProjectilesMaxAmount = 20; // this is each?
 

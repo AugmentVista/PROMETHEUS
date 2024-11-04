@@ -34,26 +34,15 @@ public class PlayerAttackHitBox : MonoBehaviour // This script is attached to th
 
     private bool isAttacking = false;
 
-    public List<string> ableToHit;
 
     private void Start()
     {
-        ableToHit = new List<string>();
-
         weaponCollider = GetComponent<Collider>();
         weaponVisual = GetComponent<Renderer>();
 
         idleColor = weaponVisual.material.color;
         idleWeapon = weaponMaterial;
         idleWeapon.color = weaponMaterial.color;
-
-        PlayerWeaponCheck();
-    }
-
-    public void PlayerWeaponCheck()
-    {
-        ableToHit.Add("Knockback");
-        ableToHit.Add("Stone");
     }
 
     public void UpdateAttackSpeed(float amountToReduce)
@@ -81,21 +70,14 @@ public class PlayerAttackHitBox : MonoBehaviour // This script is attached to th
             StartCoroutine(Attack());
         }
     }
-    public void PlayHammerAnimation()
-    {
-        weaponAnimator.SetTrigger("HammerTrigger");
-
-        //string animationName = AnimationHammer.name;
-        //weaponAnimator.Play(animationName);
-    }
 
     private IEnumerator Attack()
     {
         weaponVisual.material.color = Color.red;
         weaponMaterial.color = Color.red;
 
-        PlayHammerAnimation();
-       
+        weaponAnimator.SetTrigger("HammerTrigger");
+
         canAttack = false; 
 
         //PlayHammerAnimation();
@@ -120,12 +102,8 @@ public class PlayerAttackHitBox : MonoBehaviour // This script is attached to th
         Debug.Log("Checking for ProjectileCollisionHandler on: " + other.gameObject.name);
         if (projectileHandler != null && isAttacking)
         {
-            Debug.Log("Collider tag: " + other.tag);
-            Debug.Log("ableToHit contains: " + string.Join(", ", ableToHit));
-
-            if (ableToHit.Contains(other.tag))
+            if (other.tag == "Knockback")
             {
-                Debug.Log("Tag match found: " + other.tag);
                 if (isAttacking)
                 {
                     projectileHandler.struckByWeapon = true;
@@ -137,11 +115,12 @@ public class PlayerAttackHitBox : MonoBehaviour // This script is attached to th
 
                 Debug.Log($"CanPlayerAttackThis: struckByWeapon is set to {projectileHandler.struckByWeapon}");
 
-                //Attack();
-                // Instantiate the VFX at the position of the projectile
                 GameObject explosion = Instantiate(rockSmashVFX, other.transform.position, Quaternion.identity);
+
                 explosion.SetActive(true);
+
                 ParticleSystem explosionVFX = explosion.GetComponent<ParticleSystem>();
+
                 if (explosionVFX != null)
                 {
                     explosionVFX.Play();

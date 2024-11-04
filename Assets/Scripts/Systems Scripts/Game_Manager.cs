@@ -18,7 +18,6 @@ public class Game_Manager : MonoBehaviour
 
 
     public bool Paused = GlobalSettings.globalPauseOverride;
-    bool firstStart = true;
 
     public enum GameState { MainMenu, Level1, GameOver, GameWin, DoNothing, Upgrades, Results, Introduction }
     public GameState gameState;

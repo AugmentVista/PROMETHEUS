@@ -3,9 +3,16 @@ using UnityEngine;
 public class EnemyFire : MonoBehaviour
 {
     [SerializeField] private Transform projectileTarget; // The player or other target
+
     public Transform[] spawnPositions; // Array to hold multiple spawn positions
-    private float spawnInterval = GlobalSettings.spawnerSecondsBetweenAttacks;
-    private float ShotDelay() { return Mathf.Round(Random.Range(0.1f, 2.0f) * 100) / 100; } // produces clean decimals
+
+    [SerializeField] private int AmmunitionLifespan = 10;
+    [SerializeField] private int Ammunition = 0;
+
+
+    private float spawnInterval = 1.0f;
+
+    private float ShotDelay() { return Mathf.Round(Random.Range(0.5f, 1.0f) * 100) / 100; } // produces clean decimals
     private float shootingTimeGap; 
 
     private EnemyProjectileManager projectileManager;
@@ -25,40 +32,47 @@ public class EnemyFire : MonoBehaviour
     {
         if (isGameActive)
         {
+            
             GameObject projectileInstance = projectileManager.RequestProjectile(transform); // Get a projectile from the manager
             if (projectileInstance != null)
             {
-                // Select a random spawn position for the projectile
+
                 Transform spawnPosition = spawnPositions[Random.Range(0, spawnPositions.Length)];
                 projectileInstance.transform.position = spawnPosition.position;
 
-                // Calculate direction to target (e.g., player)
+
                 Vector3 directionToPlayer = (projectileTarget.position - spawnPosition.position).normalized;
 
-                // Apply velocity to the projectile
+
                 Rigidbody projectileRb = projectileInstance.GetComponent<Rigidbody>();
                 BaseProjectile baseProj = projectileInstance.GetComponent<BaseProjectile>();
                 projectileRb.velocity = directionToPlayer * baseProj.travelSpeed;
 
-                // Ensure a ProjectileCollisionHandler is attached and setup properly
+
                 ProjectileCollisionHandler collisionHandler = projectileInstance.GetComponent<ProjectileCollisionHandler>();
                 if (collisionHandler == null)
                 {
                     collisionHandler = projectileInstance.AddComponent<ProjectileCollisionHandler>();
                 }
 
+
                 collisionHandler.SetSpawner(projectileManager);
                 if (!collisionHandler.reusedProjectile)
                 {
                     collisionHandler.reusedProjectile = true;
                 }
+                Ammunition += 1;
             }
         }
-    }
-
-    private void Update()
-    {
-        ToggleFiring(!GlobalSettings.projectileSpawnerActive);
+        if (Ammunition >= AmmunitionLifespan)
+        { 
+            ToggleFiring(false);
+            EnemySpawn thisEnemy = GetComponent<EnemySpawn>();
+            if (thisEnemy != null)
+            { 
+                thisEnemy.IsAlive = false;
+            }
+        }
     }
 
     public void ToggleFiring(bool isActive)

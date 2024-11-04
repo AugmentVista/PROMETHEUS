@@ -4,11 +4,6 @@ using UnityEngine;
 
 public class BaseProjectile : MonoBehaviour
 {
-    /// <summary>
-    /// This is the base class for all projectiles, it defines instructs the projectile how to behave based on what
-    /// kind it is and other factors
-    /// </summary>
-
     private EnemyProjectileManager spawner; // Reference to the spawner
     private Collider localCollider;
     private Rigidbody rb;
@@ -20,18 +15,18 @@ public class BaseProjectile : MonoBehaviour
     public ProjectileState currentState;
     public enum ProjectileEffect { KnockBack, Stun, Slow, Cash, Bomb }
     public ProjectileEffect currentEffect;
-    public enum ProjectileVariant { Purple, Yellow, Pink, Blue, Black }
-    public ProjectileVariant currentVariant;
 
-    public float damage;
     public int scoreReduction;
+
     public int value;
 
-
     public float stunDamage = 10f;
-    public float knockBackDamage = 10f;
-    public float slowDamage = 12f;
-    public float bombDamage = 5f;
+
+    public float knockBackDamage = 5f;
+
+    public float slowDamage = 2f;
+
+    public float bombDamage = 8f;
 
     private void Awake()
     {
@@ -39,23 +34,6 @@ public class BaseProjectile : MonoBehaviour
         localCollider = FindObjectOfType<Collider>();
         rb = GetComponent<Rigidbody>();
     }
-    void AssignProjectileType()
-    {
-        switch (currentVariant)
-        {
-            case ProjectileVariant.Purple:
-                break;
-            case ProjectileVariant.Yellow:
-                break;
-            case ProjectileVariant.Pink:
-                break;
-            case ProjectileVariant.Blue:
-                break;
-            case ProjectileVariant.Black:
-                break;
-        }
-    }
-
 
     private void Update()
     {
@@ -72,6 +50,7 @@ public class BaseProjectile : MonoBehaviour
         switch (currentEffect)
         {
             case ProjectileEffect.KnockBack:
+                Spin();
                 value = 1;
                 break;
             case ProjectileEffect.Slow:

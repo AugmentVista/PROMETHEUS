@@ -22,8 +22,6 @@ public class ProjectileCollisionHandler : MonoBehaviour
     public bool reusedProjectile = false; 
     public bool struckByWeapon;
 
-   
-
     private Collider projectileCollider;
 
     private void Start()
@@ -64,7 +62,7 @@ public class ProjectileCollisionHandler : MonoBehaviour
             case "PlayerBody":
                 if (!struckByWeapon)
                 { 
-                HandleProjectileCollision(other, "PlayerBody");
+                    HandleProjectileCollision(other, "PlayerBody");
                 }
                 break;  
 
@@ -73,7 +71,7 @@ public class ProjectileCollisionHandler : MonoBehaviour
                 break;
 
             default:
-                //Debug.Log("Unknown projectile tag");
+                Debug.Log("Unknown projectile tag");
                 break;
         }
     }
@@ -88,7 +86,6 @@ public class ProjectileCollisionHandler : MonoBehaviour
 
                 if (Score != null) { Score.score -= Base.value; }
                 //Debug.Log($"{gameObject.tag} hit the PlayerBody");
-                //Score.score--;
                 DisableColliderForPooling();
                 break;
 

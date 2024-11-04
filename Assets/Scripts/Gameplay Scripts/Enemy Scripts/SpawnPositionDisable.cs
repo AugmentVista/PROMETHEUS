@@ -5,7 +5,6 @@ using UnityEngine;
 public class SpawnPositionDisable : MonoBehaviour
 {
     public EnemyWaveTrigger waveTrigger;
-    public event EventHandler OnPlayerEnterTrigger;
     public Transform[] SpawnPositions;
 
     private void Start()
