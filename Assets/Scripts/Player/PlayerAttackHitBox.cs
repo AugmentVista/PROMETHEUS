@@ -8,8 +8,6 @@ public class PlayerAttackHitBox : MonoBehaviour // This script is attached to th
 
     private ProjectileCollisionHandler projectileHandler;
 
-    public AnimationClip AnimationHammer;
-
     public GameObject rockSmashVFX;
 
     public GameObject HitBoxVisual;
