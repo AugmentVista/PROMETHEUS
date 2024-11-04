@@ -71,7 +71,7 @@ public class ProjectileCollisionHandler : MonoBehaviour
                 break;
 
             default:
-                Debug.Log("Unknown projectile tag");
+               // Debug.Log("Unknown projectile tag");
                 break;
         }
     }
@@ -84,7 +84,6 @@ public class ProjectileCollisionHandler : MonoBehaviour
             case "PlayerBody":
                 OnPlayerDamaged(true, gameObject.tag); 
 
-                if (Score != null) { Score.score -= Base.value; }
                 //Debug.Log($"{gameObject.tag} hit the PlayerBody");
                 DisableColliderForPooling();
                 break;
@@ -126,8 +125,7 @@ public class ProjectileCollisionHandler : MonoBehaviour
             //Debug.Log($"Player hit {projectileType} !!!!!");
             switch (projectileType)
             {
-                case "Stone":
-                    Score.score--; // Reduce score
+                case "Stone":// Reduce score
                     PlayerHealthSystem.TakeDamage(Base.stunDamage);
                     playerMove.WasHit(true, projectileType);
                     //Debug.Log("Stone hit the player. Score reduced.");

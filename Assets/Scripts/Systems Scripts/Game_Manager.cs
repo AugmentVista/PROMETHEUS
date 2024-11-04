@@ -11,6 +11,8 @@ public class Game_Manager : MonoBehaviour
     [SerializeField] private GameObject meteorVFX;
     [SerializeField] private SpawnBridge bridge;
 
+    [SerializeField] private ResultsKeeper resultsKeeper;
+
     public GameObject userInterfaceCamera;
 
     [SerializeField] private AudioListener audioPlayer;
@@ -296,6 +298,7 @@ public class Game_Manager : MonoBehaviour
     { 
         IsMenuOpen (true);
         OnResults?.Invoke();
+        resultsKeeper.ResultsButton();
     }
 
     private void MainMenu()

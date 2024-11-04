@@ -10,7 +10,7 @@ public class WaveSystem : MonoBehaviour
 
    
 
-    public int waveCount = 0;
+    public int waveCount = 1;
     private State state;
 
     private enum State
@@ -82,6 +82,7 @@ public class WaveSystem : MonoBehaviour
             { 
                 // Battle is over
                 state = State.BattleOver;
+                waveCount += 1;
                 Debug.Log($"Battle is {state}");
                 // invoke results screen
             }
@@ -93,8 +94,8 @@ public class WaveSystem : MonoBehaviour
         {
             if (wave.IsWaveOver())
             {
-                waveCount += 1;
-                // Wave is over
+                // wave over
+                return true;
             }
             else
             {
