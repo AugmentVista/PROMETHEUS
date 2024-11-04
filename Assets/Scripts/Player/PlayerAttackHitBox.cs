@@ -4,28 +4,36 @@ using UnityEngine;
 
 public class PlayerAttackHitBox : MonoBehaviour // This script is attached to the player weapon
 {
-    public KeyCode hitKey = KeyCode.Space;
+    private KeyCode hitKey = KeyCode.Mouse0;
 
-    ProjectileCollisionHandler projectileHandler;
+    private ProjectileCollisionHandler projectileHandler;
+
+    public AnimationClip AnimationHammer;
 
     public GameObject rockSmashVFX;
 
-    public float attackDuration = 0.25f;
+    public GameObject HitBoxVisual;
 
-    public float attackCooldown = 1.0f;
+    public float attackDuration;
+
+    public float attackCooldown;
 
     private int attackSpeedUps = 0;
 
     public Renderer weaponVisual;
 
     public Material weaponMaterial;
+
     public Material idleWeapon;
 
     private Color idleColor;
 
     public Collider weaponCollider; 
 
+    public Animator weaponAnimator;
+
     private bool canAttack = true; 
+
     private bool isAttacking = false;
 
     public List<string> ableToHit;
@@ -36,6 +44,7 @@ public class PlayerAttackHitBox : MonoBehaviour // This script is attached to th
 
         weaponCollider = GetComponent<Collider>();
         weaponVisual = GetComponent<Renderer>();
+
         idleColor = weaponVisual.material.color;
         idleWeapon = weaponMaterial;
         idleWeapon.color = weaponMaterial.color;
@@ -62,30 +71,43 @@ public class PlayerAttackHitBox : MonoBehaviour // This script is attached to th
     {
         float convertedValue = 1f + amountToEnlarge / 100;
         weaponCollider.transform.localScale *= convertedValue;
+        HitBoxVisual.transform.localScale *= convertedValue;
         Debug.Log($"Hammer has grown by {convertedValue} %");
     }
 
     private void Update()
     {
         if (Input.GetKeyDown(hitKey) && canAttack)
-        { 
+        {
             StartCoroutine(Attack());
         }
     }
+    public void PlayHammerAnimation()
+    {
+        weaponAnimator.SetTrigger("HammerTrigger");
+
+        //string animationName = AnimationHammer.name;
+        //weaponAnimator.Play(animationName);
+    }
+
     private IEnumerator Attack()
     {
+
+        PlayHammerAnimation();
+
         weaponVisual.material.color = Color.red;
         weaponMaterial.color = Color.red;
        
         canAttack = false; // Prevent further attacks until cooldown expires
-
         // Allow hit detection for a short duration
         isAttacking = true;
+        PlayHammerAnimation();
         yield return new WaitForSeconds(attackDuration);
 
         yield return new WaitForSeconds(attackCooldown);
         isAttacking = false;
         canAttack = true; // Allow attacks again
+        weaponAnimator.SetTrigger("Idle");
         weaponVisual.material.color = idleColor;
         weaponMaterial.color = Color.blue;
     }

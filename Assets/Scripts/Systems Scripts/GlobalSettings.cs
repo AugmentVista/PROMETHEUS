@@ -12,7 +12,7 @@ public class GlobalSettings : MonoBehaviour
 
     #region TimerController Variables
 
-    public static float globalTimerDuration = 25f;
+    public static float globalTimerDuration = 99f;
 
     #endregion
 

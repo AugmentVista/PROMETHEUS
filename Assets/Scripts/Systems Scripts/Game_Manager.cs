@@ -13,6 +13,10 @@ public class Game_Manager : MonoBehaviour
 
     public GameObject userInterfaceCamera;
 
+    [SerializeField] private AudioListener audioPlayer;
+    [SerializeField] private AudioListener audioMenu;
+
+
     public bool Paused = GlobalSettings.globalPauseOverride;
     bool firstStart = true;
 

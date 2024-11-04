@@ -31,7 +31,7 @@ public class BaseProjectile : MonoBehaviour
     public float stunDamage = 10f;
     public float knockBackDamage = 10f;
     public float slowDamage = 12f;
-    public float bombDamage = 20f;
+    public float bombDamage = 10f;
 
     private void Awake()
     {

@@ -246,8 +246,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectileTarget: {fileID: 0}
   spawnPositions:
-  - {fileID: 3439214495896424505}
-  - {fileID: 378455244119700793}
+  - {fileID: 6785141640521358098}
 --- !u!1 &6389879633082565058
 GameObject:
   m_ObjectHideFlags: 0

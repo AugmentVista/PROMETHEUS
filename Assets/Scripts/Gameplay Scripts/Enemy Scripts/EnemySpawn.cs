@@ -23,6 +23,19 @@ public class EnemySpawn : MonoBehaviour
 
     }
 
+    private void OnTriggerEnter(Collider collider)
+    {
+        if (collider.CompareTag("MissZone"))
+        { 
+            EnemyFire fireScript = GetComponent<EnemyFire>();
+            if (fireScript != null)
+            { 
+                fireScript.enabled = false;
+                fireScript.ToggleFiring(false);
+            }
+        }
+    }
+
     public void Spawn()
     {
         if (enemySpawnPositions == null || enemySpawnPositions.Length == 0)
