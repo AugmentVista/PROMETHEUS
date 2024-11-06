@@ -8,7 +8,10 @@ public class SpawnBridge : MonoBehaviour
     private float bridgeZ = -82.5f;
     private GameObject parentOfBridge;
 
-
+    private void Awake()
+    {
+        bridgePrefab = GameObject.Find("Test_Prefab_BridgeSection");
+    }
     public void CreateBridge()
     {
         parentOfBridge = GameObject.Find("Extention");
@@ -16,6 +19,6 @@ public class SpawnBridge : MonoBehaviour
         Transform ExtentionTransform = parentOfBridge.transform;
 
         Instantiate(bridgePrefab, new Vector3(0,0, bridgeZ), Quaternion.identity);
-        bridgePrefab.gameObject.transform.SetParent(ExtentionTransform);
+        //bridgePrefab.gameObject.transform.SetParent(ExtentionTransform);
     }
 }

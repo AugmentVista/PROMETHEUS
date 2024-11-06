@@ -182,8 +182,18 @@ public class Level_Manager : MonoBehaviour
     {
         Game_Manager gameManager = Singleton.instance.GetComponent<Game_Manager>();
         GlobalSettings.globalPauseOverride = false;
-        gameManager.ResultsMenuTrigger();
-        ResetLevel(gameManager);
+        gameManager.ResultsMenuTrigger(); // need to create a 
+        //ResetLevel(gameManager);
+    }
+
+    private void Update()
+    {
+        Game_Manager gameManager = Singleton.instance.GetComponent<Game_Manager>();
+        if (gameManager.hasHitEndWaveTrigger)
+        {
+            ResetLevel(gameManager);
+            gameManager.hasHitEndWaveTrigger = false;
+        }
     }
 
     public void ResetLevel(Game_Manager gameManager)
@@ -192,16 +202,16 @@ public class Level_Manager : MonoBehaviour
         Extention = GameObject.Find("Extention");
         Transform ExtentionTransform = Extention.transform;
 
+        CreateBridgeSectionDuringIntro?.Invoke(this, EventArgs.Empty);
         foreach (Transform child in ExtentionTransform)
         {
             Extentions.Add(child.gameObject.transform);
             child.gameObject.SetActive(false);
         }
 
-        CreateBridgeSectionDuringIntro?.Invoke(this, EventArgs.Empty);
 
         GameObject playerObject = GameObject.FindWithTag("Player");
-        GameObject Respawn = GameObject.FindWithTag("Respawn Point");
+        GameObject Respawn = GameObject.FindWithTag("Respawn");
         if (playerObject != null)
         {
             playerTransform = playerObject.transform;

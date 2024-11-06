@@ -8,7 +8,6 @@ public class Game_Manager : MonoBehaviour
     [SerializeField] private UI_Manager ui_Manager;
     [SerializeField] private Level_Manager level_Manager;
     [SerializeField] private GameObject meteorVFX;
-    [SerializeField] private SpawnBridge bridge;
 
     [SerializeField] private ResultsKeeper resultsKeeper;
 
@@ -44,6 +43,9 @@ public class Game_Manager : MonoBehaviour
 
     private void Level_Manager_CreateBridgeSectionDuringIntro(object sender, EventArgs _)
     {
+        GameObject bridgeScriptHolder = GameObject.Find("Bridge Script Holder");
+        SpawnBridge bridge = bridgeScriptHolder.GetComponent<SpawnBridge>();
+        if (bridge != null)
         bridge.CreateBridge();
     }
 
@@ -147,9 +149,10 @@ public class Game_Manager : MonoBehaviour
             if (UpgradeContinueButton != null && !UpgradePlayButton.activeSelf)
             {
                 UpgradeContinueButton.SetActive(true);
-                gameState = GameState.Level1;
-                ResumeGameTrigger();
             }
+            gameState = GameState.Level1;
+            ChangeGameState(gameState);
+            ResumeGameTrigger();
         }
     }
 

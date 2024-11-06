@@ -15,6 +15,7 @@ TagManager:
   - Weapon
   - VFX
   - PlayerCamera
+  - Bridge
   layers:
   - Default
   - TransparentFX

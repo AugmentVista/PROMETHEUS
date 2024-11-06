@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System;
+using Unity.VisualScripting;
 
 public class PlayerHealthSystem : MonoBehaviour
 {
@@ -77,9 +78,17 @@ public class PlayerHealthSystem : MonoBehaviour
 
             if (currentScene.name == "Level_1")
             {
-                gameManager.ResultsMenuTrigger();
+                GameObject waveEndTrigger = GameObject.Find("Wave End Trigger");
+                EndWaveTrigger waveEnd = waveEndTrigger.GetComponent<EndWaveTrigger>();
+                if (waveEnd != null)
+                {
+                    waveEnd.Alt_WaveEnd_ShowResults();
+                }
+                //gameManager.hasHitEndWaveTrigger = true;
+                //gameManager.ResultsMenuTrigger();
+                
                 isPlayerAlive = false;
-                GlobalSettings.globalPauseOverride = true;
+                //GlobalSettings.globalPauseOverride = true;
             }
         }
     }
@@ -88,13 +97,12 @@ public class PlayerHealthSystem : MonoBehaviour
     {
         if (item != null)
         {
-
             Debug.Log($"Mod is {item.Modifer}");
-                GlobalSettings.globalPlayerHPMaximum += item.Modifer;
-                maxHealth = GlobalSettings.globalPlayerHPMaximum;
-                Heal(item.Modifer * 3f);
-                Debug.Log("Player has been healed");
-                hpUpgradeLimit++;
+            GlobalSettings.globalPlayerHPMaximum += item.Modifer;
+            maxHealth = GlobalSettings.globalPlayerHPMaximum;
+            Heal(item.Modifer * 3f);
+            Debug.Log("Player has been healed");
+            hpUpgradeLimit++;
         }
         else
         {
