@@ -26,12 +26,11 @@ public class EnemySpawn : MonoBehaviour
 
     private void OnTriggerEnter(Collider collider)
     {
+        EnemyFire fireScript = GetComponent<EnemyFire>();
         if (collider.CompareTag("MissZone"))
         {
-            EnemyFire fireScript = GetComponent<EnemyFire>();
             if (fireScript != null)
             {
-                fireScript.enabled = false;
                 fireScript.ToggleFiring(false);
             }
             IsAlive = false;
@@ -45,7 +44,16 @@ public class EnemySpawn : MonoBehaviour
         }
         else if (collider.CompareTag("Weapon"))
         {
-            IsAlive = false; // Mark the enemy as not alive
+            IsAlive = false;
+            if (fireScript != null)
+            {
+                fireScript.ToggleFiring(false);
+            }
+            MeshRenderer meshRenderer = GetComponent<MeshRenderer>();
+            if (meshRenderer.enabled)
+            {
+                meshRenderer.enabled = false;
+            }
         }
     }
 
@@ -68,7 +76,16 @@ public class EnemySpawn : MonoBehaviour
         enemyInstance.transform.rotation = Quaternion.identity;
 
         Debug.Log($"Enemy spawned at position: {spawnPosition.position}");
-
+        if (waveTrigger.SpawnPositions.Length > 0)
+        {
+            var spawnPositionsList = waveTrigger.SpawnPositions.ToList();
+            spawnPositionsList.Remove(transform);
+            waveTrigger.SpawnPositions = spawnPositionsList.ToArray();
+        }
+        else
+        {
+            Debug.LogError($"No more spawn points for enemies to spawn at, there are {waveTrigger.SpawnPositions.Length} left");
+        }
         Debug.Log("An enemy has been spawned");
     }
 }

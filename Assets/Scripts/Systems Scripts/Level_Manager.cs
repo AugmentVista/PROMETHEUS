@@ -39,8 +39,6 @@ public class Level_Manager : MonoBehaviour
         upgradeManager.UpdateUpgradeHammer += UpgradeEventManager_UpdateUpgradeHammer;
         upgradeManager.UpdateUpgradeStamina += UpgradeEventManager_UpdateUpgradeStamina;
         upgradeManager.UpdateUpgradeBlock += UpgradeEventManager_UpdateUpgradeBlock;
-
-        
     }
 
     private void UpgradeEventManager_UpdateUpgradeBlock(object sender, UpgradeEventArgs e)
@@ -87,10 +85,6 @@ public class Level_Manager : MonoBehaviour
         Debug.Log($"Upgrade purchased of type {hammerUpgrade}");
         if (hammerHitBox != null) { hammerHitBox.UpdateHammer(hammerUpgrade.Modifer);}
     }
-    public void IntroductionInvoke()
-    {
-        CreateBridgeSectionDuringIntro?.Invoke(this, EventArgs.Empty);
-    }
 
     private void OnDisable()
     {
@@ -100,13 +94,6 @@ public class Level_Manager : MonoBehaviour
         upgradeManager.UpdateUpgradeHammer -= UpgradeEventManager_UpdateUpgradeHammer;
         upgradeManager.UpdateUpgradeStamina -= UpgradeEventManager_UpdateUpgradeStamina;
         upgradeManager.UpdateUpgradeBlock -= UpgradeEventManager_UpdateUpgradeBlock;
-    }
-
-
-
-    private void Update()
-    {
-        
     }
 
     #region SceneCalls
@@ -121,11 +108,11 @@ public class Level_Manager : MonoBehaviour
     }
     public void LoadGameWin()
     {
-        //SceneManager.LoadScene("GameWin");
+        SceneManager.LoadScene("GameWin");
     }
     public void LoadGameOver()
     {
-        //SceneManager.LoadScene("GameOver");
+        SceneManager.LoadScene("GameOver");
     }
 
     #endregion
@@ -201,12 +188,14 @@ public class Level_Manager : MonoBehaviour
 
     public void ResetLevel(Game_Manager gameManager)
     {
+        gameManager.Button_Results_To_Upgrades();
         Extention = GameObject.Find("Extention");
         Transform ExtentionTransform = Extention.transform;
 
         foreach (Transform child in ExtentionTransform)
         {
             Extentions.Add(child.gameObject.transform);
+            child.gameObject.SetActive(false);
         }
 
         CreateBridgeSectionDuringIntro?.Invoke(this, EventArgs.Empty);
@@ -220,8 +209,6 @@ public class Level_Manager : MonoBehaviour
             playerTransform.position = respawn.position;
             Debug.Log($"Found player object: {playerTransform.name}");
         }
-
-        gameManager.ResumeGameTrigger();
     }
 
 

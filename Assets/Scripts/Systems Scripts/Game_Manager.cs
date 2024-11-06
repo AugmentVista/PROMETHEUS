@@ -124,10 +124,11 @@ public class Game_Manager : MonoBehaviour
         ChangeGameState(gameState);
     }
 
-    public void ContinueFromUpgrades()
+    public void Button_Upgrades_To_Gameplay()
     {
         gameState = GameState.Upgrades;
         ChangeGameState(gameState);
+
         if (hasHitEndWaveTrigger)
         {
             GameObject UpgradePlayButton;
@@ -143,9 +144,11 @@ public class Game_Manager : MonoBehaviour
                 UpgradePlayButton.SetActive(false);
             }
 
-            if (UpgradeContinueButton != null)
+            if (UpgradeContinueButton != null && !UpgradePlayButton.activeSelf)
             {
                 UpgradeContinueButton.SetActive(true);
+                gameState = GameState.Level1;
+                ResumeGameTrigger();
             }
         }
     }
@@ -171,31 +174,16 @@ public class Game_Manager : MonoBehaviour
         }
     }
 
-    public void ContinueButton()
+    public void Button_Results_To_Upgrades()
     {
-            Introduction();
-            GameObject IntroPlayButton;
-            GameObject IntroContinueButton;
-
-            IntroContinueButton = ui_Manager.introductionUI.transform.Find("Continue Button").gameObject; // still locates if !activeSelf
-
-            IntroPlayButton = ui_Manager.introductionUI.transform.Find("Play BG").gameObject; // still locates if !activeSelf
-
-            if (IntroPlayButton != null && IntroPlayButton.activeSelf && IntroContinueButton != null)
-            {
-                IntroPlayButton.SetActive(false);
-                IntroContinueButton.SetActive(true);
-            }
-
-            if (IntroContinueButton != null)
-            {
-                WaveSystem wave = FindAnyObjectByType<WaveSystem>();
-                if (wave != null)
-                {
-                    hasHitEndWaveTrigger = true;
-                    wave.BeginNewWave();
-                }
-            }
+        WaveSystem wave = FindAnyObjectByType<WaveSystem>();
+        if (wave != null)
+        {
+            hasHitEndWaveTrigger = true;
+            wave.BeginNewWave();
+        }
+        gameState = GameState.Upgrades;
+        ChangeGameState(gameState);
     }
    
     public void IntroductionReturn()
@@ -346,29 +334,33 @@ public class Game_Manager : MonoBehaviour
 
     private void MainMenu()
     {
+        Scene currentScene = SceneManager.GetActiveScene();
         IsMenuOpen(true);
-        level_Manager.LoadMainMenu();
+        if (currentScene.name != "Main Menu") { level_Manager.LoadMainMenu(); }
         OnMainMenu?.Invoke();
     }
 
     private void Level_1()
     {
+        Scene currentScene = SceneManager.GetActiveScene();
         IsMenuOpen(false);
-        level_Manager.LoadLevel_1();
+        if (currentScene.name != "Level_1") { level_Manager.LoadLevel_1(); }
         OnLevel1?.Invoke();
     }
     
     private void GameOver()
     {
+        Scene currentScene = SceneManager.GetActiveScene();
         IsMenuOpen(true);
-        level_Manager.LoadGameOver();
+        if (currentScene.name != "GameOver") { level_Manager.LoadGameOver(); }
         OnGameOver?.Invoke();
     }
 
     private void GameWin()
     {
+        Scene currentScene = SceneManager.GetActiveScene();
         IsMenuOpen(true);
-        level_Manager.LoadGameWin();
+        if (currentScene.name != "GameWin") { level_Manager.LoadGameWin(); }
         OnGameWin?.Invoke();
     }
 
