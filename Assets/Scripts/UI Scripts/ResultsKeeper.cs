@@ -44,9 +44,9 @@ public class ResultsKeeper : MonoBehaviour
 
     public void ShowResults() 
     {
-        Debug.Log("Points is " + score);
-        Debug.Log("money is " + earnings);
-        Debug.LogError($"wave is: {GetWaveInfo().ToString()}");
+        //Debug.Log("Points is " + score);
+        //Debug.Log("money is " + earnings);
+        //Debug.LogError($"wave is: {GetWaveInfo().ToString()}");
         DetermineResults(score, earnings, GetWaveInfo());
     }
 

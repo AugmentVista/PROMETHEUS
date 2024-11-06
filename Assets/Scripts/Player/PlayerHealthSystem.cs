@@ -17,6 +17,13 @@ public class PlayerHealthSystem : MonoBehaviour
 
     private int hpUpgradeLimit = 0;
 
+    private bool isPlayerAlive;
+    // should probably add a bool for tracking if player is alive
+
+    private void Awake()
+    {
+        isPlayerAlive = true;
+    }
     private void Start()
     {
         currentHealth = maxHealth;
@@ -33,7 +40,7 @@ public class PlayerHealthSystem : MonoBehaviour
         {
             playerHealthGauge.fillAmount = Mathf.Lerp(playerHealthGauge.fillAmount, targetFillAmount, Time.deltaTime * fillSpeed);
         }
-        PlayerDeath();
+        if (isPlayerAlive) { PlayerDeath(); }
     }
 
     private void UpdateFillAmount()
@@ -52,7 +59,6 @@ public class PlayerHealthSystem : MonoBehaviour
 
     public static void TakeDamage(float damageTaken)
     {
-        // Find the active instance of PlayerHealthSystem
         PlayerHealthSystem instance = FindObjectOfType<PlayerHealthSystem>();
         if (instance != null)
         {
@@ -72,6 +78,7 @@ public class PlayerHealthSystem : MonoBehaviour
             if (currentScene.name == "Level_1")
             {
                 gameManager.ResultsMenuTrigger();
+                isPlayerAlive = false;
                 GlobalSettings.globalPauseOverride = true;
             }
         }

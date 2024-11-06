@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -15,9 +14,6 @@ public class Game_Manager : MonoBehaviour
 
     public GameObject userInterfaceCamera;
     public bool hasHitEndWaveTrigger = false;
-
-    [SerializeField] private AudioListener audioPlayer;
-    [SerializeField] private AudioListener audioMenu;
 
 
     public bool Paused = GlobalSettings.globalPauseOverride;
@@ -81,7 +77,7 @@ public class Game_Manager : MonoBehaviour
         switch (state)
         {
             case GameState.DoNothing:
-                Default();
+                Debug.Log("Nothing State");
                 break;
             case GameState.Introduction:
                 Introduction();
@@ -103,9 +99,6 @@ public class Game_Manager : MonoBehaviour
                 break;
             case GameState.Results:
                 ResultsMenu();
-                break;
-            default:
-                Default();
                 break;
         }
     }
@@ -133,18 +126,10 @@ public class Game_Manager : MonoBehaviour
 
     public void ContinueFromUpgrades()
     {
-        if (!hasHitEndWaveTrigger)
+        gameState = GameState.Upgrades;
+        ChangeGameState(gameState);
+        if (hasHitEndWaveTrigger)
         {
-            gameState = GameState.Upgrades;
-            ChangeGameState(gameState);
-        }
-        else if (hasHitEndWaveTrigger)
-        {
-            gameState = GameState.Upgrades;
-            ChangeGameState(gameState);
-
-            hasHitEndWaveTrigger = true;
-
             GameObject UpgradePlayButton;
             GameObject UpgradeContinueButton;
 
@@ -152,10 +137,12 @@ public class Game_Manager : MonoBehaviour
 
             UpgradePlayButton = ui_Manager.upgradesUI.transform.Find("Return").gameObject;
 
+
             if (UpgradePlayButton != null && UpgradePlayButton.activeSelf)
             {
                 UpgradePlayButton.SetActive(false);
             }
+
             if (UpgradeContinueButton != null)
             {
                 UpgradeContinueButton.SetActive(true);
@@ -177,6 +164,7 @@ public class Game_Manager : MonoBehaviour
             gameState = GameState.Level1;
             ChangeGameState(gameState);
         }
+        // could just be an else
         else if (thisScene.name == "Level_1") // if we are jumping back into the same game 
         {
             ResumeGameTrigger();
@@ -185,28 +173,29 @@ public class Game_Manager : MonoBehaviour
 
     public void ContinueButton()
     {
-        WaveSystem wave = FindAnyObjectByType<WaveSystem>();
-        if (wave != null)
-        {
-            wave.BeginNewWave();
             Introduction();
             GameObject IntroPlayButton;
             GameObject IntroContinueButton;
 
-            IntroContinueButton = ui_Manager.introductionUI.transform.Find("Continue Button").gameObject;
+            IntroContinueButton = ui_Manager.introductionUI.transform.Find("Continue Button").gameObject; // still locates if !activeSelf
 
-            IntroPlayButton = ui_Manager.introductionUI.transform.Find("Play BG").gameObject;
+            IntroPlayButton = ui_Manager.introductionUI.transform.Find("Play BG").gameObject; // still locates if !activeSelf
 
-            if (IntroPlayButton != null && IntroPlayButton.activeSelf)
+            if (IntroPlayButton != null && IntroPlayButton.activeSelf && IntroContinueButton != null)
             {
                 IntroPlayButton.SetActive(false);
-            }
-            if (IntroContinueButton != null)
-            { 
                 IntroContinueButton.SetActive(true);
-                hasHitEndWaveTrigger = true;
             }
-        }
+
+            if (IntroContinueButton != null)
+            {
+                WaveSystem wave = FindAnyObjectByType<WaveSystem>();
+                if (wave != null)
+                {
+                    hasHitEndWaveTrigger = true;
+                    wave.BeginNewWave();
+                }
+            }
     }
    
     public void IntroductionReturn()
@@ -309,6 +298,7 @@ public class Game_Manager : MonoBehaviour
         {
             Cursor.visible = open;
         }
+        // could just be an else
         else if (!open)
         {
             Cursor.visible = open;
@@ -334,10 +324,6 @@ public class Game_Manager : MonoBehaviour
     #endregion
 
     #region Private Invoke calls
-    private void Default()
-    {
-
-    }
 
     private void Introduction() // INVOKING DOES NOT CHANGE GAMESTATE, GAMESTATE IS MANUALLY CHANGED
     {

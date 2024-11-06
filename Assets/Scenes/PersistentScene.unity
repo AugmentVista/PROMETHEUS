@@ -243,12 +243,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9776329}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 2100.7842, y: 1047.6653, z: 119.223976}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 9082993959735988864}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &40614382
 GameObject:
@@ -26628,7 +26628,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1230490785
 Transform:
   m_ObjectHideFlags: 0
@@ -56380,7 +56380,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 4525191834167568916}
         m_TargetAssemblyTypeName: Game_Manager, Assembly-CSharp
-        m_MethodName: ContinueFromUpgrades
+        m_MethodName: ContinueButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -57892,6 +57892,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2453379512808070224}
+  - component: {fileID: 2453379512808070225}
   m_Layer: 0
   m_Name: Camera Holder
   m_TagString: Untagged
@@ -70899,6 +70900,14 @@ Transform:
   - {fileID: 8428313498359003861}
   m_Father: {fileID: 9082993959735988864}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!81 &2453379512808070225
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 539069329940609946}
+  m_Enabled: 1
 --- !u!222 &2492867948565466522
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -88650,8 +88659,6 @@ MonoBehaviour:
   resultsKeeper: {fileID: 2006493035}
   userInterfaceCamera: {fileID: 6258696111653029438}
   hasHitEndWaveTrigger: 0
-  audioPlayer: {fileID: 0}
-  audioMenu: {fileID: 0}
   Paused: 0
   gameState: 4
 --- !u!224 &4534549598921086488
@@ -100720,7 +100727,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &6033511883651361129
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -100974,7 +100981,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5719079838647781640}
   - component: {fileID: 7831032648012028366}
-  - component: {fileID: 7831032648012028367}
   m_Layer: 0
   m_Name: User Interface Camera
   m_TagString: PlayerCamera
@@ -113279,14 +113285,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!81 &7831032648012028367
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6258696111653029438}
-  m_Enabled: 1
 --- !u!1 &7834392551089992166
 GameObject:
   m_ObjectHideFlags: 0
@@ -115524,6 +115522,7 @@ Transform:
   - {fileID: 4670406291920601430}
   - {fileID: 1080690859}
   - {fileID: 1468377157}
+  - {fileID: 9776331}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &9095748429576511250
@@ -115986,4 +115985,3 @@ SceneRoots:
   m_Roots:
   - {fileID: 9082993959735988864}
   - {fileID: 1561772593}
-  - {fileID: 9776331}

@@ -32,7 +32,6 @@ public class WaveSystem : MonoBehaviour
         if (state == State.BattleOver) 
         {
             state = State.Idle; 
-        // send to results screen
         }
     }
 
@@ -81,7 +80,6 @@ public class WaveSystem : MonoBehaviour
                 state = State.BattleOver;
                 waveCount += 1;
                 Debug.Log($"Battle is {state}");
-                // invoke results screen
             }
         }
     }
@@ -105,7 +103,7 @@ public class WaveSystem : MonoBehaviour
 
     public void BeginNewWave()
     {
-        Debug.LogError("Has a new wave begun?");
+        Debug.Log("Has a new wave begun?");
         endWaveTrigger.WaveEnd_ShowResults -= EndWaveTrigger_WaveEnd_ShowResults;
         waveTrigger.OnPlayerEnterTrigger += EnemyWaveTrigger_OnPlayerEnterTrigger;
         foreach (Wave wave in waveArray)

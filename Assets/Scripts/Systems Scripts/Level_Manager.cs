@@ -1,6 +1,7 @@
 using UnityEngine;
 using System;
 using UnityEngine.SceneManagement;
+using System.Collections.Generic;
 
 public class Level_Manager : MonoBehaviour 
 {
@@ -14,7 +15,9 @@ public class Level_Manager : MonoBehaviour
 
     public Transform playerTransform = null;
 
-    public Transform respawnPoint;
+    public Transform respawn;
+
+    private List<Transform> Extentions = new List<Transform>();
 
     public bool Win = GlobalSettings.globalPlayerWin;
     public bool Lose = GlobalSettings.globalPlayerLose;
@@ -193,24 +196,29 @@ public class Level_Manager : MonoBehaviour
         Game_Manager gameManager = Singleton.instance.GetComponent<Game_Manager>();
         GlobalSettings.globalPauseOverride = false;
         gameManager.ResultsMenuTrigger();
-        ResetLevel();
+        ResetLevel(gameManager);
     }
 
-    public void ResetLevel()
+    public void ResetLevel(Game_Manager gameManager)
     {
-        Game_Manager gameManager = Singleton.instance.GetComponent<Game_Manager>();
+        Extention = GameObject.Find("Extention");
+        Transform ExtentionTransform = Extention.transform;
+
+        foreach (Transform child in ExtentionTransform)
+        {
+            Extentions.Add(child.gameObject.transform);
+        }
+
         CreateBridgeSectionDuringIntro?.Invoke(this, EventArgs.Empty);
 
-        Extention = GameObject.Find("Extention");
-        Extention.SetActive(false);
-
         GameObject playerObject = GameObject.FindWithTag("Player");
+        GameObject Respawn = GameObject.FindWithTag("Respawn Point");
         if (playerObject != null)
         {
             playerTransform = playerObject.transform;
-            playerTransform.position = respawnPoint.position;
+            respawn = Respawn.transform;
+            playerTransform.position = respawn.position;
             Debug.Log($"Found player object: {playerTransform.name}");
-            playerTransform.position = respawnPoint.position;
         }
 
         gameManager.ResumeGameTrigger();
@@ -240,14 +248,13 @@ public class Level_Manager : MonoBehaviour
 
     private void SetupGameWin()
     {
-
+        Game_Manager gameManager = Singleton.instance.GetComponent<Game_Manager>();
+        gameManager.EnableGameplayCamera(false); // Ensure menu camera is active
     }
 
     private void SetupGameOver()
     {
         Game_Manager gameManager = Singleton.instance.GetComponent<Game_Manager>();
-        // Logic for handling what happens in the Game Lose scene
-        // example, activate lose UI, display scores, play defeat animations, etc.
         gameManager.EnableGameplayCamera(false); // Ensure menu camera is active
     }
     #endregion
