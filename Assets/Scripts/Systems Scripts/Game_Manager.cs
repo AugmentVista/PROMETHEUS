@@ -43,10 +43,12 @@ public class Game_Manager : MonoBehaviour
 
     private void Level_Manager_CreateBridgeSectionDuringIntro(object sender, EventArgs _)
     {
+        ResultsMenuTrigger();
         GameObject bridgeScriptHolder = GameObject.Find("Bridge Script Holder");
         SpawnBridge bridge = bridgeScriptHolder.GetComponent<SpawnBridge>();
         if (bridge != null)
         bridge.CreateBridge();
+        GlobalSettings.globalWaveCount++;
     }
 
 
@@ -118,6 +120,7 @@ public class Game_Manager : MonoBehaviour
     {
         gameState = GameState.Results;
         ChangeGameState(gameState);
+        GlobalSettings.globalPauseOverride = true;
     }
 
     public void UpgradesMenuTrigger()
@@ -133,23 +136,23 @@ public class Game_Manager : MonoBehaviour
 
         if (hasHitEndWaveTrigger)
         {
-            GameObject UpgradePlayButton;
-            GameObject UpgradeContinueButton;
+            //GameObject UpgradePlayButton;
+            //GameObject UpgradeContinueButton;
 
-            UpgradeContinueButton = ui_Manager.upgradesUI.transform.Find("ContinueFromUpgrades").gameObject;
+            //UpgradeContinueButton = ui_Manager.upgradesUI.transform.Find("ContinueFromUpgrades").gameObject;
 
-            UpgradePlayButton = ui_Manager.upgradesUI.transform.Find("Return").gameObject;
+            //UpgradePlayButton = ui_Manager.upgradesUI.transform.Find("Return").gameObject;
 
 
-            if (UpgradePlayButton != null && UpgradePlayButton.activeSelf)
-            {
-                UpgradePlayButton.SetActive(false);
-            }
+            //if (UpgradePlayButton != null && UpgradePlayButton.activeSelf)
+            //{
+            //    UpgradePlayButton.SetActive(false);
+            //}
 
-            if (UpgradeContinueButton != null && !UpgradePlayButton.activeSelf)
-            {
-                UpgradeContinueButton.SetActive(true);
-            }
+            //if (UpgradeContinueButton != null && !UpgradePlayButton.activeSelf)
+            //{
+            //    UpgradeContinueButton.SetActive(true);
+            //}
             gameState = GameState.Level1;
             ChangeGameState(gameState);
             ResumeGameTrigger();

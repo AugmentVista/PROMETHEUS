@@ -122,9 +122,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waveTrigger: {fileID: 0}
-  MissZoneTransform: {fileID: 0}
   enemyPrefab: {fileID: 3967361403814445529}
-  IsAlive: 0
+  IsAlive: 1
 --- !u!114 &9185364281201999126
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -140,5 +139,3 @@ MonoBehaviour:
   projectileTarget: {fileID: 0}
   spawnPositions:
   - {fileID: 6785141640521358098}
-  AmmunitionLifespan: 100
-  Ammunition: 0

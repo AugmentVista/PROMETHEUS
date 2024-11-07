@@ -3,26 +3,33 @@ using UnityEngine;
 
 public class EnemySpawn : MonoBehaviour
 {
-    [SerializeField] private EnemyWaveTrigger waveTrigger;
+    private EnemyWaveTrigger waveTrigger;
     private Transform MissZoneTransform;
     public GameObject enemyPrefab;
-    private Transform[] enemySpawnPositions => waveTrigger?.SpawnPositions;
+    private Transform[] enemySpawnPositions;
     private Transform InitalPosition = null;
-    public bool IsAlive;
+    public bool IsAlive = true;
 
     private void Start()
     {
-        Transform MissZoneTransform = GameObject.Find("MissZone").transform;
-        if (MissZoneTransform == null) { Debug.LogError($"MissZone cannot be found, MissZone is {MissZoneTransform.gameObject}"); }
+        EnemyWaveTrigger waveTrigger = GameObject.Find("Wave Start Trigger").GetComponent<EnemyWaveTrigger>();
+        Transform MissZoneTransform = GameObject.Find("Miss Zone").transform;
+        if (MissZoneTransform == null) { Debug.LogError($"Miss Zone cannot be found, Miss Zone is {MissZoneTransform.gameObject}"); }
         if (waveTrigger == null)
         {
-            return;
+            Debug.LogError("waveTrigger is null");
         }
 
         if (enemySpawnPositions == null || enemySpawnPositions.Length == 0)
         {
-            return;
+            Debug.Log("enemySpawnPositions are null");
         }
+        var spawnPositionsList = waveTrigger.SpawnPositions.ToList();
+        foreach (var position in waveTrigger.SpawnPositions) 
+        {
+            spawnPositionsList.Add(position);
+        }
+        enemySpawnPositions = spawnPositionsList.ToArray();
     }
 
     private void Update()
@@ -60,8 +67,6 @@ public class EnemySpawn : MonoBehaviour
         else if (collider.CompareTag("Weapon"))
         {
             IsAlive = false;
-            
-           
         }
     }
 

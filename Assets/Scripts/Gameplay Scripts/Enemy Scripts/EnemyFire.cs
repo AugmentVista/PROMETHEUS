@@ -3,28 +3,27 @@ using UnityEngine;
 public class EnemyFire : MonoBehaviour
 {
     [SerializeField] private Transform projectileTarget; // The player or other target
+    private EnemyWaveTrigger waveTrigger;
+    public Transform[] spawnPositions => waveTrigger?.SpawnPositions;
 
-    public Transform[] spawnPositions; // Array to hold multiple spawn positions
-
-    [SerializeField] private int AmmunitionLifespan = 100;
-    [SerializeField] private int Ammunition = 0;
+    private int AmmunitionLifespan = 25;
+     private int Ammunition = 0;
 
 
     private float spawnInterval = 1.0f;
 
     private float ShotDelay() { return Mathf.Round(Random.Range(0.5f, 1.0f) * 100) / 100; } // produces clean decimals
-    private float shootingTimeGap = 3.0f - GlobalSettings.globalWaveCount / 10f; 
 
     private EnemyProjectileManager projectileManager;
     private bool isGameActive = GlobalSettings.projectileSpawnerActive;
 
     private void Start()
     {
+        waveTrigger = FindObjectOfType<EnemyWaveTrigger>();
         projectileManager = FindObjectOfType<EnemyProjectileManager>(); // Reference the manager
         if (isGameActive)
         {
-            shootingTimeGap = ShotDelay();
-            InvokeRepeating(nameof(SpawnProjectile), 0f, spawnInterval + shootingTimeGap);
+            InvokeRepeating(nameof(SpawnProjectile), 0f, spawnInterval + ShotDelay());
         }
     }
 
@@ -33,11 +32,12 @@ public class EnemyFire : MonoBehaviour
     {
         if (isGameActive)
         {
-            InvokeRepeating(nameof(SpawnProjectile), 0f, spawnInterval);
+            InvokeRepeating(nameof(SpawnProjectile), 0f, spawnInterval + ShotDelay());
         }
         else
         {
             CancelInvoke(nameof(SpawnProjectile));
+            waveTrigger = FindObjectOfType<EnemyWaveTrigger>();
         }
     }
     public void SpawnProjectile()

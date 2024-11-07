@@ -6,7 +6,7 @@ public class GlobalSettings : MonoBehaviour
 {
     public static bool EnemiesAreAlive = true;
 
-    public static float globalWaveCount = 0;
+    public static float globalWaveCount = 1;
 
     #region PlayerHealthSystem Variables
 
