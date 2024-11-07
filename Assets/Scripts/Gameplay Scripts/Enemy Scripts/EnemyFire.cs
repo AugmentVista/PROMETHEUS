@@ -28,6 +28,18 @@ public class EnemyFire : MonoBehaviour
         }
     }
 
+
+    private void Update()
+    {
+        if (isGameActive)
+        {
+            InvokeRepeating(nameof(SpawnProjectile), 0f, spawnInterval);
+        }
+        else
+        {
+            CancelInvoke(nameof(SpawnProjectile));
+        }
+    }
     public void SpawnProjectile()
     {
         if (isGameActive)
@@ -77,14 +89,6 @@ public class EnemyFire : MonoBehaviour
 
     public void ToggleFiring(bool isActive)
     {
-        isGameActive = isActive;
-        if (isGameActive)
-        {
-            InvokeRepeating(nameof(SpawnProjectile), 0f, spawnInterval);
-        }
-        else
-        {
-            CancelInvoke(nameof(SpawnProjectile));
-        }
+        GlobalSettings.projectileSpawnerActive = isActive;
     }
 }

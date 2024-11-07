@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -31,15 +32,7 @@ public class ResultsKeeper : MonoBehaviour
 
     public int GetWaveInfo()
     { 
-        WaveSystem wave = FindAnyObjectByType<WaveSystem>();
-        if (wave != null)
-        {
-            return wave.waveCount;
-        }
-        else
-        {
-            return 0;
-        }
+        return (int)GlobalSettings.globalWaveCount;
     }
 
     public void ShowResults() 

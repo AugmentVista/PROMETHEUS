@@ -178,14 +178,6 @@ public class Level_Manager : MonoBehaviour
         }
     }
 
-    private void EndWaveTrigger_WaveEnd_ShowResults(object sender, EventArgs _)
-    {
-        Game_Manager gameManager = Singleton.instance.GetComponent<Game_Manager>();
-        GlobalSettings.globalPauseOverride = false;
-        gameManager.ResultsMenuTrigger(); 
-        //ResetLevel(gameManager);
-    }
-
     private void Update()
     {
         Game_Manager gameManager = Singleton.instance.GetComponent<Game_Manager>();
@@ -198,7 +190,6 @@ public class Level_Manager : MonoBehaviour
     // this will run for the frame that hasHitEndWaveTrigger == true
     public void ResetLevel(Game_Manager gameManager) 
     {
-        //gameManager.Button_Results_To_Upgrades();
         Extention = GameObject.Find("Extention");
         Transform ExtentionTransform = Extention.transform;
 
@@ -232,13 +223,6 @@ public class Level_Manager : MonoBehaviour
     {
         Game_Manager gameManager = Singleton.instance.GetComponent<Game_Manager>();
         GlobalSettings.globalPauseOverride = false;
-
-        EndWaveTrigger endWaveTrigger = FindAnyObjectByType<EndWaveTrigger>();
-        Debug.LogError($"Has the end wave trigger loaded at this point {endWaveTrigger.isActiveAndEnabled}");
-        if (endWaveTrigger != null)
-        { 
-            endWaveTrigger.WaveEnd_ShowResults += EndWaveTrigger_WaveEnd_ShowResults;
-        }
         gameManager.EnableGameplayCamera(true);
     }
 

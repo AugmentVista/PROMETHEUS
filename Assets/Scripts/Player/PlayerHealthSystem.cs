@@ -71,8 +71,8 @@ public class PlayerHealthSystem : MonoBehaviour
 
     public void ResetPlayerHealth()
     {
-        isPlayerAlive = true;
         Heal(maxHealth);
+        isPlayerAlive = true;
     }
 
     private void PlayerDeath()
