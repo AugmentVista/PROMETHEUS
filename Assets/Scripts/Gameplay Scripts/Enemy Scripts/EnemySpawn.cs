@@ -39,7 +39,7 @@ public class EnemySpawn : MonoBehaviour
             {
                 var spawnPositionsList = waveTrigger.SpawnPositions.ToList();
                 spawnPositionsList.Remove(transform);
-                waveTrigger.SpawnPositions = spawnPositionsList.ToArray(); // Update the array
+                waveTrigger.SpawnPositions = spawnPositionsList.ToArray();
             }
         }
         else if (collider.CompareTag("Weapon"))

@@ -13,7 +13,7 @@ public class EnemyFire : MonoBehaviour
     private float spawnInterval = 1.0f;
 
     private float ShotDelay() { return Mathf.Round(Random.Range(0.5f, 1.0f) * 100) / 100; } // produces clean decimals
-    private float shootingTimeGap; 
+    private float shootingTimeGap = 3.0f - GlobalSettings.globalWaveCount / 10f; 
 
     private EnemyProjectileManager projectileManager;
     private bool isGameActive = GlobalSettings.projectileSpawnerActive;

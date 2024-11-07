@@ -78,7 +78,6 @@ public class WaveSystem : MonoBehaviour
             { 
                 // Battle is over
                 state = State.BattleOver;
-                waveCount += 1;
                 Debug.Log($"Battle is {state}");
             }
         }
@@ -121,6 +120,7 @@ public class WaveSystem : MonoBehaviour
     {
         [SerializeField] private EnemySpawn[] enemySpawnArray;
         [SerializeField] private float timer;
+        [SerializeField] private bool moveToNextWave = false;
 
         public void Update() 
         {
@@ -129,10 +129,12 @@ public class WaveSystem : MonoBehaviour
                 timer -= Time.deltaTime;
                 if (timer <= 0)
                 {
-                    SpawnEnemies();
+                        SpawnEnemies();
                 }
             }
         }
+
+
 
         public void DestroyAllEnemies()
         {
@@ -156,6 +158,7 @@ public class WaveSystem : MonoBehaviour
             {
                 enemySpawn.Spawn();
             }
+            GlobalSettings.globalWaveCount++;
         }
         public bool IsWaveOver()
         {

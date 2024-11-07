@@ -182,7 +182,7 @@ public class Level_Manager : MonoBehaviour
     {
         Game_Manager gameManager = Singleton.instance.GetComponent<Game_Manager>();
         GlobalSettings.globalPauseOverride = false;
-        gameManager.ResultsMenuTrigger(); // need to create a 
+        gameManager.ResultsMenuTrigger(); 
         //ResetLevel(gameManager);
     }
 
@@ -192,13 +192,13 @@ public class Level_Manager : MonoBehaviour
         if (gameManager.hasHitEndWaveTrigger)
         {
             ResetLevel(gameManager);
-            gameManager.hasHitEndWaveTrigger = false;
         }
     }
 
-    public void ResetLevel(Game_Manager gameManager)
+    // this will run for the frame that hasHitEndWaveTrigger == true
+    public void ResetLevel(Game_Manager gameManager) 
     {
-        gameManager.Button_Results_To_Upgrades();
+        //gameManager.Button_Results_To_Upgrades();
         Extention = GameObject.Find("Extention");
         Transform ExtentionTransform = Extention.transform;
 
@@ -208,8 +208,14 @@ public class Level_Manager : MonoBehaviour
             Extentions.Add(child.gameObject.transform);
             child.gameObject.SetActive(false);
         }
+        ResetPlayerPosition();
 
+        
+        gameManager.hasHitEndWaveTrigger = false;
+    }
 
+    public void ResetPlayerPosition()
+    {
         GameObject playerObject = GameObject.FindWithTag("Player");
         GameObject Respawn = GameObject.FindWithTag("Respawn");
         if (playerObject != null)
