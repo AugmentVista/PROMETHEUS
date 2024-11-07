@@ -6,10 +6,8 @@ public class WaveSystem : MonoBehaviour
     [SerializeField] private Wave[] waveArray;
     [SerializeField] private EnemyWaveTrigger waveTrigger;
     [SerializeField] private EndWaveTrigger endWaveTrigger;
-
-    public int waveCount = 1;
     private State state;
-
+    public float waveCount;
     private enum State
     { 
         Idle, 
@@ -58,6 +56,10 @@ public class WaveSystem : MonoBehaviour
                 }
                 TestBattleOver();
                 break;
+            case State.BattleOver:
+
+
+                break;
         }
     }
 
@@ -68,8 +70,6 @@ public class WaveSystem : MonoBehaviour
         state = State.Active;
     }
 
-    
-
     private void TestBattleOver()
     {
         if (state == State.Active)
@@ -78,11 +78,11 @@ public class WaveSystem : MonoBehaviour
             { 
                 // Battle is over
                 state = State.BattleOver;
-                waveCount += 1;
                 Debug.Log($"Battle is {state}");
             }
         }
     }
+
     private bool AreWavesOver()
     {
         foreach (Wave wave in waveArray)
@@ -120,15 +120,16 @@ public class WaveSystem : MonoBehaviour
     private class Wave 
     {
         [SerializeField] private EnemySpawn[] enemySpawnArray;
-        [SerializeField] private float timer;
+        [SerializeField] private float waveCount => GlobalSettings.globalWaveCount;
+        private float lastWaveCount = 0;
 
         public void Update() 
         {
-            if (timer >= 0)
+            if (!GlobalSettings.globalPauseOverride) 
             { 
-                timer -= Time.deltaTime;
-                if (timer <= 0)
+                if (lastWaveCount < waveCount)
                 {
+                    lastWaveCount = waveCount;
                     SpawnEnemies();
                 }
             }
@@ -156,10 +157,13 @@ public class WaveSystem : MonoBehaviour
             {
                 enemySpawn.Spawn();
             }
+            GlobalSettings.globalWaveCount++;
+            
         }
         public bool IsWaveOver()
         {
-            if (timer < 0)
+            float lastWave = 0;
+            if (waveCount < lastWave )
             {
                 // Wave spawned
 

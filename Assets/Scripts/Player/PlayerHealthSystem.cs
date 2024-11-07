@@ -7,19 +7,20 @@ using Unity.VisualScripting;
 public class PlayerHealthSystem : MonoBehaviour
 {
     public float maxHealth = GlobalSettings.globalPlayerHPMaximum;
+
     public float currentHealth;
 
     public Image playerHealthGauge;
+
     public float elapsedTime = 0f;
 
-    public float fillSpeed = 0.5f;  // Controls how fast the health bar fills/drains
+    public float fillSpeed = 0.5f;
 
     private float targetFillAmount;
 
     private int hpUpgradeLimit = 0;
 
     private bool isPlayerAlive;
-    // should probably add a bool for tracking if player is alive
 
     private void Awake()
     {
@@ -68,6 +69,12 @@ public class PlayerHealthSystem : MonoBehaviour
         }
     }
 
+    public void ResetPlayerHealth()
+    {
+        Heal(maxHealth);
+        isPlayerAlive = true;
+    }
+
     private void PlayerDeath()
     {
         Game_Manager gameManager = Singleton.instance.GetComponent<Game_Manager>();
@@ -84,11 +91,11 @@ public class PlayerHealthSystem : MonoBehaviour
                 {
                     waveEnd.Alt_WaveEnd_ShowResults();
                 }
-                //gameManager.hasHitEndWaveTrigger = true;
+                gameManager.hasHitEndWaveTrigger = true;
                 //gameManager.ResultsMenuTrigger();
                 
                 isPlayerAlive = false;
-                //GlobalSettings.globalPauseOverride = true;
+                GlobalSettings.globalPauseOverride = true;
             }
         }
     }
