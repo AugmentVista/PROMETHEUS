@@ -214,8 +214,6 @@ public class Game_Manager : MonoBehaviour
         yield return new WaitForSeconds(duration);
 
         IntroPlayButton.SetActive(true);
-
-        Debug.Log($"{duration} seconds have passed.");
     }
 
     public void GameOverTrigger()

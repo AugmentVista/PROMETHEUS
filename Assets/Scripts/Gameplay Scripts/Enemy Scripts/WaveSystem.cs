@@ -65,8 +65,6 @@ public class WaveSystem : MonoBehaviour
 
     private void StartWave()
     {
-        Debug.Log("Wave is starting");
-
         state = State.Active;
     }
 

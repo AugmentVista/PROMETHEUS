@@ -31,7 +31,6 @@ public class PlayerHealthSystem : MonoBehaviour
         currentHealth = maxHealth;
         targetFillAmount = 1.0f;
         playerHealthGauge.fillAmount = targetFillAmount;
-        Debug.Log("Health Start has completed");
     }
 
     private void Update()

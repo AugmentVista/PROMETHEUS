@@ -1,42 +1,46 @@
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class EnemySpawn : MonoBehaviour
 {
     private EnemyWaveTrigger waveTrigger;
-    private Transform MissZoneTransform;
+    private Transform missZoneTransform;
     public GameObject enemyPrefab;
-    private Transform[] enemySpawnPositions;
-    private Transform InitalPosition = null;
+    private Transform initalPosition = null;
 
-    List<Transform> spawnPositionsList = new List<Transform>();
+    List<Transform> enemySpawnPositions = new List<Transform>();
 
     public bool IsAlive = true;
 
     bool spawnPositionsAssigned;
 
-    private void Start()
+    private void InitStart()
     {
+        IsAlive = true;
         waveTrigger = GameObject.Find("Wave Start Trigger").GetComponent<EnemyWaveTrigger>();
-        MissZoneTransform = GameObject.Find("Miss Zone").transform;
-        if (MissZoneTransform == null) 
-        { 
-            Debug.LogError($"Miss Zone cannot be found, Miss Zone is {MissZoneTransform.gameObject}");
+
+        missZoneTransform = GameObject.Find("Miss Zone").transform;
+        if (missZoneTransform == null)
+        {
+            Debug.LogError($"Miss Zone cannot be found, Miss Zone is {missZoneTransform.gameObject}");
         }
-        enemySpawnPositions = new Transform[0];
         spawnPositionsAssigned = false;
+        EnemyFire fireScript = enemyPrefab.GetComponent<EnemyFire>();
+        MeshRenderer meshRenderer = enemyPrefab.GetComponent<MeshRenderer>();
     }
+
 
     private void Update()
     {
+        Debug.LogError($"Do we have a wave trigger? {waveTrigger}");
+        Debug.Log($"Do we have a wave trigger? {waveTrigger}");
         if (!IsAlive)
         {
-            EnemyFire fireScript = GetComponent<EnemyFire>();
+            EnemyFire fireScript = enemyPrefab.GetComponent<EnemyFire>();
             if (fireScript != null)
             {
                 fireScript.ToggleFiring(false);
-                MeshRenderer meshRenderer = GetComponent<MeshRenderer>();
+                MeshRenderer meshRenderer = enemyPrefab.GetComponent<MeshRenderer>();
                 if (meshRenderer.enabled)
                 {
                     meshRenderer.enabled = false;
@@ -47,7 +51,7 @@ public class EnemySpawn : MonoBehaviour
 
     private void OnTriggerEnter(Collider collider)
     {
-        EnemyFire fireScript = GetComponent<EnemyFire>();
+        collider = enemyPrefab.GetComponent<Collider>();
         if (collider.CompareTag("MissZone"))
         {
             IsAlive = false;
@@ -60,46 +64,59 @@ public class EnemySpawn : MonoBehaviour
 
     public void Spawn()
     {
-        if (/*!spawnPositionsAssigned && */enemySpawnPositions != null && spawnPositionsList != null)
+        waveTrigger = GameObject.Find("Wave Start Trigger").GetComponent<EnemyWaveTrigger>(); // this works
+        if (waveTrigger == null)
         {
-            spawnPositionsList = enemySpawnPositions.ToList();
-            foreach (var position in waveTrigger.SpawnPositions)
+            Debug.LogError("Cannot spawn. WaveTrigger is not initialized.");
+            return;
+        }
+
+        // Only assign spawn positions once
+        if (!spawnPositionsAssigned)
+        {
+            // Ensure spawn positions are added
+            foreach (Transform position in waveTrigger.SpawnPositions)
             {
-                spawnPositionsList.Add(position);
+                if (!enemySpawnPositions.Contains(position))
+                {
+                    enemySpawnPositions.Add(position);
+                }
             }
-            enemySpawnPositions = spawnPositionsList.ToArray();
             spawnPositionsAssigned = true;
-            Debug.Log($"What the hecks value is {enemySpawnPositions.Length}");
+            Debug.Log($"Spawn positions count: {enemySpawnPositions.Count}");
 
-            if (enemySpawnPositions == null || enemySpawnPositions.Length == 0)
+            if (enemySpawnPositions.Count == 0)
             {
-                Debug.LogError($"enemySpawnPositions is {enemySpawnPositions.Length}");
-                Debug.LogError($"enemySpawnPositions is {enemySpawnPositions}");
-                Debug.LogError("No valid spawn positions");
+                Debug.LogError("No valid spawn positions available.");
+                return;
             }
-            else
-            {
+        }
 
-            }
-            IsAlive = true;
+        // Check if the prefab is set
+        if (enemyPrefab == null)
+        {
+            Debug.LogError("Enemy prefab is not assigned in the inspector.");
+            return;
+        }
 
-            GameObject enemyInstance = Instantiate(enemyPrefab, transform.position, Quaternion.identity);
-            InitalPosition = transform;
+        // Instantiate enemy
+        GameObject enemyInstance = Instantiate(enemyPrefab, transform.position, Quaternion.identity);
+        initalPosition = transform;
 
-            Transform spawnPosition = enemySpawnPositions[Random.Range(0, enemySpawnPositions.Length)];
-            enemyInstance.transform.position = spawnPosition.position;
-            enemyInstance.transform.rotation = Quaternion.identity;
+        // Get random spawn position and set the enemy's position
+        Transform spawnPosition = enemySpawnPositions[Random.Range(0, enemySpawnPositions.Count)];
+        enemyInstance.transform.position = spawnPosition.position;
+        enemyInstance.transform.rotation = Quaternion.identity;
 
-            if (spawnPositionsList.Count > 0)
-            {
-                spawnPositionsList.Remove(transform);
-                enemySpawnPositions = spawnPositionsList.ToArray();
-            }
-            else
-            {
-                Debug.Log($"Remaining spawn points {spawnPositionsList.Count}");
-                Debug.LogError($"No more spawn points for enemies to spawn at, there are {waveTrigger.SpawnPositions.Length} left");
-            }
+        // Remove the spawn position to avoid reusing it
+        enemySpawnPositions.Remove(spawnPosition);
+
+        Debug.Log($"Remaining spawn points: {enemySpawnPositions.Count}");
+
+        // If no spawn points left, log a warning
+        if (enemySpawnPositions.Count == 0)
+        {
+            Debug.LogWarning("No more spawn points left for enemies.");
         }
     }
 }
