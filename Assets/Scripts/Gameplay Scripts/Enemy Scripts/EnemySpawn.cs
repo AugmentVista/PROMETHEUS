@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -8,28 +9,23 @@ public class EnemySpawn : MonoBehaviour
     public GameObject enemyPrefab;
     private Transform[] enemySpawnPositions;
     private Transform InitalPosition = null;
+
+    List<Transform> spawnPositionsList = new List<Transform>();
+
     public bool IsAlive = true;
+
+    bool spawnPositionsAssigned;
 
     private void Start()
     {
-        EnemyWaveTrigger waveTrigger = GameObject.Find("Wave Start Trigger").GetComponent<EnemyWaveTrigger>();
-        Transform MissZoneTransform = GameObject.Find("Miss Zone").transform;
-        if (MissZoneTransform == null) { Debug.LogError($"Miss Zone cannot be found, Miss Zone is {MissZoneTransform.gameObject}"); }
-        if (waveTrigger == null)
-        {
-            Debug.LogError("waveTrigger is null");
+        waveTrigger = GameObject.Find("Wave Start Trigger").GetComponent<EnemyWaveTrigger>();
+        MissZoneTransform = GameObject.Find("Miss Zone").transform;
+        if (MissZoneTransform == null) 
+        { 
+            Debug.LogError($"Miss Zone cannot be found, Miss Zone is {MissZoneTransform.gameObject}");
         }
-
-        if (enemySpawnPositions == null || enemySpawnPositions.Length == 0)
-        {
-            Debug.Log("enemySpawnPositions are null");
-        }
-        var spawnPositionsList = waveTrigger.SpawnPositions.ToList();
-        foreach (var position in waveTrigger.SpawnPositions) 
-        {
-            spawnPositionsList.Add(position);
-        }
-        enemySpawnPositions = spawnPositionsList.ToArray();
+        enemySpawnPositions = new Transform[0];
+        spawnPositionsAssigned = false;
     }
 
     private void Update()
@@ -55,14 +51,6 @@ public class EnemySpawn : MonoBehaviour
         if (collider.CompareTag("MissZone"))
         {
             IsAlive = false;
-
-            //// Remove this transform from the waveTrigger's SpawnPositions
-            //if (waveTrigger.SpawnPositions.Contains(transform))
-            //{
-            //    var spawnPositionsList = waveTrigger.SpawnPositions.ToList();
-            //    spawnPositionsList.Remove(transform);
-            //    waveTrigger.SpawnPositions = spawnPositionsList.ToArray();
-            //}
         }
         else if (collider.CompareTag("Weapon"))
         {
@@ -72,31 +60,46 @@ public class EnemySpawn : MonoBehaviour
 
     public void Spawn()
     {
-        if (enemySpawnPositions == null || enemySpawnPositions.Length == 0)
+        if (/*!spawnPositionsAssigned && */enemySpawnPositions != null && spawnPositionsList != null)
         {
-            Debug.LogError("No valid spawn positions");
-            return;
-        }
+            spawnPositionsList = enemySpawnPositions.ToList();
+            foreach (var position in waveTrigger.SpawnPositions)
+            {
+                spawnPositionsList.Add(position);
+            }
+            enemySpawnPositions = spawnPositionsList.ToArray();
+            spawnPositionsAssigned = true;
+            Debug.Log($"What the hecks value is {enemySpawnPositions.Length}");
 
-        IsAlive = true;
+            if (enemySpawnPositions == null || enemySpawnPositions.Length == 0)
+            {
+                Debug.LogError($"enemySpawnPositions is {enemySpawnPositions.Length}");
+                Debug.LogError($"enemySpawnPositions is {enemySpawnPositions}");
+                Debug.LogError("No valid spawn positions");
+            }
+            else
+            {
 
-        GameObject enemyInstance = Instantiate(enemyPrefab, transform.position, Quaternion.identity);
-        InitalPosition = transform;
+            }
+            IsAlive = true;
 
-        Transform spawnPosition = enemySpawnPositions[Random.Range(0, enemySpawnPositions.Length)];
-        enemyInstance.transform.position = spawnPosition.position;
-        enemyInstance.transform.rotation = Quaternion.identity;
+            GameObject enemyInstance = Instantiate(enemyPrefab, transform.position, Quaternion.identity);
+            InitalPosition = transform;
 
-        if (waveTrigger.SpawnPositions.Length > 0)
-        {
-            var spawnPositionsList = waveTrigger.SpawnPositions.ToList();
-            spawnPositionsList.Remove(transform);
-            waveTrigger.SpawnPositions = spawnPositionsList.ToArray();
-        }
-        else
-        {
-            Debug.LogError($"No more spawn points for enemies to spawn at, there are {waveTrigger.SpawnPositions.Length} left");
+            Transform spawnPosition = enemySpawnPositions[Random.Range(0, enemySpawnPositions.Length)];
+            enemyInstance.transform.position = spawnPosition.position;
+            enemyInstance.transform.rotation = Quaternion.identity;
+
+            if (spawnPositionsList.Count > 0)
+            {
+                spawnPositionsList.Remove(transform);
+                enemySpawnPositions = spawnPositionsList.ToArray();
+            }
+            else
+            {
+                Debug.Log($"Remaining spawn points {spawnPositionsList.Count}");
+                Debug.LogError($"No more spawn points for enemies to spawn at, there are {waveTrigger.SpawnPositions.Length} left");
+            }
         }
     }
 }
-

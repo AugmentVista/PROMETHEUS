@@ -1,5 +1,4 @@
 using System;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class WaveSystem : MonoBehaviour
@@ -122,16 +121,15 @@ public class WaveSystem : MonoBehaviour
     {
         [SerializeField] private EnemySpawn[] enemySpawnArray;
         [SerializeField] private float waveCount => GlobalSettings.globalWaveCount;
-        [SerializeField] private bool moveToNextWave = false;
+        private float lastWaveCount = 0;
 
         public void Update() 
         {
-            float lastWaveCount = 0;
-            if (lastWaveCount < waveCount)
+            if (!GlobalSettings.globalPauseOverride) 
             { 
-                lastWaveCount = waveCount;
-                if (!GlobalSettings.globalPauseOverride)
+                if (lastWaveCount < waveCount)
                 {
+                    lastWaveCount = waveCount;
                     SpawnEnemies();
                 }
             }
