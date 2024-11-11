@@ -133,9 +133,17 @@ public class WaveSystem : MonoBehaviour
         public void Update() 
         {
             if (!GlobalSettings.globalPauseOverride) 
-            { 
-                if (lastWaveCount < waveCount)
+            {
+                Debug.Log("WAVECOUNT IS:" + waveCount);
+
+                if(waveCount == lastWaveCount)
                 {
+                    Debug.LogError("THIS SHOULD ALWAYS RUN");
+                    return;
+                }
+                else if (lastWaveCount < waveCount)
+                {
+                    Debug.Log($"Wave Count before equalization is{waveCount}");
                     lastWaveCount = waveCount;
                     SpawnEnemies();
                 }
