@@ -43,19 +43,20 @@ public class EnemySpawn : MonoBehaviour
             EnemyFire fireScript = enemyPrefab.GetComponent<EnemyFire>();
             if (fireScript != null)
             {
+                Debug.Log(fireScript);
                 fireScript.ToggleFiring(false);
-                MeshRenderer meshRenderer = enemyPrefab.GetComponent<MeshRenderer>();
-                if (meshRenderer.enabled)
-                {
-                    meshRenderer.enabled = false;
-                }
+            }
+            MeshRenderer meshRenderer = enemyPrefab.GetComponent<MeshRenderer>();
+            if (meshRenderer.enabled)
+            {
+                Debug.Log(meshRenderer);
+                meshRenderer.enabled = false;
             }
         }
     }
 
     private void OnTriggerEnter(Collider collider)
     {
-        collider = enemyPrefab.GetComponent<Collider>();
         if (collider.CompareTag("MissZone"))
         {
             IsAlive = false;

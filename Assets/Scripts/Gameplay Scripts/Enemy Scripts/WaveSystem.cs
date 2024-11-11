@@ -13,6 +13,7 @@ public class WaveSystem : MonoBehaviour
         Idle, 
         Active,
         BattleOver,
+        SecondIdle,
     }
 
     private void Awake()
@@ -31,7 +32,7 @@ public class WaveSystem : MonoBehaviour
         waveTrigger.OnPlayerEnterTrigger += EnemyWaveTrigger_OnPlayerEnterTrigger;
         if (state == State.BattleOver) 
         {
-            state = State.Idle; 
+            state = State.SecondIdle; 
         }
     }
 
@@ -41,6 +42,13 @@ public class WaveSystem : MonoBehaviour
         {
             StartWave();
             // unsub to avoid multiple triggers from the same source
+            waveTrigger.OnPlayerEnterTrigger -= EnemyWaveTrigger_OnPlayerEnterTrigger; // turn off starter
+
+            endWaveTrigger.WaveEnd_ShowResults += EndWaveTrigger_WaveEnd_ShowResults; // turn on ender
+        }
+        else if (state == State.SecondIdle)
+        {
+            BeginNewWave();
             waveTrigger.OnPlayerEnterTrigger -= EnemyWaveTrigger_OnPlayerEnterTrigger; // turn off starter
 
             endWaveTrigger.WaveEnd_ShowResults += EndWaveTrigger_WaveEnd_ShowResults; // turn on ender
