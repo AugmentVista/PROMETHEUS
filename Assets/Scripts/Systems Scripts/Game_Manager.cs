@@ -41,7 +41,6 @@ public class Game_Manager : MonoBehaviour
         SpawnBridge bridge = bridgeScriptHolder.GetComponent<SpawnBridge>();
         if (bridge != null)
         bridge.CreateBridge();
-        GlobalSettings.globalWaveCount++;
         ResultsMenuTrigger();
     }
 
@@ -132,8 +131,8 @@ public class Game_Manager : MonoBehaviour
 
     public void OptionsTrigger()
     {
-        ui_Manager.OptionsUI();
         IsMenuOpen(true);
+        ui_Manager.OptionsUI();
     }
 
     public void StartGameTrigger()
@@ -260,6 +259,7 @@ public class Game_Manager : MonoBehaviour
         if (open)
         {
             Cursor.visible = open;
+            meteorVFX.SetActive(!open);
         }
         // could just be an else
         else if (!open)

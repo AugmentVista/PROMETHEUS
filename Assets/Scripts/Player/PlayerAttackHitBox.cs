@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Net;
 using UnityEngine;
 
 public class PlayerAttackHitBox : MonoBehaviour // This script is attached to the player weapon
@@ -11,6 +12,10 @@ public class PlayerAttackHitBox : MonoBehaviour // This script is attached to th
     public GameObject rockSmashVFX;
 
     public GameObject HitBoxVisual;
+
+    public GameObject RulerTargetDistance;
+
+    private Transform HandLocation;
 
     public float attackDuration;
 
@@ -34,6 +39,10 @@ public class PlayerAttackHitBox : MonoBehaviour // This script is attached to th
 
     private bool isAttacking = false;
 
+    private float lerpDuration = 1f;
+    private bool movingForward = false;
+    private float timeElapsed;
+
 
     private void Start()
     {
@@ -43,6 +52,7 @@ public class PlayerAttackHitBox : MonoBehaviour // This script is attached to th
         idleColor = weaponVisual.material.color;
         idleWeapon = weaponMaterial;
         idleWeapon.color = weaponMaterial.color;
+        HandLocation = transform;
     }
 
     public void UpdateAttackSpeed(float amountToReduce)
@@ -54,6 +64,37 @@ public class PlayerAttackHitBox : MonoBehaviour // This script is attached to th
         }
         attackSpeedUps += 1;
     }
+
+    //private void ThrowHammer()
+    //{
+    //    // Update elapsed time for the Lerp
+    //    timeElapsed += Time.deltaTime;
+    //    float lerpProgress = timeElapsed / lerpDuration;
+
+    //    if (movingForward)
+    //    {
+    //        transform.position = Vector3.Lerp(HandLocation.position, RulerTargetDistance.transform.position, lerpProgress);
+
+    //        // Check if the movement to the target is complete
+    //        if (lerpProgress >= 1f)
+    //        {
+    //            movingForward = false; // Toggle to returning phase
+    //            timeElapsed = 0f; // Reset for the return Lerp
+    //        }
+    //    }
+    //    else
+    //    {
+    //        transform.position = Vector3.Lerp(RulerTargetDistance.transform.position, HandLocation.position, lerpProgress);
+
+    //        // Check if the return movement is complete
+    //        if (lerpProgress >= 1f)
+    //        {
+    //            movingForward = true; // Ready to start again if needed
+    //            timeElapsed = 0f; // Reset for future throws
+    //            isAttacking = false; // Stop the attack movement
+    //        }
+    //    }
+    //}
 
     public void UpdateHammer(float amountToEnlarge)
     {
@@ -69,6 +110,11 @@ public class PlayerAttackHitBox : MonoBehaviour // This script is attached to th
         {
             StartCoroutine(Attack());
         }
+        //if (isAttacking)
+        //{
+        //    weaponAnimator.SetTrigger("HammerLerp");
+        //    ThrowHammer();
+        //}
     }
 
     private IEnumerator Attack()
