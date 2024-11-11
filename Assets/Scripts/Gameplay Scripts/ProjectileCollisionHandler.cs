@@ -32,13 +32,13 @@ public class ProjectileCollisionHandler : MonoBehaviour
         playerMove = FindObjectOfType<PlayerSideToSide>();
         playerAttack = FindObjectOfType<PlayerAttackHitBox>();
         projectileCollider = GetComponent<Collider>();
-
     }
 
     public void SetSpawner(EnemyProjectileManager spawnerReference)
     {
         spawner = spawnerReference;
     }
+
     public Collider GetProjectileCollider()
     {
         return projectileCollider;
@@ -47,7 +47,6 @@ public class ProjectileCollisionHandler : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        //Debug.Log($"OnTriggerEnter called with: {other.gameObject.tag}");
         switch (other.gameObject.tag)
         {
             case "Weapon":

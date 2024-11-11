@@ -16,7 +16,11 @@ public class BaseProjectile : MonoBehaviour
     public enum ProjectileEffect { KnockBack, Stun, Slow, Cash, Bomb }
     public ProjectileEffect currentEffect;
 
-    public int scoreReduction;
+    private float elapsedTime = 0f;
+
+    private Vector3 previousVelocity;
+
+    private bool isPaused = false;
 
     public int value;
 
@@ -35,10 +39,34 @@ public class BaseProjectile : MonoBehaviour
         rb = GetComponent<Rigidbody>();
     }
 
-    private void Update()
+    private void Start()
     {
         UpdateProjectileStateMachine();
     }
+
+    private void FixedUpdate()
+    {
+        if (GlobalSettings.globalPauseOverride)
+        {
+            // Pause
+            if (!isPaused)
+            {
+                previousVelocity = rb.velocity; // Store current velocity
+                rb.velocity = Vector3.zero; // Freeze the projectile
+                isPaused = true;
+            }
+        }
+        else
+        {
+            // Unpause
+            if (isPaused)
+            {
+                rb.velocity = previousVelocity; // Restore velocity
+                isPaused = false;
+            }
+        }
+    }
+
 
     void Spin()
     {

@@ -27,6 +27,8 @@ public class WaveSystem : MonoBehaviour
 
     private void EndWaveTrigger_WaveEnd_ShowResults(object sender, EventArgs _)
     {
+        endWaveTrigger.WaveEnd_ShowResults -= EndWaveTrigger_WaveEnd_ShowResults;
+        waveTrigger.OnPlayerEnterTrigger += EnemyWaveTrigger_OnPlayerEnterTrigger;
         if (state == State.BattleOver) 
         {
             state = State.Idle; 
@@ -102,8 +104,6 @@ public class WaveSystem : MonoBehaviour
     public void BeginNewWave()
     {
         Debug.Log("Has a new wave begun?");
-        endWaveTrigger.WaveEnd_ShowResults -= EndWaveTrigger_WaveEnd_ShowResults;
-        waveTrigger.OnPlayerEnterTrigger += EnemyWaveTrigger_OnPlayerEnterTrigger;
         foreach (Wave wave in waveArray)
         {
             wave.RespawnEnemies();

@@ -73,7 +73,7 @@ public class EnemySpawn : MonoBehaviour
         IsAlive = true;
         MeshRenderer meshRenderer = enemyPrefab.GetComponent<MeshRenderer>();
         EnemyFire fireScript = enemyPrefab.GetComponent<EnemyFire>();
-       
+        fireScript.AmmunitionConsumed = 0;
         if (!spawnPositionsAssigned)
         {
             // Ensure spawn positions are added
@@ -113,7 +113,6 @@ public class EnemySpawn : MonoBehaviour
                 Debug.Log($"Remaining spawn points: {enemySpawnPositions.Count}");
             }
         }
-        if (fireScript != null) { fireScript.ToggleFiring(GlobalSettings.globalPauseOverride); }
     }
 
 

@@ -29,12 +29,6 @@ public class Game_Manager : MonoBehaviour
     public static event GameStateChange OnResults;
     public static event GameStateChange OnUpgrades;
     public static event GameStateChange OnIntroduction;
-
-    private void Awake() // Awake runs before start and again when scenes change.
-    {
-
-    }
-
     private void Start()
     {
         gameState = GameState.DoNothing;
@@ -131,32 +125,9 @@ public class Game_Manager : MonoBehaviour
 
     public void Button_Upgrades_To_Gameplay()
     {
-        gameState = GameState.Upgrades;
+        gameState = GameState.Level1;
         ChangeGameState(gameState);
-
-        //if (hasHitEndWaveTrigger)
-        {
-            //GameObject UpgradePlayButton;
-            //GameObject UpgradeContinueButton;
-
-            //UpgradeContinueButton = ui_Manager.upgradesUI.transform.Find("ContinueFromUpgrades").gameObject;
-
-            //UpgradePlayButton = ui_Manager.upgradesUI.transform.Find("Return").gameObject;
-
-
-            //if (UpgradePlayButton != null && UpgradePlayButton.activeSelf)
-            //{
-            //    UpgradePlayButton.SetActive(false);
-            //}
-
-            //if (UpgradeContinueButton != null && !UpgradePlayButton.activeSelf)
-            //{
-            //    UpgradeContinueButton.SetActive(true);
-            //}
-            gameState = GameState.Level1;
-            ChangeGameState(gameState);
-            ResumeGameTrigger();
-        }
+        ResumeGameTrigger();
     }
 
     public void OptionsTrigger()
@@ -173,7 +144,6 @@ public class Game_Manager : MonoBehaviour
             gameState = GameState.Level1;
             ChangeGameState(gameState);
         }
-        // could just be an else
         else if (thisScene.name == "Level_1") // if we are jumping back into the same game 
         {
             ResumeGameTrigger();
@@ -186,11 +156,11 @@ public class Game_Manager : MonoBehaviour
         Debug.Log(wave);
         if (wave != null)
         {
-            wave.BeginNewWave();
+            wave.BeginNewWave(); // will trigger enemy respawn
+            Debug.LogError("Pause state is:" + GlobalSettings.globalPauseOverride);
             gameState = GameState.Upgrades;
             ChangeGameState(gameState);
         }
-        
     }
    
     public void IntroductionReturn()
