@@ -106,7 +106,7 @@ public class WaveSystem : MonoBehaviour
         waveTrigger.OnPlayerEnterTrigger += EnemyWaveTrigger_OnPlayerEnterTrigger;
         foreach (Wave wave in waveArray)
         {
-            //wave.DestroyAllEnemies();
+            wave.RespawnEnemies();
         }
     }
 
@@ -133,19 +133,11 @@ public class WaveSystem : MonoBehaviour
             }
         }
 
-        public void DestroyAllEnemies()
+        public void RespawnEnemies()
         {
             foreach (EnemySpawn enemySpawn in enemySpawnArray)
             {
-                enemySpawn.gameObject.SetActive(false);
-            }
-        }
-
-        public void ReviveEnemies()
-        {
-            foreach (EnemySpawn enemySpawn in enemySpawnArray)
-            {
-                enemySpawn.IsAlive = true;
+                enemySpawn.Respawn();
             }
         }
 

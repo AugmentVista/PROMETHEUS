@@ -2,7 +2,6 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System;
-using Unity.VisualScripting;
 
 public class PlayerHealthSystem : MonoBehaviour
 {
@@ -91,7 +90,6 @@ public class PlayerHealthSystem : MonoBehaviour
                     waveEnd.Alt_WaveEnd_ShowResults();
                 }
                 gameManager.hasHitEndWaveTrigger = true;
-                //gameManager.ResultsMenuTrigger();
                 
                 isPlayerAlive = false;
                 GlobalSettings.globalPauseOverride = true;

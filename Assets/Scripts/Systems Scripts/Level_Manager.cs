@@ -15,6 +15,8 @@ public class Level_Manager : MonoBehaviour
 
     public Transform playerTransform = null;
 
+    public PlayerHealthSystem playerHealth;
+
     public Transform respawn;
 
     private List<Transform> Extentions = new List<Transform>();
@@ -214,6 +216,7 @@ public class Level_Manager : MonoBehaviour
             playerTransform = playerObject.transform;
             respawn = Respawn.transform;
             playerTransform.position = respawn.position;
+            playerHealth.ResetPlayerHealth();
             Debug.Log($"Found player object: {playerTransform.name}");
         }
     }

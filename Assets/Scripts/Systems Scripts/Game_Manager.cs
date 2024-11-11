@@ -43,12 +43,12 @@ public class Game_Manager : MonoBehaviour
 
     private void Level_Manager_CreateBridgeSectionDuringIntro(object sender, EventArgs _)
     {
-        ResultsMenuTrigger();
         GameObject bridgeScriptHolder = GameObject.Find("Bridge Script Holder");
         SpawnBridge bridge = bridgeScriptHolder.GetComponent<SpawnBridge>();
         if (bridge != null)
         bridge.CreateBridge();
         GlobalSettings.globalWaveCount++;
+        ResultsMenuTrigger();
     }
 
 
@@ -134,7 +134,7 @@ public class Game_Manager : MonoBehaviour
         gameState = GameState.Upgrades;
         ChangeGameState(gameState);
 
-        if (hasHitEndWaveTrigger)
+        //if (hasHitEndWaveTrigger)
         {
             //GameObject UpgradePlayButton;
             //GameObject UpgradeContinueButton;
@@ -183,13 +183,14 @@ public class Game_Manager : MonoBehaviour
     public void Button_Results_To_Upgrades()
     {
         WaveSystem wave = FindAnyObjectByType<WaveSystem>();
+        Debug.Log(wave);
         if (wave != null)
         {
-            hasHitEndWaveTrigger = true;
             wave.BeginNewWave();
+            gameState = GameState.Upgrades;
+            ChangeGameState(gameState);
         }
-        gameState = GameState.Upgrades;
-        ChangeGameState(gameState);
+        
     }
    
     public void IntroductionReturn()

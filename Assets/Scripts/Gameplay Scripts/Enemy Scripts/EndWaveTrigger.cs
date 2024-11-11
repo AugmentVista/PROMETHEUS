@@ -9,12 +9,11 @@ public class EndWaveTrigger : MonoBehaviour
         WaveEnd_ShowResults?.Invoke(this, EventArgs.Empty);
     }
 
-    private void OnTriggerEnter(Collider collider)
-    {
-        if (collider.CompareTag("PlayerBody"))
-        {
-            Debug.LogError("Player has finished the wave");
-            WaveEnd_ShowResults?.Invoke(this, EventArgs.Empty);
-        }
-    }
+    //private void OnTriggerEnter(Collider collider)
+    //{
+    //    if (collider.CompareTag("PlayerBody"))
+    //    {
+    //        WaveEnd_ShowResults?.Invoke(this, EventArgs.Empty);
+    //    }
+    //}
 }
