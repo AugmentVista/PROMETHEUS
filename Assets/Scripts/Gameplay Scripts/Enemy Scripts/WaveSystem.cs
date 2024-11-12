@@ -118,7 +118,6 @@ public class WaveSystem : MonoBehaviour
                 wave.SpawnEnemies();
             }
         }
-        else { return; }
     }
 
     public void BeginNewWave(int waveIndex)
@@ -139,29 +138,12 @@ public class WaveSystem : MonoBehaviour
     {
         if (state == State.Active)
         {
-            wave.DetectAliveEnemies();
-            if (AreWavesOver())
+            if (wave.IsWaveOver())
             { 
                 state = State.BattleOver;
                 GlobalSettings.globalWaveCount++;
                 Debug.Log($"Battle is {state}");
             }
-        }
-    }
-
-    private bool AreWavesOver()
-    {
-        Debug.Log("is this even running? - AreWavesOver"); // does run
-        if (wave.IsWaveOver() == true)
-        {
-            // wave over
-            Debug.Log("WAVE IS OVER from AreWavesOver"); // does not run
-            return true;
-        }
-        else
-        {
-            // Wave not over
-            return false;
         }
     }
 
@@ -174,7 +156,7 @@ public class WaveSystem : MonoBehaviour
     private class Wave 
     {
         [SerializeField] private EnemySpawn[] enemySpawnArray;
-        [SerializeField] private EnemySpawn[] spawnCount;
+        [SerializeField] private BaseEnemy[] spawnCount;
         [SerializeField] private float waveCount => GlobalSettings.globalWaveCount;
 
         public void RespawnEnemies()
@@ -202,7 +184,7 @@ public class WaveSystem : MonoBehaviour
 
         public void DetectAliveEnemies()
         {
-            spawnCount = FindObjectsOfType<EnemySpawn>();
+            spawnCount = FindObjectsOfType<BaseEnemy>();
 
             if (spawnCount.Length > 0)
             {
@@ -213,18 +195,17 @@ public class WaveSystem : MonoBehaviour
                 Debug.LogError("No spawnCounts found!");
             }
 
-            foreach (EnemySpawn enemySpawn in spawnCount)
+            foreach (BaseEnemy enemy in spawnCount)
             {
-                if (enemySpawn != null)
+                if (enemy != null)
                 {
-                    Debug.Log("Enemy is not null");
-                    if (enemySpawn.IsAlive)
+                    if (enemy.IsAlive)
                     {
-                        Debug.Log($"{enemySpawn.gameObject.name} is alive.");
+                        Debug.Log($"{enemy.gameObject.name} is alive.");
                     }
                     else
                     {
-                        Debug.Log($"{enemySpawn.gameObject.name} is dead.");
+                        Debug.Log($"{enemy.gameObject.name} is dead.");
                     }
                 }
                 else
@@ -236,21 +217,26 @@ public class WaveSystem : MonoBehaviour
 
         public bool IsWaveOver()
         {
-            if (spawnCount != null && spawnCount.Length > 0)
+            if (spawnCount != null)
             {
-                foreach (EnemySpawn enemySpawn in spawnCount)
+                if (spawnCount.Length > 0)
                 {
-                    if (enemySpawn != null)
+                    Debug.Log(spawnCount.Length);
+                    foreach (BaseEnemy enemy in spawnCount)
                     {
-                        Debug.Log($"{enemySpawn.gameObject.name} IsAlive: {enemySpawn.IsAlive}");
-                        if (enemySpawn.IsAlive)
+                        if (enemy != null)
                         {
-                            return false; // Wave is not over yet
+                            Debug.Log($"{enemy.gameObject.name} IsAlive: {enemy.IsAlive}");
+                            if (!enemy.IsAlive)
+                            {
+                                return true;
+                            }
                         }
                     }
+                    Debug.Log("WAVE IS OVER");
+                    return false; // All enemies are dead, wave over
                 }
-                Debug.Log("WAVE IS OVER");
-                return true; // All enemies are dead, wave over
+                return false;
             }
             else
             {
