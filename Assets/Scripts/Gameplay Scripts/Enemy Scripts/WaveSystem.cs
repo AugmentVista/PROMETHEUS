@@ -1,13 +1,17 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class WaveSystem : MonoBehaviour
 {
     [SerializeField] private Wave[] waveArray;
+    [SerializeField] private Wave wave;
     [SerializeField] private EnemyWaveTrigger waveTrigger;
     [SerializeField] private EndWaveTrigger endWaveTrigger;
     private State state;
     public float waveCount;
+    private bool waveStarted = false;
+    private int waveIndexer = 0;
     private enum State
     { 
         Idle, 
@@ -23,6 +27,7 @@ public class WaveSystem : MonoBehaviour
 
     void Start()
     {
+        Wave wave = waveArray[0];
         waveTrigger.OnPlayerEnterTrigger += EnemyWaveTrigger_OnPlayerEnterTrigger;
     }
 
@@ -40,7 +45,7 @@ public class WaveSystem : MonoBehaviour
     {
         if (state == State.Idle)
         {
-            StartWave();
+            state = State.Active;
             // unsub to avoid multiple triggers from the same source
             waveTrigger.OnPlayerEnterTrigger -= EnemyWaveTrigger_OnPlayerEnterTrigger; // turn off starter
 
@@ -48,7 +53,7 @@ public class WaveSystem : MonoBehaviour
         }
         else if (state == State.SecondIdle)
         {
-            BeginNewWave();
+            state = State.Active;
             waveTrigger.OnPlayerEnterTrigger -= EnemyWaveTrigger_OnPlayerEnterTrigger; // turn off starter
 
             endWaveTrigger.WaveEnd_ShowResults += EndWaveTrigger_WaveEnd_ShowResults; // turn on ender
@@ -57,25 +62,51 @@ public class WaveSystem : MonoBehaviour
 
     private void Update()
     {
+        int waveIndex = Mathf.FloorToInt(GlobalSettings.globalWaveCount); // updates, any changes to state will be seen
         switch (state)
         {
             case State.Active:
-                foreach (Wave wave in waveArray)
-                {
-                    wave.Update();
-                }
-                TestBattleOver();
+                StartWave();
+                TestBattleOver(); // sets state to BattleOver
                 break;
             case State.BattleOver:
-
-
+                if (waveArray.Length > waveIndex)
+                {
+                    Wave wave = waveArray[waveIndex]; // increments waveArray when the battle ends
+                }
+                break;
+            case State.SecondIdle:
+                BeginNewWave(waveIndex);
+                TestBattleOver();
                 break;
         }
     }
 
     private void StartWave()
     {
-        state = State.Active;
+        if (!waveStarted)
+        {
+            Wave wave = waveArray[0];
+
+            if (state == State.Active)
+            {
+                wave.SpawnEnemies();
+                waveStarted = true;
+            }
+        }
+    }
+
+    public void BeginNewWave(int waveIndex)
+    {
+        wave = waveArray[waveIndex];
+        if (waveIndexer < waveIndex)
+        {
+            if (state == State.Active)
+            {
+                wave.SpawnEnemies();
+                waveIndexer += 1;
+            }
+        }
     }
 
     private void TestBattleOver()
@@ -84,7 +115,6 @@ public class WaveSystem : MonoBehaviour
         {
             if (AreWavesOver())
             { 
-                // Battle is over
                 state = State.BattleOver;
                 GlobalSettings.globalWaveCount++;
                 Debug.Log($"Battle is {state}");
@@ -94,30 +124,18 @@ public class WaveSystem : MonoBehaviour
 
     private bool AreWavesOver()
     {
-        foreach (Wave wave in waveArray)
+        if (wave.IsWaveOver())
         {
-            if (wave.IsWaveOver())
-            {
-                // wave over
-                return true;
-            }
-            else
-            {
-                // Wave not over
-                return false;
-            }
+            // wave over
+            return true;
         }
-        return true;
+        else
+        {
+            // Wave not over
+            return false;
+        }
     }
 
-    public void BeginNewWave()
-    {
-        Debug.Log("Has a new wave begun?");
-        foreach (Wave wave in waveArray)
-        {
-            wave.RespawnEnemies();
-        }
-    }
 
     /// <summary>
     /// Represents a single Enemy Spawn Wave
@@ -130,26 +148,6 @@ public class WaveSystem : MonoBehaviour
         [SerializeField] private float waveCount => GlobalSettings.globalWaveCount;
         private float lastWaveCount = 0;
 
-        public void Update() 
-        {
-            if (!GlobalSettings.globalPauseOverride) 
-            {
-                Debug.Log("WAVECOUNT IS:" + waveCount);
-
-                if(waveCount == lastWaveCount)
-                {
-                    Debug.LogError("THIS SHOULD ALWAYS RUN");
-                    return;
-                }
-                else if (lastWaveCount < waveCount)
-                {
-                    Debug.Log($"Wave Count before equalization is{waveCount}");
-                    lastWaveCount = waveCount;
-                    SpawnEnemies();
-                }
-            }
-        }
-
         public void RespawnEnemies()
         {
             foreach (EnemySpawn enemySpawn in enemySpawnArray)
@@ -158,7 +156,7 @@ public class WaveSystem : MonoBehaviour
             }
         }
 
-        private void SpawnEnemies()
+        public void SpawnEnemies()
         {
             foreach (EnemySpawn enemySpawn in enemySpawnArray)
             {
