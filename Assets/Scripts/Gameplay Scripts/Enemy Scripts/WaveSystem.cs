@@ -69,6 +69,7 @@ public class WaveSystem : MonoBehaviour
     {
         int waveIndex = Mathf.FloorToInt(GlobalSettings.globalWaveCount); // updates, any changes to state will be seen
         CheckAndRunOnStateChange(state, waveIndex);
+        if (state == State.BattleOver) { Debug.LogError("THE BATTLE HAS FINISHED"); }
     }
 
     private void CheckAndRunOnStateChange(State currentState, int waveIndexReference)
@@ -76,10 +77,7 @@ public class WaveSystem : MonoBehaviour
         if (currentState != previousState)
         {
             Debug.Log($"This should not be running every frame");
-            // Run the desired method since the state has changed
             WaveStateMachine(waveIndexReference);
-
-            // Update the previousState to the current state
             previousState = currentState;
         }
         else { return; }
@@ -141,6 +139,7 @@ public class WaveSystem : MonoBehaviour
     {
         if (state == State.Active)
         {
+            wave.DetectAliveEnemies();
             if (AreWavesOver())
             { 
                 state = State.BattleOver;
@@ -152,10 +151,11 @@ public class WaveSystem : MonoBehaviour
 
     private bool AreWavesOver()
     {
-        if (wave.IsWaveOver())
+        Debug.Log("is this even running? - AreWavesOver"); // does run
+        if (wave.IsWaveOver() == true)
         {
             // wave over
-            Debug.Log("WAVE IS OVER from AreWavesOver");
+            Debug.Log("WAVE IS OVER from AreWavesOver"); // does not run
             return true;
         }
         else
@@ -175,7 +175,6 @@ public class WaveSystem : MonoBehaviour
     {
         [SerializeField] private EnemySpawn[] enemySpawnArray;
         [SerializeField] private EnemySpawn[] spawnCount;
-        private EnemySpawn[] activeEnemies;
         [SerializeField] private float waveCount => GlobalSettings.globalWaveCount;
 
         public void RespawnEnemies()
@@ -201,27 +200,20 @@ public class WaveSystem : MonoBehaviour
             DetectAliveEnemies();
         }
 
-        // Store the references of all spawned enemies
         public void DetectAliveEnemies()
         {
-            // Use an array or list to store references to all spawned enemies
-            activeEnemies = new EnemySpawn[enemySpawnArray.Length];
+            spawnCount = FindObjectsOfType<EnemySpawn>();
 
-            int index = 0;
-            foreach (EnemySpawn enemySpawn in enemySpawnArray)
+            if (spawnCount.Length > 0)
             {
-                if (enemySpawn != null)
-                {
-                    activeEnemies[index] = enemySpawn;
-                    index++;
-                }
+                Debug.Log($"Detected {spawnCount.Length} spawnCounts!");
+            }
+            else
+            {
+                Debug.LogError("No spawnCounts found!");
             }
 
-            // Ensure we track all the active enemies correctly
-            Debug.Log($"Detected {activeEnemies.Length} active enemies.");
-
-            // Optional: Check if the enemies are alive after spawning
-            foreach (EnemySpawn enemySpawn in activeEnemies)
+            foreach (EnemySpawn enemySpawn in spawnCount)
             {
                 if (enemySpawn != null)
                 {
@@ -235,29 +227,35 @@ public class WaveSystem : MonoBehaviour
                         Debug.Log($"{enemySpawn.gameObject.name} is dead.");
                     }
                 }
-                else { Debug.Log("Enemy is null"); }
+                else
+                {
+                    Debug.Log("Enemy is null");
+                }
             }
         }
 
         public bool IsWaveOver()
         {
-            // Check if all active enemies are dead
-            if (activeEnemies != null && activeEnemies.Length > 0)
+            if (spawnCount != null && spawnCount.Length > 0)
             {
-                foreach (EnemySpawn enemySpawn in activeEnemies)
+                foreach (EnemySpawn enemySpawn in spawnCount)
                 {
-                    if (enemySpawn != null && enemySpawn.IsAlive) // Only check alive enemies
+                    if (enemySpawn != null)
                     {
-                        return false; // Wave is not over yet
+                        Debug.Log($"{enemySpawn.gameObject.name} IsAlive: {enemySpawn.IsAlive}");
+                        if (enemySpawn.IsAlive)
+                        {
+                            return false; // Wave is not over yet
+                        }
                     }
                 }
                 Debug.Log("WAVE IS OVER");
                 return true; // All enemies are dead, wave over
             }
-            else 
+            else
             {
+                // Enemies have not spawned yet
                 return false;
-            // Enemies have not spawned yet
             }
         }
     }

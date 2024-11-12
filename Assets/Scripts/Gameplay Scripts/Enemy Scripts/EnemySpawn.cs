@@ -6,6 +6,10 @@ public class EnemySpawn : MonoBehaviour
     private Transform missZoneTransform;
     public GameObject enemyPrefab;
     private Transform initalPosition = null;
+
+    private EnemyFire fireScript;
+    private MeshRenderer meshRenderer;
+
     [SerializeField] private GameObject SpawnTransformParent;
 
     List<Transform> enemySpawnPositions = new List<Transform>();
@@ -18,82 +22,36 @@ public class EnemySpawn : MonoBehaviour
 
     bool spawnPositionsAssigned =  false;
 
-    private void Update()
+   
+    private void Start()
     {
-        if (!IsAlive)
+        fireScript = enemyPrefab.GetComponent<EnemyFire>();
+        meshRenderer = enemyPrefab.GetComponent<MeshRenderer>();
+        enemyInstance
+    }
+    public void SetDead()
+    {
+        IsAlive = false;
+        spawnPositionsAssigned = false;
+
+        if (fireScript != null)
         {
-            EnemyFire fireScript = enemyPrefab.GetComponent<EnemyFire>();
-            if (fireScript != null)
-            {
-                Debug.Log(fireScript);
-                fireScript.ToggleFiring(false);
-            }
-            MeshRenderer meshRenderer = enemyPrefab.GetComponent<MeshRenderer>();
-            if (meshRenderer.enabled)
-            {
-                Debug.Log(meshRenderer);
-                meshRenderer.enabled = false;
-            }
+            fireScript.ToggleFiring(false);
+        }
+
+        if (meshRenderer.enabled)
+        {
+            meshRenderer.enabled = false;
         }
     }
 
     private void OnTriggerEnter(Collider collider)
     {
-        if (collider.CompareTag("MissZone"))
+        if (collider.CompareTag("MissZone") || collider.CompareTag("Weapon"))
         {
-            IsAlive = false;
-            spawnPositionsAssigned = false;
-        }
-        else if (collider.CompareTag("Weapon"))
-        {
-            IsAlive = false;
-            spawnPositionsAssigned = false;
+            SetDead();
         }
     }
-
-    //public void Respawn()
-    //{
-    //    IsAlive = true;
-    //    MeshRenderer meshRenderer = enemyPrefab.GetComponent<MeshRenderer>();
-    //    EnemyFire fireScript = enemyPrefab.GetComponent<EnemyFire>();
-    //    fireScript.AmmunitionConsumed = 0;
-    //    if (!spawnPositionsAssigned)
-    //    {
-    //        // Ensure spawn positions are added
-    //        foreach (Transform child in SpawnTransformParent.transform)
-    //        {
-    //            enemySpawnPositions.Add(child.transform);
-    //            spawnPositionsAssigned = true;
-    //        }
-
-    //        if (enemySpawnPositions.Count == 0)
-    //        {
-    //            Debug.LogError("No valid spawn positions available.");
-    //            return;
-    //        }
-    //    }
-    //    else
-    //    {
-    //        if (enemySpawnPositions.Count > 0)
-    //        {
-    //            if (!meshRenderer.enabled)
-    //            {
-    //                meshRenderer.enabled = true;
-    //            }
-
-    //            // Get random spawn position and set the enemy's position
-    //            Transform spawnPosition = enemySpawnPositions[Random.Range(0, enemySpawnPositions.Count)];
-    //            enemyInstance.transform.position = spawnPosition.position;
-    //            enemyInstance.transform.rotation = Quaternion.identity;
-
-    //            // Remove the spawn position to avoid reusing it
-    //            enemySpawnPositions.Remove(spawnPosition);
-
-    //            Debug.Log($"Remaining spawn points: {enemySpawnPositions.Count}");
-    //        }
-    //    }
-    //}
-
 
     public void Spawn()
     {
