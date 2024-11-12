@@ -22,7 +22,6 @@ public class EnemyFire : MonoBehaviour
         waveTrigger = FindObjectOfType<EnemyWaveTrigger>();
         projectileManager = FindObjectOfType<EnemyProjectileManager>(); // Reference the manager
         projectileTarget = GameObject.Find("Miss Zone").transform;
-        Debug.LogWarning(projectileTarget);
         if (isGameActive)
         {
             InvokeRepeating("SpawnProjectile", 2.0f, ShotDelay());
@@ -39,7 +38,6 @@ public class EnemyFire : MonoBehaviour
     {
         if (GlobalSettings.globalPauseOverride || !GlobalSettings.projectileSpawnerActive)
         {
-            Debug.LogError("Pause state is:" + GlobalSettings.globalPauseOverride);
             isGameActive = false;
         }
 

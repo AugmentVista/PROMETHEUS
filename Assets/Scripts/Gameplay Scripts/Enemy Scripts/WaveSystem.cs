@@ -8,10 +8,13 @@ public class WaveSystem : MonoBehaviour
     [SerializeField] private Wave wave;
     [SerializeField] private EnemyWaveTrigger waveTrigger;
     [SerializeField] private EndWaveTrigger endWaveTrigger;
-    private State state;
+    [SerializeField] private State state;
+    [SerializeField] private bool waveStarted = false;
+    [SerializeField] private int waveIndexer = -1;
+
     public float waveCount;
-    private bool waveStarted = false;
-    private int waveIndexer = 0;
+
+    private State previousState;
     private enum State
     { 
         Idle, 
@@ -27,7 +30,7 @@ public class WaveSystem : MonoBehaviour
 
     void Start()
     {
-        Wave wave = waveArray[0];
+        wave = waveArray[0];
         waveTrigger.OnPlayerEnterTrigger += EnemyWaveTrigger_OnPlayerEnterTrigger;
     }
 
@@ -37,7 +40,8 @@ public class WaveSystem : MonoBehaviour
         waveTrigger.OnPlayerEnterTrigger += EnemyWaveTrigger_OnPlayerEnterTrigger;
         if (state == State.BattleOver) 
         {
-            state = State.SecondIdle; 
+            state = State.SecondIdle;
+            Debug.Log($"Current state is {state}");
         }
     }
 
@@ -46,23 +50,43 @@ public class WaveSystem : MonoBehaviour
         if (state == State.Idle)
         {
             state = State.Active;
-            // unsub to avoid multiple triggers from the same source
-            waveTrigger.OnPlayerEnterTrigger -= EnemyWaveTrigger_OnPlayerEnterTrigger; // turn off starter
 
-            endWaveTrigger.WaveEnd_ShowResults += EndWaveTrigger_WaveEnd_ShowResults; // turn on ender
+            waveTrigger.OnPlayerEnterTrigger -= EnemyWaveTrigger_OnPlayerEnterTrigger;
+
+            endWaveTrigger.WaveEnd_ShowResults += EndWaveTrigger_WaveEnd_ShowResults; 
         }
         else if (state == State.SecondIdle)
         {
             state = State.Active;
-            waveTrigger.OnPlayerEnterTrigger -= EnemyWaveTrigger_OnPlayerEnterTrigger; // turn off starter
 
-            endWaveTrigger.WaveEnd_ShowResults += EndWaveTrigger_WaveEnd_ShowResults; // turn on ender
+            waveTrigger.OnPlayerEnterTrigger -= EnemyWaveTrigger_OnPlayerEnterTrigger; 
+
+            endWaveTrigger.WaveEnd_ShowResults += EndWaveTrigger_WaveEnd_ShowResults; 
         }
     }
 
     private void Update()
     {
         int waveIndex = Mathf.FloorToInt(GlobalSettings.globalWaveCount); // updates, any changes to state will be seen
+        CheckAndRunOnStateChange(state, waveIndex);
+    }
+
+    private void CheckAndRunOnStateChange(State currentState, int waveIndexReference)
+    {
+        if (currentState != previousState)
+        {
+            Debug.Log($"This should not be running every frame");
+            // Run the desired method since the state has changed
+            WaveStateMachine(waveIndexReference);
+
+            // Update the previousState to the current state
+            previousState = currentState;
+        }
+        else { return; }
+    }
+
+    private void WaveStateMachine(int waveIndex)
+    {
         switch (state)
         {
             case State.Active:
@@ -82,18 +106,21 @@ public class WaveSystem : MonoBehaviour
         }
     }
 
+
     private void StartWave()
     {
         if (!waveStarted)
         {
-            Wave wave = waveArray[0];
+            wave = waveArray[0];
 
             if (state == State.Active)
             {
-                wave.SpawnEnemies();
                 waveStarted = true;
+                Debug.Log($"StartWave Spawned Enemies");
+                wave.SpawnEnemies();
             }
         }
+        else { return; }
     }
 
     public void BeginNewWave(int waveIndex)
@@ -103,6 +130,7 @@ public class WaveSystem : MonoBehaviour
         {
             if (state == State.Active)
             {
+                Debug.Log($"BeginNewWave Spawned Enemies");
                 wave.SpawnEnemies();
                 waveIndexer += 1;
             }
@@ -127,6 +155,7 @@ public class WaveSystem : MonoBehaviour
         if (wave.IsWaveOver())
         {
             // wave over
+            Debug.Log("WAVE IS OVER from AreWavesOver");
             return true;
         }
         else
@@ -145,44 +174,90 @@ public class WaveSystem : MonoBehaviour
     private class Wave 
     {
         [SerializeField] private EnemySpawn[] enemySpawnArray;
+        [SerializeField] private EnemySpawn[] spawnCount;
+        private EnemySpawn[] activeEnemies;
         [SerializeField] private float waveCount => GlobalSettings.globalWaveCount;
-        private float lastWaveCount = 0;
 
         public void RespawnEnemies()
         {
             foreach (EnemySpawn enemySpawn in enemySpawnArray)
             {
-                enemySpawn.Respawn();
+                //enemySpawn.Respawn();
             }
         }
-
         public void SpawnEnemies()
         {
             foreach (EnemySpawn enemySpawn in enemySpawnArray)
             {
+                if (enemySpawn == null)
+                {
+                    Debug.LogError("One of the enemy spawn positions is null!");
+                    continue;
+                }
                 enemySpawn.Spawn();
             }
-        }
-        public bool IsWaveOver()
-        {
-            float lastWave = 0;
-            if (waveCount < lastWave )
-            {
-                // Wave spawned
 
-                foreach (EnemySpawn enemySpawn in enemySpawnArray)
+            // Track spawned enemies once, after spawning them
+            DetectAliveEnemies();
+        }
+
+        // Store the references of all spawned enemies
+        public void DetectAliveEnemies()
+        {
+            // Use an array or list to store references to all spawned enemies
+            activeEnemies = new EnemySpawn[enemySpawnArray.Length];
+
+            int index = 0;
+            foreach (EnemySpawn enemySpawn in enemySpawnArray)
+            {
+                if (enemySpawn != null)
                 {
+                    activeEnemies[index] = enemySpawn;
+                    index++;
+                }
+            }
+
+            // Ensure we track all the active enemies correctly
+            Debug.Log($"Detected {activeEnemies.Length} active enemies.");
+
+            // Optional: Check if the enemies are alive after spawning
+            foreach (EnemySpawn enemySpawn in activeEnemies)
+            {
+                if (enemySpawn != null)
+                {
+                    Debug.Log("Enemy is not null");
                     if (enemySpawn.IsAlive)
                     {
-                        return false;
+                        Debug.Log($"{enemySpawn.gameObject.name} is alive.");
+                    }
+                    else
+                    {
+                        Debug.Log($"{enemySpawn.gameObject.name} is dead.");
                     }
                 }
-                return true;
+                else { Debug.Log("Enemy is null"); }
+            }
+        }
+
+        public bool IsWaveOver()
+        {
+            // Check if all active enemies are dead
+            if (activeEnemies != null && activeEnemies.Length > 0)
+            {
+                foreach (EnemySpawn enemySpawn in activeEnemies)
+                {
+                    if (enemySpawn != null && enemySpawn.IsAlive) // Only check alive enemies
+                    {
+                        return false; // Wave is not over yet
+                    }
+                }
+                Debug.Log("WAVE IS OVER");
+                return true; // All enemies are dead, wave over
             }
             else 
             {
-                // Enemies have not spawned yet
                 return false;
+            // Enemies have not spawned yet
             }
         }
     }

@@ -143,7 +143,7 @@ public class PlayerAttackHitBox : MonoBehaviour // This script is attached to th
     {
         projectileHandler = other.GetComponent<ProjectileCollisionHandler>();
 
-        Debug.Log("Checking for ProjectileCollisionHandler on: " + other.gameObject.name);
+        //Debug.Log("Checking for ProjectileCollisionHandler on: " + other.gameObject.name);
         if (projectileHandler != null )
         {
             if (other.tag == "Knockback" /* && isAttacking*/)
@@ -157,7 +157,7 @@ public class PlayerAttackHitBox : MonoBehaviour // This script is attached to th
                     projectileHandler.struckByWeapon = false;
                 }
 
-                Debug.Log($"CanPlayerAttackThis: struckByWeapon is set to {projectileHandler.struckByWeapon}");
+                //Debug.Log($"CanPlayerAttackThis: struckByWeapon is set to {projectileHandler.struckByWeapon}");
 
                 GameObject explosion = Instantiate(rockSmashVFX, other.transform.position, Quaternion.identity);
 
@@ -171,17 +171,17 @@ public class PlayerAttackHitBox : MonoBehaviour // This script is attached to th
                 }
 
                 Destroy(explosion, explosionVFX.main.duration);
-                Debug.Log("Explosion instantiated at projectile position.");
+                //Debug.Log("Explosion instantiated at projectile position.");
             }
             else
             {
-                Debug.LogError("Tag not found in ableToHit list: " + other.tag);
+                //Debug.LogError("Tag not found in ableToHit list: " + other.tag);
                 projectileHandler.struckByWeapon = false;
             }
         }
         else
         {
-            Debug.LogError("No ProjectileCollisionHandler found on: " + other.gameObject.name);
+            //Debug.LogError("No ProjectileCollisionHandler found on: " + other.gameObject.name);
         }
     }
 }

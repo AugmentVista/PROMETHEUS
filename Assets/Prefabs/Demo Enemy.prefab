@@ -30,8 +30,8 @@ Transform:
   m_GameObject: {fileID: 3967361403814445529}
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 1.6, y: 13.43, z: -41.8}
-  m_LocalScale: {x: 1, y: 0.25, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -121,7 +121,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e0b303ad09c90f4298aef96c4ddb21c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waveTrigger: {fileID: 0}
   enemyPrefab: {fileID: 3967361403814445529}
   IsAlive: 1
 --- !u!114 &9185364281201999126
@@ -137,5 +136,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectileTarget: {fileID: 0}
-  spawnPositions:
-  - {fileID: 6785141640521358098}
+  AmmunitionConsumed: 0

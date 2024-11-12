@@ -3,38 +3,20 @@ using UnityEngine;
 
 public class EnemySpawn : MonoBehaviour
 {
-    private EnemyWaveTrigger waveTrigger;
     private Transform missZoneTransform;
     public GameObject enemyPrefab;
     private Transform initalPosition = null;
+    [SerializeField] private GameObject SpawnTransformParent;
 
     List<Transform> enemySpawnPositions = new List<Transform>();
 
     private GameObject enemyInstance;
 
+    private Transform spawnPosition;
+
     public bool IsAlive = true;
 
     bool spawnPositionsAssigned =  false;
-
-    private void InitStart()
-    {
-        IsAlive = true;
-        waveTrigger = GameObject.Find("Wave Start Trigger").GetComponent<EnemyWaveTrigger>();
-        if (missZoneTransform == null)
-        {
-            Debug.LogError($"waveTrigger cannot be found, waveTrigger is {waveTrigger.gameObject}");
-            return;
-        }
-        missZoneTransform = GameObject.Find("Miss Zone").transform;
-        if (missZoneTransform == null)
-        {
-            Debug.LogError($"Miss Zone cannot be found, Miss Zone is {missZoneTransform.gameObject}");
-            return;
-        }
-        EnemyFire fireScript = enemyPrefab.GetComponent<EnemyFire>();
-        MeshRenderer meshRenderer = enemyPrefab.GetComponent<MeshRenderer>();
-    }
-
 
     private void Update()
     {
@@ -69,76 +51,62 @@ public class EnemySpawn : MonoBehaviour
         }
     }
 
-    public void Respawn()
-    {
-        IsAlive = true;
-        MeshRenderer meshRenderer = enemyPrefab.GetComponent<MeshRenderer>();
-        EnemyFire fireScript = enemyPrefab.GetComponent<EnemyFire>();
-        fireScript.AmmunitionConsumed = 0;
-        if (!spawnPositionsAssigned)
-        {
-            // Ensure spawn positions are added
-            foreach (Transform position in waveTrigger.SpawnPositions)
-            {
-                if (!enemySpawnPositions.Contains(position))
-                {
-                    enemySpawnPositions.Add(position);
-                }
-                spawnPositionsAssigned = true;
-            }
-            Debug.Log($"Spawn positions count: {enemySpawnPositions.Count}");
+    //public void Respawn()
+    //{
+    //    IsAlive = true;
+    //    MeshRenderer meshRenderer = enemyPrefab.GetComponent<MeshRenderer>();
+    //    EnemyFire fireScript = enemyPrefab.GetComponent<EnemyFire>();
+    //    fireScript.AmmunitionConsumed = 0;
+    //    if (!spawnPositionsAssigned)
+    //    {
+    //        // Ensure spawn positions are added
+    //        foreach (Transform child in SpawnTransformParent.transform)
+    //        {
+    //            enemySpawnPositions.Add(child.transform);
+    //            spawnPositionsAssigned = true;
+    //        }
 
-            if (enemySpawnPositions.Count == 0)
-            {
-                Debug.LogError("No valid spawn positions available.");
-                return;
-            }
-        }
-        else
-        {
-            if (enemySpawnPositions.Count > 0)
-            {
-                if (!meshRenderer.enabled)
-                {
-                    meshRenderer.enabled = true;
-                }
+    //        if (enemySpawnPositions.Count == 0)
+    //        {
+    //            Debug.LogError("No valid spawn positions available.");
+    //            return;
+    //        }
+    //    }
+    //    else
+    //    {
+    //        if (enemySpawnPositions.Count > 0)
+    //        {
+    //            if (!meshRenderer.enabled)
+    //            {
+    //                meshRenderer.enabled = true;
+    //            }
 
-                // Get random spawn position and set the enemy's position
-                Transform spawnPosition = enemySpawnPositions[Random.Range(0, enemySpawnPositions.Count)];
-                enemyInstance.transform.position = spawnPosition.position;
-                enemyInstance.transform.rotation = Quaternion.identity;
+    //            // Get random spawn position and set the enemy's position
+    //            Transform spawnPosition = enemySpawnPositions[Random.Range(0, enemySpawnPositions.Count)];
+    //            enemyInstance.transform.position = spawnPosition.position;
+    //            enemyInstance.transform.rotation = Quaternion.identity;
 
-                // Remove the spawn position to avoid reusing it
-                enemySpawnPositions.Remove(spawnPosition);
+    //            // Remove the spawn position to avoid reusing it
+    //            enemySpawnPositions.Remove(spawnPosition);
 
-                Debug.Log($"Remaining spawn points: {enemySpawnPositions.Count}");
-            }
-        }
-    }
+    //            Debug.Log($"Remaining spawn points: {enemySpawnPositions.Count}");
+    //        }
+    //    }
+    //}
 
 
     public void Spawn()
     {
-        waveTrigger = GameObject.Find("Wave Start Trigger").GetComponent<EnemyWaveTrigger>(); // this works
-        if (waveTrigger == null)
-        {
-            Debug.LogError("Cannot spawn. WaveTrigger is not initialized.");
-            return;
-        }
+        SpawnTransformParent = GameObject.Find("Spawn Positions"); // this works
 
         // Only assign spawn positions once
         if (!spawnPositionsAssigned)
         {
-            // Ensure spawn positions are added
-            foreach (Transform position in waveTrigger.SpawnPositions)
+            foreach (Transform child in SpawnTransformParent.transform)
             {
-                if (!enemySpawnPositions.Contains(position))
-                {
-                    enemySpawnPositions.Add(position);
-                }
+                enemySpawnPositions.Add(child.transform);
                 spawnPositionsAssigned = true;
             }
-            Debug.Log($"Spawn positions count: {enemySpawnPositions.Count}");
 
             if (enemySpawnPositions.Count == 0)
             {
@@ -154,7 +122,7 @@ public class EnemySpawn : MonoBehaviour
                 Debug.LogError("Enemy prefab is not assigned in the inspector.");
                 return;
             }
-            // If no spawn points left, log a warning
+
             if (enemySpawnPositions.Count > 0)
             {
                 // Instantiate enemy
@@ -162,14 +130,14 @@ public class EnemySpawn : MonoBehaviour
                 initalPosition = transform;
 
                 // Get random spawn position and set the enemy's position
-                Transform spawnPosition = enemySpawnPositions[Random.Range(0, enemySpawnPositions.Count)];
+                spawnPosition = enemySpawnPositions[Random.Range(0, enemySpawnPositions.Count)];
                 enemyInstance.transform.position = spawnPosition.position;
                 enemyInstance.transform.rotation = Quaternion.identity;
 
                 // Remove the spawn position to avoid reusing it
-                enemySpawnPositions.Remove(spawnPosition);
+                //enemySpawnPositions.Remove(spawnPosition);
 
-                Debug.Log($"Remaining spawn points: {enemySpawnPositions.Count}");
+                //Debug.Log($"Remaining spawn points: {enemySpawnPositions.Count}");
             }
         } 
     }

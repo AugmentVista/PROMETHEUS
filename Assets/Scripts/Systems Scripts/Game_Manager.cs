@@ -155,7 +155,6 @@ public class Game_Manager : MonoBehaviour
         Debug.Log(wave);
         if (wave != null)
         {
-            Debug.LogError("Pause state is:" + GlobalSettings.globalPauseOverride);
             gameState = GameState.Upgrades;
             ChangeGameState(gameState);
         }
