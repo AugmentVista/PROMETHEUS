@@ -32,7 +32,7 @@ public class ResultsKeeper : MonoBehaviour
 
     public int GetWaveInfo()
     { 
-        return (int)GlobalSettings.globalWaveCount;
+        return GlobalSettings.globalWaveCount;
     }
 
     public void ShowResults() 

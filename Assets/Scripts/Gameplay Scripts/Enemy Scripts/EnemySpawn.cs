@@ -17,7 +17,7 @@ public class EnemySpawn : MonoBehaviour
 
     bool spawnPositionsAssigned =  false;
 
-    public void Spawn()
+    public void Spawn(int amountToSpawn)
     {
         SpawnTransformParent = GameObject.Find("Spawn Positions"); // this works
 
@@ -44,15 +44,19 @@ public class EnemySpawn : MonoBehaviour
                 return;
             }
 
-            if (enemySpawnPositions.Count > 0)
+            for (int i = 0; i < amountToSpawn; i++)
             {
-                enemyInstance = Instantiate(enemyPrefab, transform.position, Quaternion.identity);
-                initalPosition = transform;
+                if (enemySpawnPositions.Count > 0)
+                {
+                    enemyInstance = Instantiate(enemyPrefab, transform.position, Quaternion.identity);
+                    initalPosition = transform;
 
-                spawnPosition = enemySpawnPositions[Random.Range(0, enemySpawnPositions.Count)];
-                enemyInstance.transform.position = spawnPosition.position;
-                enemyInstance.transform.rotation = Quaternion.identity;
+                    spawnPosition = enemySpawnPositions[Random.Range(0, enemySpawnPositions.Count)];
+                    enemyInstance.transform.position = spawnPosition.position;
+                    enemyInstance.transform.rotation = Quaternion.identity;
+                }
             }
+
         } 
     }
 }
