@@ -151,7 +151,7 @@ public class Game_Manager : MonoBehaviour
 
     public void Button_Results_To_Upgrades()
     {
-        WaveSystem wave = FindAnyObjectByType<WaveSystem>();
+        NewWaveSystem wave = FindAnyObjectByType<NewWaveSystem>();
         Debug.Log(wave);
         if (wave != null)
         {

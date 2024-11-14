@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.EventSystems.EventTrigger;
 
 public class NewWaveSystem : MonoBehaviour
 {
@@ -52,15 +51,25 @@ public class NewWaveSystem : MonoBehaviour
             case 1:
                 waveTrigger.OnPlayerEnterTrigger -= EnemyWaveTrigger_OnPlayerEnterTrigger;
                 NewWave();
+                endWaveTrigger.WaveEnd_ShowResults += EndWaveTrigger_WaveEnd_ShowResults;
                 break;
             case 2:
-                NewWave();
-                break;
             case 3:
-                NewWave();
-                break;
             case 4:
                 NewWave();
+                endWaveTrigger.WaveEnd_ShowResults += EndWaveTrigger_WaveEnd_ShowResults;
+                break;
+            case 5:
+            case 6:
+            case 7:
+                NewWave();
+                endWaveTrigger.WaveEnd_ShowResults += EndWaveTrigger_WaveEnd_ShowResults;
+                break;
+            case 8:
+            case 9:
+            case 10:
+                NewWave();
+                endWaveTrigger.WaveEnd_ShowResults += EndWaveTrigger_WaveEnd_ShowResults;
                 break;
         }
     }
@@ -68,12 +77,26 @@ public class NewWaveSystem : MonoBehaviour
 
     public void NewWave()
     {
+        Debug.Log("New Wave Trigger");
         isWaveRunning = true;
         enemySpawn.Spawn(spawnBatchSize);
         enemyWaveInstance = new List<GameObject>(enemySpawn.totalEnemyInstances);
+
+        foreach (GameObject enemyObj in enemySpawn.totalEnemyInstances)
+        {
+            enemyWaveInstance.Add(enemyObj); // Add the enemy to the current wave instance list
+
+            BaseEnemy baseEnemy = enemyObj.GetComponent<BaseEnemy>();
+            if (baseEnemy != null)
+            {
+                baseEnemy.EnemyHasDied += EnemyWaveTrigger_OnPlayerEnterTrigger;
+            }
+        }
+
         allEnemyWaveInstances.Add(enemyWaveInstance);
+
         spawnBatchSize++;
-        enemyDeath.EnemyHasDied += EnemyWaveTrigger_OnPlayerEnterTrigger;
+        Debug.Log("New Wave Finished");
     }
 
     private void FindAllDeadEnemies()
@@ -118,11 +141,20 @@ public class NewWaveSystem : MonoBehaviour
     {
         if (allEnemiesInWaveSlain)
         {
+            foreach (GameObject enemyObj in enemySpawn.totalEnemyInstances)
+            {
+                enemyWaveInstance.Add(enemyObj); // Add the enemy to the current wave instance list
+
+                BaseEnemy baseEnemy = enemyObj.GetComponent<BaseEnemy>();
+                if (baseEnemy != null)
+                {
+                    baseEnemy.EnemyHasDied -= EnemyWaveTrigger_OnPlayerEnterTrigger;
+                }
+            }
             isWaveRunning = false;
             aliveEnemies.Clear();
             deadEnemies.Clear ();
             enemySpawn.ClearEnemyInstanceList();
-            enemyDeath.EnemyHasDied -= EnemyWaveTrigger_OnPlayerEnterTrigger;
         }
         else if (!allEnemiesInWaveSlain)
         { 
@@ -152,7 +184,4 @@ public class NewWaveSystem : MonoBehaviour
         endWaveTrigger.WaveEnd_ShowResults -= EndWaveTrigger_WaveEnd_ShowResults;
         currentWaveCount++;
     }
-
-
-
 }
