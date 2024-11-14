@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,6 +10,8 @@ public class BaseEnemy : MonoBehaviour
     private EnemyFire fireScript;
 
     private MeshRenderer meshRenderer;
+
+    public event EventHandler EnemyHasDied;
 
     public bool IsAlive = true;
 
@@ -33,13 +36,13 @@ public class BaseEnemy : MonoBehaviour
             meshRenderer.enabled = false;
         }
 
-        WaveSystem waveSystem = FindFirstObjectByType<WaveSystem>();
-        if (waveSystem != null)
-        {
-            Debug.Log(waveSystem.isActiveAndEnabled);
-            waveSystem.DetectDead();
-        }
-
+        //WaveSystem waveSystem = FindFirstObjectByType<WaveSystem>();
+        //if (waveSystem != null)
+        //{
+        //    Debug.Log(waveSystem.isActiveAndEnabled);
+        //    waveSystem.DetectDead();
+        //}
+        EnemyHasDied?.Invoke(this, EventArgs.Empty);
         Debug.Log("Enemy has died");
     }
 

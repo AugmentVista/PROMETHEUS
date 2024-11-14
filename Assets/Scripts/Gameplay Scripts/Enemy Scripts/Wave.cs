@@ -102,8 +102,8 @@ public class Wave : MonoBehaviour
             {
                 Debug.Log("No enemies remain, ending wave");
                 nextWaveTrigger.Alt_WaveEnd_ShowResults();
-                spawnCount.Clear();
-                livingEnemies.Clear();
+                //spawnCount.Clear();
+                //livingEnemies.Clear();
                 return true;
             }
             else

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -5,13 +6,17 @@ public class EnemySpawn : MonoBehaviour
 {
     public GameObject enemyPrefab;
 
+    private NewWaveSystem newWave;
+
     private Transform initalPosition = null;
 
     [SerializeField] private GameObject SpawnTransformParent;
 
     List<Transform> enemySpawnPositions = new List<Transform>();
 
-    private GameObject enemyInstance;
+    public List<GameObject> totalEnemyInstances = new List<GameObject>();
+
+    public GameObject enemyInstance;
 
     private Transform spawnPosition;
 
@@ -51,12 +56,21 @@ public class EnemySpawn : MonoBehaviour
                     enemyInstance = Instantiate(enemyPrefab, transform.position, Quaternion.identity);
                     initalPosition = transform;
 
-                    spawnPosition = enemySpawnPositions[Random.Range(0, enemySpawnPositions.Count)];
+                    spawnPosition = enemySpawnPositions[UnityEngine.Random.Range(0, enemySpawnPositions.Count)];
                     enemyInstance.transform.position = spawnPosition.position;
                     enemyInstance.transform.rotation = Quaternion.identity;
                 }
+                totalEnemyInstances.Add(enemyInstance);
             }
-
         } 
+    }
+
+    public void ClearEnemyInstanceList()
+    {
+        totalEnemyInstances.Clear();
+    }
+    public GameObject GetEnemyInstance()
+    { 
+        return enemyInstance;
     }
 }
