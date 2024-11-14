@@ -8,12 +8,4 @@ public class EndWaveTrigger : MonoBehaviour
     {
         WaveEnd_ShowResults?.Invoke(this, EventArgs.Empty);
     }
-
-    //private void OnTriggerEnter(Collider collider)
-    //{
-    //    if (collider.CompareTag("PlayerBody"))
-    //    {
-    //        WaveEnd_ShowResults?.Invoke(this, EventArgs.Empty);
-    //    }
-    //}
 }

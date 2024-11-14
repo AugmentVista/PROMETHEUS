@@ -15,8 +15,8 @@ public class WaveSystem : MonoBehaviour
 
     private State previousState = State.Idle;
     private enum State
-    { 
-        Idle, 
+    {
+        Idle,
         Active,
         BattleOver,
         SecondIdle,
@@ -25,7 +25,8 @@ public class WaveSystem : MonoBehaviour
 
     private void Awake()
     {
-       state = State.Idle;
+        state = State.Idle;
+        WaveStateMachine(state);
     }
 
     void Start()
@@ -34,7 +35,11 @@ public class WaveSystem : MonoBehaviour
         waveTrigger.OnPlayerEnterTrigger += EnemyWaveTrigger_OnPlayerEnterTrigger;
     }
 
-   
+    public void DetectDead()
+    {
+        wave.IsWaveOver();
+        Debug.LogError(wave.IsWaveOver().ToString());
+    }
 
     private void EnemyWaveTrigger_OnPlayerEnterTrigger(object sender, EventArgs _) // _  is for events that don’t require information beyond the event occurring.
     {
@@ -44,15 +49,17 @@ public class WaveSystem : MonoBehaviour
 
             waveTrigger.OnPlayerEnterTrigger -= EnemyWaveTrigger_OnPlayerEnterTrigger;
 
-            endWaveTrigger.WaveEnd_ShowResults += EndWaveTrigger_WaveEnd_ShowResults; 
+            endWaveTrigger.WaveEnd_ShowResults += EndWaveTrigger_WaveEnd_ShowResults;
+            WaveStateMachine(state);
         }
         else if (state == State.SecondIdle)
         {
             state = State.ActiveSecond;
 
-            waveTrigger.OnPlayerEnterTrigger -= EnemyWaveTrigger_OnPlayerEnterTrigger; 
+            waveTrigger.OnPlayerEnterTrigger -= EnemyWaveTrigger_OnPlayerEnterTrigger;
 
-            endWaveTrigger.WaveEnd_ShowResults += EndWaveTrigger_WaveEnd_ShowResults; 
+            endWaveTrigger.WaveEnd_ShowResults += EndWaveTrigger_WaveEnd_ShowResults;
+            WaveStateMachine(state);
         }
     }
 
@@ -63,6 +70,11 @@ public class WaveSystem : MonoBehaviour
         if (state == State.BattleOver)
         {
             state = State.SecondIdle;
+            WaveStateMachine(state);
+            if (waveArray.Length > WaveCount)
+            {
+                GlobalSettings.globalWaveCount++;
+            } // Increments WaveCount, then changes state
             Debug.Log($"Current state is {state}");
         }
     }
@@ -70,27 +82,26 @@ public class WaveSystem : MonoBehaviour
     private void Update()
     {
         //int waveIndex = GlobalSettings.globalWaveCount; // updates, any changes to state will be seen
-        CheckAndRunOnStateChange(state, WaveCount); // do i need this?
-        Debug.Log($"WaveCount is: {WaveCount}");
+        //CheckAndRunOnStateChange(state, WaveCount); // do i need this?
     }
 
-    private void CheckAndRunOnStateChange(State currentState, int waveIndexReference)
-    {
-        if (currentState != previousState)
-        {
-            Debug.Log($"This should not be running every frame");
-            WaveStateMachine(waveIndexReference); // logs WaveCount value on the first frame after state is changed
-            previousState = currentState;
-        }
-        else { return; }
-    }
+    //private void CheckAndRunOnStateChange(State currentState, int waveIndexReference)
+    //{
+    //    if (currentState != previousState)
+    //    {
+    //        Debug.Log($"This should not be running every frame");
+    //        WaveStateMachine(waveIndexReference); // logs WaveCount value on the first frame after state is changed
+    //        previousState = currentState;
+    //    }
+    //    else { return; }
+    //}
 
-    private void WaveStateMachine(int waveIndex) // waveIndex is a captured value from the first frame after the last state change
+    private void WaveStateMachine(State state) // waveIndex is a captured value from the first frame after the last state change
     {
         switch (state)
         {
             case State.ActiveSecond:
-                BeginNewWave(waveIndex);
+                BeginNewWave(WaveCount);
                 TestBattleOver();
                 break;
             case State.Active:
@@ -98,12 +109,15 @@ public class WaveSystem : MonoBehaviour
                 TestBattleOver(); // sets state to BattleOver
                 break;
             case State.BattleOver:
-                if (waveArray.Length > waveIndex)
+                if (waveArray.Length > WaveCount)
                 {
-                    wave = waveArray[waveIndex]; // increments waveArray when the battle ends
+                    wave = waveArray[WaveCount]; // increments waveArray when the battle ends
                 }
                 break;
-            
+            case State.Idle:
+                // nothing 
+                break;
+
         }
     }
 
@@ -118,21 +132,25 @@ public class WaveSystem : MonoBehaviour
                 waveStarted = true;
                 Debug.Log($"StartWave Spawned Enemies");
                 wave.SpawnEnemies();
+                WaveStateMachine(state);
             }
         }
+        else { return; }
     }
 
-    public void BeginNewWave(int waveIndex) 
-        //waveIndex is a captured value from the first frame after the last state change
-        // when would this captured value be less than the true WaveCount?
-        // When state becomes BattleOver waveIndex is small
+    public void BeginNewWave(int waveIndex)
+    //waveIndex is a captured value from the first frame after the last state change
+    // when would this captured value be less than the true WaveCount?
+    // When state becomes BattleOver waveIndex is small
     {
         wave = waveArray[waveIndex];
         if (WaveCount < waveIndex)
         {
             Debug.Log($"BeginNewWave Spawned Enemies");
             wave.SpawnEnemies();
+            WaveStateMachine(state);
         }
+        else { return; }
     }
 
     private void TestBattleOver()
@@ -140,124 +158,17 @@ public class WaveSystem : MonoBehaviour
         if (state == State.Active || state == State.ActiveSecond)
         {
             if (wave.IsWaveOver())
-            { 
-                if (waveArray.Length > WaveCount)
-                {
-                    GlobalSettings.globalWaveCount++;
-                } // Increments WaveCount, then changes state
+            {
                 state = State.BattleOver;
+                WaveStateMachine(state);
                 Debug.Log($"Battle is {state}");
             }
         }
     }
 
-
+}
     /// <summary>
     /// Represents a single Enemy Spawn Wave
     /// </summary>
 
-    [Serializable]
-    private class Wave 
-    {
-        [SerializeField] private EnemySpawn enemySpawn;
-        [SerializeField] private List<BaseEnemy> spawnCount = new List<BaseEnemy>();
-        [SerializeField] private List <bool> livingEnemies = new List<bool>();
-        private GameObject Enemy;
-        private bool initialWaveStarted = false;
-        [SerializeField] private int WaveCount => GlobalSettings.globalWaveCount +3;
-
-        public void SpawnEnemies()
-        {
-            Debug.LogError($"WAVE COUNT IS: {WaveCount}");
-            if (enemySpawn != null)
-            {
-                for (int i = 0; i < WaveCount; i++)
-                {
-                    enemySpawn.Spawn(1);
-                    AddNewEnemiesToList();
-                    Debug.Log($"spawnCount length is: {spawnCount.Count}");
-                    Debug.Log(spawnCount.ToString());
-                }
-            }
-            else 
-            {
-                Debug.Log($"EnemySpawn is {enemySpawn.isActiveAndEnabled}");
-            }
-
-            // Track spawned enemies once, after spawning them
-            DetectAliveEnemies();
-        }
-
-        private void AddNewEnemiesToList()
-        {
-            // Retrieve all active BaseEnemy instances.
-            BaseEnemy[] allEnemies = FindObjectsOfType<BaseEnemy>();
-
-            // Loop through all found enemies and add only new ones to spawnCount.
-            foreach (BaseEnemy enemy in allEnemies)
-            {
-                if (!spawnCount.Contains(enemy))
-                {
-                    spawnCount.Add(enemy);
-                }
-            }
-        }
-
-
-        public void DetectAliveEnemies()
-        {
-            if (spawnCount.Count > 0)
-            {
-                Debug.Log($"Detected {spawnCount.Count} enemies spawned in");
-            }
-            else
-            {
-                Debug.LogError("No spawnCount is broken");
-                return;
-            }
-
-            foreach (BaseEnemy enemy in spawnCount)
-            {
-                if (enemy != null)
-                {
-                    if (enemy.IsAlive)
-                    {
-                        Debug.Log($"{enemy.gameObject.name} is alive.");
-                        livingEnemies.Add(enemy);
-                    }
-                    else
-                    {
-                        Debug.Log($"{enemy.gameObject.name} is dead.");
-                        if (livingEnemies.Count > 0)
-                        livingEnemies.Remove(enemy);
-                    }
-                    Debug.LogError($"Living Enemies Remaining {livingEnemies.Count}");
-                    initialWaveStarted = true;
-                }
-                else
-                {
-                    Debug.Log("Enemy is null");
-                }
-            }
-        }
-
-        public bool IsWaveOver()
-        {
-            if (initialWaveStarted)
-            {
-                if (livingEnemies.Count != 0)
-                {
-                    return false;
-                }
-                else 
-                {
-                    return true;
-                }
-            }
-            else
-            {
-                return false;
-            }
-        }
-    }
-}
+   

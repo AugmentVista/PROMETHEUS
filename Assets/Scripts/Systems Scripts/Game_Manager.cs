@@ -177,7 +177,7 @@ public class Game_Manager : MonoBehaviour
             IntroPlayButton.SetActive(false);
         }
 
-        float duration = 3f; // seconds
+        float duration = 1f; // seconds
         
         yield return new WaitForSeconds(duration);
 

@@ -21,6 +21,9 @@ public class PlayerHealthSystem : MonoBehaviour
 
     private bool isPlayerAlive;
 
+    public EventHandler Player_Death;
+    
+
     private void Awake()
     {
         isPlayerAlive = true;
@@ -41,6 +44,11 @@ public class PlayerHealthSystem : MonoBehaviour
             playerHealthGauge.fillAmount = Mathf.Lerp(playerHealthGauge.fillAmount, targetFillAmount, Time.deltaTime * fillSpeed);
         }
         if (isPlayerAlive) { PlayerDeath(); }
+    }
+
+    public void Player_Death_ShowResults() // not connected to anything
+    {
+        Player_Death?.Invoke(this, EventArgs.Empty);
     }
 
     private void UpdateFillAmount()
@@ -83,12 +91,13 @@ public class PlayerHealthSystem : MonoBehaviour
 
             if (currentScene.name == "Level_1")
             {
-                GameObject waveEndTrigger = GameObject.Find("Wave End Trigger");
-                EndWaveTrigger waveEnd = waveEndTrigger.GetComponent<EndWaveTrigger>();
-                if (waveEnd != null)
-                {
-                    waveEnd.Alt_WaveEnd_ShowResults();
-                }
+                //GameObject waveEndTrigger = GameObject.Find("Wave End Trigger");
+                //EndWaveTrigger waveEnd = waveEndTrigger.GetComponent<EndWaveTrigger>();
+                //if (waveEnd != null)
+                //{
+                //    waveEnd.Alt_WaveEnd_ShowResults();
+                //}
+                Player_Death_ShowResults(); // not connected to anything
                 gameManager.hasHitEndWaveTrigger = true;
                 
                 isPlayerAlive = false;

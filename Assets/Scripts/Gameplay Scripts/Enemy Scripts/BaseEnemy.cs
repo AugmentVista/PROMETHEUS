@@ -22,7 +22,7 @@ public class BaseEnemy : MonoBehaviour
     public void SetDead()
     {
         IsAlive = false;
-
+        
         if (fireScript != null)
         {
             fireScript.ToggleFiring(false);
@@ -32,6 +32,15 @@ public class BaseEnemy : MonoBehaviour
         {
             meshRenderer.enabled = false;
         }
+
+        WaveSystem waveSystem = FindFirstObjectByType<WaveSystem>();
+        if (waveSystem != null)
+        {
+            Debug.Log(waveSystem.isActiveAndEnabled);
+            waveSystem.DetectDead();
+        }
+
+        Debug.Log("Enemy has died");
     }
 
     private void OnTriggerEnter(Collider collider)
