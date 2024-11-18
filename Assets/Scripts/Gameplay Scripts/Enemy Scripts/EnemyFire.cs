@@ -8,12 +8,14 @@ public class EnemyFire : MonoBehaviour
 
     private EnemyProjectileManager projectileManager;
 
+    private float elapsedTime = 0f;
+
     private bool isGameActive = GlobalSettings.projectileSpawnerActive;
+    private float ShotDelay() { return Mathf.Round(Random.Range(5.5f, 10.0f) * 100) / 100; } // produces clean decimals
 
-    private bool firstShotHasBeenFired = false;
-    private float ShotDelay() { return Mathf.Round(Random.Range(0.5f, 1.0f) * 100) / 100; } // produces clean decimals
+    private float FiringCooldown;
 
-    
+
 
     private void Start()
     {
@@ -22,13 +24,25 @@ public class EnemyFire : MonoBehaviour
         projectileTarget = GameObject.Find("Miss Zone").transform;
         if (isGameActive)
         {
-            InvokeRepeating("SpawnProjectile", 2.0f, ShotDelay());
+            //InvokeRepeating("SpawnProjectile", 2.0f, ShotDelay());
+        }
+        FiringCooldown = ShotDelay();
+    }
+
+
+    private void TimedShots()
+    {
+        if (elapsedTime > FiringCooldown)
+        {
+            FiringCooldown += ShotDelay();
+            SpawnProjectile();
         }
     }
 
 
     private void Update()
     {
+        elapsedTime += Time.deltaTime;
         CheckPermissionToFire();
     }
 
@@ -38,14 +52,11 @@ public class EnemyFire : MonoBehaviour
         {
             isGameActive = false;
         }
-
-        if (isGameActive)
+        else 
         {
-            InvokeRepeating("SpawnProjectile", 2.0f, ShotDelay());
-        }
-        else
-        {
-            CancelInvoke("SpawnProjectile");
+            isGameActive = true;
+            elapsedTime += Time.deltaTime;
+            TimedShots();
         }
     }
 
@@ -78,13 +89,12 @@ public class EnemyFire : MonoBehaviour
                 {
                     collisionHandler.reusedProjectile = true;
                 }
-                firstShotHasBeenFired = true;
             }
         }
     }
 
     public void ToggleFiring(bool isActive)
     {
-        isGameActive = isActive;
+        GlobalSettings.projectileSpawnerActive = isActive;
     }
 }

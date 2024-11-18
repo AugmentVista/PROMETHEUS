@@ -6,7 +6,9 @@ public class EnemySpawn : MonoBehaviour
 {
     public GameObject enemyPrefab;
 
-    private NewWaveSystem newWave;
+    public GameObject lv2EnemyPrefab;
+
+    public GameObject lv3EnemyPrefab;
 
     private Transform initalPosition = null;
 

@@ -201,17 +201,15 @@ public class Game_Manager : MonoBehaviour
 
     private void ResumeGame(Scene scene)
     {
+        GlobalSettings.projectileSpawnerActive = true;
+        GlobalSettings.globalPauseOverride = false;
         if (scene.name != "Level_1") 
         {
             ReloadScene();
-            IsMenuOpen(true);
         }
         else if (scene.name == "Level_1")
         {
-            IsMenuOpen(false);
-            ui_Manager.GamePlayUI();
-            GlobalSettings.projectileSpawnerActive = true;
-            GlobalSettings.globalPauseOverride = false;
+            Level_1();
         }
     }
 

@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemyProjectileManager : MonoBehaviour
 {
     public GameObject ProjectilePrefab;
-    public int maxProjectiles = GlobalSettings.spawnerProjectilesMaxAmount;
+    [SerializeField]private int maxProjectiles;
     public Transform InitalPosition = null;
 
     private int currentProjectiles = 0;
@@ -27,6 +27,7 @@ public class EnemyProjectileManager : MonoBehaviour
         }
         else if (pooledProjectiles.Count > 0)
         {
+            Debug.LogError($"Recycling a projectile {pooledProjectiles}");
             // Reuse from the pool
             projectileInstance = pooledProjectiles.Dequeue();
             projectileInstance.SetActive(true);
@@ -59,7 +60,7 @@ public class EnemyProjectileManager : MonoBehaviour
         }
 
         // Disable the projectile and add it back to the pool
-        obj.SetActive(false);
+        //obj.SetActive(false);
         obj.transform.position = InitalPosition.position;
         pooledProjectiles.Enqueue(obj);
 
