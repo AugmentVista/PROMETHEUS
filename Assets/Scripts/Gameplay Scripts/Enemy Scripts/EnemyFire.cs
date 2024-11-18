@@ -3,19 +3,17 @@ using UnityEngine;
 public class EnemyFire : MonoBehaviour
 {
     [SerializeField] private Transform projectileTarget; // The player or other target
+
     private EnemyWaveTrigger waveTrigger;
-    public Transform[] SpawnPositions => waveTrigger?.SpawnPositions;
 
-    private int AmmunitionLifespan = 25;
-    public int AmmunitionConsumed = 0;
+    private EnemyProjectileManager projectileManager;
 
-    private float standardSpeed;
-    private Vector3 memoryOfPlayer;
+    private bool isGameActive = GlobalSettings.projectileSpawnerActive;
+
     private bool firstShotHasBeenFired = false;
     private float ShotDelay() { return Mathf.Round(Random.Range(0.5f, 1.0f) * 100) / 100; } // produces clean decimals
 
-    private EnemyProjectileManager projectileManager;
-    private bool isGameActive = GlobalSettings.projectileSpawnerActive;
+    
 
     private void Start()
     {
@@ -53,22 +51,19 @@ public class EnemyFire : MonoBehaviour
 
     public void SpawnProjectile()
     {
-        if (isGameActive && AmmunitionConsumed < AmmunitionLifespan)
+        if (isGameActive /*&& AmmunitionConsumed < AmmunitionLifespan*/)
         {
             GameObject projectileInstance = projectileManager.RequestProjectile(transform); // Get a projectile from the manager
             if (projectileInstance != null)
             {
-                Transform spawnPosition = SpawnPositions[Random.Range(0, SpawnPositions.Length)];
+                Transform spawnPosition = gameObject.transform;
                 projectileInstance.transform.position = spawnPosition.position;
 
                 Vector3 directionToPlayer = (projectileTarget.position - spawnPosition.position).normalized;
-                memoryOfPlayer = directionToPlayer;
-
 
                 Rigidbody projectileRb = projectileInstance.GetComponent<Rigidbody>();
 
                 BaseProjectile baseProj = projectileInstance.GetComponent<BaseProjectile>();
-                standardSpeed = baseProj.travelSpeed;
 
                 projectileRb.velocity = directionToPlayer * baseProj.travelSpeed;
 
@@ -83,7 +78,6 @@ public class EnemyFire : MonoBehaviour
                 {
                     collisionHandler.reusedProjectile = true;
                 }
-                AmmunitionConsumed += 1;
                 firstShotHasBeenFired = true;
             }
         }
