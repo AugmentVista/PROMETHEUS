@@ -148,17 +148,6 @@ public class Game_Manager : MonoBehaviour
             ResumeGameTrigger();
         }
     }
-
-    public void Button_Results_To_Upgrades()
-    {
-        NewWaveSystem wave = FindAnyObjectByType<NewWaveSystem>();
-        Debug.Log(wave);
-        if (wave != null)
-        {
-            gameState = GameState.Upgrades;
-            ChangeGameState(gameState);
-        }
-    }
    
     public void IntroductionReturn()
     {
