@@ -9,10 +9,12 @@ public class ScoreKeeper : MonoBehaviour
     public Image[] PointsNumberImages;
     public Image pointsOnes;
     public Image pointsTens;
+    public Image pointsHundreds;
 
     public Image[] DrachmaNumberImages;
     public Image drachmaOnes;
     public Image drachmaTens;
+    public Image drachmaHundreds;
 
     public int score = GlobalSettings.globalScore;
     public int drachma = GlobalSettings.globalDrachma; // Ancient Greek name for currency
@@ -41,17 +43,21 @@ public class ScoreKeeper : MonoBehaviour
     {
         int ones = points % 10;
         int tens = (points / 10) % 10;
+        int hundreds = (points / 100) % 10;
 
         pointsOnes.sprite = PointsNumberImages[ones].sprite;
         pointsTens.sprite = PointsNumberImages[tens].sprite;
+        pointsHundreds.sprite = PointsNumberImages[hundreds].sprite;
     }
 
     private void SetDrachmaUINumbers(int money)
     {
         int ones = drachma % 10;
         int tens = (drachma / 10) % 10;
+        int hundreds = (drachma / 100) % 10;
 
         drachmaOnes.sprite = DrachmaNumberImages[ones].sprite;
         drachmaTens.sprite = DrachmaNumberImages[tens].sprite;
+        drachmaHundreds.sprite = DrachmaNumberImages[hundreds].sprite;
     }
 }

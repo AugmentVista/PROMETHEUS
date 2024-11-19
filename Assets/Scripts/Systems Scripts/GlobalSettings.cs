@@ -59,8 +59,6 @@ public class GlobalSettings : MonoBehaviour
 
     #region ProjectileSpawner Variables
 
-    public static int spawnerProjectilesMaxAmount = 500; // this is each?
-
     public static bool projectileSpawnerActive = true;
 
     #endregion

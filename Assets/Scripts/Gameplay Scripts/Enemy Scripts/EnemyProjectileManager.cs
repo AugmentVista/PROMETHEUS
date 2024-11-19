@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemyProjectileManager : MonoBehaviour
 {
     public GameObject ProjectilePrefab;
-    [SerializeField]private int maxProjectiles;
+    public int maxProjectiles = 50;
     public Transform InitalPosition = null;
 
     private int currentProjectiles = 0;
