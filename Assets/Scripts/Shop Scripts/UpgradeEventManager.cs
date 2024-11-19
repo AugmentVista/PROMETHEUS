@@ -9,6 +9,13 @@ public class UpgradeEventManager : MonoBehaviour // this needs to be on an objec
 
     [SerializeField] private Button_UpgradeEvent upgradeButton;
 
+    private int healthUpgradesPurchased = 0;
+    private int hammerUpgradesPurchased = 0;
+    private int staminaUpgradesPurchased = 0;
+    private int attackSpeedUpgradesPurchased = 0;
+    private int sprintSpeedUpgradesPurchased = 0;
+    private int blockUpgradesPurchased = 0;
+
     public EventHandler<UpgradeEventArgs> UpdateUpgradeHealth;
     public EventHandler<UpgradeEventArgs> UpdateUpgradeHammer;
     public EventHandler<UpgradeEventArgs> UpdateUpgradeStamina;
@@ -36,38 +43,68 @@ public class UpgradeEventManager : MonoBehaviour // this needs to be on an objec
             case "Health Potion":
                 if (Item.IsTitleMatch("Health Potion"))
                 {
-                    UpdateUpgradeHealth?.Invoke(this, new UpgradeEventArgs(Item));
-                    Debug.Log("Player bought a Health Potion");
+                    if (healthUpgradesPurchased < 5)
+                    {
+                        UpdateUpgradeHealth?.Invoke(this, new UpgradeEventArgs(Item));
+                        Debug.Log("Player bought a Health Potion");
+                        healthUpgradesPurchased += 1;
+                    }
+                    else { Debug.LogError($"Player has bought the last {Item}"); }
                 }
                 break;
             case "Hammer Upgrade":
                 if (Item.IsTitleMatch("Hammer Upgrade"))
                 {
-                    UpdateUpgradeHammer?.Invoke(this, new UpgradeEventArgs(Item));
+                    if (hammerUpgradesPurchased < 5)
+                    {
+                        UpdateUpgradeHammer?.Invoke(this, new UpgradeEventArgs(Item));
+                        hammerUpgradesPurchased += 1;
+                    }
+                    else { Debug.LogError($"Player has bought the last {Item}"); }
                 }
                 break;
                 case "Stamina Upgrade":
                 if (Item.IsTitleMatch("Stamina Upgrade"))
                 {
-                    UpdateUpgradeStamina?.Invoke(this, new UpgradeEventArgs(Item));
+                    if (staminaUpgradesPurchased < 5)
+                    {
+                        UpdateUpgradeStamina?.Invoke(this, new UpgradeEventArgs(Item));
+                        staminaUpgradesPurchased += 1;
+                    }
+                    else { Debug.LogError($"Player has bought the last {Item}"); }
                 }
                 break;
                 case "Attack Speed Upgrade":
                 if (Item.IsTitleMatch("Attack Speed Upgrade"))
                 {
-                    UpdateUpgradeAttackSpeed?.Invoke(this, new UpgradeEventArgs(Item));
+                    if (attackSpeedUpgradesPurchased < 5)
+                    {
+                        UpdateUpgradeAttackSpeed?.Invoke(this, new UpgradeEventArgs(Item));
+                        attackSpeedUpgradesPurchased += 1;
+                    }
+                    else { Debug.LogError($"Player has bought the last {Item}"); }
                 }
                 break;
                 case "Sprint Speed Upgrade":
                 if (Item.IsTitleMatch("Sprint Speed Upgrade"))
                 {
-                    UpdateUpgradeSprintSpeed?.Invoke(this, new UpgradeEventArgs(Item));
+                    if (sprintSpeedUpgradesPurchased < 5)
+                    { 
+                        UpdateUpgradeSprintSpeed?.Invoke(this, new UpgradeEventArgs(Item));
+                        staminaUpgradesPurchased += 1;
+                    }
+                    else { Debug.LogError($"Player has bought the last {Item}"); }
                 }
                 break;
             case "Block Upgrade":
                 if (Item.IsTitleMatch("Block Upgrade"))
                 {
-                    UpdateUpgradeBlock?.Invoke(this, new UpgradeEventArgs(Item));
+                    if (blockUpgradesPurchased < 5)
+                    { 
+                        UpdateUpgradeBlock?.Invoke(this, new UpgradeEventArgs(Item));
+                        blockUpgradesPurchased += 1;
+                    }
+                    else { Debug.LogError($"Player has bought the last {Item}"); }
                 }
                 break;
             default:
