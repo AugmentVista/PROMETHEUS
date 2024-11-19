@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class SprintBoost : MonoBehaviour
+public class SprintBoost : MonoBehaviour // likely will not use this class at all with upcoming map changes
 {
     public void IncreaseSprint(float boost)
     {

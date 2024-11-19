@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class EnemyFire : MonoBehaviour
 {
-    [SerializeField] private Transform projectileTarget; // The player or other target
+    [SerializeField] private Transform projectileTarget;
 
     private EnemyWaveTrigger waveTrigger;
 
@@ -11,7 +11,7 @@ public class EnemyFire : MonoBehaviour
     private float elapsedTime = 0f;
 
     private bool isGameActive = GlobalSettings.projectileSpawnerActive;
-    private float ShotDelay() { return Mathf.Round(Random.Range(5.5f, 10.0f) * 100) / 100; } // produces clean decimals
+    private float ShotDelay() { return Mathf.Round(Random.Range(3.0f, 5.0f) * 100) / 100; } // produces clean decimals
 
     private float FiringCooldown;
 
@@ -22,10 +22,6 @@ public class EnemyFire : MonoBehaviour
         waveTrigger = FindObjectOfType<EnemyWaveTrigger>();
         projectileManager = FindObjectOfType<EnemyProjectileManager>(); // Reference the manager
         projectileTarget = GameObject.Find("Miss Zone").transform;
-        if (isGameActive)
-        {
-            //InvokeRepeating("SpawnProjectile", 2.0f, ShotDelay());
-        }
         FiringCooldown = ShotDelay();
     }
 
@@ -62,7 +58,7 @@ public class EnemyFire : MonoBehaviour
 
     public void SpawnProjectile()
     {
-        if (isGameActive /*&& AmmunitionConsumed < AmmunitionLifespan*/)
+        if ( isGameActive )
         {
             GameObject projectileInstance = projectileManager.RequestProjectile(transform); // Get a projectile from the manager
             if (projectileInstance != null)

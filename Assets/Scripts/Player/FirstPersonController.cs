@@ -373,10 +373,8 @@ public class FirstPersonController : MonoBehaviour
 
         if (playerCanMove)
         {
-            // Calculate how fast we should be moving
             Vector3 targetVelocity = new Vector3(0, 0, Input.GetAxis("Vertical"));
 
-            // Checks if player is walking and isGrounded
             if ((targetVelocity.x != 0 || targetVelocity.z != 0) && isGrounded)
             {
                 isWalking = true;
@@ -386,24 +384,15 @@ public class FirstPersonController : MonoBehaviour
                 isWalking = false;
             }
 
-            // Movement calculations while sprinting
             if (enableSprint && Input.GetKey(sprintKey) && sprintRemaining > 0f && !isSprintCooldown)
             {
                 targetVelocity = transform.TransformDirection(targetVelocity) * sprintSpeed;
-                //Debug.Log($"Sprint Speed at the start of sprint is {sprintSpeed}");
-
 
                 Vector3 velocity = rb.velocity;
 
-
                 float currentZ = velocity.z;
 
-
                 float smoothZVelocity = Mathf.Lerp(currentZ, targetVelocity.z, Time.deltaTime);
-
-
-                //Debug.Log("Non-Final Velocity is: " + rb.velocity); // returns 9.68
-
 
                 rb.velocity = new Vector3(velocity.x, velocity.y, smoothZVelocity);
 
@@ -422,10 +411,7 @@ public class FirstPersonController : MonoBehaviour
                         sprintBarCG.alpha += 5 * Time.deltaTime;
                     }
                 }
-                //Debug.Log(sprintSpeed);
-                //Debug.Log("Velocity is: " + rb.velocity); // returns 10.0
             }
-            // Movement calculations while walking
             else
             {
                 isSprinting = false;
@@ -436,32 +422,19 @@ public class FirstPersonController : MonoBehaviour
                 }
 
                 targetVelocity = transform.TransformDirection(targetVelocity) * walkSpeed;
-                //Debug.Log($"Sprint Speed at the start of sprint is {walkSpeed}");
-
 
                 Vector3 velocity = rb.velocity;
-
 
                 float currentZ = velocity.z;
 
 
                 float smoothZVelocity = Mathf.Lerp(currentZ, targetVelocity.z, Time.deltaTime);
 
-
-                //Debug.Log("Non-Final Velocity is: " + rb.velocity);
-
-
                 rb.velocity = new Vector3(velocity.x, velocity.y, smoothZVelocity);
-
-                //Debug.Log(walkSpeed);
-                //Debug.Log("Velocity is: " + rb.velocity);
             }
         }
-
         #endregion
-
     }
-
 
     // Sets isGrounded based on a raycast sent straigth down from the player object
     private void CheckGround()
@@ -483,7 +456,6 @@ public class FirstPersonController : MonoBehaviour
 
     private void Jump()
     {
-        // Adds force to the player rigidbody to jump
         if (isGrounded)
         {
             rb.AddForce(0f, jumpPower, 0f, ForceMode.Impulse);
@@ -549,8 +521,6 @@ public class FirstPersonController : MonoBehaviour
         }
     }
 }
-
-
 
 // Custom Editor
 #if UNITY_EDITOR
@@ -760,7 +730,6 @@ public class FirstPersonControllerEditor : Editor
             SerFPC.ApplyModifiedProperties();
         }
     }
-
 }
 
 #endif

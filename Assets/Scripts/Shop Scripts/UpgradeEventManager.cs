@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class UpgradeEventManager : MonoBehaviour // this needs to be on an object within UI Manager

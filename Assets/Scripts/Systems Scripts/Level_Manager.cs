@@ -45,7 +45,10 @@ public class Level_Manager : MonoBehaviour
 
     private void UpgradeEventManager_UpdateUpgradeBlock(object sender, UpgradeEventArgs e)
     {
-        // BLOCK WILL NOT BE AVAILABLE BY ALPHA
+        // Block block = FindObjectOfType<Block>(true);
+        // ItemDisplay blockUpgrade = e.Item;
+        // Debug.Log($"Upgrade purchased of type {block}");
+        //if (block != null) { block.blockUpgrade(blockUpgrade); }
     }
 
     private void UpgradeEventManager_UpdateUpgradeHealth(object sender, UpgradeEventArgs e)
@@ -135,7 +138,7 @@ public class Level_Manager : MonoBehaviour
                 }
                 else if (Lose && currentScene.name == "Level_1")
                 {
-                    gameManager.GameOverTrigger(); // same call as Scene_Transition
+                    gameManager.GameOverTrigger();
                 }
             }
             else
@@ -189,7 +192,6 @@ public class Level_Manager : MonoBehaviour
         }
     }
 
-    // this will run for the frame that hasHitEndWaveTrigger == true
     public void ResetLevel(Game_Manager gameManager) 
     {
         Extention = GameObject.Find("Extention");
@@ -202,8 +204,6 @@ public class Level_Manager : MonoBehaviour
             child.gameObject.SetActive(false);
         }
         ResetPlayerPosition();
-
-        
         gameManager.hasHitEndWaveTrigger = false;
     }
 

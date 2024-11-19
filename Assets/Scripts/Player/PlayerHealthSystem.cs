@@ -91,12 +91,6 @@ public class PlayerHealthSystem : MonoBehaviour
 
             if (currentScene.name == "Level_1")
             {
-                //GameObject waveEndTrigger = GameObject.Find("Wave End Trigger");
-                //EndWaveTrigger waveEnd = waveEndTrigger.GetComponent<EndWaveTrigger>();
-                //if (waveEnd != null)
-                //{
-                //    waveEnd.Alt_WaveEnd_ShowResults();
-                //}
                 Player_Death_ShowResults(); // not connected to anything
                 gameManager.hasHitEndWaveTrigger = true;
                 

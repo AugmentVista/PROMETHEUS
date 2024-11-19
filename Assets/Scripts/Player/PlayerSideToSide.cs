@@ -9,11 +9,11 @@ public class PlayerSideToSide : MonoBehaviour
     public float sideMoveCooldown = 0.2f; // Time to wait between side movements
 
     private bool isMovingSide = false;
-    private FirstPersonController firstPersonController; // Reference to the FirstPersonController
+    private FirstPersonController firstPersonController; 
 
     private void Awake()
     {
-        firstPersonController = GetComponent<FirstPersonController>(); // Get the FirstPersonController component
+        firstPersonController = GetComponent<FirstPersonController>(); 
     }
 
     private void Update()
@@ -23,8 +23,7 @@ public class PlayerSideToSide : MonoBehaviour
 
     private void HandleSideMovement()
     {
-        // Only allow side movement if the player is grounded
-        if (firstPersonController != null /*&& firstPersonController.isGrounded*/ && !isMovingSide)
+        if (firstPersonController != null && !GlobalSettings.globalPauseOverride && !isMovingSide)
         {
             if (Input.GetKeyDown(KeyCode.A))
             {
@@ -67,9 +66,8 @@ public class PlayerSideToSide : MonoBehaviour
 
     public void WasHit(bool hit, string projectileTag)
     {
-        if (hit) // if this is true, the player moves backwards
+        if (hit)
         {
-            // Handle different projectile types based on the tag
             switch (projectileTag)
             {
                 case "Stone":
@@ -80,11 +78,11 @@ public class PlayerSideToSide : MonoBehaviour
                     break;
 
                 case "Stun":
-                    //StartCoroutine(StunPlayer(2f)); // Example stun for 2 seconds
+                    //StartCoroutine(StunPlayer(2f)); 
                     break;
 
                 case "Slow":
-                    //StartCoroutine(SlowPlayer(2f)); // Example slow for 2 seconds
+                    //StartCoroutine(SlowPlayer(2f)); 
                     break;
 
                 default:
@@ -93,44 +91,4 @@ public class PlayerSideToSide : MonoBehaviour
             }
         }
     }
-
-    //public void MoveBackwards(int spacesToMove)
-    //{
-    //    if (currentRow > spacesToMove) // Adjust if more columns are added
-    //    {
-    //        currentRow = currentRow - spacesToMove;
-    //        if (currentRow <= 0) // after decrementing if the currentRow is 0 or less the player loses instead of moves
-    //        {
-    //            //Lose script
-    //        }
-    //        else if (gridPositions[currentRow, currentColumn] != null) // after decrementing current row is greater than 0 player moves back
-    //        {
-    //            transform.position = Vector3.Lerp(transform.position, gridPositions[currentRow, currentColumn].position, moveSpeed * Time.deltaTime);
-    //        }
-    //    }
-    //}
-   
-    //private IEnumerator StunPlayer(float duration)
-    //{
-    //    // Temporarily disable movement input while stunned
-    //    Debug.Log("Player is stunned!");
-    //    isMovingSide = true;
-    //    isMovingForward = true;
-    //    yield return new WaitForSeconds(duration);
-    //    isMovingSide = false;
-    //    isMovingForward = false;
-    //    Debug.Log("Player is no longer stunned.");
-    //}
-
-    //private IEnumerator SlowPlayer(float duration)
-    //{
-    //    Debug.Log("Player is slowed!");
-    //    moveSpeed /= 2; // Reduce movement speed by half as an example
-    //    yield return new WaitForSeconds(duration);
-    //    moveSpeed *= 2; // Restore original speed
-    //    Debug.Log("Player is no longer slowed.");
-    //}
-
-
 }
-

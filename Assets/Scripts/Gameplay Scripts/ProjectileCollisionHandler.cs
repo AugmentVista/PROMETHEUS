@@ -156,17 +156,14 @@ public class ProjectileCollisionHandler : MonoBehaviour
             //Debug.Log($"Projectile missed: {projectileType}");
         }
 
-        // Call spawner to deactivate the projectile
         DisableColliderForPooling();
     }
 
     private void DisableColliderForPooling()
     {
-        // Disable the collider to prevent further interactions
         GetComponent<Collider>().enabled = false;
         GetComponent<Renderer>().enabled = false;
 
-        // Call the spawner to handle the pooling logic if needed
         spawner.ReturnProjectile(gameObject);
     }
 }

@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -17,10 +16,8 @@ public class EnemyProjectileManager : MonoBehaviour
         GameObject projectileInstance;
         InitalPosition = localTransform;
 
-        // Check if there are any available pooled projectiles or need to create new ones
         if (totalProjectilesCreated < maxProjectiles)
         {
-            // Create new projectile if under max limit
             projectileInstance = Instantiate(ProjectilePrefab, localTransform.position, Quaternion.identity);
             totalProjectilesCreated += 1;
             currentProjectiles++;
@@ -45,7 +42,6 @@ public class EnemyProjectileManager : MonoBehaviour
 
     public void ReturnProjectile(GameObject obj)
     {
-        // Reset necessary components on the projectile
         ProjectileCollisionHandler handler = obj.GetComponent<ProjectileCollisionHandler>();
         if (handler != null)
         {
@@ -59,8 +55,6 @@ public class EnemyProjectileManager : MonoBehaviour
             rb.velocity = Vector3.zero; 
         }
 
-        // Disable the projectile and add it back to the pool
-        //obj.SetActive(false);
         obj.transform.position = InitalPosition.position;
         pooledProjectiles.Enqueue(obj);
 
