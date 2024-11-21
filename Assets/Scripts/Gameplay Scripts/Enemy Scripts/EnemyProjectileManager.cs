@@ -1,13 +1,15 @@
 using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
+using Unity.VisualScripting;
 
 public class EnemyProjectileManager : MonoBehaviour
 {
     public GameObject ProjectilePrefab;
     public GameObject[] Projectiles;
     private WaveUI waveUI;
-    private int maxProjectiles = 10;
+    public int maxProjectiles = 10;
+    public int minProjectiles;
     public Transform InitalPosition = null;
 
     private int currentProjectiles = 0;
@@ -15,7 +17,10 @@ public class EnemyProjectileManager : MonoBehaviour
     int localWaveCount = 0;
     public Queue<GameObject> pooledProjectiles = new Queue<GameObject>(); // Queue to hold inactive projectiles
 
-
+    private void Start()
+    {
+        minProjectiles = maxProjectiles;
+    }
     public GameObject RequestProjectile(Transform localTransform)
     {
         GameObject projectileInstance; // declared undefined
@@ -29,7 +34,7 @@ public class EnemyProjectileManager : MonoBehaviour
         }
         else if (totalProjectilesCreated >= maxProjectiles) // has hit the max number of projectiles
         {
-            Debug.Log(waveUI.waveCount);
+            Debug.Log(waveUI.waveCount + "th Wave");
             if (localWaveCount < waveUI.waveCount)
             {
                 totalProjectilesCreated = 0;   
@@ -92,6 +97,22 @@ public class EnemyProjectileManager : MonoBehaviour
         Debug.Log(p + " is the value of p");
         return p;
     }
+
+    public void DestroyAllProjectiles()
+    {
+        GameObject[] allBombs = GameObject.FindGameObjectsWithTag("Knockback");
+
+        foreach (GameObject obj in allBombs)
+        { 
+            Destroy(obj);
+        }
+        currentProjectiles = 0;
+        totalProjectilesCreated = 0;
+        localWaveCount = 0;
+        maxProjectiles =  minProjectiles;
+        Debug.LogError("All on screen bombs destroyed");
+    }
+
 
     GameObject FireProjectile(Transform localTransform)
     {

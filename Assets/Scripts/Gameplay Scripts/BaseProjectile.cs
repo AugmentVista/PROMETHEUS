@@ -25,7 +25,7 @@ public class BaseProjectile : MonoBehaviour
 
     public float stunDamage = 10f;
 
-    public float knockBackDamage = 5f;
+    public float knockBackDamage = 25f;
 
     public float slowDamage = 2f;
 

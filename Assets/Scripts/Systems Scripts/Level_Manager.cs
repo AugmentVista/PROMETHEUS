@@ -204,6 +204,7 @@ public class Level_Manager : MonoBehaviour
             child.gameObject.SetActive(false);
         }
         ResetPlayerPosition();
+        ResetWave();
         gameManager.hasHitEndWaveTrigger = false;
     }
 
@@ -223,7 +224,21 @@ public class Level_Manager : MonoBehaviour
 
     public void ResetWave()
     { 
-    
+        WaveUI waveUI = FindAnyObjectByType<WaveUI>();
+        EnemyProjectileManager projManager = FindAnyObjectByType<EnemyProjectileManager>();
+
+        Debug.Log($"WaveUI Status: {waveUI}, EnemyProjectileManager status: {projManager}");
+
+        if (waveUI != null)
+        {
+            Debug.Log($"waveUI  is not null, it is {waveUI}");
+            if (projManager != null)
+            {
+                Debug.Log($"projManager  is not null, it is {projManager}");
+                waveUI.ResetWave();
+                projManager.DestroyAllProjectiles();
+            }
+        }
     }
 
 

@@ -90,11 +90,6 @@ public class EnemyFire : MonoBehaviour
                     collisionHandler.reusedProjectile = true;
                 }
             }
-            else if (projectileInstance == null && projectileManager.totalProjectilesCreated >= 5)
-            {
-                Debug.LogError("What was I going to put here again?");
-                // maybe switch into a new array?
-            }
         }
     }
 }

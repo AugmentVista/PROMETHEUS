@@ -20,13 +20,21 @@ public class WaveUI : MonoBehaviour
         yield return new WaitForSeconds(waveMessageTime);
     }
 
+    public void ResetWave()
+    {
+        waveMessageTime = 0f;
+        waveCount = 0;
+        NextWave();
+    }
+
+
     public void NextWave()
     {
         WaveDelay();
         if (waveCount < 10) 
         {
             waveCount++;
-            Debug.Log($"Wave {waveCount} has begun");
+            Debug.LogError($"Wave {waveCount} has begun");
         }
     }
 }
