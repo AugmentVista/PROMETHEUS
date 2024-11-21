@@ -16,11 +16,18 @@ public class PlayerAttackHitBox : MonoBehaviour // This script is attached to th
     public GameObject blockerPrefab;
 
     private Transform HandLocation;
+
+
     public Transform[] Lanes;
+    public Transform[] LanesForward1;
+    public Transform[] LanesForward2;
+
 
     public float attackDuration;
 
     private int attackSpeedUps = 0;
+
+    private float checkRadius = 0.5f;
 
     public Renderer weaponVisual;
 
@@ -89,7 +96,15 @@ public class PlayerAttackHitBox : MonoBehaviour // This script is attached to th
 
         if (laneIndex >= 0 && laneIndex < Lanes.Length)
         {
-            Instantiate(blockerPrefab, Lanes[laneIndex].position, Quaternion.identity);
+            Transform spawnPosition = GetAvailableSpawnPosition(laneIndex);
+            if (spawnPosition != null)
+            {
+                Instantiate(blockerPrefab, spawnPosition.position, Quaternion.identity);
+            }
+            else
+            {
+                Debug.Log("No available space to spawn blocker in lane " + laneIndex);
+            }
         }
         else
         {
@@ -170,6 +185,47 @@ public class PlayerAttackHitBox : MonoBehaviour // This script is attached to th
                 projectileHandler.struckByWeapon = false;
             }
         }
+    }
+
+    private bool IsLaneOccupied(Transform lane)
+    {
+        if (lane == null) return true; // Treat null lane as occupied
+
+        // Check for any colliders within a small radius around the lane position
+        Collider[] colliders = Physics.OverlapSphere(lane.position, checkRadius);
+        foreach (var collider in colliders)
+        {
+            if (collider.CompareTag("Blocker")) // Assuming blockers have the tag "Blocker"
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private Transform GetAvailableSpawnPosition(int laneIndex)
+    {
+        // Check the default lane
+        if (!IsLaneOccupied(Lanes[laneIndex]))
+        {
+            return Lanes[laneIndex];
+        }
+
+        // Check the first forward lane
+        if (laneIndex < LanesForward1.Length && !IsLaneOccupied(LanesForward1[laneIndex]))
+        {
+            return LanesForward1[laneIndex];
+        }
+
+        // Check the second forward lane
+        if (laneIndex < LanesForward2.Length && !IsLaneOccupied(LanesForward2[laneIndex]))
+        {
+            return LanesForward2[laneIndex];
+        }
+
+        // No available spawn positions
+        return null;
     }
 
     private KeyCode GetPressedAlphaKey()
