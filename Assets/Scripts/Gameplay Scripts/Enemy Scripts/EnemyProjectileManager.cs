@@ -12,47 +12,43 @@ public class EnemyProjectileManager : MonoBehaviour
 
     private int currentProjectiles = 0;
     public int totalProjectilesCreated = 0;
+    int localWaveCount = 0;
     public Queue<GameObject> pooledProjectiles = new Queue<GameObject>(); // Queue to hold inactive projectiles
 
 
     public GameObject RequestProjectile(Transform localTransform)
     {
         GameObject projectileInstance; // declared undefined
-        InitalPosition = localTransform;
         WaveUI waveUI = FindObjectOfType<WaveUI>();
+        InitalPosition = localTransform;
 
         if (totalProjectilesCreated < maxProjectiles)
         {
-            Debug.Log($"waveUI is {waveUI}");
             FireProjectile(localTransform); // creates projectileInstance and assigns it
             projectileInstance = FireProjectile(localTransform);
         }
-        else if (waveUI.waveCount > 0)
+        else if (totalProjectilesCreated >= maxProjectiles) // has hit the max number of projectiles
         {
-            Debug.Log($"waveUI is {waveUI}"); 
-            if (totalProjectilesCreated >= maxProjectiles && currentProjectiles == 0)
+            Debug.LogError(waveUI.waveCount);
+            if (localWaveCount < waveUI.waveCount)
             {
+                totalProjectilesCreated = 0;   
                 waveUI.NextWave();
                 maxProjectiles += waveUI.waveCount * 2;
+                localWaveCount++;
             }
-            FireProjectile(localTransform);
-            projectileInstance = FireProjectile(localTransform);
-            return projectileInstance;
+            //FireProjectile(localTransform);
+            //projectileInstance = FireProjectile(localTransform);
+            //return projectileInstance; // hand over the projectile to EnemyFire
+            return null;
         }
         else
         {
-            projectileInstance = FireProjectile(localTransform);
-            Debug.Log($"waveUI is {waveUI}");
-            return null;
+            return null; // nothing to provide to enemyFire
         }
         return projectileInstance;
     }
 
-
-    public void ZeroProjectilesRemaining()
-    { 
-    
-    }
 
     GameObject FireProjectile(Transform localTransform)
     {
