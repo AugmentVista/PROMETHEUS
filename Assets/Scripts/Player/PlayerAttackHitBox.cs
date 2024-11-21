@@ -19,8 +19,6 @@ public class PlayerAttackHitBox : MonoBehaviour // This script is attached to th
 
     public float attackDuration;
 
-    public float attackCooldown;
-
     private int attackSpeedUps = 0;
 
     public Renderer weaponVisual;
@@ -60,7 +58,10 @@ public class PlayerAttackHitBox : MonoBehaviour // This script is attached to th
         if (attackSpeedUps < 5)
         { 
             float convertedValue = amountToReduce / 100;
-            attackCooldown -= convertedValue;
+            if (attackDuration > convertedValue && attackDuration + -convertedValue > 0)
+            {
+                attackDuration -= convertedValue;
+            }
         }
         attackSpeedUps += 1;
     }
@@ -128,8 +129,6 @@ public class PlayerAttackHitBox : MonoBehaviour // This script is attached to th
 
         isAttacking = true;
         yield return new WaitForSeconds(attackDuration);
-
-        yield return new WaitForSeconds(attackCooldown);
         isAttacking = false;
         canAttack = true; // Allow attacks again
 
@@ -143,21 +142,11 @@ public class PlayerAttackHitBox : MonoBehaviour // This script is attached to th
     {
         projectileHandler = other.GetComponent<ProjectileCollisionHandler>();
 
-        //Debug.Log("Checking for ProjectileCollisionHandler on: " + other.gameObject.name);
         if (projectileHandler != null )
         {
-            if (other.tag == "Knockback" /* && isAttacking*/)
+            if (other.tag == "Knockback")
             {
-                if (isAttacking)
-                {
-                    projectileHandler.struckByWeapon = true;
-                }
-                else
-                {
-                    projectileHandler.struckByWeapon = false;
-                }
-
-                //Debug.Log($"CanPlayerAttackThis: struckByWeapon is set to {projectileHandler.struckByWeapon}");
+                projectileHandler.struckByWeapon = true;
 
                 GameObject explosion = Instantiate(rockSmashVFX, other.transform.position, Quaternion.identity);
 
@@ -169,13 +158,11 @@ public class PlayerAttackHitBox : MonoBehaviour // This script is attached to th
                 {
                     explosionVFX.Play();
                 }
-
                 Destroy(explosion, explosionVFX.main.duration);
-                //Debug.Log("Explosion instantiated at projectile position.");
+
             }
             else
             {
-                //Debug.LogError("Tag not found in ableToHit list: " + other.tag);
                 projectileHandler.struckByWeapon = false;
             }
         }

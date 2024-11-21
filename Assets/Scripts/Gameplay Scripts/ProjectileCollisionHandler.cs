@@ -1,7 +1,5 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.ProBuilder.Shapes;
-using UnityEngine.SocialPlatforms.Impl;
 
 public class ProjectileCollisionHandler : MonoBehaviour
 {
@@ -77,23 +75,23 @@ public class ProjectileCollisionHandler : MonoBehaviour
 
     private void HandleProjectileCollision(Collider other, string projectileType)
     {
-        // Determine what was hit (PlayerBody, Weapon, MissZone)
         switch (other.gameObject.tag) // the tag of this object
         {
             case "PlayerBody":
                 OnPlayerDamaged(true, gameObject.tag); 
 
-                //Debug.Log($"{gameObject.tag} hit the PlayerBody");
                 DisableColliderForPooling();
                 break;
 
             case "Weapon":
                 if (struckByWeapon)
                 {
-                    if (Score != null) { Score.score += Base.value; }
-                    Score.drachma += 8;
+                    if (Score != null) 
+                    {
+                        Score.score += Base.value; 
+                        Score.drachma += Base.value/2;
+                    }
 
-                    //Debug.Log($"{projectileType} hit the player's weapon and was blocked.");
                     DisableColliderForPooling();
                 }
                 else if (!struckByWeapon)
@@ -105,13 +103,13 @@ public class ProjectileCollisionHandler : MonoBehaviour
             case "MissZone":
                 OnPlayerDamaged(false, gameObject.tag);
 
-                //Debug.Log($"{gameObject.tag} missed and hit the MissZone.");
+                //OnCastleDamaged(true, gameObject.tag)
+
 
                 DisableColliderForPooling(); 
                 break;
 
             default:
-                //Debug.Log("Unknown hit location");
                 DisableColliderForPooling();
                 break;
         }
@@ -127,23 +125,19 @@ public class ProjectileCollisionHandler : MonoBehaviour
                 case "Stone":// Reduce score
                     PlayerHealthSystem.TakeDamage(Base.stunDamage);
                     playerMove.WasHit(true, projectileType);
-                    //Debug.Log("Stone hit the player. Score reduced.");
                     break;
 
                 case "Knockback":
                     PlayerHealthSystem.TakeDamage(Base.knockBackDamage);
                     playerMove.WasHit(true, projectileType); // Move player backward
-                    //Debug.Log("Knockback hit the player. Player moved backward.");
                     break;
 
                 case "Stun":
                     playerMove.WasHit(true, projectileType); // Stun the player
-                    //Debug.Log("Stun hit the player. Player stunned.");
                     break;
 
                 case "Slow":
                     playerMove.WasHit(true, projectileType); // Slow the player
-                    //Debug.Log("Slow hit the player. Player movement slowed.");
                     break;
 
                 default:
@@ -153,7 +147,6 @@ public class ProjectileCollisionHandler : MonoBehaviour
         }
         else
         {
-            //Debug.Log($"Projectile missed: {projectileType}");
         }
 
         DisableColliderForPooling();

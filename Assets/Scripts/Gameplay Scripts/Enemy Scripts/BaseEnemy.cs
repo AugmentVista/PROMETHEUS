@@ -36,12 +36,6 @@ public class BaseEnemy : MonoBehaviour
             meshRenderer.enabled = false;
         }
 
-        //WaveSystem waveSystem = FindFirstObjectByType<WaveSystem>();
-        //if (waveSystem != null)
-        //{
-        //    Debug.Log(waveSystem.isActiveAndEnabled);
-        //    waveSystem.DetectDead();
-        //}
         EnemyHasDied?.Invoke(this, EventArgs.Empty);
         Debug.Log("Enemy has died");
     }

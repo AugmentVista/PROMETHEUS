@@ -37,10 +37,10 @@ public class Game_Manager : MonoBehaviour
 
     private void Level_Manager_CreateBridgeSectionDuringIntro(object sender, EventArgs _)
     {
-        GameObject bridgeScriptHolder = GameObject.Find("Bridge Script Holder");
-        SpawnBridge bridge = bridgeScriptHolder.GetComponent<SpawnBridge>();
-        if (bridge != null)
-        bridge.CreateBridge();
+        //GameObject bridgeScriptHolder = GameObject.Find("Bridge Script Holder");
+        //SpawnBridge bridge = bridgeScriptHolder.GetComponent<SpawnBridge>();
+        //if (bridge != null)
+        //bridge.CreateBridge();
         ResultsMenuTrigger();
     }
 

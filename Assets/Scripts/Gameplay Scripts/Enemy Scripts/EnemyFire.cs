@@ -11,9 +11,9 @@ public class EnemyFire : MonoBehaviour
     private float elapsedTime = 0f;
 
     private bool isGameActive = GlobalSettings.projectileSpawnerActive;
-    private float ShotDelay() { return Mathf.Round(Random.Range(3.0f, 5.0f) * 100) / 100; } // produces clean decimals
+    private float ShotDelay() { return Mathf.Round(Random.Range(4.0f, 5.0f) * 100) / 100; } // produces clean decimals
 
-    private float FiringCooldown;
+    private float FiringCooldown = 1f;
 
 
 
@@ -25,16 +25,10 @@ public class EnemyFire : MonoBehaviour
         FiringCooldown = ShotDelay();
     }
 
-
-    private void TimedShots()
+    public void ToggleFiring(bool isActive)
     {
-        if (elapsedTime > FiringCooldown)
-        {
-            FiringCooldown += ShotDelay();
-            SpawnProjectile();
-        }
+        GlobalSettings.projectileSpawnerActive = isActive;
     }
-
 
     private void Update()
     {
@@ -48,11 +42,21 @@ public class EnemyFire : MonoBehaviour
         {
             isGameActive = false;
         }
-        else 
+        else
         {
             isGameActive = true;
             elapsedTime += Time.deltaTime;
             TimedShots();
+        }
+    }
+
+    private void TimedShots()
+    {
+        if (elapsedTime > FiringCooldown)
+        {
+            FiringCooldown += ShotDelay();
+            Debug.LogWarning($"ShotDelay is: {ShotDelay()}");
+            SpawnProjectile();
         }
     }
 
@@ -86,11 +90,10 @@ public class EnemyFire : MonoBehaviour
                     collisionHandler.reusedProjectile = true;
                 }
             }
+            else if (projectileInstance == null && projectileManager.totalProjectilesCreated >= 5)
+            { 
+            
+            }
         }
-    }
-
-    public void ToggleFiring(bool isActive)
-    {
-        GlobalSettings.projectileSpawnerActive = isActive;
     }
 }
