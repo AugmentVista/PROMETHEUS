@@ -1,9 +1,11 @@
 using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 
 public class EnemyProjectileManager : MonoBehaviour
 {
     public GameObject ProjectilePrefab;
+    public GameObject[] Projectiles;
     private WaveUI waveUI;
     private int maxProjectiles = 5;
     public Transform InitalPosition = null;
@@ -12,31 +14,19 @@ public class EnemyProjectileManager : MonoBehaviour
     public int totalProjectilesCreated = 0;
     public Queue<GameObject> pooledProjectiles = new Queue<GameObject>(); // Queue to hold inactive projectiles
 
+
     public GameObject RequestProjectile(Transform localTransform)
     {
-        GameObject projectileInstance;
+        GameObject projectileInstance; // declared undefined
         InitalPosition = localTransform;
         WaveUI waveUI = FindObjectOfType<WaveUI>();
-       
 
         if (totalProjectilesCreated < maxProjectiles)
         {
             Debug.Log($"waveUI is {waveUI}");
-            //projectileInstance = Instantiate(ProjectilePrefab, localTransform.position, Quaternion.identity);
-            //totalProjectilesCreated += 1;
-            //currentProjectiles++;
-            FireProjectile(localTransform);
+            FireProjectile(localTransform); // creates projectileInstance and assigns it
+            projectileInstance = FireProjectile(localTransform);
         }
-        //else if (pooledProjectiles.Count > 0)
-        //{
-        //    Debug.Log($"Recycling a projectile {pooledProjectiles}");
-        //    // Reuse from the pool
-        //    projectileInstance = pooledProjectiles.Dequeue();
-        //    projectileInstance.SetActive(true);
-        //    projectileInstance.GetComponent<Renderer>().enabled = true;
-        //    projectileInstance.GetComponent<Collider>().enabled = true;
-        //    currentProjectiles++;
-        //}
         else if (waveUI.waveCount > 0)
         {
             Debug.Log($"waveUI is {waveUI}"); 
@@ -51,11 +41,17 @@ public class EnemyProjectileManager : MonoBehaviour
         }
         else
         {
+            projectileInstance = FireProjectile(localTransform);
             Debug.Log($"waveUI is {waveUI}");
             return null;
         }
-        projectileInstance = FireProjectile(localTransform);
         return projectileInstance;
+    }
+
+
+    public void ZeroProjectilesRemaining()
+    { 
+    
     }
 
     GameObject FireProjectile(Transform localTransform)

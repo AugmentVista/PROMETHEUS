@@ -5,6 +5,7 @@ using UnityEngine;
 public class WaveUI : MonoBehaviour
 {
     public int waveCount = 0;
+    public float waveMessageTime = 2f;
 
 
     void Start()
