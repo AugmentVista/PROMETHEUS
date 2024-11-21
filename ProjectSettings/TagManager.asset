@@ -16,6 +16,7 @@ TagManager:
   - VFX
   - PlayerCamera
   - Bridge
+  - WaveText
   layers:
   - Default
   - TransparentFX

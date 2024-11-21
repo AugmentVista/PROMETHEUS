@@ -126,6 +126,7 @@ public class Game_Manager : MonoBehaviour
     {
         gameState = GameState.Level1;
         ChangeGameState(gameState);
+        level_Manager.ResetLevel(this);
         ResumeGameTrigger();
     }
 
@@ -307,15 +308,15 @@ public class Game_Manager : MonoBehaviour
         if (currentScene.name != "Level_1") { level_Manager.LoadLevel_1(); }
         OnLevel1?.Invoke();
     }
-    private void Restart()
-    {
-        Scene currentScene = SceneManager.GetActiveScene();
-        IsMenuOpen(false);
-        {
-            level_Manager.LoadLevel_1(); 
-        }
-        OnLevel1?.Invoke();
-    }
+    //private void Restart()
+    //{
+    //    Scene currentScene = SceneManager.GetActiveScene();
+    //    IsMenuOpen(false);
+    //    {
+    //        level_Manager.LoadLevel_1(); 
+    //    }
+    //    OnLevel1?.Invoke();
+    //}
 
 
     private void GameOver()

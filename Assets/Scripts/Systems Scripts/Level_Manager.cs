@@ -11,8 +11,6 @@ public class Level_Manager : MonoBehaviour
 
     public GameObject Extention = null;
 
-    public TimerController Timer;
-
     public Transform playerTransform = null;
 
     public PlayerHealthSystem playerHealth;
@@ -158,6 +156,7 @@ public class Level_Manager : MonoBehaviour
 
     private void OnSceneChanged(Scene previousScene, Scene newScene)
     {
+        WaveUI.FinalWaveConlcuded = false;
         PrepareScene(newScene);
     }
 
@@ -189,6 +188,10 @@ public class Level_Manager : MonoBehaviour
         if (gameManager.hasHitEndWaveTrigger)
         {
             ResetLevel(gameManager);
+        }
+        if (WaveUI.FinalWaveConlcuded)
+        {
+            CheckWinClause();
         }
     }
 
@@ -223,22 +226,28 @@ public class Level_Manager : MonoBehaviour
     }
 
     public void ResetWave()
-    { 
-        WaveUI waveUI = FindAnyObjectByType<WaveUI>();
-        EnemyProjectileManager projManager = FindAnyObjectByType<EnemyProjectileManager>();
+    {
+        WaveUI waveUI = FindObjectOfType<WaveUI>();
+        EnemyProjectileManager projManager = FindObjectOfType<EnemyProjectileManager>();
 
-        Debug.Log($"WaveUI Status: {waveUI}, EnemyProjectileManager status: {projManager}");
+        Debug.Log($"WaveUI Status: {waveUI.name}, EnemyProjectileManager status: {projManager.name}");
 
         if (waveUI != null)
         {
-            Debug.Log($"waveUI  is not null, it is {waveUI}");
+            Debug.Log($"waveUI  is not null, it is {waveUI.name}");
             if (projManager != null)
             {
-                Debug.Log($"projManager  is not null, it is {projManager}");
-                waveUI.ResetWave();
+                Debug.Log($"projManager  is not null, it is {projManager.name}");
                 projManager.DestroyAllProjectiles();
+                waveUI.RestartWave();
             }
         }
+        WaveUI.FinalWaveConlcuded = false;
+    }
+
+    void ResetAllUpgrades()
+    { 
+    
     }
 
 

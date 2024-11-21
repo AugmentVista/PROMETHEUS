@@ -1,62 +1,74 @@
 using System.Collections;
-using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class WaveUI : MonoBehaviour
 {
+    public static bool FinalWaveConlcuded = false;
     public int waveCount = 1;
     public float waveMessageTime = 0.5f;
-    public Image progressBarFill;
-    private float targetFillAmount;
 
-
-    void Start()
+    private void Awake()
     {
-        targetFillAmount = 1.0f;
-        progressBarFill.fillAmount = 0.0f;
+        Scene thisScene = SceneManager.GetActiveScene();
+        if (thisScene.name != "Level_1")
+        {
+            SetWaveText();
+        }
+    }
+
+
+    private void Start()
+    {
         StartCoroutine(WaveDelay());
-    }
-
-    private void Update()
-    {
-        if (progressBarFill.fillAmount + -targetFillAmount < 1.1f)
-        {
-            progressBarFill.fillAmount = Mathf.Lerp(progressBarFill.fillAmount, targetFillAmount, Time.deltaTime * 1f);
-        }
-    }
-
-    public void UpdateFillAmount()
-    {
-        if (progressBarFill != null)
-        {
-            targetFillAmount = waveCount / 10;
-        }
     }
 
     private IEnumerator WaveDelay()
     {
-        Debug.Log("Delay is running");
-        waveMessageTime += 0.25f;
+        waveMessageTime = 1.0f;
         yield return new WaitForSeconds(waveMessageTime);
     }
 
-    public void ResetWave()
+    public void RestartWave()
     {
         waveMessageTime = 0f;
         waveCount = 0;
         NextWave();
     }
 
+    private void Update()
+    {
+        SetWaveText();
+    }
+
+    public void SetWaveText()
+    {
+        GameObject waveTextObject = GameObject.FindGameObjectWithTag("WaveText");
+        if (waveTextObject != null) 
+        { 
+            TextMeshProUGUI waveTextUI = waveTextObject.GetComponent<TextMeshProUGUI>();
+            if (waveTextUI != null)
+            {
+                waveTextUI.text = $"Wave {waveCount} / 10";
+            }
+        }
+    }
+
 
     public void NextWave()
     {
         WaveDelay();
-        if (waveCount < 10) 
+        if (waveCount < 5)
         {
             waveCount++;
+            GlobalSettings.globalWaveCount = waveCount;
             Debug.LogError($"Wave {waveCount} has begun");
         }
-        UpdateFillAmount();
+        else 
+        {
+            FinalWaveConlcuded = true;
+        }
     }
 }
