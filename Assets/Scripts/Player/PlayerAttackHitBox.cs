@@ -6,16 +6,17 @@ using UnityEngine;
 public class PlayerAttackHitBox : MonoBehaviour // This script is attached to the player weapon
 {
     private KeyCode hitKey = KeyCode.Mouse0;
+    private KeyCode blockKey;
 
     private ProjectileCollisionHandler projectileHandler;
 
     public GameObject rockSmashVFX;
-
     public GameObject HitBoxVisual;
-
     public GameObject RulerTargetDistance;
+    public GameObject blockerPrefab;
 
     private Transform HandLocation;
+    public Transform[] Lanes;
 
     public float attackDuration;
 
@@ -24,7 +25,6 @@ public class PlayerAttackHitBox : MonoBehaviour // This script is attached to th
     public Renderer weaponVisual;
 
     public Material weaponMaterial;
-
     public Material idleWeapon;
 
     private Color idleColor;
@@ -36,10 +36,6 @@ public class PlayerAttackHitBox : MonoBehaviour // This script is attached to th
     private bool canAttack = true; 
 
     private bool isAttacking = false;
-
-    private float lerpDuration = 1f;
-    private bool movingForward = false;
-    private float timeElapsed;
 
 
     private void Start()
@@ -53,57 +49,7 @@ public class PlayerAttackHitBox : MonoBehaviour // This script is attached to th
         HandLocation = transform;
     }
 
-    public void UpdateAttackSpeed(float amountToReduce)
-    {
-        if (attackSpeedUps < 5)
-        { 
-            float convertedValue = amountToReduce / 100;
-            if (attackDuration > convertedValue && attackDuration + -convertedValue > 0)
-            {
-                attackDuration -= convertedValue;
-            }
-        }
-        attackSpeedUps += 1;
-    }
-
-    //private void ThrowHammer()
-    //{
-    //    // Update elapsed time for the Lerp
-    //    timeElapsed += Time.deltaTime;
-    //    float lerpProgress = timeElapsed / lerpDuration;
-
-    //    if (movingForward)
-    //    {
-    //        transform.position = Vector3.Lerp(HandLocation.position, RulerTargetDistance.transform.position, lerpProgress);
-
-    //        // Check if the movement to the target is complete
-    //        if (lerpProgress >= 1f)
-    //        {
-    //            movingForward = false; // Toggle to returning phase
-    //            timeElapsed = 0f; // Reset for the return Lerp
-    //        }
-    //    }
-    //    else
-    //    {
-    //        transform.position = Vector3.Lerp(RulerTargetDistance.transform.position, HandLocation.position, lerpProgress);
-
-    //        // Check if the return movement is complete
-    //        if (lerpProgress >= 1f)
-    //        {
-    //            movingForward = true; // Ready to start again if needed
-    //            timeElapsed = 0f; // Reset for future throws
-    //            isAttacking = false; // Stop the attack movement
-    //        }
-    //    }
-    //}
-
-    public void UpdateHammer(float amountToEnlarge)
-    {
-        float convertedValue = 1f + amountToEnlarge / 100;
-        weaponCollider.transform.localScale *= convertedValue;
-        HitBoxVisual.transform.localScale *= convertedValue;
-        Debug.Log($"Hammer has grown by {convertedValue} %");
-    }
+    
 
     private void Update()
     {
@@ -111,12 +57,49 @@ public class PlayerAttackHitBox : MonoBehaviour // This script is attached to th
         {
             StartCoroutine(Attack());
         }
-        //if (isAttacking)
-        //{
-        //    weaponAnimator.SetTrigger("HammerLerp");
-        //    ThrowHammer();
-        //}
+        if (Input.GetKeyDown(KeyCode.Alpha1) ||
+            Input.GetKeyDown(KeyCode.Alpha2) ||
+            Input.GetKeyDown(KeyCode.Alpha3) ||
+            Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            blockKey = GetPressedAlphaKey();
+            StartCoroutine(CreateBlocker(blockKey));
+        }
     }
+
+    private IEnumerator CreateBlocker(KeyCode key)
+    {
+        int laneIndex = -1;
+
+        switch (key)
+        {
+            case KeyCode.Alpha1:
+                laneIndex = 0;
+                break;
+            case KeyCode.Alpha2:
+                laneIndex = 1;
+                break;
+            case KeyCode.Alpha3:
+                laneIndex = 2;
+                break;
+            case KeyCode.Alpha4:
+                laneIndex = 3;
+                break;
+        }
+
+        if (laneIndex >= 0 && laneIndex < Lanes.Length)
+        {
+            Instantiate(blockerPrefab, Lanes[laneIndex].position, Quaternion.identity);
+        }
+        else
+        {
+            Debug.LogError("Invalid lane index or lane Transform not assigned.");
+        }
+
+        yield return null;
+    }
+
+   
 
     private IEnumerator Attack()
     {
@@ -138,13 +121,34 @@ public class PlayerAttackHitBox : MonoBehaviour // This script is attached to th
         weaponMaterial.color = Color.blue;
     }
 
+    public void UpdateAttackSpeed(float amountToReduce)
+    {
+        if (attackSpeedUps < 5)
+        {
+            float convertedValue = amountToReduce / 100;
+            if (attackDuration > convertedValue && attackDuration + -convertedValue > 0)
+            {
+                attackDuration -= convertedValue;
+            }
+        }
+        attackSpeedUps += 1;
+    }
+
+    public void UpdateHammer(float amountToEnlarge)
+    {
+        float convertedValue = 1f + amountToEnlarge / 100;
+        weaponCollider.transform.localScale *= convertedValue;
+        HitBoxVisual.transform.localScale *= convertedValue;
+        Debug.Log($"Hammer has grown by {convertedValue} %");
+    }
+
     public void CanPlayerAttackThis(Collider other)
     {
         projectileHandler = other.GetComponent<ProjectileCollisionHandler>();
 
         if (projectileHandler != null )
         {
-            if (other.tag == "Knockback")
+            if (other.tag == "Knockback" || other.tag == "TowerBuster")
             {
                 projectileHandler.struckByWeapon = true;
 
@@ -166,9 +170,15 @@ public class PlayerAttackHitBox : MonoBehaviour // This script is attached to th
                 projectileHandler.struckByWeapon = false;
             }
         }
-        else
-        {
-            //Debug.LogError("No ProjectileCollisionHandler found on: " + other.gameObject.name);
-        }
+    }
+
+    private KeyCode GetPressedAlphaKey()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1)) return KeyCode.Alpha1;
+        if (Input.GetKeyDown(KeyCode.Alpha2)) return KeyCode.Alpha2;
+        if (Input.GetKeyDown(KeyCode.Alpha3)) return KeyCode.Alpha3;
+        if (Input.GetKeyDown(KeyCode.Alpha4)) return KeyCode.Alpha4;
+
+        return KeyCode.None;
     }
 }

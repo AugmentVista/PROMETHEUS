@@ -122,17 +122,17 @@
 //                    aliveEnemies.Add(baseEnemy);
 //                }
 //            }
-//        if (aliveEnemies.Count == 0 && deadEnemies.Count > 0)
-//        {
-//            allEnemiesInWaveSlain = true;
-//        }
-//        else
-//        {
-//            allEnemiesInWaveSlain = false;
-//        }
+//            if (aliveEnemies.Count == 0 && deadEnemies.Count > 0)
+//            {
+//                allEnemiesInWaveSlain = true;
+//            }
+//            else
+//            {
+//                allEnemiesInWaveSlain = false;
+//            }
 
-//        Debug.Log($"There are {aliveEnemies.Count} alive enemies and {deadEnemies.Count} dead enemies active");
-//        Debug.Log($"Is every enemy in this wave dead? {allEnemiesInWaveSlain}");
+//            Debug.Log($"There are {aliveEnemies.Count} alive enemies and {deadEnemies.Count} dead enemies active");
+//            Debug.Log($"Is every enemy in this wave dead? {allEnemiesInWaveSlain}");
 //        }
 //    }
 
@@ -152,12 +152,12 @@
 //            }
 //            isWaveRunning = false;
 //            aliveEnemies.Clear();
-//            deadEnemies.Clear ();
+//            deadEnemies.Clear();
 //            enemySpawn.ClearEnemyInstanceList();
 //        }
 //        else if (!allEnemiesInWaveSlain)
-//        { 
-//            isWaveRunning= true;
+//        {
+//            isWaveRunning = true;
 //        }
 //    }
 
@@ -176,7 +176,7 @@
 //        waveTrigger.OnPlayerEnterTrigger -= EnemyWaveTrigger_OnPlayerEnterTrigger;
 //    }
 
-    
+
 
 //    private void EndWaveTrigger_WaveEnd_ShowResults(object sender, EventArgs _) // End of Wave
 //    {

@@ -12,7 +12,7 @@ public class BaseProjectile : MonoBehaviour
 
     public enum ProjectileState { Traveling, Recycled, HitPlayer, MissedPlayer }
     public ProjectileState currentState;
-    public enum ProjectileEffect { KnockBack, Stun, Slow, Cash, Bomb }
+    public enum ProjectileEffect { KnockBack, TowerBuster, Slow, Cash, Bomb }
     public ProjectileEffect currentEffect;
 
     private float elapsedTime = 0f;
@@ -23,13 +23,13 @@ public class BaseProjectile : MonoBehaviour
 
     public int value;
 
-    public float stunDamage = 10f;
+    float TowerBusterDamage = 10f;
 
-    public float knockBackDamage = 25f;
+    public float knockBackDamage;
 
-    public float slowDamage = 2f;
+    float slowDamage = 2f;
 
-    public float bombDamage = 8f;
+    float bombDamage = 8f;
 
     private void Awake()
     {
@@ -78,12 +78,11 @@ public class BaseProjectile : MonoBehaviour
         {
             case ProjectileEffect.KnockBack:
                 Spin();
-                value = 4;
                 break;
             case ProjectileEffect.Slow:
                 value = 1;
                 break;
-            case ProjectileEffect.Stun:
+            case ProjectileEffect.TowerBuster:
                 value = 2;
                 break;
             case ProjectileEffect.Cash:

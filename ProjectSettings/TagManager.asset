@@ -17,6 +17,7 @@ TagManager:
   - PlayerCamera
   - Bridge
   - WaveText
+  - Blocker
   layers:
   - Default
   - TransparentFX

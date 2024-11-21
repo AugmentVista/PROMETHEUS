@@ -67,6 +67,10 @@ public class ProjectileCollisionHandler : MonoBehaviour
                 HandleProjectileCollision(other, "MissZone");
                 break;
 
+            case "Blocker":
+                HandleProjectileCollision(other, "Blocker");
+                break;
+
             default:
                // Debug.Log("Unknown projectile tag");
                 break;
@@ -103,10 +107,16 @@ public class ProjectileCollisionHandler : MonoBehaviour
             case "MissZone":
                 OnPlayerDamaged(false, gameObject.tag);
 
-                //OnCastleDamaged(true, gameObject.tag)
-
+                //OnTowerDamaged(true, gameObject.tag)
 
                 DisableColliderForPooling(); 
+                break;
+
+            case "Blocker":
+                Blocker blocker = other.GetComponent<Blocker>();
+                blocker.BlockerTakeDamage(Base.knockBackDamage);
+
+                DisableColliderForPooling();
                 break;
 
             default:
@@ -123,7 +133,6 @@ public class ProjectileCollisionHandler : MonoBehaviour
             switch (projectileType)
             {
                 case "Stone":// Reduce score
-                    PlayerHealthSystem.TakeDamage(Base.stunDamage);
                     playerMove.WasHit(true, projectileType);
                     break;
 
@@ -132,7 +141,7 @@ public class ProjectileCollisionHandler : MonoBehaviour
                     playerMove.WasHit(true, projectileType); // Move player backward
                     break;
 
-                case "Stun":
+                case "TowerBuster":
                     playerMove.WasHit(true, projectileType); // Stun the player
                     break;
 
@@ -145,10 +154,6 @@ public class ProjectileCollisionHandler : MonoBehaviour
                     break;
             }
         }
-        else
-        {
-        }
-
         DisableColliderForPooling();
     }
 
