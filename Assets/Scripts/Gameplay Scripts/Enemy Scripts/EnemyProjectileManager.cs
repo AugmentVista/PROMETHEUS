@@ -7,7 +7,7 @@ public class EnemyProjectileManager : MonoBehaviour
     public GameObject ProjectilePrefab;
     public GameObject[] Projectiles;
     private WaveUI waveUI;
-    private int maxProjectiles = 5;
+    private int maxProjectiles = 10;
     public Transform InitalPosition = null;
 
     private int currentProjectiles = 0;
@@ -29,7 +29,7 @@ public class EnemyProjectileManager : MonoBehaviour
         }
         else if (totalProjectilesCreated >= maxProjectiles) // has hit the max number of projectiles
         {
-            Debug.LogError(waveUI.waveCount);
+            Debug.Log(waveUI.waveCount);
             if (localWaveCount < waveUI.waveCount)
             {
                 totalProjectilesCreated = 0;   
@@ -37,9 +37,6 @@ public class EnemyProjectileManager : MonoBehaviour
                 maxProjectiles += waveUI.waveCount * 2;
                 localWaveCount++;
             }
-            //FireProjectile(localTransform);
-            //projectileInstance = FireProjectile(localTransform);
-            //return projectileInstance; // hand over the projectile to EnemyFire
             return null;
         }
         else
@@ -49,13 +46,59 @@ public class EnemyProjectileManager : MonoBehaviour
         return projectileInstance;
     }
 
+    public void RotateProjectilePool()
+
+    {
+        switch (waveUI.waveCount)
+        {
+            case 1:
+                Debug.Log("Projectile Rotator online");
+                break;
+            case 3:
+                
+                break; 
+            default:
+                Debug.Log("Rotator has exceeded current wave limits");
+                break;
+        }
+        Debug.Log(ProjectilePrefab);
+    }
+
+    private int GenerateNewProjectiles()
+    {
+        Debug.Log("can i have one debug log please?");
+        int p = 0;
+        int randomNumber = Random.Range(1, 101);
+        switch (randomNumber)
+        {
+            case int i when (i >= 1 /*+ (waveUI.waveCount * 10)*/ && i <= 50):
+                Debug.Log("First Result");
+
+                ProjectilePrefab = Projectiles[0];
+                p = 0;
+
+                Debug.Log(ProjectilePrefab.name);
+                break;
+
+            case int i when (i /*+ (waveUI.waveCount*10)*/ >= 51):
+                Debug.Log("Second Result");
+
+                ProjectilePrefab = Projectiles[0];
+                p = 1;
+
+                Debug.Log(ProjectilePrefab.name);
+                break;
+        }
+        Debug.Log(p + " is the value of p");
+        return p;
+    }
 
     GameObject FireProjectile(Transform localTransform)
     {
         GameObject projectileInstance;
         InitalPosition = localTransform;
-
-        projectileInstance = Instantiate(ProjectilePrefab, localTransform.position, Quaternion.identity);
+        Debug.Log(GenerateNewProjectiles());
+        projectileInstance = Instantiate(Projectiles[GenerateNewProjectiles()], localTransform.position, Quaternion.identity);
         totalProjectilesCreated += 1;
         currentProjectiles++;
         return projectileInstance;

@@ -221,6 +221,11 @@ public class Level_Manager : MonoBehaviour
         }
     }
 
+    public void ResetWave()
+    { 
+    
+    }
+
 
     private void SetupGameplayScene(Scene scene)
     {

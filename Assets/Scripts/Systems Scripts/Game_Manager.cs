@@ -37,10 +37,10 @@ public class Game_Manager : MonoBehaviour
 
     private void Level_Manager_CreateBridgeSectionDuringIntro(object sender, EventArgs _)
     {
-        //GameObject bridgeScriptHolder = GameObject.Find("Bridge Script Holder");
-        //SpawnBridge bridge = bridgeScriptHolder.GetComponent<SpawnBridge>();
-        //if (bridge != null)
-        //bridge.CreateBridge();
+        GameObject bridgeScriptHolder = GameObject.Find("Bridge Script Holder");
+        SpawnBridge bridge = bridgeScriptHolder.GetComponent<SpawnBridge>();
+        if (bridge != null)
+            bridge.CreateBridge();
         ResultsMenuTrigger();
     }
 
@@ -307,7 +307,17 @@ public class Game_Manager : MonoBehaviour
         if (currentScene.name != "Level_1") { level_Manager.LoadLevel_1(); }
         OnLevel1?.Invoke();
     }
-    
+    private void Restart()
+    {
+        Scene currentScene = SceneManager.GetActiveScene();
+        IsMenuOpen(false);
+        {
+            level_Manager.LoadLevel_1(); 
+        }
+        OnLevel1?.Invoke();
+    }
+
+
     private void GameOver()
     {
         Scene currentScene = SceneManager.GetActiveScene();

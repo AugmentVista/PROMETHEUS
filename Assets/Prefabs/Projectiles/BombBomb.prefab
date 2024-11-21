@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: -3158181525368003139}
   - component: {fileID: 5025310217177838612}
   m_Layer: 0
-  m_Name: Bomb
+  m_Name: BombBomb
   m_TagString: Knockback
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -148,7 +148,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37063564f08dbdf46a0436a0df4ff5b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  travelSpeed: 10
+  travelSpeed: 20
   currentState: 0
   currentEffect: 0
   value: 2

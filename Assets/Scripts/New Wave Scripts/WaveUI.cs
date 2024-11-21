@@ -5,17 +5,24 @@ using UnityEngine;
 public class WaveUI : MonoBehaviour
 {
     public int waveCount = 1;
-    public float waveMessageTime = 2f;
+    public float waveMessageTime = 0.5f;
 
 
     void Start()
     {
-        
+        StartCoroutine(WaveDelay());
+    }
+
+    private IEnumerator WaveDelay()
+    {
+        Debug.Log("Delay is running");
+        waveMessageTime += 0.25f;
+        yield return new WaitForSeconds(waveMessageTime);
     }
 
     public void NextWave()
     {
-        Debug.Log("What is going on with waves?");
+        WaveDelay();
         if (waveCount < 10) 
         {
             waveCount++;
