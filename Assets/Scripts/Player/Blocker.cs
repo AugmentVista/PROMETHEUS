@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Blocker : MonoBehaviour
 {
@@ -16,20 +17,35 @@ public class Blocker : MonoBehaviour
 
     public float currentblockerHealth;
 
+    public Image healthBar;
+
 
     private void Start()
     {
         blockerCollider = GetComponent<Collider>();
         currentblockerHealth = blockerMaxHP;
+
+        UpdateHealthBar();
     }
 
     public void BlockerTakeDamage(float damageTaken)
     {
         currentblockerHealth = Mathf.Clamp(currentblockerHealth - damageTaken, 0f, blockerMaxHP);
+
         Shrink();
+
+        UpdateHealthBar();
         if (currentblockerHealth <= 0f)
-        { 
+        {
             Destroy(gameObject, 0.5f);
+        }
+    }
+
+    private void UpdateHealthBar()
+    {
+        if (healthBar != null)
+        {
+            healthBar.fillAmount = currentblockerHealth / blockerMaxHP;
         }
     }
 
