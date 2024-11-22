@@ -1,6 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
-using System.Net;
 using UnityEngine;
 
 public class PlayerAttackHitBox : MonoBehaviour // This script is attached to the player weapon
@@ -9,6 +7,7 @@ public class PlayerAttackHitBox : MonoBehaviour // This script is attached to th
     private KeyCode blockKey;
 
     private ProjectileCollisionHandler projectileHandler;
+    private ShopManager shopManager;
 
     public GameObject rockSmashVFX;
     public GameObject HitBoxVisual;
@@ -49,6 +48,7 @@ public class PlayerAttackHitBox : MonoBehaviour // This script is attached to th
     {
         weaponCollider = GetComponent<Collider>();
         weaponVisual = GetComponent<Renderer>();
+        shopManager = FindAnyObjectByType<ShopManager>();
 
         idleColor = weaponVisual.material.color;
         idleWeapon = weaponMaterial;
@@ -93,22 +93,26 @@ public class PlayerAttackHitBox : MonoBehaviour // This script is attached to th
                 laneIndex = 3;
                 break;
         }
+       
 
-        if (laneIndex >= 0 && laneIndex < Lanes.Length)
+        if (shopManager.CanPlayerAffordBlocker())
         {
-            Transform spawnPosition = GetAvailableSpawnPosition(laneIndex);
-            if (spawnPosition != null)
+            if (laneIndex >= 0 && laneIndex < Lanes.Length)
             {
-                Instantiate(blockerPrefab, spawnPosition.position, Quaternion.identity);
+                Transform spawnPosition = GetAvailableSpawnPosition(laneIndex);
+                if (spawnPosition != null)
+                {
+                    Instantiate(blockerPrefab, spawnPosition.position, Quaternion.identity);
+                }
+                else
+                {
+                    Debug.Log("No available space to spawn blocker in lane " + laneIndex);
+                }
             }
             else
             {
-                Debug.Log("No available space to spawn blocker in lane " + laneIndex);
+                Debug.LogError("Invalid lane index or lane Transform not assigned.");
             }
-        }
-        else
-        {
-            Debug.LogError("Invalid lane index or lane Transform not assigned.");
         }
 
         yield return null;

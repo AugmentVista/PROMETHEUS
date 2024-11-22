@@ -9,7 +9,7 @@ public class WaveUI : MonoBehaviour
     public static bool FinalWaveConlcuded = false;
     public int waveCount = 1;
     public float waveMessageTime = 0.5f;
-
+    private int amountOfWavesToBeat = 8;
     private void Awake()
     {
         Scene thisScene = SceneManager.GetActiveScene();
@@ -51,7 +51,7 @@ public class WaveUI : MonoBehaviour
             TextMeshProUGUI waveTextUI = waveTextObject.GetComponent<TextMeshProUGUI>();
             if (waveTextUI != null)
             {
-                waveTextUI.text = $"Wave {waveCount} / 10";
+                waveTextUI.text = $"Wave {waveCount} / {amountOfWavesToBeat}";
             }
         }
     }
@@ -60,7 +60,7 @@ public class WaveUI : MonoBehaviour
     public void NextWave()
     {
         WaveDelay();
-        if (waveCount < 5)
+        if (waveCount < amountOfWavesToBeat)
         {
             waveCount++;
             GlobalSettings.globalWaveCount = waveCount;

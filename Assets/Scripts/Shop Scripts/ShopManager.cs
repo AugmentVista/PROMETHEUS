@@ -16,6 +16,8 @@ public class ShopManager : MonoBehaviour
     public Image drachmaTens;
     public Image drachmaHundreds;
 
+    public int blockerCost = 4;
+
     #endregion
     
     private int lastDrachma = -1;
@@ -92,4 +94,28 @@ public class ShopManager : MonoBehaviour
             return false;
         }
     }
+
+    public bool CanPlayerAffordBlocker()
+    {
+        if (scoreKeeper.score >= blockerCost)
+        {
+            SubtractScore(blockerCost);
+            Debug.Log($"Blocker spawned! Remaining score: {scoreKeeper.score}");
+            return true;
+        }
+        else
+        {
+            Debug.Log("Not enough score to spawn blocker.");
+            Debug.Log($"Player has {scoreKeeper.score} score, blocker cost is {blockerCost}");
+            return false;
+        }
+    }
+
+    public void SubtractScore(int amountToReduce)
+    {
+        scoreKeeper.score -= amountToReduce;
+        Debug.Log($"Score subtracted: {amountToReduce}. New score: {scoreKeeper.score}");
+    }
+
+
 }

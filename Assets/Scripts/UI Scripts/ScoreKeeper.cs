@@ -29,6 +29,7 @@ public class ScoreKeeper : MonoBehaviour
         {
             SetPointUINumbers(currentPoints);
             lastPointValue = currentPoints;
+            GlobalSettings.globalScore = score;
         }
 
         int currentDrachma = drachma;

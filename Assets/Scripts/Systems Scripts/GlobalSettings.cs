@@ -22,7 +22,7 @@ public class GlobalSettings : MonoBehaviour
 
     #region ScoreKeeper Variables
 
-    public static int globalScore = 0;
+    public static int globalScore = 40;
 
     public static int globalDrachma = 0;
 
