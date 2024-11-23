@@ -16,11 +16,9 @@ public class PlayerAttackHitBox : MonoBehaviour // This script is attached to th
 
     private Transform HandLocation;
 
-
     public Transform[] Lanes;
     public Transform[] LanesForward1;
     public Transform[] LanesForward2;
-
 
     public float attackDuration;
 
@@ -62,7 +60,7 @@ public class PlayerAttackHitBox : MonoBehaviour // This script is attached to th
     {
         if (Input.GetKeyDown(hitKey) && canAttack)
         {
-            StartCoroutine(Attack());
+            /*StartCoroutine*/Attack();
         }
         if (Input.GetKeyDown(KeyCode.Alpha1) ||
             Input.GetKeyDown(KeyCode.Alpha2) ||
@@ -120,7 +118,7 @@ public class PlayerAttackHitBox : MonoBehaviour // This script is attached to th
 
    
 
-    private IEnumerator Attack()
+    private void Attack()
     {
         weaponVisual.material.color = Color.red;
         weaponMaterial.color = Color.red;
@@ -128,9 +126,7 @@ public class PlayerAttackHitBox : MonoBehaviour // This script is attached to th
         weaponAnimator.SetTrigger("HammerTrigger");
 
         canAttack = false; 
-
         isAttacking = true;
-        yield return new WaitForSeconds(attackDuration);
         isAttacking = false;
         canAttack = true; // Allow attacks again
 

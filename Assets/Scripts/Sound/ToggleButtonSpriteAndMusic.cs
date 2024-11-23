@@ -11,7 +11,7 @@ public class ToggleButtonSpriteAndMusic : MonoBehaviour, IPointerEnterHandler, I
     public AudioSource musicSource;
 
     private Image buttonImage;
-    private bool isMusicPlaying = true; // Assuming music is playing by default
+    private bool isMusicPlaying = false; // Assuming music is playing by default
 
     private void Awake()
     {
