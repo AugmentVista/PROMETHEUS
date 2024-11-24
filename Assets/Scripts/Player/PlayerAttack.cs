@@ -19,16 +19,11 @@ public class PlayerAttack : MonoBehaviour // This script is attached to the play
     public Transform[] LanesForward1;
     public Transform[] LanesForward2;
 
-    public float attackDuration;
-
     private int attackSpeedUps = 0;
 
     private float checkRadius = 0.5f;
 
     public Renderer weaponVisual;
-
-    public Material weaponMaterial;
-    public Material idleWeapon;
 
     private Color idleColor;
 
@@ -46,10 +41,7 @@ public class PlayerAttack : MonoBehaviour // This script is attached to the play
         weaponCollider = GetComponent<Collider>();
         weaponVisual = GetComponent<Renderer>();
         shopManager = FindAnyObjectByType<ShopManager>();
-
-        idleColor = weaponVisual.material.color;
-        idleWeapon = weaponMaterial;
-        idleWeapon.color = weaponMaterial.color;
+       
         HandLocation = transform;
     }
 
@@ -119,8 +111,6 @@ public class PlayerAttack : MonoBehaviour // This script is attached to the play
 
     private void Attack()
     {
-        weaponVisual.material.color = Color.red;
-        weaponMaterial.color = Color.red;
 
         weaponAnimator.SetTrigger("HammerTrigger");
 
@@ -130,22 +120,19 @@ public class PlayerAttack : MonoBehaviour // This script is attached to the play
         canAttack = true; // Allow attacks again
 
         weaponAnimator.SetTrigger("Idle");
-
-        weaponVisual.material.color = idleColor;
-        weaponMaterial.color = Color.blue;
     }
 
     public void UpdateAttackSpeed(float amountToReduce)
     {
-        if (attackSpeedUps < 5)
-        {
-            float convertedValue = amountToReduce / 100;
-            if (attackDuration > convertedValue && attackDuration + -convertedValue > 0)
-            {
-                attackDuration -= convertedValue;
-            }
-        }
-        attackSpeedUps += 1;
+        //if (attackSpeedUps < 5)
+        //{
+        //    float convertedValue = amountToReduce / 100;
+        //    if (attackDuration > convertedValue && attackDuration + -convertedValue > 0)
+        //    {
+        //        attackDuration -= convertedValue;
+        //    }
+        //}
+        //attackSpeedUps += 1;
     }
 
     public void UpdateHammer(float amountToEnlarge)
