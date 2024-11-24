@@ -157,12 +157,12 @@ public class Level_Manager : MonoBehaviour
     private void OnSceneChanged(Scene previousScene, Scene newScene)
     {
         WaveUI.FinalWaveConlcuded = false;
-        PrepareScene(newScene);
+        PrepareScene(previousScene, newScene);
     }
 
-    private void PrepareScene(Scene scene)
+    private void PrepareScene(Scene previousScene, Scene newScene)
     {
-        switch (scene.name)
+        switch (newScene.name)
         {
             case "Level_1":
                 SetupGameplayScene();
@@ -177,7 +177,7 @@ public class Level_Manager : MonoBehaviour
                 SetupGameOver();
                 break;
             default:
-                Debug.LogWarning($"No specific setup for scene: {scene.name}");
+                Debug.LogWarning($"No specific setup for scene: {newScene.name}");
                 break;
         }
     }
@@ -256,7 +256,6 @@ public class Level_Manager : MonoBehaviour
 
     private void SetupGameplayScene()
     {
-       
     }
 
     private void SetupMainMenu()

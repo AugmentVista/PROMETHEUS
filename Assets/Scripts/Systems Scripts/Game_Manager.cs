@@ -304,7 +304,7 @@ public class Game_Manager : MonoBehaviour
     private void Level_1()
     {
         Scene currentScene = SceneManager.GetActiveScene();
-        level_Manager.LoadLevel_1(); 
+        if (currentScene.name != "Level_1") { level_Manager.LoadLevel_1(); }
         IsMenuOpen(false);
         OnLevel1?.Invoke();
     }

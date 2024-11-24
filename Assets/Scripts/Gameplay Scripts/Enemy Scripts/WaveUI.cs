@@ -8,8 +8,7 @@ public class WaveUI : MonoBehaviour
 {
     public static bool FinalWaveConlcuded = false;
     public int waveCount = 1;
-    public float waveMessageTime = 0.5f;
-    private int amountOfWavesToBeat = 8;
+    private int amountOfWavesToBeat = 20;
     private void Awake()
     {
         Scene thisScene = SceneManager.GetActiveScene();
@@ -19,23 +18,11 @@ public class WaveUI : MonoBehaviour
         }
     }
 
-
-    private void Start()
-    {
-        StartCoroutine(WaveDelay());
-    }
-
-    private IEnumerator WaveDelay()
-    {
-        waveMessageTime = 1.0f;
-        yield return new WaitForSeconds(waveMessageTime);
-    }
-
     public void RestartWave()
     {
-        waveMessageTime = 0f;
         waveCount = 0;
         NextWave();
+        SetWaveText();
     }
 
     private void Update()
@@ -45,8 +32,12 @@ public class WaveUI : MonoBehaviour
 
     public void SetWaveText()
     {
-        GameObject waveTextObject = GameObject.FindGameObjectWithTag("WaveText");
-        if (waveTextObject != null) 
+        GameObject waveTextObject;
+        if (waveTextObject = null)
+        { 
+            waveTextObject = GameObject.FindGameObjectWithTag("WaveText");
+        }
+        else if (waveTextObject != null) 
         { 
             TextMeshProUGUI waveTextUI = waveTextObject.GetComponent<TextMeshProUGUI>();
             if (waveTextUI != null)
@@ -59,12 +50,11 @@ public class WaveUI : MonoBehaviour
 
     public void NextWave()
     {
-        WaveDelay();
         if (waveCount < amountOfWavesToBeat)
         {
             waveCount++;
             GlobalSettings.globalWaveCount = waveCount;
-            //Debug.LogError($"Wave {waveCount} has begun");
+            Debug.Log($"Wave {waveCount} has begun");
         }
         else 
         {

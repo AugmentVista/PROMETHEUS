@@ -52,7 +52,7 @@ public class EnemyFire : MonoBehaviour
 
     private void TimedShots()
     {
-        if (elapsedTime > FiringCooldown)
+        if (elapsedTime > FiringCooldown && isGameActive)
         {
             FiringCooldown += ShotDelay();
             SpawnProjectile();
