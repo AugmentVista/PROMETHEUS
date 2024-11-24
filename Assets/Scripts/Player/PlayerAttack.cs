@@ -111,7 +111,6 @@ public class PlayerAttack : MonoBehaviour // This script is attached to the play
 
     private void Attack()
     {
-
         weaponAnimator.SetTrigger("HammerTrigger");
 
         canAttack = false;
