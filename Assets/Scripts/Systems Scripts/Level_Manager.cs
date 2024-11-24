@@ -34,10 +34,10 @@ public class Level_Manager : MonoBehaviour
     private void Start()
     {
         upgradeManager.UpdateUpgradeHealth += UpgradeEventManager_UpdateUpgradeHealth;
-        upgradeManager.UpdateUpgradeSprintSpeed += UpgradeEventManager_UpdateUpgradeSprintSpeed;
+        //upgradeManager.UpdateUpgradeSprintSpeed += UpgradeEventManager_UpdateUpgradeSprintSpeed;
         upgradeManager.UpdateUpgradeAttackSpeed += UpgradeEventManager_UpdateUpgradeAttackSpeed;
         upgradeManager.UpdateUpgradeHammer += UpgradeEventManager_UpdateUpgradeHammer;
-        upgradeManager.UpdateUpgradeStamina += UpgradeEventManager_UpdateUpgradeStamina;
+        //upgradeManager.UpdateUpgradeStamina += UpgradeEventManager_UpdateUpgradeStamina;
         upgradeManager.UpdateUpgradeBlock += UpgradeEventManager_UpdateUpgradeBlock;
     }
 
@@ -57,25 +57,25 @@ public class Level_Manager : MonoBehaviour
         if (healthSystem != null) { healthSystem.HpEvent(healthPotion); }
     }
 
-    private void UpgradeEventManager_UpdateUpgradeSprintSpeed(object sender, UpgradeEventArgs e)
-    {
-        SprintBoost sprint = FindObjectOfType<SprintBoost>(true);
-        ItemDisplay sprintUpgrade = e.Item;
-        Debug.Log($"Upgrade purchased of type {sprint}");
-        if (sprint != null) { sprint.IncreaseSprint(sprintUpgrade.Modifer);}
-    }
+    //private void UpgradeEventManager_UpdateUpgradeSprintSpeed(object sender, UpgradeEventArgs e)
+    //{
+    //    SprintBoost sprint = FindObjectOfType<SprintBoost>(true);
+    //    ItemDisplay sprintUpgrade = e.Item;
+    //    Debug.Log($"Upgrade purchased of type {sprint}");
+    //    if (sprint != null) { sprint.IncreaseSprint(sprintUpgrade.Modifer);}
+    //}
 
-    private void UpgradeEventManager_UpdateUpgradeStamina(object sender, UpgradeEventArgs e)
-    {
-        SprintBoost stamina = FindObjectOfType<SprintBoost>(true);
-        ItemDisplay staminaUpgrade = e.Item;
-        Debug.Log($"Upgrade purchased of type {stamina}");
-        if (stamina != null) { stamina.IncreaseStamina(staminaUpgrade.Modifer); }
-    }
+    //private void UpgradeEventManager_UpdateUpgradeStamina(object sender, UpgradeEventArgs e)
+    //{
+    //    SprintBoost stamina = FindObjectOfType<SprintBoost>(true);
+    //    ItemDisplay staminaUpgrade = e.Item;
+    //    Debug.Log($"Upgrade purchased of type {stamina}");
+    //    if (stamina != null) { stamina.IncreaseStamina(staminaUpgrade.Modifer); }
+    //}
 
     private void UpgradeEventManager_UpdateUpgradeAttackSpeed(object sender, UpgradeEventArgs e)
     { 
-        PlayerAttackHitBox attackHitBox = FindObjectOfType<PlayerAttackHitBox>(true);
+        PlayerAttack attackHitBox = FindObjectOfType<PlayerAttack>(true);
         ItemDisplay attackSpeedUpgrade = e.Item;
         Debug.Log($"Upgrade purchased of type {attackSpeedUpgrade}");
         if (attackHitBox != null) { attackHitBox.UpdateAttackSpeed(attackSpeedUpgrade.Modifer);}
@@ -83,7 +83,7 @@ public class Level_Manager : MonoBehaviour
 
     private void UpgradeEventManager_UpdateUpgradeHammer(object sender, UpgradeEventArgs e)
     { 
-        PlayerAttackHitBox hammerHitBox = FindObjectOfType<PlayerAttackHitBox>(true);
+        PlayerAttack hammerHitBox = FindObjectOfType<PlayerAttack>(true);
         ItemDisplay hammerUpgrade = e.Item;
         Debug.Log($"Upgrade purchased of type {hammerUpgrade}");
         if (hammerHitBox != null) { hammerHitBox.UpdateHammer(hammerUpgrade.Modifer);}
@@ -92,10 +92,10 @@ public class Level_Manager : MonoBehaviour
     private void OnDisable()
     {
         upgradeManager.UpdateUpgradeHealth -= UpgradeEventManager_UpdateUpgradeHealth;
-        upgradeManager.UpdateUpgradeSprintSpeed -= UpgradeEventManager_UpdateUpgradeSprintSpeed;
+        //upgradeManager.UpdateUpgradeSprintSpeed -= UpgradeEventManager_UpdateUpgradeSprintSpeed;
         upgradeManager.UpdateUpgradeAttackSpeed -= UpgradeEventManager_UpdateUpgradeAttackSpeed;
         upgradeManager.UpdateUpgradeHammer -= UpgradeEventManager_UpdateUpgradeHammer;
-        upgradeManager.UpdateUpgradeStamina -= UpgradeEventManager_UpdateUpgradeStamina;
+        //upgradeManager.UpdateUpgradeStamina -= UpgradeEventManager_UpdateUpgradeStamina;
         upgradeManager.UpdateUpgradeBlock -= UpgradeEventManager_UpdateUpgradeBlock;
     }
 

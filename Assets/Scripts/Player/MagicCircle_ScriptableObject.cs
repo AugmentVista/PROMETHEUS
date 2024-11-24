@@ -2,21 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Magic Circle", menuName = "Item")]
+[CreateAssetMenu(fileName = "Magic Circle", menuName = "Magics", order = 1)]
 public class MagicCircle_ScriptableObject : ScriptableObject
 {
-    public enum Effect
+    public int level;
+
+    public Ability ability;
+    public enum Ability
     {
         Duplicate,
-    }
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        Fortify
     }
 }

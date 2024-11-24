@@ -23,16 +23,26 @@ public class HammerThrow : MonoBehaviour
         {
             contactObjectDistance += upgradeAmount;
         }
-        //destroyOnContactObject.transform.position = releasePosition.transform.position + new Vector3 (0, 0, contactObjectDistance);
     }
 
     private void OnTriggerEnter(Collider other)
     {
         Debug.Log(other.tag);
-        if (other.CompareTag("Release"))
+        Debug.Log(other.name);
+        if (other.CompareTag("MagicCircle"))
         {
-            Debug.Log(other.name);
-            ThrowHammer(4);
+            
+            MagicCircleModular magicObj = other.GetComponent<MagicCircleModular>();
+            if (magicObj != null)
+            {
+                Debug.Log(other.name);
+
+                if (magicObj.Type == "Duplicate")
+                {
+                    Debug.LogError($"Target is {other.name} and {magicObj.name}");
+                    ThrowHammer(magicObj.Level);
+                }
+            }
         }
     }
 

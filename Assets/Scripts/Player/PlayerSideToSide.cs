@@ -9,12 +9,6 @@ public class PlayerSideToSide : MonoBehaviour
     public float sideMoveCooldown = 0.2f; // Time to wait between side movements
 
     private bool isMovingSide = false;
-    private FirstPersonController firstPersonController; 
-
-    private void Awake()
-    {
-        firstPersonController = GetComponent<FirstPersonController>(); 
-    }
 
     private void Update()
     {
@@ -23,7 +17,7 @@ public class PlayerSideToSide : MonoBehaviour
 
     private void HandleSideMovement()
     {
-        if (firstPersonController != null && !GlobalSettings.globalPauseOverride && !isMovingSide)
+        if (!GlobalSettings.globalPauseOverride && !isMovingSide)
         {
             if (Input.GetKeyDown(KeyCode.A))
             {

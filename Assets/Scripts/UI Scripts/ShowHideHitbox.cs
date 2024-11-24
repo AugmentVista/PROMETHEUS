@@ -6,12 +6,12 @@ using UnityEngine.UI;
 
 public class ShowHideHitbox : MonoBehaviour
 {
-    [SerializeField] private PlayerAttackHitBox hitBox;
+    [SerializeField] private PlayerAttack hitBox;
     [SerializeField] private Slider slider;
     [SerializeField] private GameObject hitBoxChild;
     public void DisplayHitBoxUI()
     {
-        PlayerAttackHitBox hitBox = FindAnyObjectByType<PlayerAttackHitBox>();
+        PlayerAttack hitBox = FindAnyObjectByType<PlayerAttack>();
         Slider slider = gameObject.GetComponent<Slider>();
         if (hitBox != null)
         {

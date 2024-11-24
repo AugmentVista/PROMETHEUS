@@ -21,6 +21,7 @@ TagManager:
   - TowerBuster
   - WeaponDestroyer
   - Release
+  - MagicCircle
   layers:
   - Default
   - TransparentFX

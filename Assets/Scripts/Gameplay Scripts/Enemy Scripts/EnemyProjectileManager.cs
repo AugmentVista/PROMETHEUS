@@ -9,7 +9,7 @@ public class EnemyProjectileManager : MonoBehaviour
     public GameObject[] Projectiles;
     private WaveUI waveUI;
     public int maxProjectiles = 10;
-    public int minProjectiles;
+    public int initalProjectiles;
     public Transform InitalPosition = null;
 
     private int currentProjectiles = 0;
@@ -19,7 +19,7 @@ public class EnemyProjectileManager : MonoBehaviour
 
     private void Start()
     {
-        minProjectiles = maxProjectiles;
+        initalProjectiles = maxProjectiles;
     }
     public GameObject RequestProjectile(Transform localTransform)
     {
@@ -92,7 +92,7 @@ public class EnemyProjectileManager : MonoBehaviour
         currentProjectiles = 0;
         totalProjectilesCreated = 0;
         localWaveCount = 0;
-        maxProjectiles =  minProjectiles;
+        maxProjectiles =  initalProjectiles;
         //Debug.LogError("All on screen bombs destroyed");
     }
 
