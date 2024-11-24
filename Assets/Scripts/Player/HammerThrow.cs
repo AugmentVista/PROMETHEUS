@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Progress;
 
 public class HammerThrow : MonoBehaviour
 {
@@ -27,20 +28,16 @@ public class HammerThrow : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log(other.tag);
-        Debug.Log(other.name);
         if (other.CompareTag("MagicCircle"))
         {
-            
             MagicCircleModular magicObj = other.GetComponent<MagicCircleModular>();
             if (magicObj != null)
             {
                 Debug.Log(other.name);
 
-                if (magicObj.Type == "Duplicate")
+                if (magicObj.IsTypeMatch("Duplicate"))
                 {
-                    Debug.LogError($"Target is {other.name} and {magicObj.name}");
-                    ThrowHammer(magicObj.Level);
+                    ThrowHammer(magicObj.level);
                 }
             }
         }

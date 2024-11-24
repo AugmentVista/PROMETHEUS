@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,17 +7,19 @@ public class MagicCircleModular : MonoBehaviour
 {
     [SerializeField] MagicCircle_ScriptableObject scriptableMagic;
 
-    public int Level;
+    public int level;
 
-    public string Type;
-
+    public string type;
 
     void Start()
     {
-        Level = scriptableMagic.level;
+        level = scriptableMagic.level;
 
-        Type = scriptableMagic.ability.ToString();
-        Debug.LogError(Type);
+        type = scriptableMagic.ability.ToString();
     }
 
+    public bool IsTypeMatch(string typeToCheck)
+    {
+        return type.Equals(typeToCheck, StringComparison.OrdinalIgnoreCase);
+    }
 }
