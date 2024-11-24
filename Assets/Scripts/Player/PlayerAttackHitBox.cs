@@ -60,7 +60,7 @@ public class PlayerAttackHitBox : MonoBehaviour // This script is attached to th
     {
         if (Input.GetKeyDown(hitKey) && canAttack)
         {
-            /*StartCoroutine*/Attack();
+            Attack();
         }
         if (Input.GetKeyDown(KeyCode.Alpha1) ||
             Input.GetKeyDown(KeyCode.Alpha2) ||

@@ -93,7 +93,7 @@ public class EnemyProjectileManager : MonoBehaviour
         totalProjectilesCreated = 0;
         localWaveCount = 0;
         maxProjectiles =  minProjectiles;
-        Debug.LogError("All on screen bombs destroyed");
+        //Debug.LogError("All on screen bombs destroyed");
     }
 
 
@@ -101,7 +101,7 @@ public class EnemyProjectileManager : MonoBehaviour
     {
         GameObject projectileInstance;
         InitalPosition = localTransform;
-        Debug.Log(GenerateNewProjectiles());
+        //Debug.Log(GenerateNewProjectiles());
         projectileInstance = Instantiate(Projectiles[GenerateNewProjectiles()], localTransform.position, Quaternion.identity);
         totalProjectilesCreated += 1;
         currentProjectiles++;

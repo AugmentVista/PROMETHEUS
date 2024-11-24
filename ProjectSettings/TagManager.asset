@@ -18,6 +18,9 @@ TagManager:
   - Bridge
   - WaveText
   - Blocker
+  - TowerBuster
+  - WeaponDestroyer
+  - Release
   layers:
   - Default
   - TransparentFX
