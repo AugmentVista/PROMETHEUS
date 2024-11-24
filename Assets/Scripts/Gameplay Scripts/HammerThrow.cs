@@ -23,7 +23,7 @@ public class HammerThrow : MonoBehaviour
         {
             contactObjectDistance += upgradeAmount;
         }
-        destroyOnContactObject.transform.position = releasePosition.transform.position + new Vector3 (0, 0, contactObjectDistance);
+        //destroyOnContactObject.transform.position = releasePosition.transform.position + new Vector3 (0, 0, contactObjectDistance);
     }
 
     private void OnTriggerEnter(Collider other)
