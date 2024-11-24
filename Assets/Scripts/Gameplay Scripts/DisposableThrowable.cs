@@ -28,6 +28,6 @@ public class DisposableThrowable : MonoBehaviour
 
     public void SelfDestruct()
     {
-        Destroy(gameObject, 1f);
+        Destroy(gameObject);
     }
 }
