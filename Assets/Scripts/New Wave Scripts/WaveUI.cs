@@ -64,7 +64,7 @@ public class WaveUI : MonoBehaviour
         {
             waveCount++;
             GlobalSettings.globalWaveCount = waveCount;
-            Debug.LogError($"Wave {waveCount} has begun");
+            //Debug.LogError($"Wave {waveCount} has begun");
         }
         else 
         {

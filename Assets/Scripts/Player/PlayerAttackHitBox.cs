@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class PlayerAttackHitBox : MonoBehaviour // This script is attached to the player weapon
 {
-    private KeyCode hitKey = KeyCode.Mouse0;
+    [SerializeField] private KeyCode hitKey = KeyCode.Mouse0;
     private KeyCode blockKey;
 
     private ProjectileCollisionHandler projectileHandler;
@@ -116,7 +116,7 @@ public class PlayerAttackHitBox : MonoBehaviour // This script is attached to th
         yield return null;
     }
 
-   
+
 
     private void Attack()
     {
@@ -125,7 +125,7 @@ public class PlayerAttackHitBox : MonoBehaviour // This script is attached to th
 
         weaponAnimator.SetTrigger("HammerTrigger");
 
-        canAttack = false; 
+        canAttack = false;
         isAttacking = true;
         isAttacking = false;
         canAttack = true; // Allow attacks again

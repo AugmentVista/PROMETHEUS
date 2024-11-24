@@ -7,13 +7,11 @@ public class HammerThrow : MonoBehaviour
     [SerializeField] GameObject destroyOnContactObject;
     [SerializeField] GameObject hammerPrefab;
 
-    [SerializeField] Rigidbody[] rb = new Rigidbody[2];
-
     [SerializeField] Transform releasePosition;
 
-    [SerializeField] float speed = 10f;
+    [SerializeField] float speed = 1000f;
 
-    [SerializeField] Vector3 offset = new Vector3(1, 0, 0);
+    [SerializeField] Vector3 offset = new Vector3(0, 0, 0);
 
     private int rangeUpgrades = 1;
     private int upgradeAmount = 10;
@@ -50,24 +48,21 @@ public class HammerThrow : MonoBehaviour
     public void ThrowHammer()
     {
         Debug.Log("Throwing Hammers");
-        GameObject firstHammerInstance = Instantiate(hammerPrefab, releasePosition.position + offset, Quaternion.identity);
+        GameObject firstHammerInstance = Instantiate(hammerPrefab, releasePosition.position, Quaternion.identity);
 
-        GameObject secondHammerInstance = Instantiate(hammerPrefab, releasePosition.position + -offset, Quaternion.identity);
+        // GameObject secondHammerInstance = Instantiate(hammerPrefab, releasePosition.position + -offset, Quaternion.identity);
+
+
+        Rigidbody rb = firstHammerInstance.GetComponent<Rigidbody>();
+        rb.AddForce(Vector3.forward * speed);
+       // rb[1] = secondHammerInstance.GetComponent<Rigidbody>();
 
         
-        rb[0] = firstHammerInstance.GetComponent<Rigidbody>();
-        rb[1] = secondHammerInstance.GetComponent<Rigidbody>();
-
-        Debug.Log(rb[0], rb[1]);
-
-        foreach (Rigidbody rigidbody in rb)
-        {
-            rigidbody.velocity = Vector3.forward * speed;
-            //rigidbody.gameObject.transform.SetParent(null);
-        }
-
         firstHammerInstance.AddComponent<DisposableThrowable>();
-        secondHammerInstance.AddComponent<DisposableThrowable>();
+        // secondHammerInstance.AddComponent<DisposableThrowable>();
+        
+
+       
     }
 
 }

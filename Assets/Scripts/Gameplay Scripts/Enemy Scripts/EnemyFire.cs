@@ -55,7 +55,6 @@ public class EnemyFire : MonoBehaviour
         if (elapsedTime > FiringCooldown)
         {
             FiringCooldown += ShotDelay();
-            Debug.LogWarning($"ShotDelay is: {ShotDelay()}");
             SpawnProjectile();
         }
     }

@@ -116,9 +116,7 @@ GameObject:
   - component: {fileID: 3741441852258093224}
   - component: {fileID: 793187256829548771}
   - component: {fileID: 6494432600350905646}
-  - component: {fileID: 367139776721924590}
   - component: {fileID: 6517110694808570720}
-  - component: {fileID: 1302757827443024570}
   - component: {fileID: 7257475583924413103}
   m_Layer: 0
   m_Name: HAMMER
@@ -193,43 +191,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &367139776721924590
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6394708610303585990}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 243ec8fb572cf3946ae4c4a7fdb41708, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rockSmashVFX: {fileID: 0}
-  HitBoxVisual: {fileID: 3230405817745983432}
-  RulerTargetDistance: {fileID: 0}
-  blockerPrefab: {fileID: 6611652781032945156, guid: 61b0acb87f55e16459f6404cea1212a8, type: 3}
-  Lanes:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  LanesForward1:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  LanesForward2:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  attackDuration: 0.001
-  weaponVisual: {fileID: 6494432600350905646}
-  weaponMaterial: {fileID: 2100000, guid: a6fcd240a91064543a1e89f38eeaf4e2, type: 2}
-  idleWeapon: {fileID: 2100000, guid: f91712e27b21c654a8beb1be4a2fec45, type: 2}
-  weaponCollider: {fileID: 6517110694808570720}
-  weaponAnimator: {fileID: 1302757827443024570}
 --- !u!65 &6517110694808570720
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -251,27 +212,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 100, y: 100, z: 100}
   m_Center: {x: 0, y: 0, z: 50}
---- !u!95 &1302757827443024570
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6394708610303585990}
-  m_Enabled: 0
-  m_Avatar: {fileID: 9000000, guid: deb4130e9e631634095cc965fef71e7c, type: 2}
-  m_Controller: {fileID: 9100000, guid: b6cff99fef5db39489744cc471dc8aae, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!54 &7257475583924413103
 Rigidbody:
   m_ObjectHideFlags: 0
