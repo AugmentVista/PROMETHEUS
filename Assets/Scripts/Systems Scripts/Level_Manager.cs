@@ -165,7 +165,7 @@ public class Level_Manager : MonoBehaviour
         switch (scene.name)
         {
             case "Level_1":
-                SetupGameplayScene(scene);
+                SetupGameplayScene();
                 break;
             case "MainMenu":
                 SetupMainMenu();
@@ -194,6 +194,8 @@ public class Level_Manager : MonoBehaviour
             CheckWinClause();
         }
     }
+
+    #region Resets
 
     public void ResetLevel(Game_Manager gameManager) 
     {
@@ -250,12 +252,11 @@ public class Level_Manager : MonoBehaviour
     
     }
 
+    #endregion
 
-    private void SetupGameplayScene(Scene scene)
+    private void SetupGameplayScene()
     {
-        Game_Manager gameManager = Singleton.instance.GetComponent<Game_Manager>();
-        GlobalSettings.globalPauseOverride = false;
-        gameManager.EnableGameplayCamera(true);
+       
     }
 
     private void SetupMainMenu()

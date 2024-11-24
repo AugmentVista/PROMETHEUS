@@ -296,42 +296,32 @@ public class Game_Manager : MonoBehaviour
     private void MainMenu()
     {
         Scene currentScene = SceneManager.GetActiveScene();
-        IsMenuOpen(true);
         if (currentScene.name != "Main Menu") { level_Manager.LoadMainMenu(); }
+        IsMenuOpen(true);
         OnMainMenu?.Invoke();
     }
 
     private void Level_1()
     {
         Scene currentScene = SceneManager.GetActiveScene();
+        level_Manager.LoadLevel_1(); 
         IsMenuOpen(false);
-        if (currentScene.name != "Level_1") { level_Manager.LoadLevel_1(); }
         OnLevel1?.Invoke();
     }
-    //private void Restart()
-    //{
-    //    Scene currentScene = SceneManager.GetActiveScene();
-    //    IsMenuOpen(false);
-    //    {
-    //        level_Manager.LoadLevel_1(); 
-    //    }
-    //    OnLevel1?.Invoke();
-    //}
-
 
     private void GameOver()
     {
         Scene currentScene = SceneManager.GetActiveScene();
-        IsMenuOpen(true);
         if (currentScene.name != "GameOver") { level_Manager.LoadGameOver(); }
+        IsMenuOpen(true);
         OnGameOver?.Invoke();
     }
 
     private void GameWin()
     {
         Scene currentScene = SceneManager.GetActiveScene();
-        IsMenuOpen(true);
         if (currentScene.name != "GameWin") { level_Manager.LoadGameWin(); }
+        IsMenuOpen(true);
         OnGameWin?.Invoke();
     }
 
