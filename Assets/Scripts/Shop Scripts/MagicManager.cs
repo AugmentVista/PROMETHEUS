@@ -9,17 +9,15 @@ public class MagicManager : MonoBehaviour
 
     [SerializeField] GameObject FirstPortal;
     [SerializeField] GameObject SecondPortal;
-    //[SerializeField] GameObject ThirdPortal;
+    [SerializeField] GameObject ThirdPortal;
     //[SerializeField] GameObject FourthPortal;
-
-
 
 
     void Start()
     {
         FirstPortal.SetActive(false);
         SecondPortal.SetActive(false);
-        //ThirdPortal.SetActive(false);
+        ThirdPortal.SetActive(false);
         //FourthPortal.SetActive(false);
     }
 
@@ -46,6 +44,11 @@ public class MagicManager : MonoBehaviour
                 SecondPortal.SetActive(true);
                 MagicCircleModular magCircle2 = SecondPortal.GetComponent<MagicCircleModular>();
                 magCircle2.scriptableMagic.level = level;
+                break;
+            case 3:
+                ThirdPortal.SetActive(true);
+                MagicCircleModular magCircle3 = SecondPortal.GetComponent<MagicCircleModular>();
+                magCircle3.scriptableMagic.level = level;
                 break;
             // Add additional cases if needed
             default:

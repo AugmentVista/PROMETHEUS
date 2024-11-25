@@ -10,7 +10,7 @@ public class CityHealthSystem : MonoBehaviour
     private float currentShield;
 
     private float maxHealth = GlobalSettings.globalCityMaxHP;
-    private float currentHealth;
+    public float currentHealth;
 
     private UI_Manager UI;
 
@@ -26,7 +26,6 @@ public class CityHealthSystem : MonoBehaviour
     private float targetShieldFill;
 
     private bool isCityAlive = true;
-
 
 
     private void Awake()

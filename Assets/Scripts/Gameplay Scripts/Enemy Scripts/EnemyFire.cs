@@ -11,7 +11,7 @@ public class EnemyFire : MonoBehaviour
     private float elapsedTime = 0f;
 
     private bool isGameActive = GlobalSettings.projectileSpawnerActive;
-    private float ShotDelay() { return Mathf.Round(Random.Range(4.0f - projectileManager.localWaveCount/10, 5.0f - projectileManager.localWaveCount / 10) * 100) / 100; } // produces clean decimals
+    private float ShotDelay() { return Mathf.Round(Random.Range(4.0f - projectileManager.localWaveCount/5, 5.0f - projectileManager.localWaveCount / 5) * 100) / 100; } // produces clean decimals
 
     private float FiringCooldown = 1f;
 
@@ -55,6 +55,7 @@ public class EnemyFire : MonoBehaviour
         if (elapsedTime > FiringCooldown && isGameActive)
         {
             FiringCooldown += ShotDelay();
+            Debug.LogWarning(ShotDelay());
             SpawnProjectile();
         }
     }

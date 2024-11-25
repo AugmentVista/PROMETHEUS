@@ -29,9 +29,34 @@ public class HammerThrow : MonoBehaviour
                 {
                     FortifyHammer(magicObj.level);
                 }
+                if (magicObj.IsTypeMatch("Vitality"))
+                {
+                    EnduringHammer(magicObj.level);
+                }
             }
         }
     }
+
+    public void EnduringHammer(int lifegain)
+    {
+        Vector3 randomOffset = new Vector3(0, 0, Random.Range(-1.5f, 1.5f));
+        Vector3 spawnPosition = transform.position + randomOffset;
+
+        GameObject hammerInstance = Instantiate(hammerPrefab, spawnPosition, Quaternion.identity);
+
+        Rigidbody rb = hammerInstance.GetComponent<Rigidbody>();
+        rb.AddForce(Vector3.forward.normalized * speed, ForceMode.Impulse);
+
+        Blocker HP = hammerInstance.GetComponent<Blocker>();
+
+        HP.blockerMaxHP = lifegain * lifegain;
+        CityHealthSystem cityHP = FindObjectOfType<CityHealthSystem>();
+        Debug.Log(cityHP.currentHealth + "CITY HP BEFORE");
+        cityHP.Heal(lifegain);
+        hammerInstance.AddComponent<DisposableThrowable>();
+        Debug.Log(cityHP.currentHealth + "CITY HP AFTER");
+    }
+
 
     public void FortifyHammer(int size)
     {
@@ -42,7 +67,7 @@ public class HammerThrow : MonoBehaviour
         hammerInstance.transform.localScale *= size;
 
         Rigidbody rb = hammerInstance.GetComponent<Rigidbody>();
-        rb.AddForce(Vector3.forward.normalized * speed, ForceMode.Impulse);
+        rb.AddForce(Vector3.forward.normalized * speed * 0.75f, ForceMode.Impulse);
 
         Blocker HP = hammerInstance.GetComponent<Blocker>();
         
@@ -59,12 +84,10 @@ public class HammerThrow : MonoBehaviour
 
             GameObject hammerInstance = Instantiate(hammerPrefab, spawnPosition, Quaternion.identity);
 
-            // Get Rigidbody and add force with slight directional variation
             Rigidbody rb = hammerInstance.GetComponent<Rigidbody>();
             Vector3 randomDirection = Vector3.forward + new Vector3(Random.Range(-0.1f, 0.1f), Random.Range(-0.05f, 0.05f), 0);
-            rb.AddForce(randomDirection.normalized * speed, ForceMode.Impulse);
+            rb.AddForce(randomDirection.normalized * speed * 1.25f, ForceMode.Impulse);
 
-            // Add the DisposableThrowable component
             hammerInstance.AddComponent<DisposableThrowable>();
         }
     }

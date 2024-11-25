@@ -11,6 +11,7 @@ public class MagicCircle_ScriptableObject : ScriptableObject
     public enum Ability
     {
         Duplicate,
-        Fortify
+        Fortify,
+        Vitality,
     }
 }

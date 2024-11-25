@@ -114,7 +114,7 @@ public class UpgradeEventManager : MonoBehaviour // this needs to be on an objec
             case "Magic Upgrade":
                 if (Item.IsTitleMatch("Magic Upgrade"))
                 {
-                    if (magicUpgradesPurchased < 5)
+                    if (magicUpgradesPurchased < 4)
                     {
                         UpdateUpgradeMagic?.Invoke(this, new UpgradeEventArgs(Item));
                         magicUpgradesPurchased += 1;
