@@ -5,6 +5,13 @@ public class UpgradeEventManager : MonoBehaviour // this needs to be on an objec
 {
     [SerializeField] private GlobalSettings settings;
 
+    [SerializeField] GameObject PlayerHealthMerchandise;
+    [SerializeField] GameObject HammerMerchandise;
+    [SerializeField] GameObject CityHealthMerchandise;
+    [SerializeField] GameObject ToBeChanged;
+    [SerializeField] GameObject ToBeChanged2;
+    [SerializeField] GameObject BlockMerchandise;
+
     [SerializeField] private Button_UpgradeEvent upgradeButton;
 
     private int healthUpgradesPurchased = 0;
@@ -41,13 +48,18 @@ public class UpgradeEventManager : MonoBehaviour // this needs to be on an objec
             case "Health Potion":
                 if (Item.IsTitleMatch("Health Potion"))
                 {
-                    if (healthUpgradesPurchased < 5)
+                    if (healthUpgradesPurchased <= 5)
                     {
                         UpdateUpgradeHealth?.Invoke(this, new UpgradeEventArgs(Item));
                         Debug.Log("Player bought a Health Potion");
                         healthUpgradesPurchased += 1;
                     }
-                    else { Debug.LogError($"Player has bought the last {Item}"); }
+                    else 
+                    {
+                        PlayerHealthMerchandise.SetActive(false);
+                        DataToBigDisplay.DisplayDefault();
+                        Debug.LogError($"Player has bought the last {Item}"); 
+                    }
                 }
                 break;
             case "Hammer Upgrade":
@@ -58,7 +70,12 @@ public class UpgradeEventManager : MonoBehaviour // this needs to be on an objec
                         UpdateUpgradeHammer?.Invoke(this, new UpgradeEventArgs(Item));
                         hammerUpgradesPurchased += 1;
                     }
-                    else { Debug.LogError($"Player has bought the last {Item}"); }
+                    else
+                    {
+                        HammerMerchandise.SetActive(false);
+                        DataToBigDisplay.DisplayDefault();
+                        Debug.LogError($"Player has bought the last {Item}");
+                    }
                 }
                 break;
                 case "City Health Upgrade":
@@ -70,7 +87,12 @@ public class UpgradeEventManager : MonoBehaviour // this needs to be on an objec
                         cityHealthUpgradesPurchased += 1;
                         Debug.Log($"Player bought A {Item}");
                     }
-                    else { Debug.LogError($"Player has bought the last {Item}"); }
+                    else
+                    {
+                        CityHealthMerchandise.SetActive(false);
+                        DataToBigDisplay.DisplayDefault();
+                        Debug.LogError($"Player has bought the last {Item}");
+                    }
                 }
                 break;
                 case "Attack Speed Upgrade":
@@ -81,20 +103,30 @@ public class UpgradeEventManager : MonoBehaviour // this needs to be on an objec
                         UpdateUpgradeAttackSpeed?.Invoke(this, new UpgradeEventArgs(Item));
                         attackSpeedUpgradesPurchased += 1;
                     }
-                    else { Debug.LogError($"Player has bought the last {Item}"); }
+                    else
+                    {
+                        ToBeChanged.SetActive(false);
+                        DataToBigDisplay.DisplayDefault();
+                        Debug.LogError($"Player has bought the last {Item}");
+                    }
                 }
                 break;
-                //case "Sprint Speed Upgrade":
-                //if (Item.IsTitleMatch("Sprint Speed Upgrade"))
-                //{
-                //    if (sprintSpeedUpgradesPurchased < 5)
-                //    { 
-                //        UpdateUpgradeSprintSpeed?.Invoke(this, new UpgradeEventArgs(Item));
-                //        cityHealthUpgradesPurchased += 1;
-                //    }
-                //    else { Debug.LogError($"Player has bought the last {Item}"); }
-                //}
-                //break;
+            case "Sprint Speed Upgrade":
+                if (Item.IsTitleMatch("Sprint Speed Upgrade"))
+                {
+                    if (sprintSpeedUpgradesPurchased < 5)
+                    {
+                        UpdateUpgradeSprintSpeed?.Invoke(this, new UpgradeEventArgs(Item));
+                        cityHealthUpgradesPurchased += 1;
+                    }
+                    else
+                    {
+                        ToBeChanged2.SetActive(false);
+                        DataToBigDisplay.DisplayDefault();
+                        Debug.LogError($"Player has bought the last {Item}");
+                    }
+                }
+                break;
             case "Block Upgrade":
                 if (Item.IsTitleMatch("Block Upgrade"))
                 {
@@ -103,7 +135,12 @@ public class UpgradeEventManager : MonoBehaviour // this needs to be on an objec
                         UpdateUpgradeBlock?.Invoke(this, new UpgradeEventArgs(Item));
                         blockUpgradesPurchased += 1;
                     }
-                    else { Debug.LogError($"Player has bought the last {Item}"); }
+                    else
+                    {
+                        BlockMerchandise.SetActive(false);
+                        DataToBigDisplay.DisplayDefault();
+                        Debug.LogError($"Player has bought the last {Item}");
+                    }
                 }
                 break;
             default:
