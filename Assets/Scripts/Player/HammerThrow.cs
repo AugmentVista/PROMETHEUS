@@ -9,7 +9,7 @@ public class HammerThrow : MonoBehaviour
 
     [SerializeField] Transform releasePosition;
 
-    [SerializeField] float speed = 1000f;
+    float speed = 1000f;
 
     [SerializeField] Vector3 offset = new Vector3(2, 0, 0);
 
@@ -71,7 +71,7 @@ public class HammerThrow : MonoBehaviour
         {
             GameObject hammerInstance = Instantiate(hammerPrefab, releasePosition.position +  new Vector3(-2 + i, 0, 0) , Quaternion.identity);
             Rigidbody rb = hammerInstance.GetComponent<Rigidbody>();
-            rb.AddForce(Vector3.forward * 800f);
+            rb.AddForce(Vector3.forward * speed);
             hammerInstance.AddComponent<DisposableThrowable>();
         }
     }

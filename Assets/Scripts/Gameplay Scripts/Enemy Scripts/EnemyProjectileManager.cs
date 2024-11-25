@@ -58,25 +58,20 @@ public class EnemyProjectileManager : MonoBehaviour
         int randomNumber = Random.Range(1, 101);
         switch (randomNumber)
         {
-            case int i when (i >= 1 /*+ (waveUI.waveCount * 10)*/ && i <= 50):
-                //Debug.Log("First Result");
+            case int i when (i >= 1 && i <= 50):
 
                 ProjectilePrefab = Projectiles[0];
                 p = 0;
 
-                //Debug.Log(ProjectilePrefab.name);
                 break;
 
-            case int i when (i /*+ (waveUI.waveCount*10)*/ >= 51):
-                //Debug.Log("Second Result");
+            case int i when (i >= 51):
 
                 ProjectilePrefab = Projectiles[0];
                 p = 1;
 
-                //Debug.Log(ProjectilePrefab.name);
                 break;
         }
-        //Debug.Log(p + " is the value of p");
         return p;
     }
 

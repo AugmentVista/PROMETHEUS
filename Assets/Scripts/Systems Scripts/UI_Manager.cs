@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class UI_Manager : MonoBehaviour
@@ -13,6 +14,11 @@ public class UI_Manager : MonoBehaviour
     public GameObject gameWinUI;
     public GameObject upgradesUI;
     public GameObject resultsUI;
+
+    [Header("City Variables")]
+    public Image CityShieldImage;
+    public Image CityHealthImage;
+
 
     void Start()
     {

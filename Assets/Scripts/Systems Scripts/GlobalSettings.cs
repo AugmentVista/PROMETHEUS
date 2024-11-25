@@ -36,10 +36,16 @@ public class GlobalSettings : MonoBehaviour
 
     #endregion
 
+    #region City Variables
+
+    public static float globalCityMaxHP = 100f;
+   
+    #endregion
+
 
     #region Player Movement Variables
 
-        #region fpc MonoBehaviour
+    #region fpc MonoBehaviour
 
     public static float globalSprintSpeed = 10f;
     public static float globalSprintDuration = 5f;

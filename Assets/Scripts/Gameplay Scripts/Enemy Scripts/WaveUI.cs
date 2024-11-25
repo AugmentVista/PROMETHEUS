@@ -1,4 +1,4 @@
-using System.Collections;
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -9,10 +9,12 @@ public class WaveUI : MonoBehaviour
     public static bool FinalWaveConlcuded = false;
     public int waveCount = 1;
     private int amountOfWavesToBeat = 20;
+
+
     private void Awake()
     {
         Scene thisScene = SceneManager.GetActiveScene();
-        if (thisScene.name != "Level_1")
+        if (thisScene.name == "Level_1")
         {
             SetWaveText();
         }
@@ -32,21 +34,24 @@ public class WaveUI : MonoBehaviour
 
     public void SetWaveText()
     {
-        GameObject waveTextObject;
-        if (waveTextObject = null)
-        { 
-            waveTextObject = GameObject.FindGameObjectWithTag("WaveText");
-        }
-        else if (waveTextObject != null) 
-        { 
-            TextMeshProUGUI waveTextUI = waveTextObject.GetComponent<TextMeshProUGUI>();
-            if (waveTextUI != null)
+        try
+        {
+            GameObject waveTextObject = GameObject.FindGameObjectWithTag("WaveText");
+
+            if (waveTextObject != null)
             {
-                waveTextUI.text = $"Wave {waveCount} / {amountOfWavesToBeat}";
+                TextMeshProUGUI waveTextUI = waveTextObject.GetComponent<TextMeshProUGUI>();
+                if (waveTextUI != null)
+                {
+                    waveTextUI.text = $"Wave {waveCount} / {amountOfWavesToBeat}";
+                }
             }
         }
+        catch (Exception ex)
+        {
+            Debug.LogWarning($"SetWaveText failed, WaveUI not found in this scene: {ex.Message}\n{ex.StackTrace}");
+        }
     }
-
 
     public void NextWave()
     {
