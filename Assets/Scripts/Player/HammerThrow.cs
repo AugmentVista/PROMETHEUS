@@ -47,9 +47,6 @@ public class HammerThrow : MonoBehaviour
         Rigidbody rb = hammerInstance.GetComponent<Rigidbody>();
         rb.AddForce(Vector3.forward.normalized * speed, ForceMode.Impulse);
 
-        Blocker HP = hammerInstance.GetComponent<Blocker>();
-
-        HP.blockerMaxHP = lifegain * lifegain;
         CityHealthSystem cityHP = FindObjectOfType<CityHealthSystem>();
         Debug.Log(cityHP.currentHealth + "CITY HP BEFORE");
         cityHP.Heal(lifegain);
@@ -58,26 +55,30 @@ public class HammerThrow : MonoBehaviour
     }
 
 
-    public void FortifyHammer(int size)
+    public void FortifyHammer(int sizeMultiplier)
     {
         Vector3 randomOffset = new Vector3(0, 0, Random.Range(-1.5f, 1.5f));
         Vector3 spawnPosition = transform.position + randomOffset;
 
         GameObject hammerInstance = Instantiate(hammerPrefab, spawnPosition, Quaternion.identity);
-        hammerInstance.transform.localScale *= size;
+
+        float scaleMultiplier = 1f + (sizeMultiplier * 1.5f); // Adjust this factor as needed
+        Vector3 newScale = hammerPrefab.transform.localScale * scaleMultiplier;
+        hammerInstance.transform.localScale = newScale;
 
         Rigidbody rb = hammerInstance.GetComponent<Rigidbody>();
-        rb.AddForce(Vector3.forward.normalized * speed * 0.75f, ForceMode.Impulse);
+        rb.AddForce(Vector3.forward.normalized * speed, ForceMode.Impulse);
 
-        Blocker HP = hammerInstance.GetComponent<Blocker>();
-        
-        HP.blockerMaxHP *= size;
         hammerInstance.AddComponent<DisposableThrowable>();
+
+        Debug.Log($"Hammer created with scale multiplier: {scaleMultiplier}, Final scale: {newScale}");
     }
+
+
 
     public void DuplicateHammer(int amountToCreate)
     {
-        for (int i = 0; i < amountToCreate; i++)
+        for (int i = 0; i < amountToCreate+1; i++)
         {
             Vector3 randomOffset = new Vector3(0, 0, Random.Range(-1.5f, 1.5f));
             Vector3 spawnPosition = transform.position + new Vector3(-3 + i, 0, 0) + randomOffset;
@@ -86,7 +87,7 @@ public class HammerThrow : MonoBehaviour
 
             Rigidbody rb = hammerInstance.GetComponent<Rigidbody>();
             Vector3 randomDirection = Vector3.forward + new Vector3(Random.Range(-0.1f, 0.1f), Random.Range(-0.05f, 0.05f), 0);
-            rb.AddForce(randomDirection.normalized * speed * 1.25f, ForceMode.Impulse);
+            rb.AddForce(randomDirection.normalized * speed, ForceMode.Impulse);
 
             hammerInstance.AddComponent<DisposableThrowable>();
         }

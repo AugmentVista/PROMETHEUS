@@ -18,7 +18,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2395421241238481253
 RectTransform:
   m_ObjectHideFlags: 0
@@ -296,11 +296,9 @@ GameObject:
   - component: {fileID: 6494432600350905646}
   - component: {fileID: 6517110694808570720}
   - component: {fileID: 7257475583924413103}
-  - component: {fileID: 4815608091193606677}
-  - component: {fileID: 4580753269675116525}
   m_Layer: 0
   m_Name: HAMMER
-  m_TagString: Blocker
+  m_TagString: Weapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -420,36 +418,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 6
   m_CollisionDetection: 2
---- !u!114 &4815608091193606677
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6394708610303585990}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e01b4b19f443e04596a1ae3c207e4e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rockSmashVFX: {fileID: 3741534511865145610, guid: c0cde899d2ec3fe4190c2a516e0462f4, type: 3}
-  blockerMaxHP: 50
-  currentblockerHealth: 0
-  healthBar: {fileID: 2589960135421960277}
---- !u!114 &4580753269675116525
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6394708610303585990}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e108d8b765c00b54682deaae370344d4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  blocker: {fileID: 4815608091193606677}
-  healthBarFill: {fileID: 2589960135421960277}
 --- !u!1 &6534131762409007114
 GameObject:
   m_ObjectHideFlags: 0

@@ -219,7 +219,9 @@ public class Level_Manager : MonoBehaviour
         }
         if (WaveUI.FinalWaveConlcuded)
         {
+            Win = true;
             CheckWinClause();
+            WaveUI.FinalWaveConlcuded = false;
         }
     }
 

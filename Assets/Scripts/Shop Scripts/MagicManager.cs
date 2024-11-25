@@ -33,22 +33,32 @@ public class MagicManager : MonoBehaviour
 
     private void ActivatePortal(int level)
     {
+        MagicCircleModular magCircle = FirstPortal.GetComponent<MagicCircleModular>();
+        MagicCircleModular magCircle2 = SecondPortal.GetComponent<MagicCircleModular>();
+        MagicCircleModular magCircle3 = SecondPortal.GetComponent<MagicCircleModular>();
         switch (level)
         {
             case 1:
                 FirstPortal.SetActive(true);
-                MagicCircleModular magCircle = FirstPortal.GetComponent<MagicCircleModular>();
-                magCircle.scriptableMagic.level = level;
+                
+                magCircle.level = level;
                 break;
             case 2:
                 SecondPortal.SetActive(true);
-                MagicCircleModular magCircle2 = SecondPortal.GetComponent<MagicCircleModular>();
-                magCircle2.scriptableMagic.level = level;
+
+                magCircle.level = level;
+                magCircle2.level = level;
                 break;
             case 3:
                 ThirdPortal.SetActive(true);
-                MagicCircleModular magCircle3 = SecondPortal.GetComponent<MagicCircleModular>();
-                magCircle3.scriptableMagic.level = level;
+                magCircle.level = level;
+                magCircle2.level = level;
+                magCircle3.level = level;
+                break;
+            case 4:
+                magCircle.level = level;
+                magCircle2.level = level;
+                magCircle3.level = level;
                 break;
             // Add additional cases if needed
             default:
