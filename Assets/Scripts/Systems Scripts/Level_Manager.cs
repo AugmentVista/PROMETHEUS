@@ -238,6 +238,7 @@ public class Level_Manager : MonoBehaviour
         }
         ResetPlayerPosition();
         ResetWave();
+        ResetCity();
         gameManager.hasHitEndWaveTrigger = false;
     }
 
@@ -252,6 +253,16 @@ public class Level_Manager : MonoBehaviour
             playerTransform.position = respawn.position;
             playerHealth.ResetPlayerHealth();
             Debug.Log($"Found player object: {playerTransform.name}");
+        }
+    }
+
+    public void ResetCity()
+    {
+        CityHealthSystem city = FindObjectOfType<CityHealthSystem>(true);
+        if (city != null)
+        {
+            city.ResetCity();
+            Debug.Log($"City has been reset: {city.gameObject.name}");
         }
     }
 
