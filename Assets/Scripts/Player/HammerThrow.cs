@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using UnityEngine;
 
 public class HammerThrow : MonoBehaviour
@@ -7,23 +8,9 @@ public class HammerThrow : MonoBehaviour
     [SerializeField] GameObject destroyOnContactObject;
     [SerializeField] GameObject hammerPrefab;
 
-    [SerializeField] Transform releasePosition;
+    float speed = 10f;
 
-    float speed = 1000f;
-
-    [SerializeField] Vector3 offset = new Vector3(2, 0, 0);
-
-    private int rangeUpgrades = 1;
-    private int upgradeAmount = 10;
-    private int contactObjectDistance = 1;
-
-    private void Awake()
-    {
-        for (int i = 0; i < rangeUpgrades; i++)
-        {
-            contactObjectDistance += upgradeAmount;
-        }
-    }
+    [SerializeField] Vector3 offset = new Vector3(0, 0, 0);
 
     private void OnTriggerEnter(Collider other)
     {
@@ -36,42 +23,48 @@ public class HammerThrow : MonoBehaviour
 
                 if (magicObj.IsTypeMatch("Duplicate"))
                 {
-                    ThrowHammer(magicObj.level);
+                    DuplicateHammer(magicObj.level);
+                }
+                if (magicObj.IsTypeMatch("Fortify"))
+                {
+                    FortifyHammer(magicObj.level);
                 }
             }
         }
     }
 
-    public void UpgradeHammerRange()
+    public void FortifyHammer(int size)
     {
-        if (rangeUpgrades * upgradeAmount != contactObjectDistance)
-        {
-            contactObjectDistance = rangeUpgrades * upgradeAmount;
-            destroyOnContactObject.transform.position = releasePosition.transform.position + new Vector3(0, 0, contactObjectDistance);
-        }
+        Vector3 randomOffset = new Vector3(0, 0, Random.Range(-1.5f, 1.5f));
+        Vector3 spawnPosition = transform.position + randomOffset;
+
+        GameObject hammerInstance = Instantiate(hammerPrefab, spawnPosition, Quaternion.identity);
+        hammerInstance.transform.localScale *= size;
+
+        Rigidbody rb = hammerInstance.GetComponent<Rigidbody>();
+        rb.AddForce(Vector3.forward.normalized * speed, ForceMode.Impulse);
+
+        Blocker HP = hammerInstance.GetComponent<Blocker>();
+        
+        HP.blockerMaxHP *= size;
+        hammerInstance.AddComponent<DisposableThrowable>();
     }
 
-    public void ThrowHammer(int amountToCreate)
+    public void DuplicateHammer(int amountToCreate)
     {
-        switch (amountToCreate)
-        {
-            case 1:
-                Debug.Log("Single Shot");
-                break;
-            case 2:
-                Debug.Log("Double Shot");
-                break;
-            case 3:
-                
-                break;
-            default:
-                break;
-        }
         for (int i = 0; i < amountToCreate; i++)
         {
-            GameObject hammerInstance = Instantiate(hammerPrefab, releasePosition.position +  new Vector3(-2 + i, 0, 0) , Quaternion.identity);
+            Vector3 randomOffset = new Vector3(0, 0, Random.Range(-1.5f, 1.5f));
+            Vector3 spawnPosition = transform.position + new Vector3(-3 + i, 0, 0) + randomOffset;
+
+            GameObject hammerInstance = Instantiate(hammerPrefab, spawnPosition, Quaternion.identity);
+
+            // Get Rigidbody and add force with slight directional variation
             Rigidbody rb = hammerInstance.GetComponent<Rigidbody>();
-            rb.AddForce(Vector3.forward * speed);
+            Vector3 randomDirection = Vector3.forward + new Vector3(Random.Range(-0.1f, 0.1f), Random.Range(-0.05f, 0.05f), 0);
+            rb.AddForce(randomDirection.normalized * speed, ForceMode.Impulse);
+
+            // Add the DisposableThrowable component
             hammerInstance.AddComponent<DisposableThrowable>();
         }
     }

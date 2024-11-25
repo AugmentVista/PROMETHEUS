@@ -9,6 +9,8 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: MagicCircle
   m_Shader: {fileID: 211, guid: 0000000000000000f000000000000000, type: 0}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
   - _ALPHABLEND_ON
   m_InvalidKeywords: []
@@ -20,6 +22,7 @@ Material:
     RenderType: Transparent
   disabledShaderPasses:
   - GRABPASS
+  m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -70,10 +73,10 @@ Material:
     - _Cull: 0
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
-    - _DistortionBlend: 0.5
+    - _DistortionBlend: 0.264
     - _DistortionEnabled: 0
-    - _DistortionStrength: 1
-    - _DistortionStrengthScaled: 0
+    - _DistortionStrength: 7
+    - _DistortionStrengthScaled: 0.7
     - _DstBlend: 10
     - _EmissionEnabled: 0
     - _FlipbookMode: 0

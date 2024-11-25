@@ -9748,7 +9748,7 @@ GameObject:
   - component: {fileID: 6451049463744956099}
   - component: {fileID: 9177502751203445255}
   - component: {fileID: 6779689672836421321}
-  - component: {fileID: 1600232879762707204}
+  - component: {fileID: 5849197501722274014}
   m_Layer: 0
   m_Name: Magic Circle Hitbox
   m_TagString: Magic Circle
@@ -9843,7 +9843,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1600232879762707204
+--- !u!114 &5849197501722274014
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9856,6 +9856,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scriptableMagic: {fileID: 11400000, guid: acb46951e15d791469ba94e32e3cebf4, type: 2}
+  DestroyWeaponTransform: {fileID: 4197513985993262395}
   level: 0
   type: 
 --- !u!1 &4032099144760849843
@@ -10042,8 +10043,8 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6617926930461464309}
   serializedVersion: 8
-  lengthInSec: 4
-  simulationSpeed: 1
+  lengthInSec: 8
+  simulationSpeed: 0.5
   stopAction: 0
   cullingMode: 0
   ringBufferMode: 0
@@ -19898,7 +19899,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_BoundingSphereOverride: {x: 0.6543449, y: 0.37253177, z: 0.8925013, w: 1.231946}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
