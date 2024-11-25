@@ -9,14 +9,11 @@ public class ShopManager : MonoBehaviour
     #region Player Balance
 
     private int drachma => scoreKeeper != null ? scoreKeeper.drachma : 0;
-    private int buttonAmount = 5;
     public Image[] DrachmaPositive;
     public Image[] DrachmaNegative;
     public Image drachmaOnes;
     public Image drachmaTens;
     public Image drachmaHundreds;
-
-    public int blockerCost = 4;
 
     #endregion
     
@@ -33,8 +30,6 @@ public class ShopManager : MonoBehaviour
         scoreKeeper.drachma -= amountToReduce;
         Debug.Log(drachma);
     }
-    public void ButtonAddMoney() { AddDrachma(buttonAmount); }
-    public void ButtonRemoveMoney() { SubtractDrachma(buttonAmount); }
 
     void Update()
     {
@@ -95,27 +90,6 @@ public class ShopManager : MonoBehaviour
         }
     }
 
-    public bool CanPlayerAffordBlocker()
-    {
-        if (GlobalSettings.globalScore >= blockerCost)
-        {
-            SubtractScore(blockerCost);
-            Debug.Log($"Blocker spawned! Remaining score: {GlobalSettings.globalScore}");
-            return true;
-        }
-        else
-        {
-            Debug.Log("Not enough score to spawn blocker.");
-            Debug.Log($"Player has {GlobalSettings.globalScore} score, blocker cost is {blockerCost}");
-            return false;
-        }
-    }
-
-    public void SubtractScore(int amountToReduce)
-    {
-        GlobalSettings.globalScore -= amountToReduce;
-        Debug.Log($"Score subtracted: {amountToReduce}. New score: {GlobalSettings.globalScore}");
-    }
-
+    
 
 }

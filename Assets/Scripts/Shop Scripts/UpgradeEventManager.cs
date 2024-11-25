@@ -3,8 +3,6 @@ using UnityEngine;
 
 public class UpgradeEventManager : MonoBehaviour // this needs to be on an object within UI Manager
 {
-    [SerializeField] private GlobalSettings settings;
-
     [SerializeField] GameObject PlayerHealthMerchandise;
     [SerializeField] GameObject HammerMerchandise;
     [SerializeField] GameObject CityHealthMerchandise;

@@ -80,7 +80,7 @@ public class Level_Manager : MonoBehaviour
         PlayerAttack attackHitBox = FindObjectOfType<PlayerAttack>(true);
         ItemDisplay attackSpeedUpgrade = e.Item;
         Debug.Log($"Upgrade purchased of type {attackSpeedUpgrade}");
-        if (attackHitBox != null) { attackHitBox.UpdateAttackSpeed(attackSpeedUpgrade.Modifer);}
+        //if (attackHitBox != null) { attackHitBox.UpdateAttackSpeed(attackSpeedUpgrade.Modifer);}
     }
 
     private void UpgradeEventManager_UpdateUpgradeHammer(object sender, UpgradeEventArgs e)

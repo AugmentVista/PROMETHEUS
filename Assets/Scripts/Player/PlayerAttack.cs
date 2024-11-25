@@ -19,8 +19,6 @@ public class PlayerAttack : MonoBehaviour // This script is attached to the play
     public Transform[] LanesForward1;
     public Transform[] LanesForward2;
 
-    private int attackSpeedUps = 0;
-
     private float checkRadius = 0.5f;
 
     public Renderer weaponVisual;
@@ -34,6 +32,8 @@ public class PlayerAttack : MonoBehaviour // This script is attached to the play
     private bool canAttack = true; 
 
     private bool isAttacking = false;
+
+    private bool canCreateBlocker = true;
 
 
     private void Start()
@@ -53,10 +53,10 @@ public class PlayerAttack : MonoBehaviour // This script is attached to the play
         {
             Attack();
         }
-        if (Input.GetKeyDown(KeyCode.Alpha1) ||
-            Input.GetKeyDown(KeyCode.Alpha2) ||
-            Input.GetKeyDown(KeyCode.Alpha3) ||
-            Input.GetKeyDown(KeyCode.Alpha4))
+        if (canCreateBlocker && (Input.GetKeyDown(KeyCode.Alpha1) ||
+                                 Input.GetKeyDown(KeyCode.Alpha2) ||
+                                 Input.GetKeyDown(KeyCode.Alpha3) ||
+                                 Input.GetKeyDown(KeyCode.Alpha4)))
         {
             blockKey = GetPressedAlphaKey();
             StartCoroutine(CreateBlocker(blockKey));
@@ -65,6 +65,7 @@ public class PlayerAttack : MonoBehaviour // This script is attached to the play
 
     private IEnumerator CreateBlocker(KeyCode key)
     {
+        canCreateBlocker = false;
         int laneIndex = -1;
 
         switch (key)
@@ -82,33 +83,27 @@ public class PlayerAttack : MonoBehaviour // This script is attached to the play
                 laneIndex = 3;
                 break;
         }
-       
 
-        if (shopManager.CanPlayerAffordBlocker())
+        if (laneIndex >= 0 && laneIndex < Lanes.Length)
         {
-            if (laneIndex >= 0 && laneIndex < Lanes.Length)
+            Transform spawnPosition = GetAvailableSpawnPosition(laneIndex);
+            if (spawnPosition != null)
             {
-                Transform spawnPosition = GetAvailableSpawnPosition(laneIndex);
-                if (spawnPosition != null)
-                {
-                    Instantiate(blockerPrefab, spawnPosition.position, Quaternion.identity);
-                }
-                else
-                {
-                    Debug.Log("No available space to spawn blocker in lane " + laneIndex);
-                }
+                Instantiate(blockerPrefab, spawnPosition.position, Quaternion.identity);
             }
             else
             {
-                Debug.LogError("Invalid lane index or lane Transform not assigned.");
+                Debug.Log("No available space to spawn blocker in lane " + laneIndex);
             }
         }
+        else
+        {
+            Debug.LogError("Invalid lane index or lane Transform not assigned.");
+        }
 
-        yield return null;
+        yield return new WaitForSeconds(2);
+        canCreateBlocker = true;
     }
-
-
-
     private void Attack()
     {
         weaponAnimator.SetTrigger("HammerTrigger");
@@ -116,22 +111,9 @@ public class PlayerAttack : MonoBehaviour // This script is attached to the play
         canAttack = false;
         isAttacking = true;
         isAttacking = false;
-        canAttack = true; // Allow attacks again
+        canAttack = true;
 
         weaponAnimator.SetTrigger("Idle");
-    }
-
-    public void UpdateAttackSpeed(float amountToReduce)
-    {
-        //if (attackSpeedUps < 5)
-        //{
-        //    float convertedValue = amountToReduce / 100;
-        //    if (attackDuration > convertedValue && attackDuration + -convertedValue > 0)
-        //    {
-        //        attackDuration -= convertedValue;
-        //    }
-        //}
-        //attackSpeedUps += 1;
     }
 
     public void UpdateHammer(float amountToEnlarge)
@@ -176,7 +158,6 @@ public class PlayerAttack : MonoBehaviour // This script is attached to the play
     {
         if (lane == null) return true; // Treat null lane as occupied
 
-        // Check for any colliders within a small radius around the lane position
         Collider[] colliders = Physics.OverlapSphere(lane.position, checkRadius);
         foreach (var collider in colliders)
         {
@@ -191,25 +172,21 @@ public class PlayerAttack : MonoBehaviour // This script is attached to the play
 
     private Transform GetAvailableSpawnPosition(int laneIndex)
     {
-        // Check the default lane
         if (!IsLaneOccupied(Lanes[laneIndex]))
         {
             return Lanes[laneIndex];
         }
 
-        // Check the first forward lane
         if (laneIndex < LanesForward1.Length && !IsLaneOccupied(LanesForward1[laneIndex]))
         {
             return LanesForward1[laneIndex];
         }
 
-        // Check the second forward lane
         if (laneIndex < LanesForward2.Length && !IsLaneOccupied(LanesForward2[laneIndex]))
         {
             return LanesForward2[laneIndex];
         }
 
-        // No available spawn positions
         return null;
     }
 
