@@ -9,14 +9,14 @@ public class UpgradeEventManager : MonoBehaviour // this needs to be on an objec
 
     private int healthUpgradesPurchased = 0;
     private int hammerUpgradesPurchased = 0;
-    private int staminaUpgradesPurchased = 0;
+    private int cityHealthUpgradesPurchased = 0;
     private int attackSpeedUpgradesPurchased = 0;
     private int sprintSpeedUpgradesPurchased = 0;
     private int blockUpgradesPurchased = 0;
 
     public EventHandler<UpgradeEventArgs> UpdateUpgradeHealth;
     public EventHandler<UpgradeEventArgs> UpdateUpgradeHammer;
-    public EventHandler<UpgradeEventArgs> UpdateUpgradeStamina;
+    public EventHandler<UpgradeEventArgs> UpdateUpgradeCityHealth;
     public EventHandler<UpgradeEventArgs> UpdateUpgradeAttackSpeed;
     public EventHandler<UpgradeEventArgs> UpdateUpgradeSprintSpeed;
     public EventHandler<UpgradeEventArgs> UpdateUpgradeBlock;
@@ -61,13 +61,14 @@ public class UpgradeEventManager : MonoBehaviour // this needs to be on an objec
                     else { Debug.LogError($"Player has bought the last {Item}"); }
                 }
                 break;
-                case "Stamina Upgrade":
-                if (Item.IsTitleMatch("Stamina Upgrade"))
+                case "City Health Upgrade":
+                if (Item.IsTitleMatch("City Health Upgrade"))
                 {
-                    if (staminaUpgradesPurchased < 5)
+                    if (cityHealthUpgradesPurchased < 5)
                     {
-                        UpdateUpgradeStamina?.Invoke(this, new UpgradeEventArgs(Item));
-                        staminaUpgradesPurchased += 1;
+                        UpdateUpgradeCityHealth?.Invoke(this, new UpgradeEventArgs(Item));
+                        cityHealthUpgradesPurchased += 1;
+                        Debug.Log($"Player bought A {Item}");
                     }
                     else { Debug.LogError($"Player has bought the last {Item}"); }
                 }
@@ -83,17 +84,17 @@ public class UpgradeEventManager : MonoBehaviour // this needs to be on an objec
                     else { Debug.LogError($"Player has bought the last {Item}"); }
                 }
                 break;
-                case "Sprint Speed Upgrade":
-                if (Item.IsTitleMatch("Sprint Speed Upgrade"))
-                {
-                    if (sprintSpeedUpgradesPurchased < 5)
-                    { 
-                        UpdateUpgradeSprintSpeed?.Invoke(this, new UpgradeEventArgs(Item));
-                        staminaUpgradesPurchased += 1;
-                    }
-                    else { Debug.LogError($"Player has bought the last {Item}"); }
-                }
-                break;
+                //case "Sprint Speed Upgrade":
+                //if (Item.IsTitleMatch("Sprint Speed Upgrade"))
+                //{
+                //    if (sprintSpeedUpgradesPurchased < 5)
+                //    { 
+                //        UpdateUpgradeSprintSpeed?.Invoke(this, new UpgradeEventArgs(Item));
+                //        cityHealthUpgradesPurchased += 1;
+                //    }
+                //    else { Debug.LogError($"Player has bought the last {Item}"); }
+                //}
+                //break;
             case "Block Upgrade":
                 if (Item.IsTitleMatch("Block Upgrade"))
                 {

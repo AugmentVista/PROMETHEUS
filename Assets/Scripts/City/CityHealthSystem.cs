@@ -66,6 +66,12 @@ public class CityHealthSystem : MonoBehaviour
         }
     }
 
+    public void Heal(float healthToAdd)
+    {
+        currentHealth = Mathf.Clamp(currentHealth + healthToAdd, 0f, maxHealth);
+        UpdateFillAmount();
+        targetFillAmount = currentHealth / maxHealth;
+    }
 
     public void TakeDamage(float damageTaken)
     {
@@ -82,6 +88,13 @@ public class CityHealthSystem : MonoBehaviour
             currentShield = 0;
         }
         UpdateFillAmount();
+    }
+
+    public void UpgradeCityHealth(float amountToAdd)
+    {
+        GlobalSettings.globalCityMaxHP += amountToAdd;
+        maxHealth = GlobalSettings.globalCityMaxHP;
+        Heal(amountToAdd);
     }
 
     private void UpdateFillAmount()

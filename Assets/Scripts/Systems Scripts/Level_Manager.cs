@@ -31,13 +31,15 @@ public class Level_Manager : MonoBehaviour
         isSubscribed = true;
     }
 
+    #region Upgrade event executions
+
     private void Start()
     {
         upgradeManager.UpdateUpgradeHealth += UpgradeEventManager_UpdateUpgradeHealth;
         //upgradeManager.UpdateUpgradeSprintSpeed += UpgradeEventManager_UpdateUpgradeSprintSpeed;
         upgradeManager.UpdateUpgradeAttackSpeed += UpgradeEventManager_UpdateUpgradeAttackSpeed;
         upgradeManager.UpdateUpgradeHammer += UpgradeEventManager_UpdateUpgradeHammer;
-        //upgradeManager.UpdateUpgradeStamina += UpgradeEventManager_UpdateUpgradeStamina;
+        upgradeManager.UpdateUpgradeCityHealth += UpgradeEventManager_UpdateUpgradeCityHealth;
         upgradeManager.UpdateUpgradeBlock += UpgradeEventManager_UpdateUpgradeBlock;
     }
 
@@ -65,13 +67,13 @@ public class Level_Manager : MonoBehaviour
     //    if (sprint != null) { sprint.IncreaseSprint(sprintUpgrade.Modifer);}
     //}
 
-    //private void UpgradeEventManager_UpdateUpgradeStamina(object sender, UpgradeEventArgs e)
-    //{
-    //    SprintBoost stamina = FindObjectOfType<SprintBoost>(true);
-    //    ItemDisplay staminaUpgrade = e.Item;
-    //    Debug.Log($"Upgrade purchased of type {stamina}");
-    //    if (stamina != null) { stamina.IncreaseStamina(staminaUpgrade.Modifer); }
-    //}
+    private void UpgradeEventManager_UpdateUpgradeCityHealth(object sender, UpgradeEventArgs e)
+    {
+        CityHealthSystem cityHP = FindObjectOfType<CityHealthSystem>(true);
+        ItemDisplay cityHealthUpgrade = e.Item;
+        Debug.Log($"Upgrade purchased of type {cityHealthUpgrade}");
+        if (cityHP != null) { cityHP.UpgradeCityHealth(cityHealthUpgrade.Modifer); }
+    }
 
     private void UpgradeEventManager_UpdateUpgradeAttackSpeed(object sender, UpgradeEventArgs e)
     { 
@@ -95,9 +97,11 @@ public class Level_Manager : MonoBehaviour
         //upgradeManager.UpdateUpgradeSprintSpeed -= UpgradeEventManager_UpdateUpgradeSprintSpeed;
         upgradeManager.UpdateUpgradeAttackSpeed -= UpgradeEventManager_UpdateUpgradeAttackSpeed;
         upgradeManager.UpdateUpgradeHammer -= UpgradeEventManager_UpdateUpgradeHammer;
-        //upgradeManager.UpdateUpgradeStamina -= UpgradeEventManager_UpdateUpgradeStamina;
+        upgradeManager.UpdateUpgradeCityHealth -= UpgradeEventManager_UpdateUpgradeCityHealth;
         upgradeManager.UpdateUpgradeBlock -= UpgradeEventManager_UpdateUpgradeBlock;
     }
+
+    #endregion
 
     #region SceneCalls
 
@@ -182,6 +186,30 @@ public class Level_Manager : MonoBehaviour
         }
     }
 
+    private void SetupGameplayScene()
+    {
+    }
+
+    private void SetupMainMenu()
+    {
+        Game_Manager gameManager = Singleton.instance.GetComponent<Game_Manager>();
+        gameManager.userInterfaceCamera = GameObject.FindGameObjectWithTag("PlayerCamera");
+        gameManager.EnableGameplayCamera(false);
+    }
+
+    private void SetupGameWin()
+    {
+        Game_Manager gameManager = Singleton.instance.GetComponent<Game_Manager>();
+        gameManager.EnableGameplayCamera(false); // Ensure menu camera is active
+    }
+
+    private void SetupGameOver()
+    {
+        Game_Manager gameManager = Singleton.instance.GetComponent<Game_Manager>();
+        gameManager.EnableGameplayCamera(false); // Ensure menu camera is active
+    }
+    #endregion
+
     private void Update()
     {
         Game_Manager gameManager = Singleton.instance.GetComponent<Game_Manager>();
@@ -254,27 +282,5 @@ public class Level_Manager : MonoBehaviour
 
     #endregion
 
-    private void SetupGameplayScene()
-    {
-    }
-
-    private void SetupMainMenu()
-    {
-        Game_Manager gameManager = Singleton.instance.GetComponent<Game_Manager>();
-        gameManager.userInterfaceCamera = GameObject.FindGameObjectWithTag("PlayerCamera");
-        gameManager.EnableGameplayCamera(false);
-    }
-
-    private void SetupGameWin()
-    {
-        Game_Manager gameManager = Singleton.instance.GetComponent<Game_Manager>();
-        gameManager.EnableGameplayCamera(false); // Ensure menu camera is active
-    }
-
-    private void SetupGameOver()
-    {
-        Game_Manager gameManager = Singleton.instance.GetComponent<Game_Manager>();
-        gameManager.EnableGameplayCamera(false); // Ensure menu camera is active
-    }
-    #endregion
+   
 }

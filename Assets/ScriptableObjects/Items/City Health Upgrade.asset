@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: da52b6043a4a9fc418470ec65226891a, type: 3}
-  m_Name: StaminaUpgrade
+  m_Name: City Health Upgrade
   m_EditorClassIdentifier: 
-  title: Stamina Upgrade
-  description: Increases Stamina
-  price: 50
-  itemImage: {fileID: 21300000, guid: 2477258d786cba0488483a4776749b85, type: 3}
+  title: City Health Upgrade
+  description: Increases city health by 15
+  price: 10
+  itemImage: {fileID: 21300000, guid: 2d89e2d5557e42e47992652f748a6b1f, type: 3}
   currencyType: {fileID: 21300000, guid: 8117ae5dc2e40f64384b96446574744d, type: 3}
-  ImprovementModifier: 4
+  ImprovementModifier: 15
