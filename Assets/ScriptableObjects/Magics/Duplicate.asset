@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12ea00d4cc341334bacf9e4d67bd5235, type: 3}
   m_Name: Duplicate
   m_EditorClassIdentifier: 
-  level: 4
+  level: 0
   ability: 0

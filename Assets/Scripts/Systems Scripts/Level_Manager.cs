@@ -36,7 +36,7 @@ public class Level_Manager : MonoBehaviour
     private void Start()
     {
         upgradeManager.UpdateUpgradeHealth += UpgradeEventManager_UpdateUpgradeHealth;
-        //upgradeManager.UpdateUpgradeSprintSpeed += UpgradeEventManager_UpdateUpgradeSprintSpeed;
+        upgradeManager.UpdateUpgradeMagic += UpgradeEventManager_UpdateUpgradeMagic;
         upgradeManager.UpdateUpgradeAttackSpeed += UpgradeEventManager_UpdateUpgradeAttackSpeed;
         upgradeManager.UpdateUpgradeHammer += UpgradeEventManager_UpdateUpgradeHammer;
         upgradeManager.UpdateUpgradeCityHealth += UpgradeEventManager_UpdateUpgradeCityHealth;
@@ -45,10 +45,10 @@ public class Level_Manager : MonoBehaviour
 
     private void UpgradeEventManager_UpdateUpgradeBlock(object sender, UpgradeEventArgs e)
     {
-        // Block block = FindObjectOfType<Block>(true);
-        // ItemDisplay blockUpgrade = e.Item;
-        // Debug.Log($"Upgrade purchased of type {block}");
-        //if (block != null) { block.blockUpgrade(blockUpgrade); }
+        Blocker blocker = FindObjectOfType<Blocker>(true);
+        ItemDisplay blockUpgrade = e.Item;
+        Debug.Log($"Upgrade purchased of type {blocker}");
+        if (blocker != null) { blocker.UpgradeBlocker(blockUpgrade.Modifer); }
     }
 
     private void UpgradeEventManager_UpdateUpgradeHealth(object sender, UpgradeEventArgs e)
@@ -59,13 +59,13 @@ public class Level_Manager : MonoBehaviour
         if (healthSystem != null) { healthSystem.HpEvent(healthPotion); }
     }
 
-    //private void UpgradeEventManager_UpdateUpgradeSprintSpeed(object sender, UpgradeEventArgs e)
-    //{
-    //    SprintBoost sprint = FindObjectOfType<SprintBoost>(true);
-    //    ItemDisplay sprintUpgrade = e.Item;
-    //    Debug.Log($"Upgrade purchased of type {sprint}");
-    //    if (sprint != null) { sprint.IncreaseSprint(sprintUpgrade.Modifer);}
-    //}
+    private void UpgradeEventManager_UpdateUpgradeMagic(object sender, UpgradeEventArgs e)
+    {
+        MagicManager magicManager = FindObjectOfType<MagicManager>(true);
+        ItemDisplay magicUpgrade = e.Item;
+        Debug.Log($"Upgrade purchased of type {magicManager}");
+        if (magicManager != null) { magicManager.LevelUpMagic(magicUpgrade.Modifer); }
+    }
 
     private void UpgradeEventManager_UpdateUpgradeCityHealth(object sender, UpgradeEventArgs e)
     {
@@ -94,7 +94,7 @@ public class Level_Manager : MonoBehaviour
     private void OnDisable()
     {
         upgradeManager.UpdateUpgradeHealth -= UpgradeEventManager_UpdateUpgradeHealth;
-        //upgradeManager.UpdateUpgradeSprintSpeed -= UpgradeEventManager_UpdateUpgradeSprintSpeed;
+        upgradeManager.UpdateUpgradeMagic -= UpgradeEventManager_UpdateUpgradeMagic;
         upgradeManager.UpdateUpgradeAttackSpeed -= UpgradeEventManager_UpdateUpgradeAttackSpeed;
         upgradeManager.UpdateUpgradeHammer -= UpgradeEventManager_UpdateUpgradeHammer;
         upgradeManager.UpdateUpgradeCityHealth -= UpgradeEventManager_UpdateUpgradeCityHealth;

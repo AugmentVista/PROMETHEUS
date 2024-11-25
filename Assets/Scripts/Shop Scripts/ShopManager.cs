@@ -97,24 +97,24 @@ public class ShopManager : MonoBehaviour
 
     public bool CanPlayerAffordBlocker()
     {
-        if (scoreKeeper.score >= blockerCost)
+        if (GlobalSettings.globalScore >= blockerCost)
         {
             SubtractScore(blockerCost);
-            Debug.Log($"Blocker spawned! Remaining score: {scoreKeeper.score}");
+            Debug.Log($"Blocker spawned! Remaining score: {GlobalSettings.globalScore}");
             return true;
         }
         else
         {
             Debug.Log("Not enough score to spawn blocker.");
-            Debug.Log($"Player has {scoreKeeper.score} score, blocker cost is {blockerCost}");
+            Debug.Log($"Player has {GlobalSettings.globalScore} score, blocker cost is {blockerCost}");
             return false;
         }
     }
 
     public void SubtractScore(int amountToReduce)
     {
-        scoreKeeper.score -= amountToReduce;
-        Debug.Log($"Score subtracted: {amountToReduce}. New score: {scoreKeeper.score}");
+        GlobalSettings.globalScore -= amountToReduce;
+        Debug.Log($"Score subtracted: {amountToReduce}. New score: {GlobalSettings.globalScore}");
     }
 
 

@@ -9,7 +9,7 @@ public class UpgradeEventManager : MonoBehaviour // this needs to be on an objec
     [SerializeField] GameObject HammerMerchandise;
     [SerializeField] GameObject CityHealthMerchandise;
     [SerializeField] GameObject ToBeChanged;
-    [SerializeField] GameObject ToBeChanged2;
+    [SerializeField] GameObject MagicMerchandise;
     [SerializeField] GameObject BlockMerchandise;
 
     [SerializeField] private Button_UpgradeEvent upgradeButton;
@@ -18,14 +18,14 @@ public class UpgradeEventManager : MonoBehaviour // this needs to be on an objec
     private int hammerUpgradesPurchased = 0;
     private int cityHealthUpgradesPurchased = 0;
     private int attackSpeedUpgradesPurchased = 0;
-    private int sprintSpeedUpgradesPurchased = 0;
+    private int magicUpgradesPurchased = 0;
     private int blockUpgradesPurchased = 0;
 
     public EventHandler<UpgradeEventArgs> UpdateUpgradeHealth;
     public EventHandler<UpgradeEventArgs> UpdateUpgradeHammer;
     public EventHandler<UpgradeEventArgs> UpdateUpgradeCityHealth;
     public EventHandler<UpgradeEventArgs> UpdateUpgradeAttackSpeed;
-    public EventHandler<UpgradeEventArgs> UpdateUpgradeSprintSpeed;
+    public EventHandler<UpgradeEventArgs> UpdateUpgradeMagic;
     public EventHandler<UpgradeEventArgs> UpdateUpgradeBlock;
 
 
@@ -111,17 +111,17 @@ public class UpgradeEventManager : MonoBehaviour // this needs to be on an objec
                     }
                 }
                 break;
-            case "Sprint Speed Upgrade":
-                if (Item.IsTitleMatch("Sprint Speed Upgrade"))
+            case "Magic Upgrade":
+                if (Item.IsTitleMatch("Magic Upgrade"))
                 {
-                    if (sprintSpeedUpgradesPurchased < 5)
+                    if (magicUpgradesPurchased < 5)
                     {
-                        UpdateUpgradeSprintSpeed?.Invoke(this, new UpgradeEventArgs(Item));
-                        cityHealthUpgradesPurchased += 1;
+                        UpdateUpgradeMagic?.Invoke(this, new UpgradeEventArgs(Item));
+                        magicUpgradesPurchased += 1;
                     }
                     else
                     {
-                        ToBeChanged2.SetActive(false);
+                        MagicMerchandise.SetActive(false);
                         DataToBigDisplay.DisplayDefault();
                         Debug.LogError($"Player has bought the last {Item}");
                     }

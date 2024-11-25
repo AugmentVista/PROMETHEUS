@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class MagicCircleModular : MonoBehaviour
 {
-    [SerializeField] MagicCircle_ScriptableObject scriptableMagic;
+    public MagicCircle_ScriptableObject scriptableMagic;
     [SerializeField] Transform DestroyWeaponTransform;
 
     public int level;

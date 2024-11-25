@@ -15,6 +15,8 @@ public class Blocker : MonoBehaviour
 
     public float blockerMaxHP = 30;
 
+    private float dmgReduction = 0;
+
     public float currentblockerHealth;
 
     public Image healthBar;
@@ -30,6 +32,7 @@ public class Blocker : MonoBehaviour
 
     public void BlockerTakeDamage(float damageTaken)
     {
+        damageTaken -= dmgReduction;
         currentblockerHealth = Mathf.Clamp(currentblockerHealth - damageTaken, 0f, blockerMaxHP);
 
         Shrink();
@@ -39,6 +42,11 @@ public class Blocker : MonoBehaviour
         {
             Destroy(gameObject, 0.5f);
         }
+    }
+
+    public void UpgradeBlocker(float amountToAdd)
+    {
+        dmgReduction += amountToAdd;
     }
 
     private void UpdateHealthBar()

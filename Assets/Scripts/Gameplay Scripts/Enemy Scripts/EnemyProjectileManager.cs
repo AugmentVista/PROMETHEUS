@@ -7,13 +7,13 @@ public class EnemyProjectileManager : MonoBehaviour
     public GameObject ProjectilePrefab;
     public GameObject[] Projectiles;
     private WaveUI waveUI;
-    public int maxProjectiles = 10;
+    public int maxProjectiles;
     public int initalProjectiles;
     public Transform InitalPosition = null;
 
     private int currentProjectiles = 0;
     public int totalProjectilesCreated = 0;
-    int localWaveCount = 0;
+    public int localWaveCount = 0;
     public Queue<GameObject> pooledProjectiles = new Queue<GameObject>(); // Queue to hold inactive projectiles
 
     private void Start()
@@ -39,7 +39,7 @@ public class EnemyProjectileManager : MonoBehaviour
             {
                 totalProjectilesCreated = 0;   
                 waveUI.NextWave();
-                maxProjectiles += waveUI.waveCount * 2;
+                maxProjectiles += waveUI.waveCount;
                 localWaveCount++;
             }
             return null;
@@ -87,7 +87,6 @@ public class EnemyProjectileManager : MonoBehaviour
         totalProjectilesCreated = 0;
         localWaveCount = 0;
         maxProjectiles =  initalProjectiles;
-        //Debug.LogError("All on screen bombs destroyed");
     }
 
 
