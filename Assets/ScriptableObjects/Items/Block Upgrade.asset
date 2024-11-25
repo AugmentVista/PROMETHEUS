@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Block Upgrade
   m_EditorClassIdentifier: 
   title: Block Upgrade
-  description: Increases durability of blockers by 30%
+  description: Improves Blocker Health
   price: 20
   itemImage: {fileID: 21300000, guid: d9b356442b398514493f222dad98ee51, type: 3}
   currencyType: {fileID: 21300000, guid: 8117ae5dc2e40f64384b96446574744d, type: 3}
