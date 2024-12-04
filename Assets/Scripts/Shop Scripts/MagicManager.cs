@@ -10,7 +10,7 @@ public class MagicManager : MonoBehaviour
     [SerializeField] GameObject FirstPortal;
     [SerializeField] GameObject SecondPortal;
     [SerializeField] GameObject ThirdPortal;
-    //[SerializeField] GameObject FourthPortal;
+    [SerializeField] GameObject FourthPortal;
 
 
     void Start()
@@ -18,7 +18,7 @@ public class MagicManager : MonoBehaviour
         FirstPortal.SetActive(false);
         SecondPortal.SetActive(false);
         ThirdPortal.SetActive(false);
-        //FourthPortal.SetActive(false);
+        FourthPortal.SetActive(false);
     }
 
 
@@ -56,6 +56,7 @@ public class MagicManager : MonoBehaviour
                 magCircle3.level = level;
                 break;
             case 4:
+                FourthPortal.SetActive(true);
                 magCircle.level = level;
                 magCircle2.level = level;
                 magCircle3.level = level;
@@ -71,6 +72,4 @@ public class MagicManager : MonoBehaviour
     {
         magicLevel += Mathf.FloorToInt(levelUpAmount); // Ensure consistent integer behavior
     }
-
-
 }

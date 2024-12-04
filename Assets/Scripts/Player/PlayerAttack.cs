@@ -7,7 +7,7 @@ public class PlayerAttack : MonoBehaviour // This script is attached to the play
     private KeyCode blockKey;
 
     private ProjectileCollisionHandler projectileHandler;
-    HammerThrow hammerThrowScript;
+    MagicCircleStateMachine hammerThrowScript;
 
     public GameObject rockSmashVFX;
     public GameObject hammerPrefab;
@@ -30,12 +30,10 @@ public class PlayerAttack : MonoBehaviour // This script is attached to the play
 
     private void Start()
     {
-        hammerThrowScript = hammerPrefab.GetComponent<HammerThrow>();
+        hammerThrowScript = hammerPrefab.GetComponent<MagicCircleStateMachine>();
        
         HandLocation = transform;
     }
-
-    
 
     private void Update()
     {
@@ -125,7 +123,7 @@ public class PlayerAttack : MonoBehaviour // This script is attached to the play
         Collider[] colliders = Physics.OverlapSphere(lane.position, checkRadius);
         foreach (var collider in colliders)
         {
-            if (collider.CompareTag("Blocker")) // Assuming blockers have the tag "Blocker"
+            if (collider.CompareTag("Blocker")) 
             {
                 return true;
             }

@@ -18,7 +18,7 @@ public class CityHealthSystem : MonoBehaviour
 
     public float elapsedTime = 0f;
 
-    public float fillSpeed = 3f;
+    public float fillSpeed = 15f;
 
     private float targetFillAmount;
     private float targetShieldFill;
