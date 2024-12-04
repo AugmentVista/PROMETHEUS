@@ -88,7 +88,7 @@ public class Level_Manager : MonoBehaviour
         PlayerAttack hammerHitBox = FindObjectOfType<PlayerAttack>(true);
         ItemDisplay hammerUpgrade = e.Item;
         Debug.Log($"Upgrade purchased of type {hammerUpgrade}");
-        if (hammerHitBox != null) { hammerHitBox.UpdateHammer(hammerUpgrade.Modifer);}
+        //if (hammerHitBox != null) { hammerHitBox.UpdateHammer(hammerUpgrade.Modifer);}
     }
 
     private void OnDisable()

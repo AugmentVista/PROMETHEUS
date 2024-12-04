@@ -34,7 +34,7 @@ public class HammerThrow : MonoBehaviour
                 }
                 if (magicObj.IsTypeMatch("Vitality"))
                 {
-                    EnduringHammer(magicObj.level);
+                    EnduringHammer(magicObj.level * magicObj.level);
                 }
             }
         }
@@ -51,7 +51,9 @@ public class HammerThrow : MonoBehaviour
         rb.AddForce(Vector3.forward.normalized * speed, ForceMode.Impulse);
 
         CityHealthSystem cityHP = FindObjectOfType<CityHealthSystem>();
+        PlayerHealthSystem playerHealthSystem = FindObjectOfType<PlayerHealthSystem>();
         Debug.Log(cityHP.currentHealth + "CITY HP BEFORE");
+        playerHealthSystem.Heal(lifegain);
         cityHP.Heal(lifegain);
         hammerInstance.AddComponent<DisposableThrowable>();
         Debug.Log(cityHP.currentHealth + "CITY HP AFTER");

@@ -12,6 +12,7 @@ public class PlayerAttack : MonoBehaviour // This script is attached to the play
     public GameObject rockSmashVFX;
     public GameObject hammerPrefab;
     public GameObject blockerPrefab;
+    GameObject hammerInstance;
 
     private Transform HandLocation;
 
@@ -21,15 +22,14 @@ public class PlayerAttack : MonoBehaviour // This script is attached to the play
 
     private float checkRadius = 0.5f;
 
-    private Collider weaponCollider; 
-
     private bool canCreateBlocker = true;
 
     float speed = 15f;
 
+    int hammerUpgradesPurchased;
+
     private void Start()
     {
-        weaponCollider = hammerPrefab.GetComponent<Collider>();
         hammerThrowScript = hammerPrefab.GetComponent<HammerThrow>();
        
         HandLocation = transform;
@@ -58,7 +58,7 @@ public class PlayerAttack : MonoBehaviour // This script is attached to the play
         Vector3 randomOffset = new Vector3(0, 0, Random.Range(-1.5f, 1.5f));
         Vector3 spawnPosition = transform.position + randomOffset;
 
-        GameObject hammerInstance = Instantiate(hammerPrefab, spawnPosition, Quaternion.identity);
+        hammerInstance = Instantiate(hammerPrefab, spawnPosition, Quaternion.identity);
 
         Rigidbody rb = hammerInstance.GetComponent<Rigidbody>();
         rb.AddForce(Vector3.forward.normalized * speed, ForceMode.Impulse);
@@ -108,13 +108,15 @@ public class PlayerAttack : MonoBehaviour // This script is attached to the play
         canCreateBlocker = true;
     }
 
-    public void UpdateHammer(float amountToEnlarge)
-    {
-        float convertedValue = 1f + amountToEnlarge / 100;
-        weaponCollider.transform.localScale *= convertedValue;
-        hammerPrefab.transform.localScale *= convertedValue;
-        Debug.Log($"Hammer has grown by {convertedValue} %");
-    }
+    //public void UpdateHammer(float amountToEnlarge)
+    //{
+    //    float convertedValue = 1f + amountToEnlarge / 100;
+    //    hammerInstance.transform.localScale *= convertedValue;
+    //    hammerInstanceSizeMultiplier = convertedValue;
+    //    hammerUpgradesPurchased++;
+    //    Debug.Log($"Hammer has grown by {convertedValue} %");
+
+    //}
 
     private bool IsLaneOccupied(Transform lane)
     {
