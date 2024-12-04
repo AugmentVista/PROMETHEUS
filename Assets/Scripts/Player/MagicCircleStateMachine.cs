@@ -27,27 +27,26 @@ public class MagicCircleStateMachine : MonoBehaviour
             MagicCircleModular magicObj = GetComponent<MagicCircleModular>();
             if (magicObj != null)
             {
-                Debug.Log(other.name);
 
                 if (magicObj.IsTypeMatch("Duplicate"))
                 {
+                    other.gameObject.SetActive(false);
                     DuplicateHammer(magicObj.level);
-                    Destroy(other.gameObject);
                 }
                 if (magicObj.IsTypeMatch("Fortify"))
                 {
+                    other.gameObject.SetActive(false);
                     FortifyHammer(magicObj.level);
-                    Destroy(other.gameObject);
                 }
                 if (magicObj.IsTypeMatch("Vitality"))
                 {
+                    other.gameObject.SetActive(false);
                     EnduringHammer(magicObj.level * magicObj.level);
-                    Destroy(other.gameObject);
                 }
                 if (magicObj.IsTypeMatch("Polymorph"))
                 {
+                    other.gameObject.SetActive(false);
                     PolymorphHammer();
-                    Destroy(other.gameObject);
                 }
             }
         }
@@ -96,7 +95,7 @@ public class MagicCircleStateMachine : MonoBehaviour
         for (int i = 0; i < amountToCreate+1; i++)
         {
             Vector3 randomOffset = new Vector3(0, 0, Random.Range(-1.5f, 1.5f));
-            Vector3 spawnPosition = transform.position + new Vector3(-3 + i, 0, 0) + randomOffset;
+            Vector3 spawnPosition = transform.position + new Vector3(0, 0, 0) + randomOffset;
 
             GameObject hammerInstance = Instantiate(hammerPrefab, spawnPosition, Quaternion.identity);
 
