@@ -9768,8 +9768,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 3675287130068982875}
+  m_Children: []
   m_Father: {fileID: 6744268172576975938}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &6451049463744956099
@@ -9858,6 +9857,7 @@ MonoBehaviour:
   scriptableMagic: {fileID: 11400000, guid: acb46951e15d791469ba94e32e3cebf4, type: 2}
   DestroyWeaponTransform: {fileID: 4197513985993262395}
   level: 0
+  range: 0
   type: 
 --- !u!1 &4032099144760849843
 GameObject:
@@ -9995,6 +9995,7 @@ Transform:
   m_Children:
   - {fileID: 7804243453855613349}
   - {fileID: 4197513985993262395}
+  - {fileID: 3675287130068982875}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6617926930461464309
@@ -10023,7 +10024,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6617926930461464309}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.7071068, y: -0, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
@@ -10033,7 +10034,7 @@ Transform:
   - {fileID: 798821459250641662}
   - {fileID: 5889120128330824606}
   - {fileID: 8444277047689235732}
-  m_Father: {fileID: 7804243453855613349}
+  m_Father: {fileID: 6744268172576975938}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!198 &8982651566985705820
 ParticleSystem:

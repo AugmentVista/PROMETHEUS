@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class MagicCircleModular : MonoBehaviour
@@ -9,7 +7,8 @@ public class MagicCircleModular : MonoBehaviour
     [SerializeField] Transform DestroyWeaponTransform;
 
     public int level;
-    private int lastLevel = 0;
+    public int range;
+    private int lastRange = 0;
 
     public string type;
 
@@ -19,12 +18,20 @@ public class MagicCircleModular : MonoBehaviour
         type = scriptableMagic.ability.ToString();
     }
 
+    public void RangeUp()
+    {
+        if (range < 5)
+        { 
+            range++;
+        }
+    }
+
     void Update()
     {
-        if (lastLevel < level)
+        if (lastRange < range)
         {
             DestroyWeaponTransform.position += new Vector3(0, 0, 10);
-            lastLevel = level;
+            lastRange = range;
         }
     }
 

@@ -4856,9 +4856,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1829872121517091635}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.7071068, y: -0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
+  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: -0.69910383, y: 0.43963242, z: 0.7200012}
+  m_LocalScale: {x: 0.375115, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5477016191593926927}
@@ -4866,7 +4866,7 @@ Transform:
   - {fileID: 6976384350149852338}
   - {fileID: 4217540895625874856}
   - {fileID: 6818983722565918728}
-  m_Father: {fileID: 2107626323587330539}
+  m_Father: {fileID: 3147387561146955008}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!198 &5558754554181951604
 ParticleSystem:
@@ -14767,6 +14767,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2107626323587330539}
+  - {fileID: 347595927305268825}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4383144910464706669
@@ -24535,10 +24536,9 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0.69910383, y: 0.43963242, z: 0.7200012}
-  m_LocalScale: {x: 0.75023, y: 1, z: 1}
+  m_LocalScale: {x: 0.75023, y: 3, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 347595927305268825}
+  m_Children: []
   m_Father: {fileID: 3147387561146955008}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &4718792771315346031
@@ -24627,6 +24627,7 @@ MonoBehaviour:
   scriptableMagic: {fileID: 11400000, guid: 1f2b38a3f9310494b950ef3529a06a37, type: 2}
   DestroyWeaponTransform: {fileID: 0}
   level: 0
+  range: 0
   type: 
 --- !u!1 &9029514517332869697
 GameObject:

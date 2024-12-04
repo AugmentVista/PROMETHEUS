@@ -17,9 +17,9 @@ public class HammerThrow : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("MagicCircle"))
+        if (other.CompareTag("Weapon"))
         {
-            MagicCircleModular magicObj = other.GetComponent<MagicCircleModular>();
+            MagicCircleModular magicObj = GetComponent<MagicCircleModular>();
             if (magicObj != null)
             {
                 Debug.Log(other.name);
@@ -65,7 +65,7 @@ public class HammerThrow : MonoBehaviour
 
         GameObject hammerInstance = Instantiate(hammerPrefab, spawnPosition, Quaternion.identity);
 
-        float scaleMultiplier = 1f + (sizeMultiplier * 1.5f);
+        float scaleMultiplier = 1f + (sizeMultiplier * 1.2f);
         Vector3 newScale = hammerPrefab.transform.localScale * scaleMultiplier;
         hammerInstance.transform.localScale = newScale;
 
