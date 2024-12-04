@@ -7,10 +7,10 @@ public class PlayerAttack : MonoBehaviour // This script is attached to the play
     private KeyCode blockKey;
 
     private ProjectileCollisionHandler projectileHandler;
-    private ShopManager shopManager;
+    HammerThrow hammerThrowScript;
 
     public GameObject rockSmashVFX;
-    public GameObject HitBoxVisual;
+    public GameObject hammerPrefab;
     public GameObject blockerPrefab;
 
     private Transform HandLocation;
@@ -21,26 +21,16 @@ public class PlayerAttack : MonoBehaviour // This script is attached to the play
 
     private float checkRadius = 0.5f;
 
-    public Renderer weaponVisual;
-
-    private Color idleColor;
-
-    public Collider weaponCollider; 
-
-    public Animator weaponAnimator;
-
-    private bool canAttack = true; 
-
-    private bool isAttacking = false;
+    private Collider weaponCollider; 
 
     private bool canCreateBlocker = true;
 
+    float speed = 15f;
 
     private void Start()
     {
-        weaponCollider = GetComponent<Collider>();
-        weaponVisual = GetComponent<Renderer>();
-        shopManager = FindAnyObjectByType<ShopManager>();
+        weaponCollider = hammerPrefab.GetComponent<Collider>();
+        hammerThrowScript = hammerPrefab.GetComponent<HammerThrow>();
        
         HandLocation = transform;
     }
@@ -49,7 +39,7 @@ public class PlayerAttack : MonoBehaviour // This script is attached to the play
 
     private void Update()
     {
-        if (Input.GetKeyDown(hitKey) && canAttack)
+        if (Input.GetKeyDown(hitKey))
         {
             Attack();
         }
@@ -61,6 +51,19 @@ public class PlayerAttack : MonoBehaviour // This script is attached to the play
             blockKey = GetPressedAlphaKey();
             StartCoroutine(CreateBlocker(blockKey));
         }
+    }
+
+    private void Attack()
+    {
+        Vector3 randomOffset = new Vector3(0, 0, Random.Range(-1.5f, 1.5f));
+        Vector3 spawnPosition = transform.position + randomOffset;
+
+        GameObject hammerInstance = Instantiate(hammerPrefab, spawnPosition, Quaternion.identity);
+
+        Rigidbody rb = hammerInstance.GetComponent<Rigidbody>();
+        rb.AddForce(Vector3.forward.normalized * speed, ForceMode.Impulse);
+
+        hammerInstance.AddComponent<DisposableThrowable>();
     }
 
     private IEnumerator CreateBlocker(KeyCode key)
@@ -104,54 +107,13 @@ public class PlayerAttack : MonoBehaviour // This script is attached to the play
         yield return new WaitForSeconds(2);
         canCreateBlocker = true;
     }
-    private void Attack()
-    {
-        weaponAnimator.SetTrigger("HammerTrigger");
-
-        canAttack = false;
-        isAttacking = true;
-        isAttacking = false;
-        canAttack = true;
-
-        weaponAnimator.SetTrigger("Idle");
-    }
 
     public void UpdateHammer(float amountToEnlarge)
     {
         float convertedValue = 1f + amountToEnlarge / 100;
         weaponCollider.transform.localScale *= convertedValue;
-        HitBoxVisual.transform.localScale *= convertedValue;
+        hammerPrefab.transform.localScale *= convertedValue;
         Debug.Log($"Hammer has grown by {convertedValue} %");
-    }
-
-    public void CanPlayerAttackThis(Collider other)
-    {
-        projectileHandler = other.GetComponent<ProjectileCollisionHandler>();
-
-        if (projectileHandler != null )
-        {
-            if (other.tag == "Knockback" || other.tag == "TowerBuster")
-            {
-                projectileHandler.struckByWeapon = true;
-
-                GameObject explosion = Instantiate(rockSmashVFX, other.transform.position, Quaternion.identity);
-
-                explosion.SetActive(true);
-
-                ParticleSystem explosionVFX = explosion.GetComponent<ParticleSystem>();
-
-                if (explosionVFX != null)
-                {
-                    explosionVFX.Play();
-                }
-                Destroy(explosion, explosionVFX.main.duration);
-
-            }
-            else
-            {
-                projectileHandler.struckByWeapon = false;
-            }
-        }
     }
 
     private bool IsLaneOccupied(Transform lane)
@@ -198,5 +160,35 @@ public class PlayerAttack : MonoBehaviour // This script is attached to the play
         if (Input.GetKeyDown(KeyCode.Alpha4)) return KeyCode.Alpha4;
 
         return KeyCode.None;
+    }
+
+    public void CanPlayerAttackThis(Collider other)
+    {
+        projectileHandler = other.GetComponent<ProjectileCollisionHandler>();
+
+        if (projectileHandler != null)
+        {
+            if (other.tag == "Knockback" || other.tag == "TowerBuster")
+            {
+                projectileHandler.struckByWeapon = true;
+
+                GameObject explosion = Instantiate(rockSmashVFX, other.transform.position, Quaternion.identity);
+
+                explosion.SetActive(true);
+
+                ParticleSystem explosionVFX = explosion.GetComponent<ParticleSystem>();
+
+                if (explosionVFX != null)
+                {
+                    explosionVFX.Play();
+                }
+                Destroy(explosion, explosionVFX.main.duration);
+
+            }
+            else
+            {
+                projectileHandler.struckByWeapon = false;
+            }
+        }
     }
 }

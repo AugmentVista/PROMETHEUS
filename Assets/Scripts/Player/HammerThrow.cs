@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Drawing;
 using UnityEngine;
 
 public class HammerThrow : MonoBehaviour
@@ -11,6 +8,12 @@ public class HammerThrow : MonoBehaviour
     float speed = 10f;
 
     [SerializeField] Vector3 offset = new Vector3(0, 0, 0);
+
+    public GameObject ThrowBasicHammer()
+    {
+        return hammerPrefab;
+    }
+
 
     private void OnTriggerEnter(Collider other)
     {
@@ -62,7 +65,7 @@ public class HammerThrow : MonoBehaviour
 
         GameObject hammerInstance = Instantiate(hammerPrefab, spawnPosition, Quaternion.identity);
 
-        float scaleMultiplier = 1f + (sizeMultiplier * 1.5f); // Adjust this factor as needed
+        float scaleMultiplier = 1f + (sizeMultiplier * 1.5f);
         Vector3 newScale = hammerPrefab.transform.localScale * scaleMultiplier;
         hammerInstance.transform.localScale = newScale;
 

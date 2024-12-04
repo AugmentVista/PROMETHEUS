@@ -8,18 +8,6 @@ public class DisposableThrowable : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        //if (other.CompareTag("KnockBack"))
-        //{
-        //    BaseProjectile baseProj = other.GetComponent<BaseProjectile>();
-        //    if (baseProj != null)
-        //    {
-        //        health -= baseProj.knockBackDamage;
-        //        if (health > 0)
-        //        {
-        //            SelfDestruct();
-        //        }
-        //    }
-        //}
         if (other.CompareTag("WeaponDestroyer"))
         {
             SelfDestruct();
