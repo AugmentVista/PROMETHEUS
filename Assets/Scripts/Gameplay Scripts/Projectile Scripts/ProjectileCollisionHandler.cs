@@ -70,16 +70,12 @@ public class ProjectileCollisionHandler : MonoBehaviour
             case "Blocker":
                 HandleProjectileCollision(other, "Blocker");
                 break;
-
-            default:
-               // Debug.Log("Unknown projectile tag");
-                break;
         }
     }
 
     private void HandleProjectileCollision(Collider other, string projectileType)
     {
-        switch (other.gameObject.tag) // the tag of this object
+        switch (other.gameObject.tag)
         {
             case "PlayerBody":
                 OnPlayerDamaged(true, gameObject.tag); 
@@ -106,8 +102,6 @@ public class ProjectileCollisionHandler : MonoBehaviour
             case "MissZone":
                 OnPlayerDamaged(false, gameObject.tag);
 
-                //OnTowerDamaged(true, gameObject.tag)
-
                 DisableColliderForPooling(); 
                 break;
 
@@ -128,7 +122,6 @@ public class ProjectileCollisionHandler : MonoBehaviour
     {
         if (didThisHitPlayer)
         {
-            //Debug.Log($"Player hit {projectileType} !!!!!");
             switch (projectileType)
             {
                 case "Stone":// Reduce score
@@ -137,19 +130,15 @@ public class ProjectileCollisionHandler : MonoBehaviour
 
                 case "Knockback":
                     PlayerHealthSystem.TakeDamage(Base.knockBackDamage);
-                    playerMove.WasHit(true, projectileType); // Move player backward
+                    playerMove.WasHit(true, projectileType);
                     break;
 
                 case "TowerBuster":
-                    playerMove.WasHit(true, projectileType); // Stun the player
+                    playerMove.WasHit(true, projectileType);
                     break;
 
                 case "Slow":
-                    playerMove.WasHit(true, projectileType); // Slow the player
-                    break;
-
-                default:
-                    //Debug.Log("Player was not hit");
+                    playerMove.WasHit(true, projectileType);
                     break;
             }
         }

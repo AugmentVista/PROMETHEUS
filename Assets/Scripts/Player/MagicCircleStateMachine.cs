@@ -92,16 +92,16 @@ public class MagicCircleStateMachine : MonoBehaviour
 
     public void DuplicateHammer(int amountToCreate)
     {
-        for (int i = 0; i < amountToCreate+1; i++)
+        for (int i = 0; i < amountToCreate * 2; i++)
         {
-            Vector3 randomOffset = new Vector3(0, 0, Random.Range(-1.5f, 1.5f));
+            Vector3 randomOffset = new Vector3(0, 0, Random.Range(-5f, 5f));
             Vector3 spawnPosition = transform.position + new Vector3(0, 0, 0) + randomOffset;
 
             GameObject hammerInstance = Instantiate(hammerPrefab, spawnPosition, Quaternion.identity);
 
             Rigidbody rb = hammerInstance.GetComponent<Rigidbody>();
             Vector3 randomDirection = Vector3.forward + new Vector3(Random.Range(-0.1f, 0.1f), Random.Range(-0.05f, 0.05f), 0);
-            rb.AddForce(randomDirection.normalized * speed, ForceMode.Impulse);
+            rb.AddForce(randomDirection.normalized * Random.Range(speed * 0.5f , speed * 1.5f), ForceMode.Impulse);
 
             hammerInstance.AddComponent<DisposableThrowable>();
         }

@@ -93,6 +93,7 @@ public class CityHealthSystem : MonoBehaviour
             if (currentHealth == 0)
             { 
             // Unalived
+            // add UI messaged that the city died to inform player they need to protect everything
             }
             currentShield = 0;
         }
@@ -105,6 +106,22 @@ public class CityHealthSystem : MonoBehaviour
         GlobalSettings.globalCityMaxHP += amountToAdd;
         maxHealth = GlobalSettings.globalCityMaxHP;
         Heal(amountToAdd);
+    }
+
+    public void ResetCityHealthUpgrade()
+    {
+        GlobalSettings.globalCityMaxHP = 100f;
+        maxHealth = GlobalSettings.globalCityMaxHP;
+
+        currentHealth = maxHealth;
+        currentShield = maxShield;
+        Heal(maxHealth);
+        targetFillAmount = 1.0f;
+        targetShieldFill = 1.0f;
+
+        cityHealthGauge.fillAmount = targetFillAmount;
+        cityShieldGauge.fillAmount = targetShieldFill;
+        isCityAlive = true;
     }
 
     private void UpdateFillAmount()

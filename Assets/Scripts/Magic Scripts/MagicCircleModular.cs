@@ -26,6 +26,12 @@ public class MagicCircleModular : MonoBehaviour
         }
     }
 
+    public void ResetRange()
+    {
+        range = 0;
+        lastRange = range;
+    }
+
     void Update()
     {
         if (lastRange < range)

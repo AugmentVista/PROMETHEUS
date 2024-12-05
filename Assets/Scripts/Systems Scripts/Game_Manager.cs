@@ -180,7 +180,7 @@ public class Game_Manager : MonoBehaviour
             IntroPlayButton.SetActive(false);
         }
 
-        float duration = 1f; // seconds
+        float duration = 2f;
         
         yield return new WaitForSeconds(duration);
 
@@ -237,6 +237,7 @@ public class Game_Manager : MonoBehaviour
                 MainMenu();
                 break;
             case "Level_1":
+                level_Manager.LoadLevel_1();
                 Level_1();
                 break;
             default:
@@ -254,7 +255,6 @@ public class Game_Manager : MonoBehaviour
             Cursor.visible = open;
             meteorVFX.SetActive(!open);
         }
-        // could just be an else
         else 
         {
             Cursor.visible = open;

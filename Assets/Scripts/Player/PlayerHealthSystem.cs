@@ -17,8 +17,6 @@ public class PlayerHealthSystem : MonoBehaviour
 
     private float targetFillAmount;
 
-    private int hpUpgradeLimit = 0;
-
     private bool isPlayerAlive;
 
     public EventHandler Player_Death;
@@ -44,11 +42,6 @@ public class PlayerHealthSystem : MonoBehaviour
             playerHealthGauge.fillAmount = Mathf.Lerp(playerHealthGauge.fillAmount, targetFillAmount, Time.deltaTime * fillSpeed);
         }
         if (isPlayerAlive) { PlayerDeath(); }
-    }
-
-    public void Player_Death_ShowResults() // not connected to anything
-    {
-        Player_Death?.Invoke(this, EventArgs.Empty);
     }
 
     private void UpdateFillAmount()
@@ -91,7 +84,6 @@ public class PlayerHealthSystem : MonoBehaviour
 
             if (currentScene.name == "Level_1")
             {
-                Player_Death_ShowResults(); // not connected to anything
                 gameManager.hasHitEndWaveTrigger = true;
                 
                 isPlayerAlive = false;
@@ -109,11 +101,23 @@ public class PlayerHealthSystem : MonoBehaviour
             maxHealth = GlobalSettings.globalPlayerHPMaximum;
             Heal(maxHealth);
             Debug.Log("Player has been healed");
-            hpUpgradeLimit++;
         }
         else
         {
             Debug.Log("item is null");
         }
+    }
+
+    public void ResetPlayerHealthUpgrade()
+    {
+        GlobalSettings.globalPlayerHPMaximum = 100f;
+        maxHealth = GlobalSettings.globalPlayerHPMaximum;
+
+        currentHealth = maxHealth;
+        Heal(maxHealth);
+        targetFillAmount = 1.0f;
+
+        playerHealthGauge.fillAmount = targetFillAmount;
+        isPlayerAlive = true;
     }
 }

@@ -15,6 +15,8 @@ public class Level_Manager : MonoBehaviour
 
     public PlayerHealthSystem playerHealth;
 
+    [SerializeField] CityHealthSystem cityHealthSystem;
+
     public Transform respawn;
 
     private List<Transform> Extentions = new List<Transform>();
@@ -174,6 +176,8 @@ public class Level_Manager : MonoBehaviour
 
     private void SetupGameplayScene()
     {
+        ResetAllUpgrades();
+        ResetWave();
     }
 
     private void SetupMainMenu()
@@ -246,11 +250,10 @@ public class Level_Manager : MonoBehaviour
 
     public void ResetCity()
     {
-        CityHealthSystem city = FindObjectOfType<CityHealthSystem>(true);
-        if (city != null)
+        if (cityHealthSystem != null)
         {
-            city.ResetCity();
-            Debug.Log($"City has been reset: {city.gameObject.name}");
+            cityHealthSystem.ResetCity();
+            Debug.Log($"City has been reset: {cityHealthSystem.gameObject.name}");
         }
     }
 
@@ -275,11 +278,17 @@ public class Level_Manager : MonoBehaviour
     }
 
     void ResetAllUpgrades()
-    { 
-    
+    {
+        MagicManager magicManager = FindObjectOfType<MagicManager>(true);
+        if (magicManager != null) { magicManager.ResetMagicUpgrade(); }
+
+        upgradeManager.upgradesHaveBeenReset = true;
+
+        cityHealthSystem.ResetCityHealthUpgrade();
+
+        playerHealth.ResetPlayerHealthUpgrade();
+
     }
 
     #endregion
-
-   
 }

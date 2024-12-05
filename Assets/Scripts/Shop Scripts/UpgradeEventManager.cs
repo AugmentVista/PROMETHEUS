@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class UpgradeEventManager : MonoBehaviour // this needs to be on an object within UI Manager
+public class UpgradeEventManager : MonoBehaviour
 {
     [SerializeField] GameObject PlayerHealthMerchandise;
     [SerializeField] GameObject HammerMerchandise;
@@ -11,6 +11,8 @@ public class UpgradeEventManager : MonoBehaviour // this needs to be on an objec
     [SerializeField] GameObject BlockMerchandise;
 
     [SerializeField] private Button_UpgradeEvent upgradeButton;
+
+    public bool upgradesHaveBeenReset;
 
     private int healthUpgradesPurchased = 0;
     private int hammerUpgradesPurchased = 0;
@@ -57,6 +59,46 @@ public class UpgradeEventManager : MonoBehaviour // this needs to be on an objec
         foreach (GameObject star in BlockStars)
         {
             star.SetActive(false);
+        }
+    }
+
+
+    private void Update()
+    {
+        for (int i = 0; i < healthUpgradesPurchased; i++)
+        {
+            HealthStars[i].SetActive(true);
+        }
+        for (int j = 0; j < hammerUpgradesPurchased; j++)
+        {
+            RangeStars[j].SetActive(true);
+        }
+        for (int k = 0; k < cityHealthUpgradesPurchased; k++)
+        {
+            RangeStars[k].SetActive(true);
+        }
+        for (int l = 0; l < magicUpgradesPurchased; l++)
+        {
+            MagicStars[l].SetActive(true);
+        }
+        for (int m = 0; m < blockUpgradesPurchased; m++)
+        {
+            BlockStars[m].SetActive(true);
+        }
+        ResetUpgradeCount();
+    }
+
+    public void ResetUpgradeCount()
+    {
+        if (upgradesHaveBeenReset)
+        {
+            healthUpgradesPurchased = 0;
+            hammerUpgradesPurchased = 0;
+            cityHealthUpgradesPurchased = 0;
+            attackSpeedUpgradesPurchased = 0;
+            magicUpgradesPurchased = 0;
+            blockUpgradesPurchased = 0;
+            upgradesHaveBeenReset = false;
         }
     }
 
