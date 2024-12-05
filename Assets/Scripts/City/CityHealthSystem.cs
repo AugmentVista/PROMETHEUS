@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class CityHealthSystem : MonoBehaviour
 {
-    private float maxShield = 50f;
+    private float maxShield = 100f;
     private float currentShield;
 
     private float maxHealth = GlobalSettings.globalCityMaxHP;
@@ -18,7 +18,7 @@ public class CityHealthSystem : MonoBehaviour
 
     public float elapsedTime = 0f;
 
-    public float fillSpeed = 15f;
+    public float fillSpeed = 50f;
 
     private float targetFillAmount;
     private float targetShieldFill;
