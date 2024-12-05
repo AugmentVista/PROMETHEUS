@@ -11,16 +11,16 @@ public class EnemyFire : MonoBehaviour
     private float elapsedTime = 0f;
 
     private bool isGameActive = GlobalSettings.projectileSpawnerActive;
-    private float ShotDelay() { return Mathf.Round(Random.Range(4.0f - projectileManager.localWaveCount/5, 5.0f - projectileManager.localWaveCount / 5) * 100) / 100; } // produces clean decimals
+    private float ShotDelay() { return Mathf.Round(Random.Range(4.0f - projectileManager.localWaveCount/5, 4.5f - projectileManager.localWaveCount / 5) * 100) / 100; } // produces clean decimals
 
-    private float FiringCooldown = 1f;
+    private float FiringCooldown;
 
 
 
     private void Start()
     {
         waveTrigger = FindObjectOfType<EnemyWaveTrigger>();
-        projectileManager = FindObjectOfType<EnemyProjectileManager>(); // Reference the manager
+        projectileManager = FindObjectOfType<EnemyProjectileManager>();
         projectileTarget = GameObject.Find("Miss Zone").transform;
         FiringCooldown = ShotDelay();
     }
@@ -75,6 +75,7 @@ public class EnemyFire : MonoBehaviour
                 Rigidbody projectileRb = projectileInstance.GetComponent<Rigidbody>();
 
                 BaseProjectile baseProj = projectileInstance.GetComponent<BaseProjectile>();
+                baseProj.knockBackDamage = baseProj.knockBackDamage + projectileManager.localWaveCount;
 
                 projectileRb.velocity = directionToPlayer * baseProj.travelSpeed;
 

@@ -92,8 +92,8 @@ public class ProjectileCollisionHandler : MonoBehaviour
                 {
                     if (Score != null) 
                     {
-                        Score.score += Base.value; 
-                        Score.drachma += Base.value/2;
+                        Score.score += Base.value;
+                        Score.drachma += Base.value;
                     }
 
                     DisableColliderForPooling();
