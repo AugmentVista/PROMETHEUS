@@ -11,8 +11,6 @@ public class MagicManager : MonoBehaviour
     [SerializeField] GameObject SecondPortal;
     [SerializeField] GameObject ThirdPortal;
     [SerializeField] GameObject FourthPortal;
-
-
     void Start()
     {
         FirstPortal.SetActive(false);
@@ -20,7 +18,6 @@ public class MagicManager : MonoBehaviour
         ThirdPortal.SetActive(false);
         FourthPortal.SetActive(false);
     }
-
 
     private void Update()
     {

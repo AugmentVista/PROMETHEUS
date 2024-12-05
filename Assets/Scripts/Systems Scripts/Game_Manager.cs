@@ -47,6 +47,19 @@ public class Game_Manager : MonoBehaviour
 
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            if (Time.timeScale == 0.0f)
+            {
+                Time.timeScale = 1.0f;
+            }
+            else
+            {
+                Time.timeScale = 0.0f;
+            }
+        }
+
+
         Scene thisScene = SceneManager.GetActiveScene();
         if (Input.GetKeyDown(KeyCode.Escape) && (thisScene.name == "Level_1"))
         {

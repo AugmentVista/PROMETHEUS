@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public class ResultsKeeper : MonoBehaviour
 {
-    [SerializeField] private ScoreKeeper scoreKeeper;
+    [SerializeField] private CurrencyKeeper scoreKeeper;
 
     public Image[] EarningsNumberImages;
 
@@ -23,13 +23,17 @@ public class ResultsKeeper : MonoBehaviour
         return GlobalSettings.globalWaveCount;
     }
 
-    public void ShowResults() 
+    private void OnEnable()
     {
-        Debug.Log("money is " + earnings);
-        Debug.LogError($"wave is: {GetWaveInfo().ToString()}");
+        ShowResults();
     }
 
-    private void DetermineResults(int points, int money, int waveCount)
+    public void ShowResults() 
+    {
+        DetermineResults(earnings, GetWaveInfo());
+    }
+
+    private void DetermineResults(int money, int waveCount)
     {
         int eOnes = money % 10;
         int eTens = (money / 10) % 10;

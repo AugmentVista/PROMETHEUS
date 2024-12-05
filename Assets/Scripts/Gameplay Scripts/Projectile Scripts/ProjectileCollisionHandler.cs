@@ -10,7 +10,7 @@ public class ProjectileCollisionHandler : MonoBehaviour
     /// It can reduce your score if you get hit.
     /// </summary>
 
-    private ScoreKeeper Score;
+    private CurrencyKeeper Score;
     private PlayerSideToSide playerMove;
     private EnemyProjectileManager spawner; // Reference to the spawner
     private PlayerAttack playerAttack;
@@ -25,7 +25,7 @@ public class ProjectileCollisionHandler : MonoBehaviour
     private void Start()
     {
         Base = GetComponent<BaseProjectile>();
-        Score = FindAnyObjectByType<ScoreKeeper>();
+        Score = FindAnyObjectByType<CurrencyKeeper>();
         spawner = FindObjectOfType<EnemyProjectileManager>();
         playerMove = FindObjectOfType<PlayerSideToSide>();
         playerAttack = FindObjectOfType<PlayerAttack>();
@@ -92,7 +92,6 @@ public class ProjectileCollisionHandler : MonoBehaviour
                 {
                     if (Score != null) 
                     {
-                        Score.score += Base.value;
                         Score.drachma += Base.value;
                     }
 

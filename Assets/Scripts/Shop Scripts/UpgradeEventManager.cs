@@ -26,10 +26,38 @@ public class UpgradeEventManager : MonoBehaviour // this needs to be on an objec
     public EventHandler<UpgradeEventArgs> UpdateUpgradeMagic;
     public EventHandler<UpgradeEventArgs> UpdateUpgradeBlock;
 
+    [SerializeField] GameObject[] HealthStars;
+    [SerializeField] GameObject[] RangeStars;
+    [SerializeField] GameObject[] CityHealthStars;
+    [SerializeField] GameObject[] MagicStars;
+    [SerializeField] GameObject[] BlockStars;
+
+
 
     void Start()
     {
         upgradeButton.UpgradeWasPurchased += Button_UpgradeEvent_UpgradeWasPurchased;
+
+        foreach (GameObject star in HealthStars)
+        { 
+            star.SetActive(false);
+        }
+        foreach (GameObject star in RangeStars)
+        { 
+            star.SetActive(false); 
+        }
+        foreach (GameObject star in CityHealthStars) 
+        { 
+            star.SetActive(false); 
+        }
+        foreach (GameObject star in MagicStars)
+        {
+            star.SetActive(false);
+        }
+        foreach (GameObject star in BlockStars)
+        {
+            star.SetActive(false);
+        }
     }
 
     private void Button_UpgradeEvent_UpgradeWasPurchased(object sender, UpgradeEventArgs e)
@@ -46,7 +74,7 @@ public class UpgradeEventManager : MonoBehaviour // this needs to be on an objec
             case "Health Potion":
                 if (Item.IsTitleMatch("Health Potion"))
                 {
-                    if (healthUpgradesPurchased <= 5)
+                    if (healthUpgradesPurchased <= 4)
                     {
                         UpdateUpgradeHealth?.Invoke(this, new UpgradeEventArgs(Item));
                         Debug.Log("Player bought a Health Potion");
@@ -63,7 +91,7 @@ public class UpgradeEventManager : MonoBehaviour // this needs to be on an objec
             case "Hammer Upgrade":
                 if (Item.IsTitleMatch("Hammer Upgrade"))
                 {
-                    if (hammerUpgradesPurchased < 5)
+                    if (hammerUpgradesPurchased <= 4)
                     {
                         UpdateUpgradeHammer?.Invoke(this, new UpgradeEventArgs(Item));
                         hammerUpgradesPurchased += 1;
@@ -79,7 +107,7 @@ public class UpgradeEventManager : MonoBehaviour // this needs to be on an objec
                 case "City Health Upgrade":
                 if (Item.IsTitleMatch("City Health Upgrade"))
                 {
-                    if (cityHealthUpgradesPurchased < 5)
+                    if (cityHealthUpgradesPurchased <= 4)
                     {
                         UpdateUpgradeCityHealth?.Invoke(this, new UpgradeEventArgs(Item));
                         cityHealthUpgradesPurchased += 1;
@@ -96,7 +124,7 @@ public class UpgradeEventManager : MonoBehaviour // this needs to be on an objec
                 case "Attack Speed Upgrade":
                 if (Item.IsTitleMatch("Attack Speed Upgrade"))
                 {
-                    if (attackSpeedUpgradesPurchased < 5)
+                    if (attackSpeedUpgradesPurchased <= 4)
                     {
                         UpdateUpgradeAttackSpeed?.Invoke(this, new UpgradeEventArgs(Item));
                         attackSpeedUpgradesPurchased += 1;
@@ -112,7 +140,7 @@ public class UpgradeEventManager : MonoBehaviour // this needs to be on an objec
             case "Magic Upgrade":
                 if (Item.IsTitleMatch("Magic Upgrade"))
                 {
-                    if (magicUpgradesPurchased < 4)
+                    if (magicUpgradesPurchased <= 4)
                     {
                         UpdateUpgradeMagic?.Invoke(this, new UpgradeEventArgs(Item));
                         magicUpgradesPurchased += 1;
@@ -128,7 +156,7 @@ public class UpgradeEventManager : MonoBehaviour // this needs to be on an objec
             case "Block Upgrade":
                 if (Item.IsTitleMatch("Block Upgrade"))
                 {
-                    if (blockUpgradesPurchased < 5)
+                    if (blockUpgradesPurchased <= 5)
                     { 
                         UpdateUpgradeBlock?.Invoke(this, new UpgradeEventArgs(Item));
                         blockUpgradesPurchased += 1;

@@ -4,7 +4,7 @@ using TMPro;
 
 public class ShopManager : MonoBehaviour
 {
-    [SerializeField] private ScoreKeeper scoreKeeper;
+    [SerializeField] private CurrencyKeeper scoreKeeper;
 
     #region Player Balance
 
@@ -14,6 +14,7 @@ public class ShopManager : MonoBehaviour
     public Image drachmaOnes;
     public Image drachmaTens;
     public Image drachmaHundreds;
+    public Image drachaThousands;
 
     #endregion
     
@@ -48,6 +49,7 @@ public class ShopManager : MonoBehaviour
         int ones = absDrachma % 10;
         int tens = (absDrachma / 10) % 10;
         int hundreds = (absDrachma / 100) % 10;
+        int thousands = (absDrachma / 1000) % 10;
 
         if (drachma >= 0)
         {
@@ -55,6 +57,7 @@ public class ShopManager : MonoBehaviour
             drachmaOnes.sprite = DrachmaPositive[ones].sprite;
             drachmaTens.sprite = DrachmaPositive[tens].sprite;
             drachmaHundreds.sprite = DrachmaPositive[hundreds].sprite;
+            drachaThousands.sprite =  DrachmaPositive[thousands].sprite;
         }
         else
         {
@@ -62,6 +65,7 @@ public class ShopManager : MonoBehaviour
             drachmaOnes.sprite = DrachmaNegative[ones].sprite;
             drachmaTens.sprite = DrachmaNegative[tens].sprite;
             drachmaHundreds.sprite = DrachmaNegative[hundreds].sprite;
+            drachaThousands.sprite = DrachmaNegative[thousands].sprite;
         }
     }
 
@@ -89,7 +93,4 @@ public class ShopManager : MonoBehaviour
             return false;
         }
     }
-
-    
-
 }
