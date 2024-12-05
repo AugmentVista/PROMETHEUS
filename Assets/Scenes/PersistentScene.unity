@@ -40636,6 +40636,7 @@ MonoBehaviour:
   MagicMerchandise: {fileID: 1320564433}
   BlockMerchandise: {fileID: 40614382}
   upgradeButton: {fileID: 5248189428012718780}
+  upgradesHaveBeenReset: 0
   HealthStars: []
   RangeStars: []
   CityHealthStars: []
@@ -71770,6 +71771,7 @@ MonoBehaviour:
   Extention: {fileID: 0}
   playerTransform: {fileID: 0}
   playerHealth: {fileID: 1952016379115059952}
+  cityHealthSystem: {fileID: 136349200}
   respawn: {fileID: 0}
   Win: 0
   Lose: 0

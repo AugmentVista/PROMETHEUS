@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class MagicManager : MonoBehaviour
@@ -67,12 +68,14 @@ public class MagicManager : MonoBehaviour
     public void ResetMagicUpgrade()
     {
         magicLevel = 0;
+        List <GameObject> magicCircles = new List<GameObject>();
+        MagicCircleModular[] foundCircles = FindObjectsOfType<MagicCircleModular>();
 
-        MagicCircleModular magCircle = FirstPortal.GetComponent<MagicCircleModular>();
-        MagicCircleModular magCircle2 = SecondPortal.GetComponent<MagicCircleModular>();
-        MagicCircleModular magCircle3 = SecondPortal.GetComponent<MagicCircleModular>();
-        magCircle.level = magicLevel;
-        magCircle2.level = magicLevel;
-        magCircle3.level = magicLevel;
+        foreach (MagicCircleModular circle in foundCircles)
+        {
+            magicCircles.Add(circle.gameObject);
+
+            circle.level = 0;
+        }
     }
 }

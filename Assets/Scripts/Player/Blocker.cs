@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,8 +12,6 @@ public class Blocker : MonoBehaviour
     private Collider blockerCollider;
 
     public float blockerMaxHP = 30;
-
-    private float dmgReduction = 0;
 
     public float currentblockerHealth;
 
@@ -32,7 +28,6 @@ public class Blocker : MonoBehaviour
 
     public void BlockerTakeDamage(float damageTaken)
     {
-        damageTaken -= dmgReduction;
         currentblockerHealth = Mathf.Clamp(currentblockerHealth - damageTaken, 0f, blockerMaxHP);
 
         Shrink();
@@ -46,7 +41,12 @@ public class Blocker : MonoBehaviour
 
     public void UpgradeBlocker(float amountToAdd)
     {
-        dmgReduction += amountToAdd;
+        blockerMaxHP += amountToAdd;
+    }
+
+    public void ResetBlockerUpgrade()
+    {
+        blockerMaxHP = 30f;
     }
 
     private void UpdateHealthBar()
@@ -59,9 +59,8 @@ public class Blocker : MonoBehaviour
 
     private void Shrink()
     {
-        // Scale the blocker based on health
         float healthPercentage = currentblockerHealth / blockerMaxHP;
-        float newScale = Mathf.Lerp(0.005f, 0.01f, healthPercentage); // Scale between 0.005 and 0.01
+        float newScale = Mathf.Lerp(0.005f, 0.01f, healthPercentage);
         transform.localScale = new Vector3(newScale, newScale, newScale);
     }
 

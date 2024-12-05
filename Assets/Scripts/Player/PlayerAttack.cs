@@ -7,7 +7,6 @@ public class PlayerAttack : MonoBehaviour // This script is attached to the play
     private KeyCode blockKey;
 
     private ProjectileCollisionHandler projectileHandler;
-    MagicCircleStateMachine hammerThrowScript;
 
     public GameObject rockSmashVFX;
     public GameObject hammerPrefab;
@@ -30,8 +29,6 @@ public class PlayerAttack : MonoBehaviour // This script is attached to the play
 
     private void Start()
     {
-        hammerThrowScript = hammerPrefab.GetComponent<MagicCircleStateMachine>();
-       
         HandLocation = transform;
     }
 
@@ -105,16 +102,6 @@ public class PlayerAttack : MonoBehaviour // This script is attached to the play
         yield return new WaitForSeconds(2);
         canCreateBlocker = true;
     }
-
-    //public void UpdateHammer(float amountToEnlarge)
-    //{
-    //    float convertedValue = 1f + amountToEnlarge / 100;
-    //    hammerInstance.transform.localScale *= convertedValue;
-    //    hammerInstanceSizeMultiplier = convertedValue;
-    //    hammerUpgradesPurchased++;
-    //    Debug.Log($"Hammer has grown by {convertedValue} %");
-
-    //}
 
     private bool IsLaneOccupied(Transform lane)
     {

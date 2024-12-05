@@ -48,6 +48,7 @@ public class Level_Manager : MonoBehaviour
     private void UpgradeEventManager_UpdateUpgradeBlock(object sender, UpgradeEventArgs e)
     {
         Blocker blocker = FindObjectOfType<Blocker>(true);
+        Debug.Log($"Found Blocker Script on {blocker.gameObject.name}");
         ItemDisplay blockUpgrade = e.Item;
         Debug.Log($"Upgrade purchased of type {blocker}");
         if (blocker != null) { blocker.UpgradeBlocker(blockUpgrade.Modifer); }
@@ -156,6 +157,7 @@ public class Level_Manager : MonoBehaviour
     {
         WaveUI.FinalWaveConlcuded = false;
         PrepareScene(previousScene, newScene);
+        ResetCurrency();
     }
 
     private void PrepareScene(Scene previousScene, Scene newScene)
@@ -288,6 +290,11 @@ public class Level_Manager : MonoBehaviour
 
         playerHealth.ResetPlayerHealthUpgrade();
 
+    }
+
+    public void ResetCurrency()
+    {
+        GlobalSettings.globalDrachma = 0;
     }
 
     #endregion

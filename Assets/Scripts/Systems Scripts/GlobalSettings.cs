@@ -15,8 +15,6 @@ public class GlobalSettings : MonoBehaviour
 
     #region ScoreKeeper Variables
 
-    public static int globalScore;
-
     public static int globalDrachma;
 
     #endregion
@@ -32,10 +30,16 @@ public class GlobalSettings : MonoBehaviour
     #region City Variables
 
     public static float globalCityMaxHP = 100f;
-   
+
     #endregion
 
+    #region Weapon and Item Variables
 
+    public static float globalBlockerHealth = 0f;
+
+    #endregion
+
+    
     #region ProjectileSpawner Variables
 
     public static bool projectileSpawnerActive = true;
