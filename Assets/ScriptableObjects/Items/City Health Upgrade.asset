@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da52b6043a4a9fc418470ec65226891a, type: 3}
   m_Name: City Health Upgrade
   m_EditorClassIdentifier: 
-  title: City Health Upgrade
+  title: City Health
   description: Increases city's max hp by 30
   price: 20
   itemImage: {fileID: 21300000, guid: 2d89e2d5557e42e47992652f748a6b1f, type: 3}

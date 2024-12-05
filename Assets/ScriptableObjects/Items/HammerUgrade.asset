@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da52b6043a4a9fc418470ec65226891a, type: 3}
   m_Name: HammerUgrade
   m_EditorClassIdentifier: 
-  title: Hammer Upgrade
+  title: Attack Range
   description: Increases the size your hammer by 10%
   price: 15
   itemImage: {fileID: 21300000, guid: 182f46d6ec9693f4a9b884a747bf7f0c, type: 3}
