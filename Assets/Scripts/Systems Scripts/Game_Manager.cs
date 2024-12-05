@@ -226,12 +226,6 @@ public class Game_Manager : MonoBehaviour
             case "Level_1":
                 Level_1();
                 break;
-            case "GameWin":
-                GameWin();
-                break;
-            case "GameOver":
-                GameOver();
-                break;
             default:
                 MainMenu();
                 break;
@@ -248,7 +242,7 @@ public class Game_Manager : MonoBehaviour
             meteorVFX.SetActive(!open);
         }
         // could just be an else
-        else if (!open)
+        else 
         {
             Cursor.visible = open;
         }
@@ -311,16 +305,12 @@ public class Game_Manager : MonoBehaviour
 
     private void GameOver()
     {
-        Scene currentScene = SceneManager.GetActiveScene();
-        if (currentScene.name != "GameOver") { level_Manager.LoadGameOver(); }
         IsMenuOpen(true);
         OnGameOver?.Invoke();
     }
 
     private void GameWin()
     {
-        Scene currentScene = SceneManager.GetActiveScene();
-        if (currentScene.name != "GameWin") { level_Manager.LoadGameWin(); }
         IsMenuOpen(true);
         OnGameWin?.Invoke();
     }

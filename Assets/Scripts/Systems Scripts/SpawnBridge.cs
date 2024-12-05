@@ -19,6 +19,5 @@ public class SpawnBridge : MonoBehaviour
         Transform ExtentionTransform = parentOfBridge.transform;
 
         Instantiate(bridgePrefab, new Vector3(0,0, bridgeZ), Quaternion.identity);
-        //bridgePrefab.gameObject.transform.SetParent(ExtentionTransform);
     }
 }

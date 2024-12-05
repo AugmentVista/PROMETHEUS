@@ -151,7 +151,7 @@ MonoBehaviour:
   travelSpeed: 30
   currentState: 0
   currentEffect: 0
-  value: 5
+  value: 1
   knockBackDamage: 20
 --- !u!135 &5025310217177838612
 SphereCollider:

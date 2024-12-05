@@ -113,14 +113,6 @@ public class Level_Manager : MonoBehaviour
     {
         SceneManager.LoadScene("Level_1");
     }
-    public void LoadGameWin()
-    {
-        SceneManager.LoadScene("GameWin");
-    }
-    public void LoadGameOver()
-    {
-        SceneManager.LoadScene("GameOver");
-    }
 
     #endregion
 
@@ -173,12 +165,6 @@ public class Level_Manager : MonoBehaviour
                 break;
             case "MainMenu":
                 SetupMainMenu();
-                break;
-            case "GameWin":
-                SetupGameWin();
-                break;
-            case "GameOver":
-                SetupGameOver();
                 break;
             default:
                 Debug.LogWarning($"No specific setup for scene: {newScene.name}");
