@@ -8,7 +8,7 @@ public class WaveUI : MonoBehaviour
 {
     public static bool FinalWaveConlcuded = false;
     public int waveCount = 1;
-    private int amountOfWavesToBeat = 20;
+    private int amountOfWavesToBeat = 10;
 
 
     private void Awake()
@@ -61,7 +61,7 @@ public class WaveUI : MonoBehaviour
             GlobalSettings.globalWaveCount = waveCount;
             Debug.Log($"Wave {waveCount} has begun");
         }
-        else
+        else if (waveCount == amountOfWavesToBeat)
         {
             Game_Manager gameManager = Singleton.instance.GetComponent<Game_Manager>();
             Scene currentScene = SceneManager.GetActiveScene();

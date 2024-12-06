@@ -324,6 +324,7 @@ public class Game_Manager : MonoBehaviour
 
     private void GameWin()
     {
+        Time.timeScale = 0.0f;
         IsMenuOpen(true);
         OnGameWin?.Invoke();
     }

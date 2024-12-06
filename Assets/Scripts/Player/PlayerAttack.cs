@@ -34,7 +34,7 @@ public class PlayerAttack : MonoBehaviour // This script is attached to the play
 
     private void Update()
     {
-        if (Input.GetKeyDown(hitKey))
+        if (Input.GetKeyDown(hitKey) && !GlobalSettings.globalPauseOverride)
         {
             Attack();
         }
