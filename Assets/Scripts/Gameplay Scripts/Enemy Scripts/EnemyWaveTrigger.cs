@@ -5,14 +5,14 @@ using UnityEngine;
 
 public class EnemyWaveTrigger : MonoBehaviour
 {
-    public event EventHandler OnPlayerEnterTrigger;
-    public Transform[] SpawnPositions;
+    //public event EventHandler OnPlayerEnterTrigger;
+    //public Transform[] SpawnPositions;
 
-    private void OnTriggerEnter(Collider collider)
-    {
-        if (collider.CompareTag("PlayerBody"))
-        {
-            OnPlayerEnterTrigger?.Invoke(this, EventArgs.Empty);
-        }
-    }
+    //private void OnTriggerEnter(Collider collider)
+    //{
+    //    if (collider.CompareTag("PlayerBody"))
+    //    {
+    //        OnPlayerEnterTrigger?.Invoke(this, EventArgs.Empty);
+    //    }
+    //}
 }

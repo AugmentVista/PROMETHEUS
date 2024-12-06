@@ -7,7 +7,6 @@ public class EnemyProjectileManager : MonoBehaviour
     public GameObject[] Projectiles;
     private WaveUI waveUI;
     public int maxProjectiles;
-    //public int initalProjectiles;
     public Transform InitalPosition = null;
 
     private int currentProjectiles = 0;
@@ -15,10 +14,6 @@ public class EnemyProjectileManager : MonoBehaviour
     public int localWaveCount = 0;
     public Queue<GameObject> pooledProjectiles = new Queue<GameObject>(); // Queue to hold inactive projectiles
 
-    private void Start()
-    {
-        //initalProjectiles = maxProjectiles;
-    }
     public GameObject RequestProjectile(Transform localTransform)
     {
         GameObject projectileInstance; // declared undefined
@@ -85,7 +80,6 @@ public class EnemyProjectileManager : MonoBehaviour
         currentProjectiles = 0;
         totalProjectilesCreated = 0;
         localWaveCount = 0;
-        //maxProjectiles =  initalProjectiles;
     }
 
 

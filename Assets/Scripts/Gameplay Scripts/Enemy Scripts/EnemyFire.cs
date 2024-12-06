@@ -20,7 +20,7 @@ public class EnemyFire : MonoBehaviour
 
     private void Start()
     {
-        waveTrigger = FindObjectOfType<EnemyWaveTrigger>();
+        //waveTrigger = FindObjectOfType<EnemyWaveTrigger>();
         projectileManager = FindObjectOfType<EnemyProjectileManager>();
         projectileTarget = GameObject.Find("Miss Zone").transform;
         FiringCooldown = ShotDelay()/2;
@@ -94,10 +94,6 @@ public class EnemyFire : MonoBehaviour
                 }
 
                 collisionHandler.SetSpawner(projectileManager);
-                //if (!collisionHandler.reusedProjectile)
-                //{
-                //    collisionHandler.reusedProjectile = true;
-                //}
             }
         }
     }

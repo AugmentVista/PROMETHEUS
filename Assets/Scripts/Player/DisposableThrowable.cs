@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class DisposableThrowable : MonoBehaviour
 {
-    public float health = 20;
+    public float health = 5;
+
 
     private void OnTriggerEnter(Collider other)
     {
@@ -12,7 +13,16 @@ public class DisposableThrowable : MonoBehaviour
         {
             SelfDestruct();
         }
+        if (other.CompareTag("Knockback"))
+        {
+            health--;
+            if (health <= 0)
+            {
+                SelfDestruct();
+            }
+        }
     }
+
 
     public void SelfDestruct()
     {

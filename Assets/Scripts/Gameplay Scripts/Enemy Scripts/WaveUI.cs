@@ -8,7 +8,7 @@ public class WaveUI : MonoBehaviour
 {
     public static bool FinalWaveConlcuded = false;
     public int waveCount = 1;
-    private int amountOfWavesToBeat = 5;
+    private int amountOfWavesToBeat = 20;
 
 
     private void Awake()
