@@ -1,10 +1,9 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class DisposableThrowable : MonoBehaviour
 {
-    public float health = 5;
+    public float health = 2;
 
 
     private void OnTriggerEnter(Collider other)

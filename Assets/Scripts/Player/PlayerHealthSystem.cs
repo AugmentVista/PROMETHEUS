@@ -37,7 +37,7 @@ public class PlayerHealthSystem : MonoBehaviour
     {
         elapsedTime += Time.deltaTime;
 
-        if (Mathf.Abs(playerHealthGauge.fillAmount - targetFillAmount) > 0.001f)
+        if (Mathf.Abs(playerHealthGauge.fillAmount - targetFillAmount) > 0.01f)
         {
             playerHealthGauge.fillAmount = Mathf.Lerp(playerHealthGauge.fillAmount, targetFillAmount, Time.deltaTime * fillSpeed);
         }

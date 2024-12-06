@@ -40,18 +40,22 @@ public class UpgradeEventManager : MonoBehaviour
     void Start()
     {
         upgradeButton.UpgradeWasPurchased += Button_UpgradeEvent_UpgradeWasPurchased;
+        SetStarsFalse();
+    }
 
+    void SetStarsFalse()
+    {
         foreach (GameObject star in HealthStars)
-        { 
+        {
             star.SetActive(false);
         }
         foreach (GameObject star in RangeStars)
-        { 
-            star.SetActive(false); 
+        {
+            star.SetActive(false);
         }
-        foreach (GameObject star in CityHealthStars) 
-        { 
-            star.SetActive(false); 
+        foreach (GameObject star in CityHealthStars)
+        {
+            star.SetActive(false);
         }
         foreach (GameObject star in MagicStars)
         {
@@ -62,8 +66,6 @@ public class UpgradeEventManager : MonoBehaviour
             star.SetActive(false);
         }
     }
-
-
     private void Update()
     {
         for (int i = 0; i < healthUpgradesPurchased; i++)
@@ -99,6 +101,7 @@ public class UpgradeEventManager : MonoBehaviour
             attackSpeedUpgradesPurchased = 0;
             magicUpgradesPurchased = 0;
             blockUpgradesPurchased = 0;
+            SetStarsFalse();
             upgradesHaveBeenReset = false;
         }
     }
