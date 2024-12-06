@@ -23,13 +23,13 @@ public class BaseProjectile : MonoBehaviour
 
     public int value;
 
-    float TowerBusterDamage = 10f;
+    float TowerBusterDamage;
 
     public float knockBackDamage;
 
-    float slowDamage = 2f;
+    float slowDamage;
 
-    float bombDamage = 8f;
+    float bombDamage;
 
     private void Awake()
     {

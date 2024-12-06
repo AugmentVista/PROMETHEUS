@@ -15,8 +15,6 @@ public class ProjectileCollisionHandler : MonoBehaviour
     private PlayerAttack playerAttack;
     private BaseProjectile Base;
     private string[] Type;
-
-    public bool reusedProjectile = false; 
     public bool struckByWeapon;
 
     private Collider projectileCollider;
@@ -86,7 +84,7 @@ public class ProjectileCollisionHandler : MonoBehaviour
 
                     DisableColliderForPooling();
                 }
-                else if (!struckByWeapon)
+                else
                 {
                     DisableColliderForPooling(); 
                 }
@@ -102,10 +100,6 @@ public class ProjectileCollisionHandler : MonoBehaviour
                 Blocker blocker = other.GetComponent<Blocker>();
                 blocker.BlockerTakeDamage(Base.knockBackDamage);
 
-                DisableColliderForPooling();
-                break;
-
-            default:
                 DisableColliderForPooling();
                 break;
         }
@@ -142,5 +136,6 @@ public class ProjectileCollisionHandler : MonoBehaviour
     {
         GetComponent<Collider>().enabled = false;
         GetComponent<Renderer>().enabled = false;
+        Destroy(gameObject, 5f);
     }
 }

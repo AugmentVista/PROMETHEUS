@@ -18,7 +18,7 @@ public class CityHealthSystem : MonoBehaviour
 
     public float elapsedTime = 0f;
 
-    public float fillSpeed = 50f;
+    private float fillSpeed = 10f;
 
     private float targetFillAmount;
     private float targetShieldFill;
@@ -29,7 +29,6 @@ public class CityHealthSystem : MonoBehaviour
     private void Awake()
     {
         UI = FindObjectOfType<UI_Manager>();
-        Debug.Log(UI);
         cityHealthGauge = UI.CityHealthImage;
         cityShieldGauge = UI.CityShieldImage;
 

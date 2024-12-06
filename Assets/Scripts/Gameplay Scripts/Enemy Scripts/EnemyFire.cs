@@ -9,8 +9,6 @@ public class EnemyFire : MonoBehaviour
 
     private float elapsedTime = 0f;
 
-    List <GameObject> legitimateProjectiles = new List<GameObject>();
-
     private bool isGameActive = GlobalSettings.projectileSpawnerActive;
     private float ShotDelay() { return Mathf.Round(Random.Range(2.0f , 5.0f) * 100) / 100; } // produces clean decimals
 
@@ -38,7 +36,8 @@ public class EnemyFire : MonoBehaviour
         foreach (GameObject obj in allBombs)
         {
             if(obj && obj.GetComponent<ProjectileCollisionHandler>() == null)
-            { 
+            {
+                //Debug.LogError($"Something fucky with this bomb");
                 Destroy(obj);
             }
         }
@@ -96,19 +95,14 @@ public class EnemyFire : MonoBehaviour
                 projectileRb.velocity = directionToPlayer * baseProj.travelSpeed;
 
                 ProjectileCollisionHandler collisionHandler = projectileInstance.GetComponent<ProjectileCollisionHandler>();
-                if (collisionHandler == null)
+                
+                collisionHandler = projectileInstance.AddComponent<ProjectileCollisionHandler>();
+
+                if (projectileInstance.GetComponent<ProjectileCollisionHandler>() == null)
                 {
-                    collisionHandler = projectileInstance.AddComponent<ProjectileCollisionHandler>();
+                    Debug.LogError("This bomb has already been given a chance, it is broke");
                 }
-                if (projectileInstance != null)
-                {
-                    ProjectileCollisionHandler test = projectileInstance.GetComponent<ProjectileCollisionHandler>();
-                    if (test == null)
-                    { 
-                        legitimateProjectiles.Add(projectileInstance);
-                        Debug.Log($"Fake Bomb count: {legitimateProjectiles.Count}, this is a fake bomb");
-                    }
-                }
+                
             }
         }
     }

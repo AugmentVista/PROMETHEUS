@@ -13,7 +13,7 @@ public class PlayerHealthSystem : MonoBehaviour
 
     public float elapsedTime = 0f;
 
-    public float fillSpeed = 50f;
+    float fillSpeed = 10f;
 
     private float targetFillAmount;
 

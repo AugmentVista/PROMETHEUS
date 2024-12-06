@@ -265,14 +265,10 @@ public class Level_Manager : MonoBehaviour
         WaveUI waveUI = FindObjectOfType<WaveUI>();
         EnemyProjectileManager projManager = FindObjectOfType<EnemyProjectileManager>();
 
-        Debug.Log($"WaveUI Status: {waveUI.name}, EnemyProjectileManager status: {projManager.name}");
-
         if (waveUI != null)
         {
-            Debug.Log($"waveUI  is not null, it is {waveUI.name}");
             if (projManager != null)
             {
-                Debug.Log($"projManager  is not null, it is {projManager.name}");
                 projManager.DestroyAllProjectiles();
                 waveUI.RestartWave();
             }
