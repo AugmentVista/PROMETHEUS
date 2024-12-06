@@ -180,7 +180,7 @@ public class Game_Manager : MonoBehaviour
             IntroPlayButton.SetActive(false);
         }
 
-        float duration = 2f;
+        float duration = 1f;
         
         yield return new WaitForSeconds(duration);
 
@@ -314,6 +314,7 @@ public class Game_Manager : MonoBehaviour
         if (currentScene.name != "Level_1") { level_Manager.LoadLevel_1(); }
         IsMenuOpen(false);
         OnLevel1?.Invoke();
+        GlobalSettings.globalPauseOverride = false;
     }
 
     private void GameOver()

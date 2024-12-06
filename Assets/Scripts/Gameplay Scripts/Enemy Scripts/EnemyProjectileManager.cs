@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Collections;
 using UnityEngine;
 
 public class EnemyProjectileManager : MonoBehaviour
@@ -8,7 +7,7 @@ public class EnemyProjectileManager : MonoBehaviour
     public GameObject[] Projectiles;
     private WaveUI waveUI;
     public int maxProjectiles;
-    public int initalProjectiles;
+    //public int initalProjectiles;
     public Transform InitalPosition = null;
 
     private int currentProjectiles = 0;
@@ -18,7 +17,7 @@ public class EnemyProjectileManager : MonoBehaviour
 
     private void Start()
     {
-        initalProjectiles = maxProjectiles;
+        //initalProjectiles = maxProjectiles;
     }
     public GameObject RequestProjectile(Transform localTransform)
     {
@@ -31,6 +30,7 @@ public class EnemyProjectileManager : MonoBehaviour
         {
             FireProjectile(localTransform); // creates projectileInstance and assigns it
             projectileInstance = FireProjectile(localTransform);
+            return projectileInstance;
         }
         else if (totalProjectilesCreated >= maxProjectiles) // has hit the max number of projectiles
         {
@@ -39,7 +39,7 @@ public class EnemyProjectileManager : MonoBehaviour
             {
                 totalProjectilesCreated = 0;   
                 waveUI.NextWave();
-                maxProjectiles += waveUI.waveCount;
+                maxProjectiles += 3;
                 localWaveCount++;
             }
             return null;
@@ -48,7 +48,6 @@ public class EnemyProjectileManager : MonoBehaviour
         {
             return null; // nothing to provide to enemyFire
         }
-        return projectileInstance;
     }
 
     
@@ -86,7 +85,7 @@ public class EnemyProjectileManager : MonoBehaviour
         currentProjectiles = 0;
         totalProjectilesCreated = 0;
         localWaveCount = 0;
-        maxProjectiles =  initalProjectiles;
+        //maxProjectiles =  initalProjectiles;
     }
 
 
@@ -94,7 +93,6 @@ public class EnemyProjectileManager : MonoBehaviour
     {
         GameObject projectileInstance;
         InitalPosition = localTransform;
-        //Debug.Log(GenerateNewProjectiles());
         projectileInstance = Instantiate(Projectiles[GenerateNewProjectiles()], localTransform.position, Quaternion.identity);
         totalProjectilesCreated += 1;
         currentProjectiles++;
@@ -103,22 +101,23 @@ public class EnemyProjectileManager : MonoBehaviour
 
     public void ReturnProjectile(GameObject obj)
     {
-        ProjectileCollisionHandler handler = obj.GetComponent<ProjectileCollisionHandler>();
-        if (handler != null)
-        {
-            handler.struckByWeapon = false;
-            handler.reusedProjectile = true;
-        }
+        Destroy(obj);
+        //ProjectileCollisionHandler handler = obj.GetComponent<ProjectileCollisionHandler>();
+        //if (handler != null)
+        //{
+        //    handler.struckByWeapon = false;
+        //    handler.reusedProjectile = true;
+        //}
 
-        Rigidbody rb = obj.GetComponent<Rigidbody>();
-        if (rb != null)
-        {
-            rb.velocity = Vector3.zero; 
-        }
+        //Rigidbody rb = obj.GetComponent<Rigidbody>();
+        //if (rb != null)
+        //{
+        //    rb.velocity = Vector3.zero; 
+        //}
 
-        obj.transform.position = InitalPosition.position;
-        pooledProjectiles.Enqueue(obj);
+        //obj.transform.position = InitalPosition.position;
+        //pooledProjectiles.Enqueue(obj);
 
-        currentProjectiles--;
+        //currentProjectiles--;
     }
 }
