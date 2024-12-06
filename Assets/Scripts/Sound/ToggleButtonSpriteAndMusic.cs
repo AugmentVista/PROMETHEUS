@@ -2,60 +2,39 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class ToggleButtonSpriteAndMusic : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
+public class ToggleButtonSpriteAndMusic : MonoBehaviour
 {
-    public Sprite defaultSprite;
-    public Sprite hoverSprite;
-    public Sprite clickSprite;
-
     public AudioSource musicSource;
 
-    private Image buttonImage;
-    private bool isMusicPlaying = false; // Assuming music is playing by default
+    public Image displayedImage;
+    public Image buttonImagePlaying;
+    public Image buttonImagePaused;
 
-    private void Awake()
-    {
-        buttonImage = GetComponent<Image>();
-        buttonImage.sprite = defaultSprite;
-    }
+    private bool isMusicPlaying = true;
 
-    public void OnPointerEnter(PointerEventData eventData)
+    public void PlayPause()
     {
-        if (!isMusicPlaying)
-        {
-            buttonImage.sprite = clickSprite; // Keep clicked sprite when hovering if music is off
+        if (isMusicPlaying) 
+        { 
+            isMusicPlaying = false;
+            musicSource.Pause();
         }
-        else
-        {
-            buttonImage.sprite = hoverSprite;
-        }
-    }
-
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        if (!isMusicPlaying)
-        {
-            buttonImage.sprite = clickSprite; // Keep clicked sprite when not hovering if music is off
-        }
-        else
-        {
-            buttonImage.sprite = defaultSprite;
+        else if (!isMusicPlaying) 
+        { 
+            isMusicPlaying = true;
+            musicSource.Play();
         }
     }
 
-    public void OnPointerClick(PointerEventData eventData)
+    private void Update()
     {
-        isMusicPlaying = !isMusicPlaying; // Toggle music state
-
         if (isMusicPlaying)
         {
-            buttonImage.sprite = defaultSprite;
-            musicSource.UnPause();
+            displayedImage.sprite = buttonImagePlaying.sprite;
         }
-        else
+        else if (!isMusicPlaying)
         {
-            buttonImage.sprite = clickSprite;
-            musicSource.Pause();
+            displayedImage.sprite = buttonImagePaused.sprite;
         }
     }
 }
