@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da52b6043a4a9fc418470ec65226891a, type: 3}
   m_Name: Health Potion
   m_EditorClassIdentifier: 
-  title: Player Health
+  title: Health Potion
   description: Increases Max HP by 20
   price: 5
   itemImage: {fileID: 21300000, guid: f799bdef0508b3041844ee4d26bdda1b, type: 3}

@@ -11,6 +11,7 @@ public class UpgradeEventManager : MonoBehaviour
     [SerializeField] GameObject BlockMerchandise;
 
     [SerializeField] private Button_UpgradeEvent upgradeButton;
+    int upgradeLimit = 4;
 
     public bool upgradesHaveBeenReset;
 
@@ -114,13 +115,11 @@ public class UpgradeEventManager : MonoBehaviour
         switch (Item.scriptableItem.title)
         {
             case "Health Potion":
-                if (Item.IsTitleMatch("Health Potion"))
-                {
-                    if (healthUpgradesPurchased <= 4)
+                    healthUpgradesPurchased += 1;
+                    if (healthUpgradesPurchased < upgradeLimit)
                     {
                         UpdateUpgradeHealth?.Invoke(this, new UpgradeEventArgs(Item));
                         Debug.Log("Player bought a Health Potion");
-                        healthUpgradesPurchased += 1;
                     }
                     else 
                     {
@@ -128,15 +127,12 @@ public class UpgradeEventManager : MonoBehaviour
                         DataToBigDisplay.DisplayDefault();
                         Debug.LogError($"Player has bought the last {Item}"); 
                     }
-                }
                 break;
-            case "Hammer Upgrade":
-                if (Item.IsTitleMatch("Hammer Upgrade"))
-                {
-                    if (hammerUpgradesPurchased <= 4)
+            case "Attack Range":
+                    hammerUpgradesPurchased += 1;
+                    if (hammerUpgradesPurchased < upgradeLimit)
                     {
                         UpdateUpgradeHammer?.Invoke(this, new UpgradeEventArgs(Item));
-                        hammerUpgradesPurchased += 1;
                     }
                     else
                     {
@@ -144,15 +140,12 @@ public class UpgradeEventManager : MonoBehaviour
                         DataToBigDisplay.DisplayDefault();
                         Debug.LogError($"Player has bought the last {Item}");
                     }
-                }
                 break;
-                case "City Health Upgrade":
-                if (Item.IsTitleMatch("City Health Upgrade"))
-                {
-                    if (cityHealthUpgradesPurchased <= 4)
+                case "City Health":
+                    cityHealthUpgradesPurchased += 1;
+                    if (cityHealthUpgradesPurchased < upgradeLimit)
                     {
                         UpdateUpgradeCityHealth?.Invoke(this, new UpgradeEventArgs(Item));
-                        cityHealthUpgradesPurchased += 1;
                         Debug.Log($"Player bought A {Item}");
                     }
                     else
@@ -161,15 +154,12 @@ public class UpgradeEventManager : MonoBehaviour
                         DataToBigDisplay.DisplayDefault();
                         Debug.LogError($"Player has bought the last {Item}");
                     }
-                }
                 break;
                 case "Attack Speed Upgrade":
-                if (Item.IsTitleMatch("Attack Speed Upgrade"))
-                {
-                    if (attackSpeedUpgradesPurchased <= 4)
+                    attackSpeedUpgradesPurchased += 1;
+                    if (attackSpeedUpgradesPurchased < upgradeLimit)
                     {
                         UpdateUpgradeAttackSpeed?.Invoke(this, new UpgradeEventArgs(Item));
-                        attackSpeedUpgradesPurchased += 1;
                     }
                     else
                     {
@@ -177,15 +167,12 @@ public class UpgradeEventManager : MonoBehaviour
                         DataToBigDisplay.DisplayDefault();
                         Debug.LogError($"Player has bought the last {Item}");
                     }
-                }
                 break;
-            case "Magic Upgrade":
-                if (Item.IsTitleMatch("Magic Upgrade"))
-                {
-                    if (magicUpgradesPurchased <= 4)
+            case "Magic":
+                    magicUpgradesPurchased += 1;
+                    if (magicUpgradesPurchased < upgradeLimit)
                     {
                         UpdateUpgradeMagic?.Invoke(this, new UpgradeEventArgs(Item));
-                        magicUpgradesPurchased += 1;
                     }
                     else
                     {
@@ -193,15 +180,12 @@ public class UpgradeEventManager : MonoBehaviour
                         DataToBigDisplay.DisplayDefault();
                         Debug.LogError($"Player has bought the last {Item}");
                     }
-                }
                 break;
-            case "Block Upgrade":
-                if (Item.IsTitleMatch("Block Upgrade"))
-                {
-                    if (blockUpgradesPurchased <= 5)
+            case "Block":
+                    blockUpgradesPurchased += 1;
+                    if (blockUpgradesPurchased < upgradeLimit)
                     { 
                         UpdateUpgradeBlock?.Invoke(this, new UpgradeEventArgs(Item));
-                        blockUpgradesPurchased += 1;
                     }
                     else
                     {
@@ -209,10 +193,9 @@ public class UpgradeEventManager : MonoBehaviour
                         DataToBigDisplay.DisplayDefault();
                         Debug.LogError($"Player has bought the last {Item}");
                     }
-                }
                 break;
             default:
-                Debug.Log("No Matching Item Name Found");
+                Debug.Log("No Matching Item Name Found, Upgrade failed");
                 break;
         }
     }
