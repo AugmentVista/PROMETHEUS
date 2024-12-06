@@ -11,10 +11,10 @@ public class EnemyFire : MonoBehaviour
     private float elapsedTime = 0f;
 
     private bool isGameActive = GlobalSettings.projectileSpawnerActive;
-    private float ShotDelay() { return Mathf.Round(Random.Range(2.0f , 6.0f) * 100) / 100; } // produces clean decimals
+    private float ShotDelay() { return Mathf.Round(Random.Range(2.0f , 5.0f) * 100) / 100; } // produces clean decimals
 
     private float FiringCooldown;
-    float lastShotSpeed = 5f;
+    float lastShotSpeed = 4.75f;
 
 
 

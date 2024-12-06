@@ -270,9 +270,20 @@ public class Game_Manager : MonoBehaviour
         {
             userInterfaceCamera.SetActive(false);
         }
-        else 
-        { 
-            userInterfaceCamera.SetActive(true); 
+        else if (currentScene.name != "Level_1")
+        {
+            if (userInterfaceCamera == null /*&& currentScene.name == "Main Menu")*/ )
+            {
+                GameObject userInterfaceCamera = GameObject.FindGameObjectWithTag("PlayerCamera");
+                if (userInterfaceCamera != null)
+                { 
+                    userInterfaceCamera.SetActive(true);
+                }
+            }
+            else
+            {
+                userInterfaceCamera.SetActive(true);
+            }
             meteorVFX.SetActive(!shouldGamePlayCamOpen);
         }
     }
@@ -303,7 +314,7 @@ public class Game_Manager : MonoBehaviour
     private void MainMenu()
     {
         Scene currentScene = SceneManager.GetActiveScene();
-        if (currentScene.name != "Main Menu") { level_Manager.LoadMainMenu(); }
+        level_Manager.LoadMainMenu();
         IsMenuOpen(true);
         OnMainMenu?.Invoke();
     }
