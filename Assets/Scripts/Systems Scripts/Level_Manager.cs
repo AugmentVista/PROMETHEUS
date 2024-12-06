@@ -47,10 +47,13 @@ public class Level_Manager : MonoBehaviour
 
     private void UpgradeEventManager_UpdateUpgradeBlock(object sender, UpgradeEventArgs e)
     {
-        Blocker blocker = FindObjectOfType<Blocker>(true);
-        Debug.Log($"Found Blocker Script on {blocker.gameObject.name}");
+        PlayerAttack blocker = FindObjectOfType<PlayerAttack>(true);
         ItemDisplay blockUpgrade = e.Item;
         Debug.Log($"Upgrade purchased of type {blocker}");
+        if (blocker == null)
+        {
+            Debug.LogError($"blocker upgrade is still broken");
+        }
         if (blocker != null) { blocker.UpgradeBlocker(blockUpgrade.Modifer); }
     }
 

@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da52b6043a4a9fc418470ec65226891a, type: 3}
   m_Name: Block Upgrade
   m_EditorClassIdentifier: 
-  title: Blocker Toughness
-  description: Blockers take 4 less damage
+  title: Block
+  description: Blockers are 25% better
   price: 10
   itemImage: {fileID: 21300000, guid: d9b356442b398514493f222dad98ee51, type: 3}
   currencyType: {fileID: 21300000, guid: 8117ae5dc2e40f64384b96446574744d, type: 3}
-  ImprovementModifier: 4
+  ImprovementModifier: 20

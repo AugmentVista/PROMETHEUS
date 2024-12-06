@@ -121,12 +121,14 @@ public class Game_Manager : MonoBehaviour
     {
         gameState = GameState.MainMenu;
         ChangeGameState(gameState);
+        DestroyAllBlockers();
     }
 
     public void ResultsMenuTrigger()
     {
         gameState = GameState.Results;
         ChangeGameState(gameState);
+        DestroyAllBlockers();
         GlobalSettings.globalPauseOverride = true;
     }
 
@@ -134,6 +136,7 @@ public class Game_Manager : MonoBehaviour
     {
         gameState = GameState.Upgrades;
         ChangeGameState(gameState);
+        DestroyAllBlockers();
     }
 
     public void Button_Upgrades_To_Gameplay()
@@ -207,6 +210,7 @@ public class Game_Manager : MonoBehaviour
     public void GameWinTrigger()
     {
         gameState = GameState.GameWin;
+        DestroyAllBlockers();
         ChangeGameState(gameState);
     }
 
@@ -357,4 +361,16 @@ public class Game_Manager : MonoBehaviour
     {
         Application.Quit();
     }
+
+
+    public void DestroyAllBlockers()
+    {
+        GameObject[] allBlockers = GameObject.FindGameObjectsWithTag("Blocker");
+
+        foreach (GameObject obj in allBlockers)
+        {
+            Destroy(obj);
+        }
+    }
+
 }

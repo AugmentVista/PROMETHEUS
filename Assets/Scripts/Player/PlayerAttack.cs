@@ -11,6 +11,7 @@ public class PlayerAttack : MonoBehaviour // This script is attached to the play
     public GameObject rockSmashVFX;
     public GameObject hammerPrefab;
     public GameObject blockerPrefab;
+    GameObject localBlocker = null;
     GameObject hammerInstance;
 
     private Transform HandLocation;
@@ -31,6 +32,7 @@ public class PlayerAttack : MonoBehaviour // This script is attached to the play
     private void Start()
     {
         HandLocation = transform;
+        localBlocker = blockerPrefab;
     }
 
     private void Update()
@@ -69,6 +71,7 @@ public class PlayerAttack : MonoBehaviour // This script is attached to the play
     private IEnumerator CreateBlocker(KeyCode key)
     {
         canCreateBlocker = false;
+        localBlocker = blockerPrefab;
         int laneIndex = -1;
 
         switch (key)
@@ -92,7 +95,7 @@ public class PlayerAttack : MonoBehaviour // This script is attached to the play
             Transform spawnPosition = GetAvailableSpawnPosition(laneIndex);
             if (spawnPosition != null)
             {
-                Instantiate(blockerPrefab, spawnPosition.position, Quaternion.identity);
+                Instantiate(localBlocker, spawnPosition.position, Quaternion.identity);
             }
             else
             {
@@ -106,6 +109,12 @@ public class PlayerAttack : MonoBehaviour // This script is attached to the play
 
         yield return new WaitForSeconds(2);
         canCreateBlocker = true;
+        Debug.Log($"player made blocker has: {localBlocker.GetComponent<Blocker>().blockerMaxHP.ToString()} max HP");
+    }
+
+    public void UpgradeBlocker(float amountToAdd)
+    {
+        localBlocker.GetComponent<Blocker>().UpgradeBlocker(amountToAdd);
     }
 
     private bool IsLaneOccupied(Transform lane)
