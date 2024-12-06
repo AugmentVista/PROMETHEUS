@@ -17,7 +17,12 @@ public class MagicCircleStateMachine : MonoBehaviour
 
     [SerializeField] List<GameObject> polymorphObjects = new List<GameObject>();
 
-
+    float RandomExtreme(float min, float max)
+    {
+        float randomValue = Random.value;
+        randomValue = Mathf.Pow(randomValue, 2) * (Random.value < 0.5f ? -1 : 1);
+        return Mathf.Lerp(min, max, (randomValue + 1) / 2);
+    }
 
 
     private void OnTriggerEnter(Collider other)
@@ -78,6 +83,7 @@ public class MagicCircleStateMachine : MonoBehaviour
         rb.AddForce(Vector3.forward.normalized * speed, ForceMode.Impulse);
 
         hammerInstance.AddComponent<DisposableThrowable>();
+        hammerInstance.GetComponent<DisposableThrowable>().health = 10f;
 
         Debug.Log($"Hammer created with scale multiplier: {scaleMultiplier}, Final scale: {newScale}");
     }
@@ -86,7 +92,7 @@ public class MagicCircleStateMachine : MonoBehaviour
     {
         for (int i = 0; i < amountToCreate + 1; i++)
         {
-            Vector3 randomOffset = new Vector3(Random.Range(-2f,2f), Random.Range(0f, 2f), Random.Range(5f, 10f));
+            Vector3 randomOffset = new Vector3(RandomExtreme(-2f, 2f), RandomExtreme(-0.5f, 3f), RandomExtreme(-2f, 10f));
             Vector3 spawnPosition = transform.position + randomOffset;
 
             GameObject hammerInstance = Instantiate(hammerPrefab, spawnPosition, Quaternion.identity);
