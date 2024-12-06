@@ -10,11 +10,10 @@ public class EnemyFire : MonoBehaviour
     private float elapsedTime = 0f;
 
     private bool isGameActive = GlobalSettings.projectileSpawnerActive;
-    private float ShotDelay() { return Mathf.Round(Random.Range(2.0f , 5.0f) * 100) / 100; } // produces clean decimals
+    private float ShotDelay() { return Mathf.Round(Random.Range(2.0f , 5.0f) * 100) / 100; }
 
     private float FiringCooldown;
     float lastShotSpeed = 4.75f;
-
 
 
     private void Start()
@@ -31,19 +30,18 @@ public class EnemyFire : MonoBehaviour
 
     private void LateUpdate()
     {
-        CheckPermissionToFire();
+        HandlePausedTime();
         GameObject[] allBombs = GameObject.FindGameObjectsWithTag("Knockback");
         foreach (GameObject obj in allBombs)
         {
-            if(obj && obj.GetComponent<ProjectileCollisionHandler>() == null)
+            if (obj && obj.GetComponent<ProjectileCollisionHandler>() == null)
             {
-                //Debug.LogError($"Something fucky with this bomb");
                 Destroy(obj);
             }
         }
     }
 
-    private void CheckPermissionToFire()
+    private void HandlePausedTime()
     {
         if (GlobalSettings.globalPauseOverride || !GlobalSettings.projectileSpawnerActive)
         {
@@ -70,40 +68,26 @@ public class EnemyFire : MonoBehaviour
             {
                 FiringCooldown += lastShotSpeed;
             }
-            Debug.LogWarning($"ShotDelay: {ShotDelay()} from {gameObject.name}");
-            Debug.LogWarning($"lastShotSpeed: {lastShotSpeed} from {gameObject.name}");
             SpawnProjectile();
         }
     }
 
     public void SpawnProjectile()
     {
-        if ( isGameActive )
+        GameObject projectileInstance = projectileManager.RequestProjectile(transform);
+        // takes the created projectile from projectileManager and shoots it at the player
+        if (projectileInstance != null)
         {
-            GameObject projectileInstance = projectileManager.RequestProjectile(transform);
-            if (projectileInstance != null)
-            {
-                Transform spawnPosition = gameObject.transform;
-                projectileInstance.transform.position = spawnPosition.position;
+            Transform spawnPosition = gameObject.transform;
+            projectileInstance.transform.position = spawnPosition.position;
 
-                Vector3 directionToPlayer = (projectileTarget.position - spawnPosition.position).normalized;
+            Vector3 directionToPlayer = (projectileTarget.position - spawnPosition.position).normalized; // directs the projectile towards the player
 
-                Rigidbody projectileRb = projectileInstance.GetComponent<Rigidbody>();
+            Rigidbody projectileRb = projectileInstance.GetComponent<Rigidbody>();
 
-                BaseProjectile baseProj = projectileInstance.GetComponent<BaseProjectile>();
+            BaseProjectile baseProj = projectileInstance.GetComponent<BaseProjectile>();
 
-                projectileRb.velocity = directionToPlayer * baseProj.travelSpeed;
-
-                ProjectileCollisionHandler collisionHandler = projectileInstance.GetComponent<ProjectileCollisionHandler>();
-                
-                collisionHandler = projectileInstance.AddComponent<ProjectileCollisionHandler>();
-
-                if (projectileInstance.GetComponent<ProjectileCollisionHandler>() == null)
-                {
-                    Debug.LogError("This bomb has already been given a chance, it is broke");
-                }
-                
-            }
+            projectileRb.velocity = directionToPlayer * baseProj.travelSpeed;
         }
     }
 }

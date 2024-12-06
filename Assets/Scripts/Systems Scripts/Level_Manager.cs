@@ -7,9 +7,11 @@ public class Level_Manager : MonoBehaviour
 {
     [SerializeField] private UpgradeEventManager upgradeManager;
 
+    [SerializeField] Game_Manager gameManager;
+
     public event EventHandler CreateBridgeSectionDuringIntro;
 
-    public GameObject Extention = null;
+    public GameObject Extension = null;
 
     public Transform playerTransform = null;
 
@@ -19,7 +21,7 @@ public class Level_Manager : MonoBehaviour
 
     public Transform respawn;
 
-    private List<Transform> Extentions = new List<Transform>();
+    private List<Transform> extensions = new List<Transform>();
 
     public bool Win = GlobalSettings.globalPlayerWin;
     public bool Lose = GlobalSettings.globalPlayerLose;
@@ -33,13 +35,26 @@ public class Level_Manager : MonoBehaviour
         isSubscribed = true;
     }
 
+    private void Update()
+    {
+        if (gameManager.hasHitEndWaveTrigger)
+        {
+            ResetLevel(gameManager);
+        }
+        if (WaveUI.FinalWaveConlcuded)
+        {
+            Win = true;
+            CheckWinClause();
+            WaveUI.FinalWaveConlcuded = false;
+        }
+    }
+
     #region Upgrade event executions
 
     private void Start()
     {
         upgradeManager.UpdateUpgradeHealth += UpgradeEventManager_UpdateUpgradeHealth;
         upgradeManager.UpdateUpgradeMagic += UpgradeEventManager_UpdateUpgradeMagic;
-        upgradeManager.UpdateUpgradeAttackSpeed += UpgradeEventManager_UpdateUpgradeAttackSpeed;
         upgradeManager.UpdateUpgradeRange += UpgradeEventManager_UpdateUpgradeRange;
         upgradeManager.UpdateUpgradeCityHealth += UpgradeEventManager_UpdateUpgradeCityHealth;
         upgradeManager.UpdateUpgradeBlock += UpgradeEventManager_UpdateUpgradeBlock;
@@ -49,11 +64,6 @@ public class Level_Manager : MonoBehaviour
     {
         PlayerAttack blocker = FindObjectOfType<PlayerAttack>(true);
         ItemDisplay blockUpgrade = e.Item;
-        Debug.Log($"Upgrade purchased of type {blocker}");
-        if (blocker == null)
-        {
-            Debug.LogError($"blocker upgrade is still broken");
-        }
         if (blocker != null) { blocker.UpgradeBlocker(blockUpgrade.Modifer); }
     }
 
@@ -61,7 +71,6 @@ public class Level_Manager : MonoBehaviour
     {
         PlayerHealthSystem healthSystem = FindObjectOfType<PlayerHealthSystem>(true);
         ItemDisplay healthPotion = e.Item;
-        Debug.Log($"Upgrade purchased of type {healthSystem}");
         if (healthSystem != null) { healthSystem.HpEvent(healthPotion); }
     }
 
@@ -69,7 +78,6 @@ public class Level_Manager : MonoBehaviour
     {
         MagicManager magicManager = FindObjectOfType<MagicManager>(true);
         ItemDisplay magicUpgrade = e.Item;
-        Debug.Log($"Upgrade purchased of type {magicManager}");
         if (magicManager != null) { magicManager.LevelUpMagic(magicUpgrade.Modifer); }
     }
 
@@ -77,31 +85,22 @@ public class Level_Manager : MonoBehaviour
     {
         CityHealthSystem cityHP = FindObjectOfType<CityHealthSystem>(true);
         ItemDisplay cityHealthUpgrade = e.Item;
-        Debug.Log($"Upgrade purchased of type {cityHealthUpgrade}");
         if (cityHP != null) { cityHP.UpgradeCityHealth(cityHealthUpgrade.Modifer); }
-    }
-
-    private void UpgradeEventManager_UpdateUpgradeAttackSpeed(object sender, UpgradeEventArgs e)
-    { 
-        PlayerAttack attackHitBox = FindObjectOfType<PlayerAttack>(true);
-        ItemDisplay attackSpeedUpgrade = e.Item;
-        Debug.Log($"Upgrade purchased of type {attackSpeedUpgrade}");
-        //if (attackHitBox != null) { attackHitBox.UpdateAttackSpeed(attackSpeedUpgrade.Modifer);}
     }
 
     private void UpgradeEventManager_UpdateUpgradeRange(object sender, UpgradeEventArgs e)
     { 
         WeaponDestroyerRange range = FindObjectOfType<WeaponDestroyerRange>(true);
         ItemDisplay rangeUpgrade = e.Item;
-        Debug.Log($"Upgrade purchased of type {rangeUpgrade}");
         if (range != null) { range.RangeUp();}
     }
 
     private void OnDisable()
     {
+        //LevelManager is part of a singleton pattern and thus shouldn't ever be disabled, this shouldn't execute.
+        //In the event it does execute this will prevent memory leaks
         upgradeManager.UpdateUpgradeHealth -= UpgradeEventManager_UpdateUpgradeHealth;
         upgradeManager.UpdateUpgradeMagic -= UpgradeEventManager_UpdateUpgradeMagic;
-        upgradeManager.UpdateUpgradeAttackSpeed -= UpgradeEventManager_UpdateUpgradeAttackSpeed;
         upgradeManager.UpdateUpgradeRange -= UpgradeEventManager_UpdateUpgradeRange;
         upgradeManager.UpdateUpgradeCityHealth -= UpgradeEventManager_UpdateUpgradeCityHealth;
         upgradeManager.UpdateUpgradeBlock -= UpgradeEventManager_UpdateUpgradeBlock;
@@ -128,9 +127,7 @@ public class Level_Manager : MonoBehaviour
     {
         if (Singleton.instance != null)
         {
-            Game_Manager gameManager = Singleton.instance.GetComponent<Game_Manager>();
             Scene currentScene = SceneManager.GetActiveScene();
-            if (gameManager != null)
             {
                 if (Win && currentScene.name == "Level_1")
                 {
@@ -141,14 +138,6 @@ public class Level_Manager : MonoBehaviour
                     gameManager.GameOverTrigger();
                 }
             }
-            else
-            {
-                Debug.LogError("Game_Manager component not found on Singleton instance.");
-            }
-        }
-        else
-        {
-            Debug.LogError("Singleton instance not found.");
         }
     }
 
@@ -193,47 +182,13 @@ public class Level_Manager : MonoBehaviour
         gameManager.EnableGameplayCamera(false);
     }
 
-    private void SetupGameWin()
-    {
-        Game_Manager gameManager = Singleton.instance.GetComponent<Game_Manager>();
-        gameManager.EnableGameplayCamera(false); // Ensure menu camera is active
-    }
-
-    private void SetupGameOver()
-    {
-        Game_Manager gameManager = Singleton.instance.GetComponent<Game_Manager>();
-        gameManager.EnableGameplayCamera(false); // Ensure menu camera is active
-    }
     #endregion
-
-    private void Update()
-    {
-        Game_Manager gameManager = Singleton.instance.GetComponent<Game_Manager>();
-        if (gameManager.hasHitEndWaveTrigger)
-        {
-            ResetLevel(gameManager);
-        }
-        if (WaveUI.FinalWaveConlcuded)
-        {
-            Win = true;
-            CheckWinClause();
-            WaveUI.FinalWaveConlcuded = false;
-        }
-    }
 
     #region Resets
 
     public void ResetLevel(Game_Manager gameManager) 
     {
-        Extention = GameObject.Find("Extention");
-        Transform ExtentionTransform = Extention.transform;
-
         CreateBridgeSectionDuringIntro?.Invoke(this, EventArgs.Empty);
-        foreach (Transform child in ExtentionTransform)
-        {
-            Extentions.Add(child.gameObject.transform);
-            child.gameObject.SetActive(false);
-        }
         ResetPlayerPosition();
         ResetWave();
         ResetCity();
@@ -250,7 +205,6 @@ public class Level_Manager : MonoBehaviour
             respawn = Respawn.transform;
             playerTransform.position = respawn.position;
             playerHealth.ResetPlayerHealth();
-            Debug.Log($"Found player object: {playerTransform.name}");
         }
     }
 
@@ -259,7 +213,6 @@ public class Level_Manager : MonoBehaviour
         if (cityHealthSystem != null)
         {
             cityHealthSystem.ResetCity();
-            Debug.Log($"City has been reset: {cityHealthSystem.gameObject.name}");
         }
     }
 
@@ -279,7 +232,7 @@ public class Level_Manager : MonoBehaviour
         WaveUI.FinalWaveConlcuded = false;
     }
 
-    void ResetAllUpgrades()
+    public void ResetAllUpgrades()
     {
         MagicManager magicManager = FindObjectOfType<MagicManager>(true);
         WeaponDestroyerRange range = FindObjectOfType<WeaponDestroyerRange>(true);

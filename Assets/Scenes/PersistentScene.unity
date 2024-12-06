@@ -72449,7 +72449,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   upgradeManager: {fileID: 1685919408}
-  Extention: {fileID: 0}
+  gameManager: {fileID: 4525191834167568916}
+  Extension: {fileID: 0}
   playerTransform: {fileID: 0}
   playerHealth: {fileID: 1952016379115059952}
   cityHealthSystem: {fileID: 136349200}
@@ -113665,7 +113666,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &8332440819320749085
 GameObject:
   m_ObjectHideFlags: 0

@@ -15,7 +15,6 @@ public class Game_Manager : MonoBehaviour
     public bool hasHitEndWaveTrigger = false;
     bool hasReadIntroduction = false;
 
-
     public bool Paused = GlobalSettings.globalPauseOverride;
 
     public enum GameState { MainMenu, Level1, GameOver, GameWin, DoNothing, Upgrades, Results, Introduction }
@@ -44,7 +43,6 @@ public class Game_Manager : MonoBehaviour
             bridge.CreateBridge();
         ResultsMenuTrigger();
     }
-
 
     void Update()
     {
@@ -372,5 +370,4 @@ public class Game_Manager : MonoBehaviour
             Destroy(obj);
         }
     }
-
 }

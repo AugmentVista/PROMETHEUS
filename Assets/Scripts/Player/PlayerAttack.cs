@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class PlayerAttack : MonoBehaviour // This script is attached to the player weapon
+public class PlayerAttack : MonoBehaviour
 {
     [SerializeField] private KeyCode hitKey = KeyCode.Mouse0;
     private KeyCode blockKey;
@@ -172,7 +172,14 @@ public class PlayerAttack : MonoBehaviour // This script is attached to the play
             if (other.tag == "Knockback" || other.tag == "TowerBuster")
             {
                 projectileHandler.struckByWeapon = true;
-
+            }
+            else
+            {
+                projectileHandler.struckByWeapon = false;
+            }
+            // if the collided projectile can be attacked, create an explosion partial effect 
+            if (projectileHandler.struckByWeapon)
+            {
                 GameObject explosion = Instantiate(rockSmashVFX, other.transform.position, Quaternion.identity);
 
                 explosion.SetActive(true);
@@ -184,11 +191,6 @@ public class PlayerAttack : MonoBehaviour // This script is attached to the play
                     explosionVFX.Play();
                 }
                 Destroy(explosion, explosionVFX.main.duration);
-
-            }
-            else
-            {
-                projectileHandler.struckByWeapon = false;
             }
         }
     }

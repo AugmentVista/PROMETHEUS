@@ -7,7 +7,6 @@ public class ProjectileCollisionHandler : MonoBehaviour
     /// This class is attached to projectiles when they are instantiated. 
     /// It handles only what the projectile needs to know.
     /// It knows if it hits the Player or if it hits the Miss Zone.
-    /// It can reduce your score if you get hit.
     /// </summary>
 
     private CurrencyKeeper Score;
@@ -32,7 +31,6 @@ public class ProjectileCollisionHandler : MonoBehaviour
     {
         return projectileCollider;
     }
-
 
     private void OnTriggerEnter(Collider other)
     {

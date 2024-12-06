@@ -155,18 +155,6 @@ public class UpgradeEventManager : MonoBehaviour
                         DataToBigDisplay.DisplayDefault();
                     }
                 break;
-                case "Attack Speed Upgrade":
-                    attackSpeedUpgradesPurchased += 1;
-                    if (attackSpeedUpgradesPurchased < upgradeLimit)
-                    {
-                        UpdateUpgradeAttackSpeed?.Invoke(this, new UpgradeEventArgs(Item));
-                    }
-                    else
-                    {
-                        ToBeChanged.SetActive(false);
-                        DataToBigDisplay.DisplayDefault();
-                    }
-                break;
             case "Magic":
                     magicUpgradesPurchased += 1;
                     if (magicUpgradesPurchased < upgradeLimit)
