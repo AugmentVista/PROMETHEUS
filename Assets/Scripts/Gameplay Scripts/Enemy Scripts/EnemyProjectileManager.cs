@@ -11,8 +11,8 @@ public class EnemyProjectileManager : MonoBehaviour
 
     private int currentProjectiles = 0;
     public int totalProjectilesCreated = 0;
-    public int localWaveCount = 0;
-    public Queue<GameObject> pooledProjectiles = new Queue<GameObject>(); // Queue to hold inactive projectiles
+    public int localWaveCount = 1;
+    //public Queue<GameObject> pooledProjectiles = new Queue<GameObject>(); // Queue to hold inactive projectiles
 
     public GameObject RequestProjectile(Transform localTransform)
     {
@@ -34,7 +34,7 @@ public class EnemyProjectileManager : MonoBehaviour
             {
                 totalProjectilesCreated = 0;   
                 waveUI.NextWave();
-                maxProjectiles += 3;
+                maxProjectiles += 4;
                 localWaveCount++;
             }
             return null;
@@ -79,7 +79,7 @@ public class EnemyProjectileManager : MonoBehaviour
         }
         currentProjectiles = 0;
         totalProjectilesCreated = 0;
-        localWaveCount = 0;
+        localWaveCount = 1;
     }
 
 
@@ -89,29 +89,8 @@ public class EnemyProjectileManager : MonoBehaviour
         InitalPosition = localTransform;
         projectileInstance = Instantiate(Projectiles[GenerateNewProjectiles()], localTransform.position, Quaternion.identity);
         totalProjectilesCreated += 1;
-        currentProjectiles++;
+        currentProjectiles += 1;
         return projectileInstance;
     }
 
-    public void ReturnProjectile(GameObject obj)
-    {
-        Destroy(obj);
-        //ProjectileCollisionHandler handler = obj.GetComponent<ProjectileCollisionHandler>();
-        //if (handler != null)
-        //{
-        //    handler.struckByWeapon = false;
-        //    handler.reusedProjectile = true;
-        //}
-
-        //Rigidbody rb = obj.GetComponent<Rigidbody>();
-        //if (rb != null)
-        //{
-        //    rb.velocity = Vector3.zero; 
-        //}
-
-        //obj.transform.position = InitalPosition.position;
-        //pooledProjectiles.Enqueue(obj);
-
-        //currentProjectiles--;
-    }
 }

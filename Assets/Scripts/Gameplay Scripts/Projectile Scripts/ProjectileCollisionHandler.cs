@@ -12,7 +12,6 @@ public class ProjectileCollisionHandler : MonoBehaviour
 
     private CurrencyKeeper Score;
     private PlayerSideToSide playerMove;
-    private EnemyProjectileManager spawner; // Reference to the spawner
     private PlayerAttack playerAttack;
     private BaseProjectile Base;
     private string[] Type;
@@ -26,15 +25,9 @@ public class ProjectileCollisionHandler : MonoBehaviour
     {
         Base = GetComponent<BaseProjectile>();
         Score = FindAnyObjectByType<CurrencyKeeper>();
-        spawner = FindObjectOfType<EnemyProjectileManager>();
         playerMove = FindObjectOfType<PlayerSideToSide>();
         playerAttack = FindObjectOfType<PlayerAttack>();
         projectileCollider = GetComponent<Collider>();
-    }
-
-    public void SetSpawner(EnemyProjectileManager spawnerReference)
-    {
-        spawner = spawnerReference;
     }
 
     public Collider GetProjectileCollider()
@@ -124,7 +117,7 @@ public class ProjectileCollisionHandler : MonoBehaviour
         {
             switch (projectileType)
             {
-                case "Stone":// Reduce score
+                case "Stone":
                     playerMove.WasHit(true, projectileType);
                     break;
 
@@ -149,7 +142,5 @@ public class ProjectileCollisionHandler : MonoBehaviour
     {
         GetComponent<Collider>().enabled = false;
         GetComponent<Renderer>().enabled = false;
-
-        spawner.ReturnProjectile(gameObject);
     }
 }

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyFire : MonoBehaviour
@@ -7,6 +8,8 @@ public class EnemyFire : MonoBehaviour
     private EnemyProjectileManager projectileManager;
 
     private float elapsedTime = 0f;
+
+    List <GameObject> legitimateProjectiles = new List<GameObject>();
 
     private bool isGameActive = GlobalSettings.projectileSpawnerActive;
     private float ShotDelay() { return Mathf.Round(Random.Range(2.0f , 5.0f) * 100) / 100; } // produces clean decimals
@@ -28,9 +31,17 @@ public class EnemyFire : MonoBehaviour
         GlobalSettings.projectileSpawnerActive = isActive;
     }
 
-    private void Update()
+    private void LateUpdate()
     {
         CheckPermissionToFire();
+        GameObject[] allBombs = GameObject.FindGameObjectsWithTag("Knockback");
+        foreach (GameObject obj in allBombs)
+        {
+            if(obj && obj.GetComponent<ProjectileCollisionHandler>() == null)
+            { 
+                Destroy(obj);
+            }
+        }
     }
 
     private void CheckPermissionToFire()
@@ -89,8 +100,15 @@ public class EnemyFire : MonoBehaviour
                 {
                     collisionHandler = projectileInstance.AddComponent<ProjectileCollisionHandler>();
                 }
-
-                collisionHandler.SetSpawner(projectileManager);
+                if (projectileInstance != null)
+                {
+                    ProjectileCollisionHandler test = projectileInstance.GetComponent<ProjectileCollisionHandler>();
+                    if (test == null)
+                    { 
+                        legitimateProjectiles.Add(projectileInstance);
+                        Debug.Log($"Fake Bomb count: {legitimateProjectiles.Count}, this is a fake bomb");
+                    }
+                }
             }
         }
     }
