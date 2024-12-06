@@ -4,7 +4,7 @@ using UnityEngine;
 public class UpgradeEventManager : MonoBehaviour
 {
     [SerializeField] GameObject PlayerHealthMerchandise;
-    [SerializeField] GameObject HammerMerchandise;
+    [SerializeField] GameObject RangeMerchandise;
     [SerializeField] GameObject CityHealthMerchandise;
     [SerializeField] GameObject ToBeChanged;
     [SerializeField] GameObject MagicMerchandise;
@@ -16,14 +16,14 @@ public class UpgradeEventManager : MonoBehaviour
     public bool upgradesHaveBeenReset;
 
     private int healthUpgradesPurchased = 0;
-    private int hammerUpgradesPurchased = 0;
+    private int rangeUpgradesPurchased = 0;
     private int cityHealthUpgradesPurchased = 0;
     private int attackSpeedUpgradesPurchased = 0;
     private int magicUpgradesPurchased = 0;
     private int blockUpgradesPurchased = 0;
 
     public EventHandler<UpgradeEventArgs> UpdateUpgradeHealth;
-    public EventHandler<UpgradeEventArgs> UpdateUpgradeHammer;
+    public EventHandler<UpgradeEventArgs> UpdateUpgradeRange;
     public EventHandler<UpgradeEventArgs> UpdateUpgradeCityHealth;
     public EventHandler<UpgradeEventArgs> UpdateUpgradeAttackSpeed;
     public EventHandler<UpgradeEventArgs> UpdateUpgradeMagic;
@@ -72,7 +72,7 @@ public class UpgradeEventManager : MonoBehaviour
         {
             HealthStars[i].SetActive(true);
         }
-        for (int j = 0; j < hammerUpgradesPurchased; j++)
+        for (int j = 0; j < rangeUpgradesPurchased; j++)
         {
             RangeStars[j].SetActive(true);
         }
@@ -96,7 +96,7 @@ public class UpgradeEventManager : MonoBehaviour
         if (upgradesHaveBeenReset)
         {
             healthUpgradesPurchased = 0;
-            hammerUpgradesPurchased = 0;
+            rangeUpgradesPurchased = 0;
             cityHealthUpgradesPurchased = 0;
             attackSpeedUpgradesPurchased = 0;
             magicUpgradesPurchased = 0;
@@ -131,14 +131,14 @@ public class UpgradeEventManager : MonoBehaviour
                     }
                 break;
             case "Attack Range":
-                    hammerUpgradesPurchased += 1;
-                    if (hammerUpgradesPurchased < upgradeLimit)
+                    rangeUpgradesPurchased += 1;
+                    if (rangeUpgradesPurchased < upgradeLimit)
                     {
-                        UpdateUpgradeHammer?.Invoke(this, new UpgradeEventArgs(Item));
+                        UpdateUpgradeRange?.Invoke(this, new UpgradeEventArgs(Item));
                     }
                     else
                     {
-                        HammerMerchandise.SetActive(false);
+                        RangeMerchandise.SetActive(false);
                         DataToBigDisplay.DisplayDefault();
                     }
                 break;

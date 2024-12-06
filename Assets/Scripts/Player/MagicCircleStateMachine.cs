@@ -6,7 +6,7 @@ public class MagicCircleStateMachine : MonoBehaviour
     [SerializeField] GameObject destroyOnContactObject;
     [SerializeField] GameObject hammerPrefab;
 
-    float speed = 10f;
+    float speed = 15f;
 
     [SerializeField] Vector3 offset = new Vector3(0, 0, 0);
 
@@ -86,13 +86,13 @@ public class MagicCircleStateMachine : MonoBehaviour
     {
         for (int i = 0; i < amountToCreate + 1; i++)
         {
-            Vector3 randomOffset = new Vector3(0, 0, Random.Range(5f, 10f));
+            Vector3 randomOffset = new Vector3(Random.Range(-2f,2f), Random.Range(0f, 2f), Random.Range(5f, 10f));
             Vector3 spawnPosition = transform.position + randomOffset;
 
             GameObject hammerInstance = Instantiate(hammerPrefab, spawnPosition, Quaternion.identity);
 
             Rigidbody rb = hammerInstance.GetComponent<Rigidbody>();
-            rb.AddForce(Vector3.forward.normalized * speed, ForceMode.Impulse);
+            rb.AddForce(Vector3.forward.normalized * (speed + Random.Range(2f, 10f)), ForceMode.Impulse);
 
             hammerInstance.AddComponent<DisposableThrowable>();
         }

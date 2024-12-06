@@ -40,7 +40,7 @@ public class Level_Manager : MonoBehaviour
         upgradeManager.UpdateUpgradeHealth += UpgradeEventManager_UpdateUpgradeHealth;
         upgradeManager.UpdateUpgradeMagic += UpgradeEventManager_UpdateUpgradeMagic;
         upgradeManager.UpdateUpgradeAttackSpeed += UpgradeEventManager_UpdateUpgradeAttackSpeed;
-        upgradeManager.UpdateUpgradeHammer += UpgradeEventManager_UpdateUpgradeHammer;
+        upgradeManager.UpdateUpgradeRange += UpgradeEventManager_UpdateUpgradeRange;
         upgradeManager.UpdateUpgradeCityHealth += UpgradeEventManager_UpdateUpgradeCityHealth;
         upgradeManager.UpdateUpgradeBlock += UpgradeEventManager_UpdateUpgradeBlock;
     }
@@ -86,12 +86,12 @@ public class Level_Manager : MonoBehaviour
         //if (attackHitBox != null) { attackHitBox.UpdateAttackSpeed(attackSpeedUpgrade.Modifer);}
     }
 
-    private void UpgradeEventManager_UpdateUpgradeHammer(object sender, UpgradeEventArgs e)
+    private void UpgradeEventManager_UpdateUpgradeRange(object sender, UpgradeEventArgs e)
     { 
-        PlayerAttack hammerHitBox = FindObjectOfType<PlayerAttack>(true);
-        ItemDisplay hammerUpgrade = e.Item;
-        Debug.Log($"Upgrade purchased of type {hammerUpgrade}");
-        //if (hammerHitBox != null) { hammerHitBox.UpdateHammer(hammerUpgrade.Modifer);}
+        WeaponDestroyerRange range = FindObjectOfType<WeaponDestroyerRange>(true);
+        ItemDisplay rangeUpgrade = e.Item;
+        Debug.Log($"Upgrade purchased of type {rangeUpgrade}");
+        if (range != null) { range.RangeUp();}
     }
 
     private void OnDisable()
@@ -99,7 +99,7 @@ public class Level_Manager : MonoBehaviour
         upgradeManager.UpdateUpgradeHealth -= UpgradeEventManager_UpdateUpgradeHealth;
         upgradeManager.UpdateUpgradeMagic -= UpgradeEventManager_UpdateUpgradeMagic;
         upgradeManager.UpdateUpgradeAttackSpeed -= UpgradeEventManager_UpdateUpgradeAttackSpeed;
-        upgradeManager.UpdateUpgradeHammer -= UpgradeEventManager_UpdateUpgradeHammer;
+        upgradeManager.UpdateUpgradeRange -= UpgradeEventManager_UpdateUpgradeRange;
         upgradeManager.UpdateUpgradeCityHealth -= UpgradeEventManager_UpdateUpgradeCityHealth;
         upgradeManager.UpdateUpgradeBlock -= UpgradeEventManager_UpdateUpgradeBlock;
     }
@@ -279,14 +279,15 @@ public class Level_Manager : MonoBehaviour
     void ResetAllUpgrades()
     {
         MagicManager magicManager = FindObjectOfType<MagicManager>(true);
+        WeaponDestroyerRange range = FindObjectOfType<WeaponDestroyerRange>(true);
         if (magicManager != null) { magicManager.ResetMagicUpgrade(); }
+        if (range != null) { range.ResetRange(); }
 
         upgradeManager.upgradesHaveBeenReset = true;
 
         cityHealthSystem.ResetCityHealthUpgrade();
 
         playerHealth.ResetPlayerHealthUpgrade();
-
     }
 
     public void ResetCurrency()
