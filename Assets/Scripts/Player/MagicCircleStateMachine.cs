@@ -65,12 +65,12 @@ public class MagicCircleStateMachine : MonoBehaviour
 
     public void FortifyHammer(int sizeMultiplier)
     {
-        Vector3 randomOffset = new Vector3(0, 0, Random.Range(-1.5f, 1.5f));
+        Vector3 randomOffset = new Vector3(0, 0, Random.Range(2f, 5f));
         Vector3 spawnPosition = transform.position + randomOffset;
 
         GameObject hammerInstance = Instantiate(hammerPrefab, spawnPosition, Quaternion.identity);
 
-        float scaleMultiplier = 1f + (sizeMultiplier * 1.2f);
+        float scaleMultiplier = 1f + (sizeMultiplier * 1.1f);
         Vector3 newScale = hammerPrefab.transform.localScale * scaleMultiplier;
         hammerInstance.transform.localScale = newScale;
 
@@ -86,14 +86,13 @@ public class MagicCircleStateMachine : MonoBehaviour
     {
         for (int i = 0; i < amountToCreate + 1; i++)
         {
-            Vector3 randomOffset = new Vector3(0, 0, Random.Range(-5f, 5f));
-            Vector3 spawnPosition = transform.position + new Vector3(0, 0, 0) + randomOffset;
+            Vector3 randomOffset = new Vector3(0, 0, Random.Range(5f, 10f));
+            Vector3 spawnPosition = transform.position + randomOffset;
 
             GameObject hammerInstance = Instantiate(hammerPrefab, spawnPosition, Quaternion.identity);
 
             Rigidbody rb = hammerInstance.GetComponent<Rigidbody>();
-            Vector3 randomDirection = Vector3.forward + new Vector3(Random.Range(-0.1f, 0.1f), Random.Range(-0.05f, 0.05f), 0);
-            rb.AddForce(randomDirection.normalized * Random.Range(speed * 0.5f , speed * 1.5f), ForceMode.Impulse);
+            rb.AddForce(Vector3.forward.normalized * speed, ForceMode.Impulse);
 
             hammerInstance.AddComponent<DisposableThrowable>();
         }
@@ -102,7 +101,7 @@ public class MagicCircleStateMachine : MonoBehaviour
     public void PolymorphHammer()
     {
         GameObject randomPrefab;
-        Vector3 randomOffset = new Vector3(0, 0, Random.Range(-3f, 3f));
+        Vector3 randomOffset = new Vector3(0, 0, Random.Range(5f, 10f));
         Vector3 spawnPosition = transform.position + randomOffset;
 
         if (polymorphObjects.Count > 0)
@@ -118,7 +117,7 @@ public class MagicCircleStateMachine : MonoBehaviour
         GameObject hammerInstance = Instantiate(randomPrefab, spawnPosition, Quaternion.identity);
 
         Rigidbody rb = hammerInstance.GetComponent<Rigidbody>();
-        rb.AddForce(Vector3.forward.normalized * speed * Random.Range(1.1f, 2f), ForceMode.Impulse);
+        rb.AddForce(Vector3.forward.normalized * speed * Random.Range(1f, 2f), ForceMode.Impulse);
 
         hammerInstance.AddComponent<DisposableThrowable>();
     }
