@@ -2,7 +2,6 @@ using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class WaveUI : MonoBehaviour
 {
@@ -43,7 +42,14 @@ public class WaveUI : MonoBehaviour
                 TextMeshProUGUI waveTextUI = waveTextObject.GetComponent<TextMeshProUGUI>();
                 if (waveTextUI != null)
                 {
-                    waveTextUI.text = $"Wave {waveCount} / {amountOfWavesToBeat}";
+                    if (GlobalSettings.globalPauseOverride)
+                    {
+                        waveTextUI.text = "";
+                    }
+                    else
+                    {
+                        waveTextUI.text = $"Wave {waveCount} / {amountOfWavesToBeat}";
+                    }
                 }
             }
         }
