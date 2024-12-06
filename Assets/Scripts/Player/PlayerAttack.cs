@@ -26,6 +26,7 @@ public class PlayerAttack : MonoBehaviour // This script is attached to the play
     float speed = 15f;
 
     int hammerUpgradesPurchased;
+    bool canAttack = true;
 
     private void Start()
     {
@@ -34,9 +35,9 @@ public class PlayerAttack : MonoBehaviour // This script is attached to the play
 
     private void Update()
     {
-        if (Input.GetKeyDown(hitKey) && !GlobalSettings.globalPauseOverride)
+        if (Input.GetKeyDown(hitKey) && !GlobalSettings.globalPauseOverride && canAttack)
         {
-            Attack();
+            StartCoroutine(Attack());
         }
         if (canCreateBlocker && (Input.GetKeyDown(KeyCode.Alpha1) ||
                                  Input.GetKeyDown(KeyCode.Alpha2) ||
@@ -48,8 +49,9 @@ public class PlayerAttack : MonoBehaviour // This script is attached to the play
         }
     }
 
-    private void Attack()
+    private IEnumerator Attack()
     {
+        canAttack = false;
         Vector3 randomOffset = new Vector3(0, 0, Random.Range(-1.5f, 1.5f));
         Vector3 spawnPosition = transform.position + randomOffset;
 
@@ -59,6 +61,9 @@ public class PlayerAttack : MonoBehaviour // This script is attached to the play
         rb.AddForce(Vector3.forward.normalized * speed, ForceMode.Impulse);
 
         hammerInstance.AddComponent<DisposableThrowable>();
+
+        yield return new WaitForSeconds(0.25f);
+        canAttack = true;
     }
 
     private IEnumerator CreateBlocker(KeyCode key)
