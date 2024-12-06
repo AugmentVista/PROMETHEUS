@@ -88,4 +88,21 @@ public class Blocker : MonoBehaviour
             }
         }
     }
+
+    public void Explode()
+    {
+        GameObject explosion = Instantiate(rockSmashVFX, transform.position, Quaternion.identity);
+
+        explosion.SetActive(true);
+
+        ParticleSystem explosionVFX = explosion.GetComponent<ParticleSystem>();
+
+        if (explosionVFX != null)
+        {
+            explosionVFX.Play();
+        }
+        Destroy(explosion, explosionVFX.main.duration);
+    }
+
+
 }

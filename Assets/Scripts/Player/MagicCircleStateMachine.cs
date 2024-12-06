@@ -41,7 +41,7 @@ public class MagicCircleStateMachine : MonoBehaviour
                 if (magicObj.IsTypeMatch("Vitality"))
                 {
                     other.gameObject.SetActive(false);
-                    EnduringHammer(magicObj.level * magicObj.level);
+                    BallShooter(magicObj.level * magicObj.level);
                 }
                 if (magicObj.IsTypeMatch("Polymorph"))
                 {
@@ -52,23 +52,15 @@ public class MagicCircleStateMachine : MonoBehaviour
         }
     }
 
-    public void EnduringHammer(int lifegain)
+    public void BallShooter(int lifegain)
     {
-        Vector3 randomOffset = new Vector3(0, 0, Random.Range(-1.5f, 1.5f));
+        Vector3 randomOffset = new Vector3(0, Random.Range(0, 3f), 0);
         Vector3 spawnPosition = transform.position + randomOffset;
 
         GameObject hammerInstance = Instantiate(hammerPrefab, spawnPosition, Quaternion.identity);
 
         Rigidbody rb = hammerInstance.GetComponent<Rigidbody>();
-        rb.AddForce(Vector3.forward.normalized * speed, ForceMode.Impulse);
-
-        CityHealthSystem cityHP = FindObjectOfType<CityHealthSystem>();
-        PlayerHealthSystem playerHealthSystem = FindObjectOfType<PlayerHealthSystem>();
-        Debug.Log(cityHP.currentHealth + "CITY HP BEFORE");
-        playerHealthSystem.Heal(lifegain);
-        cityHP.Heal(lifegain);
-        hammerInstance.AddComponent<DisposableThrowable>();
-        Debug.Log(cityHP.currentHealth + "CITY HP AFTER");
+        rb.AddForce(Vector3.forward.normalized * 30f, ForceMode.Impulse);
     }
 
     public void FortifyHammer(int sizeMultiplier)
@@ -92,7 +84,7 @@ public class MagicCircleStateMachine : MonoBehaviour
 
     public void DuplicateHammer(int amountToCreate)
     {
-        for (int i = 0; i < amountToCreate * 2; i++)
+        for (int i = 0; i < amountToCreate + 1; i++)
         {
             Vector3 randomOffset = new Vector3(0, 0, Random.Range(-5f, 5f));
             Vector3 spawnPosition = transform.position + new Vector3(0, 0, 0) + randomOffset;

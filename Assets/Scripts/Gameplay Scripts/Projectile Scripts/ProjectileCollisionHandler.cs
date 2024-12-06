@@ -136,6 +136,6 @@ public class ProjectileCollisionHandler : MonoBehaviour
     {
         GetComponent<Collider>().enabled = false;
         GetComponent<Renderer>().enabled = false;
-        Destroy(gameObject, 5f);
+        Destroy(gameObject);
     }
 }
