@@ -4,8 +4,6 @@ public class EnemyFire : MonoBehaviour
 {
     [SerializeField] private Transform projectileTarget;
 
-    private EnemyWaveTrigger waveTrigger;
-
     private EnemyProjectileManager projectileManager;
 
     private float elapsedTime = 0f;
@@ -20,7 +18,6 @@ public class EnemyFire : MonoBehaviour
 
     private void Start()
     {
-        //waveTrigger = FindObjectOfType<EnemyWaveTrigger>();
         projectileManager = FindObjectOfType<EnemyProjectileManager>();
         projectileTarget = GameObject.Find("Miss Zone").transform;
         FiringCooldown = ShotDelay()/2;

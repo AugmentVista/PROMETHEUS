@@ -76,7 +76,7 @@ public class UpgradeEventManager : MonoBehaviour
         }
         for (int k = 0; k < cityHealthUpgradesPurchased; k++)
         {
-            RangeStars[k].SetActive(true);
+            CityHealthStars[k].SetActive(true);
         }
         for (int l = 0; l < magicUpgradesPurchased; l++)
         {
@@ -125,7 +125,6 @@ public class UpgradeEventManager : MonoBehaviour
                     {
                         PlayerHealthMerchandise.SetActive(false);
                         DataToBigDisplay.DisplayDefault();
-                        Debug.LogError($"Player has bought the last {Item}"); 
                     }
                 break;
             case "Attack Range":
@@ -138,7 +137,6 @@ public class UpgradeEventManager : MonoBehaviour
                     {
                         HammerMerchandise.SetActive(false);
                         DataToBigDisplay.DisplayDefault();
-                        Debug.LogError($"Player has bought the last {Item}");
                     }
                 break;
                 case "City Health":
@@ -152,7 +150,6 @@ public class UpgradeEventManager : MonoBehaviour
                     {
                         CityHealthMerchandise.SetActive(false);
                         DataToBigDisplay.DisplayDefault();
-                        Debug.LogError($"Player has bought the last {Item}");
                     }
                 break;
                 case "Attack Speed Upgrade":
@@ -165,7 +162,6 @@ public class UpgradeEventManager : MonoBehaviour
                     {
                         ToBeChanged.SetActive(false);
                         DataToBigDisplay.DisplayDefault();
-                        Debug.LogError($"Player has bought the last {Item}");
                     }
                 break;
             case "Magic":
@@ -178,7 +174,6 @@ public class UpgradeEventManager : MonoBehaviour
                     {
                         MagicMerchandise.SetActive(false);
                         DataToBigDisplay.DisplayDefault();
-                        Debug.LogError($"Player has bought the last {Item}");
                     }
                 break;
             case "Block":
@@ -191,7 +186,6 @@ public class UpgradeEventManager : MonoBehaviour
                     {
                         BlockMerchandise.SetActive(false);
                         DataToBigDisplay.DisplayDefault();
-                        Debug.LogError($"Player has bought the last {Item}");
                     }
                 break;
             default:
