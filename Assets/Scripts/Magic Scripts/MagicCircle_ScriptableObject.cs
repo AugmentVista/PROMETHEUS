@@ -11,6 +11,6 @@ public class MagicCircle_ScriptableObject : ScriptableObject
         Duplicate,
         Fortify,
         Vitality,
-        Polymorph
+        Mesmerize
     }
 }

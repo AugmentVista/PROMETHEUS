@@ -15,8 +15,6 @@ public class MagicCircleStateMachine : MonoBehaviour
         return hammerPrefab;
     }
 
-    [SerializeField] List<GameObject> polymorphObjects = new List<GameObject>();
-
     float RandomExtreme(float min, float max)
     {
         float randomValue = Random.value;
@@ -48,10 +46,10 @@ public class MagicCircleStateMachine : MonoBehaviour
                     other.gameObject.SetActive(false);
                     BallShooter(magicObj.level * magicObj.level);
                 }
-                if (magicObj.IsTypeMatch("Polymorph"))
+                if (magicObj.IsTypeMatch("Mesmerize"))
                 {
                     other.gameObject.SetActive(false);
-                    PolymorphHammer();
+                    MesmerizeShot();
                 }
             }
         }
@@ -104,28 +102,14 @@ public class MagicCircleStateMachine : MonoBehaviour
         }
     }
 
-    public void PolymorphHammer()
+    public void MesmerizeShot()
     {
-        GameObject randomPrefab;
-        Vector3 randomOffset = new Vector3(0, 0, Random.Range(5f, 10f));
-        Vector3 spawnPosition = transform.position + randomOffset;
-
-        if (polymorphObjects.Count > 0)
-        {
-            int randomPolymorphObject = Random.Range(0, polymorphObjects.Count);
-            randomPrefab = polymorphObjects[randomPolymorphObject];
-        }
-        else
-        { 
-            randomPrefab = null;
-            return;
-        }
-        GameObject hammerInstance = Instantiate(randomPrefab, spawnPosition, Quaternion.identity);
+        Vector3 spawnPosition = transform.position;
+     
+        GameObject hammerInstance = Instantiate(hammerPrefab, spawnPosition, Quaternion.identity);
 
         Rigidbody rb = hammerInstance.GetComponent<Rigidbody>();
-        rb.AddForce(Vector3.forward.normalized * speed * Random.Range(1f, 2f), ForceMode.Impulse);
-
-        hammerInstance.AddComponent<DisposableThrowable>();
+        rb.AddForce(Vector3.forward.normalized * speed, ForceMode.Impulse);
     }
 
 
