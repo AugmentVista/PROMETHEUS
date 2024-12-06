@@ -13,6 +13,7 @@ public class Game_Manager : MonoBehaviour
 
     public GameObject userInterfaceCamera;
     public bool hasHitEndWaveTrigger = false;
+    bool hasReadIntroduction = false;
 
 
     public bool Paused = GlobalSettings.globalPauseOverride;
@@ -151,6 +152,7 @@ public class Game_Manager : MonoBehaviour
 
     public void StartGameTrigger()
     {
+        Time.timeScale = 1.0f;
         Scene thisScene = SceneManager.GetActiveScene();
         if (thisScene.name != "Level_1")
         {
@@ -175,16 +177,25 @@ public class Game_Manager : MonoBehaviour
         GameObject IntroPlayButton;
 
         IntroPlayButton = ui_Manager.introductionUI.transform.Find("Play BG").gameObject;
-        if (IntroPlayButton != null && IntroPlayButton.activeSelf)
+
+        if (!hasReadIntroduction)
         {
-            IntroPlayButton.SetActive(false);
+            if (IntroPlayButton != null && IntroPlayButton.activeSelf)
+            {
+                IntroPlayButton.SetActive(false);
+            }
+            float duration = 1f;
+
+            yield return new WaitForSeconds(duration);
+
+            IntroPlayButton.SetActive(true);
+            hasReadIntroduction = true;
+        }
+        else 
+        {
+            IntroPlayButton.SetActive(true);
         }
 
-        float duration = 1f;
-        
-        yield return new WaitForSeconds(duration);
-
-        IntroPlayButton.SetActive(true);
     }
 
     public void GameOverTrigger()

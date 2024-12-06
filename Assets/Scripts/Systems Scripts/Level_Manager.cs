@@ -185,8 +185,6 @@ public class Level_Manager : MonoBehaviour
     private void SetupMainMenu()
     {
         Game_Manager gameManager = Singleton.instance.GetComponent<Game_Manager>();
-        //gameManager.userInterfaceCamera = GameObject.FindGameObjectWithTag("PlayerCamera");
-       // Debug.LogError($"The player camera is: {gameManager.userInterfaceCamera.name}");
         gameManager.EnableGameplayCamera(false);
     }
 
