@@ -15,7 +15,7 @@ public class GlobalSettings : MonoBehaviour
 
     #region ScoreKeeper Variables
 
-    public static int globalDrachma;
+    public static int globalDrachma = 1;
 
     #endregion
 

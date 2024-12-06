@@ -156,8 +156,8 @@ public class Level_Manager : MonoBehaviour
     private void OnSceneChanged(Scene previousScene, Scene newScene)
     {
         WaveUI.FinalWaveConlcuded = false;
-        PrepareScene(previousScene, newScene);
         ResetCurrency();
+        PrepareScene(previousScene, newScene);
     }
 
     private void PrepareScene(Scene previousScene, Scene newScene)
@@ -180,6 +180,8 @@ public class Level_Manager : MonoBehaviour
     {
         ResetAllUpgrades();
         ResetWave();
+        GlobalSettings.globalPauseOverride = false;
+        GlobalSettings.projectileSpawnerActive = true;
     }
 
     private void SetupMainMenu()

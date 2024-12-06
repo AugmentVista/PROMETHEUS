@@ -20,6 +20,11 @@ public class CurrencyKeeper : MonoBehaviour
             SetDrachmaUINumbers(currentDrachma);
             lastDrachma = currentDrachma;
         }
+        if (GlobalSettings.globalDrachma < 1)
+        {
+            drachma = 0;
+            GlobalSettings.globalDrachma = 1;
+        }
     }
 
     private void SetDrachmaUINumbers(int money)
