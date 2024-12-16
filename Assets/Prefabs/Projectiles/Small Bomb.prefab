@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 3109343617447235398}
   - component: {fileID: -3158181525368003139}
   - component: {fileID: 5025310217177838612}
+  - component: {fileID: -3550729615330093219}
   m_Layer: 0
   m_Name: Small Bomb
   m_TagString: Knockback
@@ -174,3 +175,16 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 40
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-3550729615330093219
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2955496615001424215}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4cafbec7bf9e6c4eb7987906a48281a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  struckByWeapon: 0

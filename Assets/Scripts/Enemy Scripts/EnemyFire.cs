@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyFire : MonoBehaviour
@@ -10,17 +9,23 @@ public class EnemyFire : MonoBehaviour
     private float elapsedTime = 0f;
 
     private bool isGameActive = GlobalSettings.projectileSpawnerActive;
-    private float ShotDelay() { return Mathf.Round(Random.Range(2.0f , 5.0f) * 100) / 100; }
 
     private float FiringCooldown;
-    float lastShotSpeed = 4.75f;
+
+    private float ShotFrequencyModifier = 0.01f;
+
+
+    private float ShotDelay() 
+    {
+        return Mathf.Round(Random.Range(2.0f, 5f) * 100) / 100;
+    }
 
 
     private void Start()
     {
         projectileManager = FindObjectOfType<EnemyProjectileManager>();
         projectileTarget = GameObject.Find("Miss Zone").transform;
-        FiringCooldown = ShotDelay()/2;
+        FiringCooldown = ShotDelay();
     }
 
     public void ToggleFiring(bool isActive)
@@ -28,17 +33,17 @@ public class EnemyFire : MonoBehaviour
         GlobalSettings.projectileSpawnerActive = isActive;
     }
 
-    private void LateUpdate()
+    private void Update()
     {
         HandlePausedTime();
-        GameObject[] allBombs = GameObject.FindGameObjectsWithTag("Knockback");
-        foreach (GameObject obj in allBombs)
-        {
-            if (obj && obj.GetComponent<ProjectileCollisionHandler>() == null)
-            {
-                Destroy(obj);
-            }
-        }
+        //GameObject[] allBombs = GameObject.FindGameObjectsWithTag("Knockback");
+        //foreach (GameObject obj in allBombs)
+        //{
+        //    if (obj && obj.GetComponent<ProjectileCollisionHandler>() == null)
+        //    {
+        //        Destroy(obj);
+        //    }
+        //}
     }
 
     private void HandlePausedTime()
@@ -57,29 +62,24 @@ public class EnemyFire : MonoBehaviour
 
     private void TimedShots()
     {
+        FiringCooldown = ShotDelay();
         if (elapsedTime > FiringCooldown && isGameActive)
         {
-            if (lastShotSpeed > ShotDelay()) // ShotDelay is faster
-            {
-                lastShotSpeed = lastShotSpeed - 0.25f;
-                FiringCooldown += ShotDelay();
-            }
-            else if (lastShotSpeed < ShotDelay()) // ShotDelay is slower
-            {
-                FiringCooldown += lastShotSpeed;
-            }
+            elapsedTime = 0.0f;
             SpawnProjectile();
+
+            Debug.LogError($"Last shot had a speed interval of {FiringCooldown}");
         }
     }
 
     public void SpawnProjectile()
     {
-        GameObject projectileInstance = projectileManager.RequestProjectile(transform);
+        GameObject projectileInstance = projectileManager.RequestProjectile();
         // takes the created projectile from projectileManager and shoots it at the player
         if (projectileInstance != null)
         {
             Transform spawnPosition = gameObject.transform;
-            projectileInstance.transform.position = spawnPosition.position;
+            projectileInstance.transform.position = spawnPosition.position; // sets the position of the obtained projectile to this gameObjects position
 
             Vector3 directionToPlayer = (projectileTarget.position - spawnPosition.position).normalized; // directs the projectile towards the player
 
@@ -87,7 +87,15 @@ public class EnemyFire : MonoBehaviour
 
             BaseProjectile baseProj = projectileInstance.GetComponent<BaseProjectile>();
 
-            projectileRb.velocity = directionToPlayer * baseProj.travelSpeed;
+            if (baseProj && projectileRb)
+            {
+                projectileRb.velocity = directionToPlayer * baseProj.travelSpeed;
+            }
+            else
+            {
+                Debug.Log("This one is broken");
+            }
+            
         }
     }
 }

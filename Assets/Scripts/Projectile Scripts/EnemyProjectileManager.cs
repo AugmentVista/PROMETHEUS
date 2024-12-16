@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyProjectileManager : MonoBehaviour
@@ -6,25 +5,22 @@ public class EnemyProjectileManager : MonoBehaviour
     public GameObject ProjectilePrefab;
     public GameObject[] Projectiles;
     private WaveUI waveUI;
-    public int maxProjectiles;
-    public Transform InitalPosition = null;
+    [SerializeField] private int maxProjectiles = 12;
 
     private int currentProjectiles = 0;
     public int totalProjectilesCreated = 0;
     public int localWaveCount = 0;
-    //public Queue<GameObject> pooledProjectiles = new Queue<GameObject>(); // Queue to hold inactive projectiles
 
-    public GameObject RequestProjectile(Transform localTransform)
+    public GameObject RequestProjectile()
     {
         GameObject projectileInstance; // declared undefined
 
-        WaveUI waveUI = FindObjectOfType<WaveUI>();
-        InitalPosition = localTransform;
+        waveUI = FindObjectOfType<WaveUI>();
 
         if (totalProjectilesCreated < maxProjectiles)
         {
-            FireProjectile(localTransform); // creates projectileInstance and assigns it
-            projectileInstance = FireProjectile(localTransform);
+            SpawnProjectile(); // creates projectileInstance and assigns it
+            projectileInstance = SpawnProjectile();
             return projectileInstance;
         }
         else if (totalProjectilesCreated >= maxProjectiles) // has hit the max number of projectiles
@@ -45,11 +41,19 @@ public class EnemyProjectileManager : MonoBehaviour
         }
     }
 
-    
-    private int GenerateNewProjectiles()
+    GameObject SpawnProjectile()
+    {
+        GameObject projectileInstance;
+        projectileInstance = Instantiate(Projectiles[DetermineProjectileType()], transform.position, Quaternion.identity);
+        totalProjectilesCreated += 1;
+        currentProjectiles += 1;
+        return projectileInstance;
+    }
+
+    private int DetermineProjectileType()
     {
         int p = 0;
-        int randomNumber = Random.Range(1, 101);
+        int randomNumber = Random.Range(1 + localWaveCount, 101);
         switch (randomNumber)
         {
             case int i when (i >= 1 && i <= 50):
@@ -58,7 +62,6 @@ public class EnemyProjectileManager : MonoBehaviour
                 p = 0;
 
                 break;
-
             case int i when (i >= 51):
 
                 ProjectilePrefab = Projectiles[0];
@@ -83,14 +86,6 @@ public class EnemyProjectileManager : MonoBehaviour
     }
 
 
-    GameObject FireProjectile(Transform localTransform)
-    {
-        GameObject projectileInstance;
-        InitalPosition = localTransform;
-        projectileInstance = Instantiate(Projectiles[GenerateNewProjectiles()], localTransform.position, Quaternion.identity);
-        totalProjectilesCreated += 1;
-        currentProjectiles += 1;
-        return projectileInstance;
-    }
+    
 
 }
