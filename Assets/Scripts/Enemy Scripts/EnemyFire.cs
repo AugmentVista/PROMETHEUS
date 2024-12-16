@@ -14,10 +14,12 @@ public class EnemyFire : MonoBehaviour
 
     private float ShotFrequencyModifier = 0.01f;
 
+    private float accelerationMulitplier = 1.00f;
+
 
     private float ShotDelay() 
     {
-        return Mathf.Round(Random.Range(2.0f, 5f) * 100) / 100;
+        return Mathf.Round(Random.Range(4.0f, 5f) * 100) / 100;
     }
 
 
@@ -36,14 +38,6 @@ public class EnemyFire : MonoBehaviour
     private void Update()
     {
         HandlePausedTime();
-        //GameObject[] allBombs = GameObject.FindGameObjectsWithTag("Knockback");
-        //foreach (GameObject obj in allBombs)
-        //{
-        //    if (obj && obj.GetComponent<ProjectileCollisionHandler>() == null)
-        //    {
-        //        Destroy(obj);
-        //    }
-        //}
     }
 
     private void HandlePausedTime()
@@ -62,11 +56,13 @@ public class EnemyFire : MonoBehaviour
 
     private void TimedShots()
     {
-        FiringCooldown = ShotDelay();
+        FiringCooldown = ShotDelay() * accelerationMulitplier;
         if (elapsedTime > FiringCooldown && isGameActive)
         {
             elapsedTime = 0.0f;
             SpawnProjectile();
+
+            accelerationMulitplier -= 0.005f;
 
             Debug.LogError($"Last shot had a speed interval of {FiringCooldown}");
         }
