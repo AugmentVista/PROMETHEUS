@@ -62,10 +62,16 @@ public class EnemyProjectileManager : MonoBehaviour
                 p = 0;
 
                 break;
-            case int i when (i >= 51):
+            case int i when (i >= 51 && i <= 90):
 
                 ProjectilePrefab = Projectiles[0];
                 p = 1;
+
+                break;
+            case int i when (i >= 91):
+
+                ProjectilePrefab = Projectiles[0];
+                p = 2;
 
                 break;
         }
@@ -84,8 +90,4 @@ public class EnemyProjectileManager : MonoBehaviour
         totalProjectilesCreated = 0;
         localWaveCount = 0;
     }
-
-
-    
-
 }

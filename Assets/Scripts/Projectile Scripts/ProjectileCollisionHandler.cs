@@ -15,6 +15,7 @@ public class ProjectileCollisionHandler : MonoBehaviour
     private BaseProjectile Base;
     private string[] Type;
     public bool struckByWeapon;
+    public float endurance;
 
     private Collider projectileCollider;
 
@@ -39,7 +40,11 @@ public class ProjectileCollisionHandler : MonoBehaviour
             case "Weapon":
                 playerAttack.CanPlayerAttackThis(projectileCollider);
                 if (!struckByWeapon) { return; }
-                else
+                else if (struckByWeapon)
+                {
+                    endurance -= 1;
+                }
+                if (struckByWeapon && endurance < 1)
                 { 
                     HandleProjectileCollision(other, "Weapon");
                 }
