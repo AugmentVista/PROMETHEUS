@@ -62,13 +62,13 @@ public class EnemyProjectileManager : MonoBehaviour
                 p = 0;
 
                 break;
-            case int i when (i >= 51 && i <= 90):
+            case int i when (i >= 51 && i <= 95):
 
                 ProjectilePrefab = Projectiles[0];
                 p = 1;
 
                 break;
-            case int i when (i >= 91):
+            case int i when (i >= 96):
 
                 ProjectilePrefab = Projectiles[0];
                 p = 2;
