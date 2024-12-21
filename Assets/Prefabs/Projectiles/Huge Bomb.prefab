@@ -188,4 +188,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   struckByWeapon: 0
-  endurance: 2
+  endurance: 3
