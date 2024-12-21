@@ -5,14 +5,13 @@ public class EnemyFire : MonoBehaviour
     [SerializeField] private Transform projectileTarget;
 
     private EnemyProjectileManager projectileManager;
+    private Game_Manager gameManager;
 
     private float elapsedTime = 0f;
 
     private bool isGameActive = GlobalSettings.projectileSpawnerActive;
 
     private float FiringCooldown;
-
-    private float ShotFrequencyModifier = 0.01f;
 
     private float accelerationMulitplier = 1.00f;
 
@@ -26,6 +25,7 @@ public class EnemyFire : MonoBehaviour
     private void Start()
     {
         projectileManager = FindObjectOfType<EnemyProjectileManager>();
+        gameManager = FindObjectOfType<Game_Manager>();
         projectileTarget = GameObject.Find("Miss Zone").transform;
         FiringCooldown = ShotDelay();
     }
@@ -38,6 +38,16 @@ public class EnemyFire : MonoBehaviour
     private void Update()
     {
         HandlePausedTime();
+        ResetFiringSpeed();
+    }
+
+    private void ResetFiringSpeed()
+    {
+        if (gameManager.gameState == Game_Manager.GameState.Upgrades)
+        { 
+            accelerationMulitplier = 1.00f;
+            Debug.Log($"Gameplay state no longer active firing speed multiplier is {accelerationMulitplier}");
+        }
     }
 
     private void HandlePausedTime()
@@ -62,7 +72,7 @@ public class EnemyFire : MonoBehaviour
             elapsedTime = 0.0f;
             SpawnProjectile();
 
-            accelerationMulitplier -= 0.005f;
+            accelerationMulitplier *= 0.98f; // increase the rate of fire of next shot by 2%
 
             Debug.LogError($"Last shot had a speed interval of {FiringCooldown}");
         }
