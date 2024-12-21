@@ -10,14 +10,14 @@ public class SpawnBridge : MonoBehaviour
 
     private void Awake()
     {
-        bridgePrefab = GameObject.Find("Test_Prefab_BridgeSection");
+        //bridgePrefab = GameObject.Find("Test_Prefab_BridgeSection");
     }
     public void CreateBridge()
     {
-        parentOfBridge = GameObject.Find("Extention");
+        //parentOfBridge = GameObject.Find("Extention");
 
-        Transform ExtentionTransform = parentOfBridge.transform;
+        //Transform ExtentionTransform = parentOfBridge.transform;
 
-        Instantiate(bridgePrefab, new Vector3(0,0, bridgeZ), Quaternion.identity);
+        //Instantiate(bridgePrefab, new Vector3(0,0, bridgeZ), Quaternion.identity);
     }
 }
