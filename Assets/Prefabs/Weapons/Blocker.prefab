@@ -440,7 +440,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rockSmashVFX: {fileID: 3741534511865145610, guid: c0cde899d2ec3fe4190c2a516e0462f4, type: 3}
-  blockerMaxHP: 60
+  blockerMaxHP: 50
   currentblockerHealth: 0
   healthBar: {fileID: 2075471939091237202}
 --- !u!114 &8804348805809262278

@@ -72,7 +72,7 @@ public class EnemyFire : MonoBehaviour
             elapsedTime = 0.0f;
             SpawnProjectile();
 
-            accelerationMulitplier *= 0.98f; // increase the rate of fire of next shot by 2%
+            accelerationMulitplier *= 0.97f; // increase the rate of fire of next shot by 2%
 
             Debug.LogError($"Last shot had a speed interval of {FiringCooldown}");
         }

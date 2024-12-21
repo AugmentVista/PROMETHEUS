@@ -51,10 +51,7 @@ public class ProjectileCollisionHandler : MonoBehaviour
                 break;
 
             case "PlayerBody":
-                if (!struckByWeapon)
-                { 
                     HandleProjectileCollision(other, "PlayerBody");
-                }
                 break;  
 
             case "MissZone":
