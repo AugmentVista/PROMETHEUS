@@ -5,6 +5,12 @@ public class TurnCoat : MonoBehaviour
     public GameObject hypnotizePrefab;
     float lifeSpan = 0f;
 
+    private Vector3 previousVelocity;
+
+    private bool isPaused = false;
+
+    private Rigidbody rb;
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Knockback"))
@@ -35,12 +41,31 @@ public class TurnCoat : MonoBehaviour
         }
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
-        lifeSpan += Time.deltaTime;
-        if (lifeSpan > 3f)
+        if (GlobalSettings.globalPauseOverride)
         {
-            Destroy(gameObject);
+            // Pause
+            if (!isPaused)
+            {
+                previousVelocity = rb.velocity; // Store current velocity
+                rb.velocity = Vector3.zero; // Freeze the projectile
+                isPaused = true;
+            }
+        }
+        else
+        {
+            lifeSpan += Time.deltaTime;
+            if (lifeSpan > 3f)
+            {
+                Destroy(gameObject);
+            }
+            // Unpause
+            if (isPaused)
+            {
+                rb.velocity = previousVelocity; // Restore velocity
+                isPaused = false;
+            }
         }
     }
 }
