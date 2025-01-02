@@ -12,7 +12,6 @@ public class Button_UpgradeEvent : MonoBehaviour
         {
             if (Shop.CanPlayerAffordThis(item.priceText))
             {
-                Debug.Log("Purchase successful");
                 UpgradeWasPurchased?.Invoke(this, new UpgradeEventArgs(item));
             }
         }

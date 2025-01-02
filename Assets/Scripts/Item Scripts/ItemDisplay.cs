@@ -19,6 +19,8 @@ public class ItemDisplay : MonoBehaviour
 
     public float Modifer;
 
+    public int timesPurchased = 0;
+
     private void Start()
     {
         titleText.text = scriptableItem.title;

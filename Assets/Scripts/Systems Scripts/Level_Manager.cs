@@ -236,6 +236,8 @@ public class Level_Manager : MonoBehaviour
     {
         MagicManager magicManager = FindObjectOfType<MagicManager>(true);
         WeaponDestroyerRange range = FindObjectOfType<WeaponDestroyerRange>(true);
+        ItemPurchaseCountReset itemReseter = FindObjectOfType<ItemPurchaseCountReset>(true);
+        if (itemReseter != null) { itemReseter.ResetItemPurchaseCount(); }
         if (magicManager != null) { magicManager.ResetMagicUpgrade(); }
         if (range != null) { range.ResetRange(); }
 

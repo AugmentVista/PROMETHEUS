@@ -1466,6 +1466,7 @@ MonoBehaviour:
   currencyImage: {fileID: 1858908937}
   priceText: {fileID: 1459549263}
   Modifer: 0
+  timesPurchased: 0
 --- !u!1 &136349198
 GameObject:
   m_ObjectHideFlags: 0
@@ -1550,9 +1551,9 @@ RectTransform:
   - {fileID: 83411470}
   m_Father: {fileID: 488000252300906894}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 450, y: 150}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &151561318
@@ -1574,6 +1575,7 @@ MonoBehaviour:
   currencyImage: {fileID: 5330630443948003870}
   priceText: {fileID: 8728312860604501666}
   Modifer: 0
+  timesPurchased: 0
 --- !u!1 &165771356
 GameObject:
   m_ObjectHideFlags: 0
@@ -21432,9 +21434,9 @@ RectTransform:
   - {fileID: 190057795}
   m_Father: {fileID: 1693689325362722047}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 750, y: -250}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &957041820
@@ -21456,6 +21458,7 @@ MonoBehaviour:
   currencyImage: {fileID: 531342184179150291}
   priceText: {fileID: 4000518695163326831}
   Modifer: 20
+  timesPurchased: 0
 --- !u!1 &995154355
 GameObject:
   m_ObjectHideFlags: 0
@@ -22939,6 +22942,58 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1132617104}
   m_CullTransparentMesh: 1
+--- !u!1 &1138767343
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1138767344}
+  - component: {fileID: 1138767345}
+  m_Layer: 5
+  m_Name: Item Purchase Reseter
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1138767344
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1138767343}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 673452572371065975}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1138767345
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1138767343}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eba5761577cb69941a063d514aac62fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  items:
+  - {fileID: 24814787531817027}
+  - {fileID: 1939123270533392832}
+  - {fileID: 957041820}
+  - {fileID: 1835969844}
+  - {fileID: 151561318}
+  - {fileID: 8231445848676644913}
+  - {fileID: 1906086986}
 --- !u!1 &1139398447
 GameObject:
   m_ObjectHideFlags: 0
@@ -47100,9 +47155,9 @@ RectTransform:
   - {fileID: 842193771}
   m_Father: {fileID: 488000252300906894}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 150, y: 150}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1835969844
@@ -47124,6 +47179,7 @@ MonoBehaviour:
   currencyImage: {fileID: 6186718390594720684}
   priceText: {fileID: 7277999452276592400}
   Modifer: 2
+  timesPurchased: 0
 --- !u!1 &1843947479
 GameObject:
   m_ObjectHideFlags: 0
@@ -47611,6 +47667,7 @@ MonoBehaviour:
   currencyImage: {fileID: 1954481888}
   priceText: {fileID: 708415787}
   Modifer: 0
+  timesPurchased: 0
 --- !u!224 &1906086987
 RectTransform:
   m_ObjectHideFlags: 0
@@ -59345,6 +59402,7 @@ MonoBehaviour:
   currencyImage: {fileID: 6971111531299294403}
   priceText: {fileID: 5793137001407451263}
   Modifer: 2
+  timesPurchased: 0
 --- !u!114 &28306979117604965
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -60295,6 +60353,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1138767344}
   - {fileID: 2105986376}
   - {fileID: 2000455038}
   - {fileID: 1416998090}
@@ -65698,9 +65757,9 @@ RectTransform:
   - {fileID: 7431853464002418631}
   m_Father: {fileID: 1693689325362722047}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 450, y: -250}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1129842397319334761
@@ -66255,9 +66314,9 @@ RectTransform:
   - {fileID: 9048349458127535684}
   m_Father: {fileID: 1693689325362722047}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 150, y: -250}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &1543320676113379357
@@ -66850,6 +66909,7 @@ MonoBehaviour:
   currencyImage: {fileID: 28306979117604965}
   priceText: {fileID: 3512692690834783449}
   Modifer: 1
+  timesPurchased: 0
 --- !u!114 &1939379551694040728
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -94403,7 +94463,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!222 &4635161273580919126
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -101268,7 +101328,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6047314924232403258
 RectTransform:
   m_ObjectHideFlags: 0
@@ -106853,7 +106913,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 150, y: -460}
-  m_SizeDelta: {x: 10, y: 10}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6776419940525350322
 CanvasRenderer:
@@ -112316,7 +112376,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: -150, y: 400}
-  m_SizeDelta: {x: 10, y: 10}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &7217538121847545892
 RectTransform:
@@ -113546,6 +113606,7 @@ MonoBehaviour:
   currencyImage: {fileID: 3040221141869818404}
   priceText: {fileID: 1939379551694040728}
   Modifer: 0
+  timesPurchased: 0
 --- !u!222 &8233495884569701245
 CanvasRenderer:
   m_ObjectHideFlags: 0

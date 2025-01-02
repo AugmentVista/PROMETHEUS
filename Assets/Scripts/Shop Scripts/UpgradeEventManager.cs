@@ -11,7 +11,7 @@ public class UpgradeEventManager : MonoBehaviour
     [SerializeField] GameObject BlockMerchandise;
 
     [SerializeField] private Button_UpgradeEvent upgradeButton;
-    int upgradeLimit = 4;
+    private int upgradeLimit = 4;
 
     public bool upgradesHaveBeenReset;
 
@@ -118,62 +118,65 @@ public class UpgradeEventManager : MonoBehaviour
         switch (Item.scriptableItem.title)
         {
             case "Health Potion":
-                    healthUpgradesPurchased += 1;
                     if (healthUpgradesPurchased < upgradeLimit)
                     {
                         UpdateUpgradeHealth?.Invoke(this, new UpgradeEventArgs(Item));
-                        Debug.Log("Player bought a Health Potion");
+                        healthUpgradesPurchased += 1;
+                        Item.timesPurchased += 1;
                     }
-                    else 
+                    else if (healthUpgradesPurchased >= upgradeLimit)
                     {
                         PlayerHealthMerchandise.SetActive(false);
                         DataToBigDisplay.DisplayDefault();
                     }
                 break;
             case "Attack Range":
-                    rangeUpgradesPurchased += 1;
                     if (rangeUpgradesPurchased < upgradeLimit)
                     {
                         UpdateUpgradeRange?.Invoke(this, new UpgradeEventArgs(Item));
+                        rangeUpgradesPurchased += 1;
+                        Item.timesPurchased += 1;
                     }
-                    else
+                    else if (rangeUpgradesPurchased >= upgradeLimit)
                     {
                         RangeMerchandise.SetActive(false);
                         DataToBigDisplay.DisplayDefault();
                     }
                 break;
                 case "City Health":
-                    cityHealthUpgradesPurchased += 1;
                     if (cityHealthUpgradesPurchased < upgradeLimit)
                     {
                         UpdateUpgradeCityHealth?.Invoke(this, new UpgradeEventArgs(Item));
-                        Debug.Log($"Player bought A {Item}");
+                        cityHealthUpgradesPurchased += 1;
+                        Item.timesPurchased += 1;
                     }
-                    else
+                    else if (cityHealthUpgradesPurchased >= upgradeLimit)
                     {
                         CityHealthMerchandise.SetActive(false);
                         DataToBigDisplay.DisplayDefault();
                     }
                 break;
             case "Magic":
-                    magicUpgradesPurchased += 1;
                     if (magicUpgradesPurchased < upgradeLimit)
                     {
                         UpdateUpgradeMagic?.Invoke(this, new UpgradeEventArgs(Item));
+                        magicUpgradesPurchased += 1;
+                        Item.timesPurchased += 1;
                     }
-                    else
+                    else if (magicUpgradesPurchased >= upgradeLimit)
                     {
                         MagicMerchandise.SetActive(false);
                         DataToBigDisplay.DisplayDefault();
                     }
                 break;
             case "Block":
-                    blockUpgradesPurchased += 1;
                     if (blockUpgradesPurchased < upgradeLimit)
                     { 
                         UpdateUpgradeBlock?.Invoke(this, new UpgradeEventArgs(Item));
+                        blockUpgradesPurchased += 1;
+                        Item.timesPurchased += 1;
                     }
-                    else
+                    else if (blockUpgradesPurchased >= upgradeLimit)
                     {
                         BlockMerchandise.SetActive(false);
                         DataToBigDisplay.DisplayDefault();

@@ -46,7 +46,6 @@ public class EnemyFire : MonoBehaviour
         if (gameManager.gameState == Game_Manager.GameState.Upgrades)
         { 
             accelerationMulitplier = 1.00f;
-            Debug.Log($"Gameplay state no longer active firing speed multiplier is {accelerationMulitplier}");
         }
     }
 
