@@ -109,7 +109,7 @@ public class MagicCircleStateMachine : MonoBehaviour
         GameObject hammerInstance = Instantiate(hammerPrefab, spawnPosition, Quaternion.identity);
 
         Rigidbody rb = hammerInstance.GetComponent<Rigidbody>();
-        rb.AddForce(Vector3.forward.normalized * speed, ForceMode.Impulse);
+        rb.AddForce(Vector3.forward.normalized * speed/3f, ForceMode.Impulse);
     }
 
 

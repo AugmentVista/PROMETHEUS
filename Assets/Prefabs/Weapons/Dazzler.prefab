@@ -54,7 +54,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: eab5170f6f3544f40929185024e30eaf, type: 2}
     - target: {fileID: 919132149155446097, guid: 5bb386873339ac04d945113495bbc9ff, type: 3}
       propertyPath: m_Name
-      value: LV5lp
+      value: Dazzler
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 5bb386873339ac04d945113495bbc9ff, type: 3}
       propertyPath: m_TagString

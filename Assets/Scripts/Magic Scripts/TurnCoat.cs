@@ -21,11 +21,16 @@ public class TurnCoat : MonoBehaviour
             hypnotizeVFX.transform.SetParent(other.transform);
 
             Rigidbody otherRB = other.GetComponent<Rigidbody>();
-            if (otherRB != null)
+            if (otherRB)
             {
                 Vector3 storedVelocity = otherRB.velocity;
                 otherRB.velocity = Vector3.zero;
-                otherRB.velocity = storedVelocity * - 1;
+                otherRB.velocity = storedVelocity * -1;
+            }
+            else if (!otherRB)
+            {
+                float storedZMovement = other.transform.position.z; 
+                other.transform.Translate(new Vector3(other.transform.position.x, other.transform.position.y, storedZMovement * -1));
             }
         }
     }
@@ -38,5 +43,4 @@ public class TurnCoat : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
 }
