@@ -50,7 +50,7 @@ public class PlayerAttack : MonoBehaviour
             StartCoroutine(CreateBlocker(blockKey));
         }
     }
-
+    
     private IEnumerator Attack()
     {
         canAttack = false;

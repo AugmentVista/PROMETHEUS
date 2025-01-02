@@ -13,8 +13,9 @@ GameObject:
   - component: {fileID: 3054951897351367283}
   - component: {fileID: 6664548208539388295}
   - component: {fileID: -2263396310563886295}
+  - component: {fileID: 1631079329404961103}
   m_Layer: 0
-  m_Name: hammer
+  m_Name: HAMMER
   m_TagString: Weapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -133,3 +134,15 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 116
   m_CollisionDetection: 2
+--- !u!114 &1631079329404961103
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 891792778934253703}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73ae959a6b562d7459eb65d2916eaf2f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
