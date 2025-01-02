@@ -7,7 +7,7 @@ public class SlowZone : MonoBehaviour
         if (other.CompareTag("Knockback"))
         {
             
-            other.attachedRigidbody.velocity *= 0.9f;
+            other.attachedRigidbody.velocity *= 0.85f;
         }
     }
 
@@ -15,7 +15,7 @@ public class SlowZone : MonoBehaviour
     {
         if (other.CompareTag("Knockback"))
         {
-            other.attachedRigidbody.velocity /= 0.9f;
+            other.attachedRigidbody.velocity /= 0.85f;
         }
     }
 }

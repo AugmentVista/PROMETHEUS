@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public class MagicCircleStateMachine : MonoBehaviour
@@ -111,6 +110,4 @@ public class MagicCircleStateMachine : MonoBehaviour
         Rigidbody rb = hammerInstance.GetComponent<Rigidbody>();
         rb.AddForce(Vector3.forward.normalized * speed/3f, ForceMode.Impulse);
     }
-
-
 }
