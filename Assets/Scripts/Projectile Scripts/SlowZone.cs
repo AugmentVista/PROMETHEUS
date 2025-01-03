@@ -2,12 +2,14 @@ using UnityEngine;
 
 public class SlowZone : MonoBehaviour
 {
+    public float slowMod;
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Knockback"))
         {
             
-            other.attachedRigidbody.velocity *= 0.85f;
+            other.attachedRigidbody.velocity *= slowMod;
         }
     }
 
@@ -15,7 +17,7 @@ public class SlowZone : MonoBehaviour
     {
         if (other.CompareTag("Knockback"))
         {
-            other.attachedRigidbody.velocity /= 0.85f;
+            other.attachedRigidbody.velocity /= slowMod;
         }
     }
 }

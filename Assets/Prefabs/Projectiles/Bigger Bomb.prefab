@@ -153,7 +153,7 @@ MonoBehaviour:
   currentState: 0
   currentEffect: 0
   value: 1
-  knockBackDamage: 20
+  knockBackDamage: 25
 --- !u!135 &5025310217177838612
 SphereCollider:
   m_ObjectHideFlags: 0
