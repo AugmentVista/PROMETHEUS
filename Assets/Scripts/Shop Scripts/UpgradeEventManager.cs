@@ -6,9 +6,9 @@ public class UpgradeEventManager : MonoBehaviour
     [SerializeField] GameObject PlayerHealthMerchandise;
     [SerializeField] GameObject RangeMerchandise;
     [SerializeField] GameObject CityHealthMerchandise;
-    [SerializeField] GameObject ToBeChanged;
     [SerializeField] GameObject MagicMerchandise;
     [SerializeField] GameObject BlockMerchandise;
+    [SerializeField] GameObject SideToSideMerchandise;
 
     [SerializeField] private Button_UpgradeEvent upgradeButton;
     private int upgradeLimit = 4;
@@ -21,6 +21,7 @@ public class UpgradeEventManager : MonoBehaviour
     private int attackSpeedUpgradesPurchased = 0;
     private int magicUpgradesPurchased = 0;
     private int blockUpgradesPurchased = 0;
+    private int sideToSideUpgradesPurchased = 0;
 
     public EventHandler<UpgradeEventArgs> UpdateUpgradeHealth;
     public EventHandler<UpgradeEventArgs> UpdateUpgradeRange;
@@ -28,13 +29,14 @@ public class UpgradeEventManager : MonoBehaviour
     public EventHandler<UpgradeEventArgs> UpdateUpgradeAttackSpeed;
     public EventHandler<UpgradeEventArgs> UpdateUpgradeMagic;
     public EventHandler<UpgradeEventArgs> UpdateUpgradeBlock;
+    public EventHandler<UpgradeEventArgs> UpdateUpgradeSideToSide;
 
     [SerializeField] GameObject[] HealthStars;
     [SerializeField] GameObject[] RangeStars;
     [SerializeField] GameObject[] CityHealthStars;
     [SerializeField] GameObject[] MagicStars;
     [SerializeField] GameObject[] BlockStars;
-
+    [SerializeField] GameObject[] SideStars;
 
 
     void Start()
@@ -65,6 +67,10 @@ public class UpgradeEventManager : MonoBehaviour
         {
             star.SetActive(false);
         }
+        foreach (GameObject star in SideStars)
+        {
+            star.SetActive(false);
+        }
     }
     private void Update()
     {
@@ -88,6 +94,10 @@ public class UpgradeEventManager : MonoBehaviour
         {
             BlockStars[m].SetActive(true);
         }
+        for (int n = 0; n < sideToSideUpgradesPurchased; n++)
+        {
+            SideStars[n].SetActive(true);
+        }
         ResetUpgradeCount();
     }
 
@@ -101,6 +111,7 @@ public class UpgradeEventManager : MonoBehaviour
             attackSpeedUpgradesPurchased = 0;
             magicUpgradesPurchased = 0;
             blockUpgradesPurchased = 0;
+            sideToSideUpgradesPurchased = 0;
             SetStarsFalse();
             upgradesHaveBeenReset = false;
         }
@@ -181,6 +192,19 @@ public class UpgradeEventManager : MonoBehaviour
                         BlockMerchandise.SetActive(false);
                         DataToBigDisplay.DisplayDefault();
                     }
+                break;
+            case "SideToSide":
+                if (sideToSideUpgradesPurchased < upgradeLimit)
+                {
+                    UpdateUpgradeSideToSide?.Invoke(this, new UpgradeEventArgs(Item));
+                    sideToSideUpgradesPurchased += 1;
+                    Item.timesPurchased += 1;
+                }
+                else if (sideToSideUpgradesPurchased >= upgradeLimit)
+                {
+                    SideToSideMerchandise.SetActive(false);
+                    DataToBigDisplay.DisplayDefault();
+                }
                 break;
             default:
                 Debug.Log("No Matching Item Name Found, Upgrade failed");

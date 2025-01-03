@@ -5,10 +5,16 @@ public class PlayerSideToSide : MonoBehaviour
 {
     public Transform[] lanes;  // Array of lane positions (left, center, right)
     private int currentLane = 0;   // Tracks the player's current lane index, start at lane 0 (first lane)
-    public float sideMoveSpeed = 5f; // Speed for Lerp when moving between lanes
-    public float sideMoveCooldown = 0.2f; // Time to wait between side movements
+    float sideMoveSpeed = 5; // Speed for Lerp when moving between lanes
+    float sideMoveCooldown = 0.25f; // Time to wait between side movements, 0.25f is the default value, fully upgraded cooldown is 0.05f
 
     private bool isMovingSide = false;
+
+    private void Awake()
+    {
+        sideMoveSpeed = 5f;
+        sideMoveCooldown = 0.25f;
+    }
 
     private void Update()
     {
@@ -56,6 +62,19 @@ public class PlayerSideToSide : MonoBehaviour
         isMovingSide = true;
         yield return new WaitForSeconds(sideMoveCooldown);
         isMovingSide = false;
+    }
+
+    public void UpgradeMovement(float cooldownReduction)
+    {
+        Debug.LogWarning("are we getting called?");
+        if (sideMoveCooldown > 0.05f)
+        {
+            sideMoveSpeed -= cooldownReduction;
+        }
+        if (sideMoveSpeed < 9)
+        {
+            sideMoveSpeed++;
+        }
     }
 
     public void WasHit(bool hit, string projectileTag)

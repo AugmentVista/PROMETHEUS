@@ -5,6 +5,8 @@ using TMPro;
 public class ShopManager : MonoBehaviour
 {
     [SerializeField] private CurrencyKeeper scoreKeeper;
+    private bool validPurchase = false;
+    private int price;
 
     #region Player Balance
 
@@ -78,19 +80,34 @@ public class ShopManager : MonoBehaviour
             if (drachma - price >= 0)
             {
                 Debug.Log("Player can Afford this item");
-                SubtractDrachma(price);
+                validPurchase = true;
                 return true;
             }
             else
             {
                 Debug.Log("Player can't afford that item");
+                validPurchase = false;
                 return false;
             }
         }
         else
         {
             Debug.Log($"Price cannot be converted to an int, price is {priceString}");
+            validPurchase = false;
             return false;
         }
+    }
+
+    public void ApplyCost(TMP_Text priceText)
+    {
+        if (validPurchase)
+        {
+            string priceString = priceText.text;
+            if (int.TryParse(priceString, out int price))
+            {
+                SubtractDrachma(price);
+            }
+        }
+        else { return; }
     }
 }

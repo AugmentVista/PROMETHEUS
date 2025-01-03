@@ -58,6 +58,7 @@ public class Level_Manager : MonoBehaviour
         upgradeManager.UpdateUpgradeRange += UpgradeEventManager_UpdateUpgradeRange;
         upgradeManager.UpdateUpgradeCityHealth += UpgradeEventManager_UpdateUpgradeCityHealth;
         upgradeManager.UpdateUpgradeBlock += UpgradeEventManager_UpdateUpgradeBlock;
+        upgradeManager.UpdateUpgradeSideToSide += UpgradeEventManager_UpdateUpgradeSideToSide;
     }
 
     private void UpgradeEventManager_UpdateUpgradeBlock(object sender, UpgradeEventArgs e)
@@ -93,6 +94,13 @@ public class Level_Manager : MonoBehaviour
         WeaponDestroyerRange range = FindObjectOfType<WeaponDestroyerRange>(true);
         ItemDisplay rangeUpgrade = e.Item;
         if (range != null) { range.RangeUp();}
+    }
+
+    private void UpgradeEventManager_UpdateUpgradeSideToSide(object sender, UpgradeEventArgs e)
+    {
+        PlayerSideToSide sideToSide = FindObjectOfType<PlayerSideToSide>(true);
+        ItemDisplay sideToSideUpgrade = e.Item;
+        if (sideToSide != null) { sideToSide.UpgradeMovement(sideToSideUpgrade.Modifer); }
     }
 
     private void OnDisable()

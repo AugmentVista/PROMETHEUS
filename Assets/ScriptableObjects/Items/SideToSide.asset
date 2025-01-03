@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: SideToSide
   m_EditorClassIdentifier: 
   title: SideToSide
-  description: Increase movement speed
+  description: 20% more move speed
   price: 10
   itemImage: {fileID: 21300000, guid: 05404138ee863564b8933a79f52421bb, type: 3}
-  currencyType: {fileID: 0}
+  currencyType: {fileID: 21300000, guid: 37858a17198b8cc43aebee37f1f37b73, type: 3}
   ImprovementModifier: 0.05
