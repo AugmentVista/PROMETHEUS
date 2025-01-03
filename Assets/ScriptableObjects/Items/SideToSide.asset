@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da52b6043a4a9fc418470ec65226891a, type: 3}
   m_Name: SideToSide
   m_EditorClassIdentifier: 
-  title: 
-  description: 
-  price: 
+  title: SideToSide
+  description: Increase movement speed
+  price: 10
   itemImage: {fileID: 21300000, guid: 05404138ee863564b8933a79f52421bb, type: 3}
   currencyType: {fileID: 0}
-  ImprovementModifier: 0
+  ImprovementModifier: 0.05
