@@ -53,7 +53,7 @@ public class EnemyProjectileManager : MonoBehaviour
     private int DetermineProjectileType()
     {
         int p = 0;
-        int randomNumber = Random.Range(1 + localWaveCount, 101);
+        int randomNumber = Random.Range(1 + localWaveCount * 3, 101);
         switch (randomNumber)
         {
             case int i when (i >= 1 && i <= 50):
@@ -89,5 +89,6 @@ public class EnemyProjectileManager : MonoBehaviour
         currentProjectiles = 0;
         totalProjectilesCreated = 0;
         localWaveCount = 0;
+        maxProjectiles = 12;
     }
 }
