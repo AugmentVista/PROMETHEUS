@@ -112,6 +112,7 @@ public class Level_Manager : MonoBehaviour
         upgradeManager.UpdateUpgradeRange -= UpgradeEventManager_UpdateUpgradeRange;
         upgradeManager.UpdateUpgradeCityHealth -= UpgradeEventManager_UpdateUpgradeCityHealth;
         upgradeManager.UpdateUpgradeBlock -= UpgradeEventManager_UpdateUpgradeBlock;
+        upgradeManager.UpdateUpgradeSideToSide -= UpgradeEventManager_UpdateUpgradeSideToSide;
     }
 
     #endregion

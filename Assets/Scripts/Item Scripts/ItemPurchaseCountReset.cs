@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 public class ItemPurchaseCountReset : MonoBehaviour
 {
     public ItemDisplay[] items;
-
+ 
     public void ResetItemPurchaseCount()
     {
         Scene currentScene = SceneManager.GetActiveScene();

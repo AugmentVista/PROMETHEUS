@@ -14,10 +14,6 @@ public class Button_UpgradeEvent : MonoBehaviour
             {
                 UpgradeWasPurchased?.Invoke(this, new UpgradeEventArgs(item));
             }
-            if (item.timesPurchased <= 4)
-            {
-                Shop.ApplyCost(item.priceText);
-            }
         }
         else
         {

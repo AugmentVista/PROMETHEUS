@@ -67,11 +67,10 @@ public class PlayerSideToSide : MonoBehaviour
     public void UpgradeMovement(float cooldownReduction)
     {
         Debug.LogWarning("are we getting called?");
-        if (sideMoveCooldown > 0.05f)
-        {
-            sideMoveSpeed -= cooldownReduction;
-        }
-        if (sideMoveSpeed < 9)
+        Debug.LogWarning(sideMoveCooldown.ToString());
+        cooldownReduction  -= sideMoveCooldown;
+        Debug.LogWarning($"{sideMoveCooldown} was supposed to be reduced by {cooldownReduction} but it isn't");
+        if (sideMoveSpeed < 10)
         {
             sideMoveSpeed++;
         }
