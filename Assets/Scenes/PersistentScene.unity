@@ -21105,7 +21105,7 @@ GameObject:
   - component: {fileID: 854110530}
   - component: {fileID: 854110529}
   m_Layer: 5
-  m_Name: View Upgrade Button
+  m_Name: View Upgrade Button s
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -5,8 +5,6 @@ using TMPro;
 public class ShopManager : MonoBehaviour
 {
     [SerializeField] private CurrencyKeeper scoreKeeper;
-    private bool validPurchase = false;
-    private int price;
 
     #region Player Balance
 
