@@ -301,10 +301,10 @@ public class Game_Manager : MonoBehaviour
 
     #region Private Invoke calls
 
-    private void Introduction() // INVOKING DOES NOT CHANGE GAMESTATE, GAMESTATE IS MANUALLY CHANGED
+    private void Introduction()
     {
         IsMenuOpen(true);
-        OnIntroduction?.Invoke(); // does not change gameState, only invokes the event.
+        OnIntroduction?.Invoke();
     }
 
     private void UpgradesMenu()

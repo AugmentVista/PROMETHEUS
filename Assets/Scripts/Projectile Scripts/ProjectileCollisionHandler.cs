@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 
 public class ProjectileCollisionHandler : MonoBehaviour
@@ -14,8 +13,6 @@ public class ProjectileCollisionHandler : MonoBehaviour
     private PlayerAttack playerAttack;
     private BaseProjectile Base;
     private string[] Type;
-    public AudioSource audioSource;
-    public AudioClip playerOof;
     public bool struckByWeapon;
     public float endurance;
 
@@ -72,8 +69,6 @@ public class ProjectileCollisionHandler : MonoBehaviour
         {
             case "PlayerBody":
                 OnPlayerDamaged(true, gameObject.tag);
-                Debug.Log($"WHY IS VALUE NULL!? {playerOof} ");
-                audioSource.PlayOneShot(playerOof, 0.75f);
                 DisableColliderForPooling();
                 break;
 
