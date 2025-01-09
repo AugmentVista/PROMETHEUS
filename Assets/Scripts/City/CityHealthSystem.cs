@@ -84,11 +84,9 @@ public class CityHealthSystem : MonoBehaviour
     public void TakeDamage(float damageTaken)
     {
         currentShield = Mathf.Clamp(currentShield - damageTaken, -maxShield, maxShield);
-        Debug.Log($"city took {damageTaken}, city has {currentShield} shield remaining. ");
         if (currentShield <= 0)
         {
             currentHealth = Mathf.Clamp(currentHealth + currentShield, 0f, maxHealth);
-            Debug.Log($"city took {damageTaken}, city has {currentHealth} health remaining. ");
             if (currentHealth == 0)
             { 
             // Unalived

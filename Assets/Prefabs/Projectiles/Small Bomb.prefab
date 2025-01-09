@@ -187,5 +187,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4cafbec7bf9e6c4eb7987906a48281a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerOof: {fileID: 8300000, guid: 8fe04f1367ba8e0428ed042df7d0e1bf, type: 3}
   struckByWeapon: 0
   endurance: 1

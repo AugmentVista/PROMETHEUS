@@ -350,6 +350,10 @@ public class Game_Manager : MonoBehaviour
         OnGameWin?.Invoke();
     }
 
+    private void DoNothing()
+    {
+        OnDoNothing.Invoke();
+    }
     #endregion
     public void GameQuit()
     {

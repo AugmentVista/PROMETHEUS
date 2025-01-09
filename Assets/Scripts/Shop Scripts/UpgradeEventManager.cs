@@ -18,7 +18,6 @@ public class UpgradeEventManager : MonoBehaviour
     private int healthUpgradesPurchased = 0;
     private int rangeUpgradesPurchased = 0;
     private int cityHealthUpgradesPurchased = 0;
-    private int attackSpeedUpgradesPurchased = 0;
     private int magicUpgradesPurchased = 0;
     private int blockUpgradesPurchased = 0;
     private int sideToSideUpgradesPurchased = 0;
@@ -108,7 +107,6 @@ public class UpgradeEventManager : MonoBehaviour
             healthUpgradesPurchased = 0;
             rangeUpgradesPurchased = 0;
             cityHealthUpgradesPurchased = 0;
-            attackSpeedUpgradesPurchased = 0;
             magicUpgradesPurchased = 0;
             blockUpgradesPurchased = 0;
             sideToSideUpgradesPurchased = 0;

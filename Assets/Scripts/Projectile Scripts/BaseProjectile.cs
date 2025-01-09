@@ -15,8 +15,6 @@ public class BaseProjectile : MonoBehaviour
     public enum ProjectileEffect { KnockBack, TowerBuster, Slow, Cash, Bomb }
     public ProjectileEffect currentEffect;
 
-    private float elapsedTime = 0f;
-
     private Vector3 previousVelocity;
 
     private bool isPaused = false;
