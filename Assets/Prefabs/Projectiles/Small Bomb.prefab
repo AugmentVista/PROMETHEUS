@@ -150,11 +150,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37063564f08dbdf46a0436a0df4ff5b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  travelSpeed: 40
+  travelSpeed: 60
   currentState: 0
   currentEffect: 0
   value: 1
-  knockBackDamage: 15
+  knockBackDamage: 10
 --- !u!135 &5025310217177838612
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -213,7 +213,7 @@ AudioSource:
   MinDistance: 1
   MaxDistance: 500
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 2
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
