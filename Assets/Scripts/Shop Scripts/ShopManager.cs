@@ -59,14 +59,6 @@ public class ShopManager : MonoBehaviour
             drachmaHundreds.sprite = DrachmaPositive[hundreds].sprite;
             drachaThousands.sprite =  DrachmaPositive[thousands].sprite;
         }
-        else
-        {
-            // Display negative sprites
-            drachmaOnes.sprite = DrachmaNegative[ones].sprite;
-            drachmaTens.sprite = DrachmaNegative[tens].sprite;
-            drachmaHundreds.sprite = DrachmaNegative[hundreds].sprite;
-            drachaThousands.sprite = DrachmaNegative[thousands].sprite;
-        }
     }
 
     public bool CanPlayerAffordThis(TMP_Text priceText)

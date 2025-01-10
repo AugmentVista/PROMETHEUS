@@ -10,7 +10,6 @@ public class AudioPlayerStruck : MonoBehaviour
     {
         if (other.gameObject.tag == "Knockback")
         {
-            Debug.LogError($"WHY IS VALUE NULL!? {playerOof} ");
             audioSource.PlayOneShot(playerOof, 1);
         }
     }
